@@ -28,7 +28,12 @@ export default {
         DEFAULT: "1rem",
         sm: "1rem",
         md: "1rem",
-        lg: "40px",
+        lg: "60px",
+      },
+    },
+    extend: {
+      backgroundImage: {
+        "custom-bg": "url('@/assets/img/hero-bg.svg')",
       },
     },
   },

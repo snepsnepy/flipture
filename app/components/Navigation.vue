@@ -1,15 +1,25 @@
 <template>
-  <section class="container mx-auto py-6">
+  <nav
+    class="container mx-auto py-6"
+    role="navigation"
+    aria-label="Main navigation"
+  >
     <div class="navbar p-0">
       <div class="navbar-start flex flex-row justify-between w-full">
-        <a class="font-poppins font-bold text-5xl text-base-content"
-          >Flipture.</a
+        <a
+          href="/"
+          class="font-poppins font-bold text-5xl text-base-content"
+          aria-label="Flipture - Home"
         >
+          Flipture.
+        </a>
         <div class="dropdown dropdown-end">
-          <div
-            tabindex="0"
-            role="button"
+          <button
+            type="button"
             class="btn btn-ghost lg:hidden py-4 px-2 border border-base-content rounded-full"
+            aria-label="Toggle navigation menu"
+            aria-expanded="false"
+            aria-controls="mobile-menu"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -17,6 +27,7 @@
               fill="none"
               viewBox="0 0 24 24"
               stroke="black"
+              aria-hidden="true"
             >
               <path
                 stroke-linecap="round"
@@ -25,45 +36,54 @@
                 d="M4 6h16M4 12h8m-8 6h16"
               />
             </svg>
-          </div>
+          </button>
           <ul
-            tabindex="0"
+            id="mobile-menu"
             class="menu menu-lg dropdown-content bg-white border border-base-300 shadow-md rounded-box z-1 mt-2 w-52 p-2 drop-shadow-md font-poppins font-bold text-sm"
+            role="menu"
+            aria-label="Mobile navigation menu"
           >
-            <li>
+            <li role="none">
               <NuxtLink
                 class="hover:text-primary hover:cursor-pointer text-base-content"
                 to="/"
+                role="menuitem"
                 >Home</NuxtLink
               >
             </li>
-            <li>
+            <li role="none">
               <NuxtLink
                 class="hover:text-primary hover:cursor-pointer text-base-content"
+                role="menuitem"
                 >Features</NuxtLink
               >
             </li>
-            <li>
+            <li role="none">
               <NuxtLink
                 class="hover:text-primary hover:cursor-pointer text-base-content"
+                role="menuitem"
                 >Pricing</NuxtLink
               >
             </li>
-            <li>
+            <li role="none">
               <NuxtLink
                 class="hover:text-primary hover:cursor-pointer text-base-content"
+                role="menuitem"
                 >FAQs</NuxtLink
               >
             </li>
-            <li>
+            <li role="none">
               <NuxtLink
                 class="hover:text-primary hover:cursor-pointer text-base-content"
+                role="menuitem"
                 >Contact</NuxtLink
               >
             </li>
-            <li class="mt-4">
+            <li class="mt-4" role="none">
               <button
+                type="button"
                 class="w-full py-2 px-4 md:px-10 text-center justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg"
+                role="menuitem"
               >
                 Sign In
               </button>
@@ -72,35 +92,44 @@
         </div>
       </div>
       <div class="navbar-center hidden lg:flex">
-        <ul class="menu menu-horizontal px-1 font-poppins font-bold text-base">
-          <li>
+        <ul
+          class="menu menu-horizontal px-1 font-poppins font-bold text-base"
+          role="menubar"
+          aria-label="Desktop navigation menu"
+        >
+          <li role="none">
             <NuxtLink
               class="hover:text-primary hover:cursor-pointer text-base-content hover:bg-transparent"
               to="/"
+              role="menuitem"
               >Home</NuxtLink
             >
           </li>
-          <li>
+          <li role="none">
             <NuxtLink
               class="hover:text-primary hover:cursor-pointer text-base-content hover:bg-transparent"
+              role="menuitem"
               >Features</NuxtLink
             >
           </li>
-          <li>
+          <li role="none">
             <NuxtLink
               class="hover:text-primary hover:cursor-pointer text-base-content hover:bg-transparent"
+              role="menuitem"
               >Pricing</NuxtLink
             >
           </li>
-          <li>
+          <li role="none">
             <NuxtLink
               class="hover:text-primary hover:cursor-pointer text-base-content hover:bg-transparent"
+              role="menuitem"
               >FAQs</NuxtLink
             >
           </li>
-          <li>
+          <li role="none">
             <NuxtLink
               class="hover:text-primary hover:cursor-pointer text-base-content hover:bg-transparent"
+              role="menuitem"
               >Contact</NuxtLink
             >
           </li>
@@ -108,13 +137,14 @@
       </div>
       <div class="navbar-end hidden lg:flex">
         <button
+          type="button"
           class="w-fit py-3 px-6 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg"
         >
           Sign In
         </button>
       </div>
     </div>
-  </section>
+  </nav>
 </template>
 
 <script lang="ts" setup></script>

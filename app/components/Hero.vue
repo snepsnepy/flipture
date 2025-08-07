@@ -1,6 +1,6 @@
 <template>
   <section
-    class="relative flex flex-row bg-[#500073] items-end rounded-3xl py-[136px]"
+    class="relative flex flex-row bg-[#500073] items-end rounded-3xl py-[136px] hero-shape"
   >
     <div class="pl-10 flex flex-col gap-y-6 w-full">
       <span class="font-inter text-white text-2xl italic"
@@ -26,3 +26,11 @@
 </template>
 
 <script setup lang="ts"></script>
+
+<style scoped>
+.hero-shape {
+  clip-path: path(
+    "M 20,80 L 900,80 A 56,56 0,0,0  940,60 L 960,20 A 56,56 0,0,1 1000,0 L 1320,0 L 1360,20 L 1360,885 L 1320,905 L 20,905 L 0,885 L 0,100 A 24,24 0,0,1 20,80 Z"
+  );
+}
+</style>

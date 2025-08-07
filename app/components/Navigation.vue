@@ -4,8 +4,8 @@
     role="navigation"
     aria-label="Main navigation"
   >
-    <div class="navbar p-0">
-      <div class="navbar-start flex flex-row justify-between w-full">
+    <div class="navbar p-0 flex flex-row justify-between">
+      <div class="navbar-start w-full lg:w-fit justify-between">
         <a
           href="https://flipture.netlify.app"
           class="font-poppins font-bold text-5xl text-base-content"
@@ -135,7 +135,7 @@
           </li>
         </ul>
       </div>
-      <div class="navbar-end hidden lg:flex">
+      <div class="navbar-end hidden w-fit lg:flex">
         <button
           type="button"
           class="w-fit py-3 px-6 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg"

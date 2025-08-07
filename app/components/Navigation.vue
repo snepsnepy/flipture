@@ -1,8 +1,9 @@
 <template>
   <section>
     <div class="navbar p-0">
-      <div class="navbar-start flex flex-row gap-x-2">
-        <div class="dropdown">
+      <div class="navbar-start flex flex-row justify-between w-full">
+        <a class="font-poppins font-bold text-5xl text-black">Flipture.</a>
+        <div class="dropdown dropdown-end">
           <div
             tabindex="0"
             role="button"
@@ -58,9 +59,15 @@
                 >Contact</NuxtLink
               >
             </li>
+            <li class="mt-4">
+              <button
+                class="w-full py-2 px-4 md:px-10 text-center justify-center items-center bg-[#0046FF] rounded-full text-white hover:cursor-pointer hover:bg-white hover:border hover:border-black hover:text-black font-poppins font-bold text-sm md:text-lg"
+              >
+                Sign In
+              </button>
+            </li>
           </ul>
         </div>
-        <a class="font-poppins font-bold text-5xl text-black">Flipture.</a>
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1 font-poppins font-bold text-base">
@@ -97,7 +104,7 @@
           </li>
         </ul>
       </div>
-      <div class="navbar-end">
+      <div class="navbar-end hidden lg:flex">
         <button
           class="w-fit py-3 px-6 md:px-10 bg-[#0046FF] rounded-full text-white hover:cursor-pointer hover:bg-white hover:border hover:border-black hover:text-black font-poppins font-bold text-sm md:text-lg"
         >

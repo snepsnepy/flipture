@@ -22,13 +22,50 @@
           Upload your PDF and instantly transform it into a sleek, interactive
           3D flipbook — ready to share with a simple link. No technical skills,
           no watermarks, no surprises. Just clean design, smooth performance,
-          and a flat €6/month.
+          and a flat <b class="text-[#FFCC00]">€6/month</b>.
         </p>
       </div>
       <button
-        class="w-fit py-2 md:py-4 px-6 md:px-10 bg-white rounded-full text-[#0046FF] font-inter font-bold text-sm md:text-lg tracking-tight"
+        class="flex flex-row items-center w-fit gap-x-1 py-2 md:py-4 px-6 md:px-10 border border-white rounded-full text-white hover:cursor-pointer hover:bg-white hover:text-[#0046FF] font-inter font-bold text-sm md:text-lg tracking-tight"
       >
-        See it in action
+        <span>See it in action</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          class="arrow-icon"
+        >
+          <g
+            fill="none"
+            stroke="#fff"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+          >
+            <path stroke-dasharray="20" stroke-dashoffset="20" d="M12 3l0 17.5">
+              <animate
+                fill="freeze"
+                attributeName="stroke-dashoffset"
+                dur="0.2s"
+                values="20;0"
+              />
+            </path>
+            <path
+              stroke-dasharray="12"
+              stroke-dashoffset="12"
+              d="M12 21l7 -7M12 21l-7 -7"
+            >
+              <animate
+                fill="freeze"
+                attributeName="stroke-dashoffset"
+                begin="0.2s"
+                dur="0.2s"
+                values="12;0"
+              />
+            </path>
+          </g>
+        </svg>
       </button>
     </div>
   </section>
@@ -36,4 +73,8 @@
 
 <script setup lang="ts"></script>
 
-<style scoped></style>
+<style scoped>
+button:hover .arrow-icon g {
+  stroke: #0046ff !important;
+}
+</style>

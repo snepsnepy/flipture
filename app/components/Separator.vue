@@ -6,7 +6,7 @@
       :damping="30"
       :stiffness="50"
       :velocity-mapping="{ input: [0, 1000], output: [0, 5] }"
-      :class="'text-base-content'"
+      class="text-base-content"
       parallax-class-name="custom-parallax"
       scroller-class-name="custom-scroller"
     />

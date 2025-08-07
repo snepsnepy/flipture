@@ -7,7 +7,7 @@
     <div class="navbar p-0">
       <div class="navbar-start flex flex-row justify-between w-full">
         <a
-          href="/"
+          href="https://flipture.netlify.app"
           class="font-poppins font-bold text-5xl text-base-content"
           aria-label="Flipture - Home"
         >

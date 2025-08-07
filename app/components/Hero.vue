@@ -1,7 +1,7 @@
 <template>
   <div class="container mx-auto py-0">
     <section
-      class="relative flex flex-row gap-x-10 bg-primary rounded-[24px] py-10 md:py-40 px-5 md:px-14 overflow-hidden"
+      class="relative flex flex-row gap-x-10 bg-primary rounded-3xl py-10 md:py-40 px-5 md:px-14 overflow-hidden"
       aria-labelledby="hero-heading"
       role="banner"
     >
@@ -14,7 +14,7 @@
       />
 
       <!-- Content container with higher z-index to appear above the image -->
-      <div class="relative z-10 flex flex-col gap-y-6 md:gap-y-8 md:w-2/3">
+      <div class="relative z-10 flex flex-col gap-y-14 md:gap-y-8 md:w-2/3">
         <header class="space-y-4 md:space-y-6">
           <h1
             id="hero-heading"
@@ -30,7 +30,7 @@
             3D flipbook — ready to share with a simple link. No technical
             skills, no watermarks, no surprises. Just clean design, smooth
             performance, and a flat
-            <strong class="text-secondary">€6/month</strong>.
+            <strong class="text-secondary text-lg">€6/month</strong>.
           </p>
         </header>
         <button

@@ -16,6 +16,7 @@
         <div class="dropdown dropdown-end">
           <button
             type="button"
+            tabindex="0"
             class="btn btn-ghost lg:hidden py-4 px-2 border border-base-content rounded-full"
             aria-label="Toggle navigation menu"
             aria-expanded="false"

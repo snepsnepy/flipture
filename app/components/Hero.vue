@@ -26,7 +26,7 @@
         </p>
       </div>
       <button
-        class="w-fit py-2 md:py-4 px-6 md:px-10 bg-white rounded-full text-[#0046FF] font-inter font-bold text-sm md:text-lg"
+        class="w-fit py-2 md:py-4 px-6 md:px-10 bg-white rounded-full text-[#0046FF] font-inter font-bold text-sm md:text-lg tracking-tight"
       >
         See it in action
       </button>

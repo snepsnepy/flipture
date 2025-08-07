@@ -7,6 +7,4 @@
 definePageMeta({
   layout: "base",
 });
-
-const name = ref<string>("John Test");
 </script>

@@ -1,12 +1,20 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-@plugin "daisyui" {
-  themes: light --default, dark --prefersdark, cupcake;
+@plugin "daisyui/theme" {
+  name: "mytheme";
+  default: true;
+  prefersdark: true;
+
+  --color-primary: oklch(0.5096 0.274811 263.5831);
+  --color-secondary: oklch(0.8652 0.1768 90.38);
+  --color-base-content: oklch(0 0 0);
+  --color-primary-content: oklch(1 0 0);
+  --color-base-300: oklch(0.94 0.0052 247.88);
 }
 
 @utility container {
-  padding: 2rem;
+  padding: 1rem;
 
   @media (min-width: 640px) {
     padding: 2rem;

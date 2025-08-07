@@ -1,5 +1,5 @@
 <template>
-  <section class="container mx-auto py-8">
+  <section class="container mx-auto py-10">
     <Hero />
   </section>
 </template>

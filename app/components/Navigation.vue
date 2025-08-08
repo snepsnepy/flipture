@@ -94,7 +94,7 @@
       </div>
       <div class="navbar-center hidden lg:flex">
         <ul
-          class="menu menu-horizontal px-1 font-poppins font-bold text-base"
+          class="menu menu-horizontal px-1 font-poppins font-bold text-lg"
           role="menubar"
           aria-label="Desktop navigation menu"
         >

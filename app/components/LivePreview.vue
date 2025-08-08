@@ -4,26 +4,30 @@
     aria-labelledby="live-preview-heading"
     role="banner"
   >
-    <div class="flex flex-col gap-y-8">
-      <header class="flex flex-col gap-y-6 items-center text-center">
-        <h2
-          class="font-poppins font-bold text-3xl md:text-5xl text-base-content"
-        >
-          See exactly what your readers <br />will experience
-        </h2>
-        <p
-          class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px] font-medium"
-        >
-          This is a live example of a 3D flipbook created with just one PDF
-          upload. Flip through the pages, interact with the layout, and imagine
-          your own content presented this beautifully —
-          <b class="text-primary">
-            instantly shareable, fully responsive, and ad-free.</b
+    <div class="flex flex-col gap-y-10">
+      <div class="flex flex-col gap-y-8">
+        <header class="flex flex-col gap-y-6 items-center text-center">
+          <h2
+            class="font-poppins font-bold text-3xl md:text-5xl text-base-content"
           >
-        </p>
-      </header>
+            See exactly what your readers <br />will experience
+          </h2>
+          <p
+            class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px] font-medium"
+          >
+            This is a live example of a 3D flipbook created with just one PDF
+            upload. Flip through the pages, interact with the layout, and
+            imagine your own content presented this beautifully —
+            <b class="text-primary">
+              instantly shareable, fully responsive, and ad-free.</b
+            >
+          </p>
+        </header>
 
-      <div class="bg-base-content/50 h-[500px] rounded-3xl"></div>
+        <div class="bg-base-content/50 h-[500px] rounded-3xl"></div>
+      </div>
+
+      <Features />
     </div>
   </section>
 </template>

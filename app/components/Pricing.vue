@@ -1,6 +1,6 @@
 <template>
   <section class="bg-base-content">
-    <div class="container mx-auto py-32 flex flex-col gap-y-20">
+    <div class="container mx-auto py-32 flex flex-col gap-y-8">
       <!-- Header -->
       <header class="flex flex-col gap-y-6 items-center text-center">
         <h2

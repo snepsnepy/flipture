@@ -14,7 +14,7 @@ export default defineNuxtConfig({
     },
   },
   ssr: false,
-  modules: ["@pinia/nuxt", "@nuxt/fonts"],
+  modules: ["@pinia/nuxt", "@nuxt/fonts", "@vueuse/nuxt"],
   typescript: {
     typeCheck: true,
   },

@@ -2,6 +2,9 @@
   <section>
     <div
       class="feature-item flex flex-row justify-between items-center py-5 border-t-2 border-base-content px-4 ease-out duration-500 transition-all relative overflow-hidden"
+      :class="{
+        'pointer-events-none': isMobile,
+      }"
     >
       <div
         class="flex flex-col md:flex-row items-left md:items-center gap-x-20 gap-y-1 w-3/4 justify-between"
@@ -29,6 +32,9 @@
     </div>
     <div
       class="feature-item flex flex-row justify-between items-center py-5 border-t-2 border-base-content px-4 ease-out duration-500 transition-all relative overflow-hidden"
+      :class="{
+        'pointer-events-none': isMobile,
+      }"
     >
       <div
         class="flex flex-col md:flex-row items-left md:items-center gap-x-20 gap-y-1 w-3/4 justify-between"
@@ -55,6 +61,9 @@
     </div>
     <div
       class="feature-item flex flex-row justify-between items-center py-5 border-t-2 border-base-content px-4 ease-out duration-500 transition-all relative overflow-hidden"
+      :class="{
+        'pointer-events-none': isMobile,
+      }"
     >
       <div
         class="flex flex-col md:flex-row items-left md:items-center gap-x-20 gap-y-1 w-3/4 justify-between"
@@ -80,6 +89,9 @@
     </div>
     <div
       class="feature-item flex flex-row justify-between items-center py-5 border-t-2 border-base-content px-4 ease-out duration-500 transition-all relative overflow-hidden"
+      :class="{
+        'pointer-events-none': isMobile,
+      }"
     >
       <div
         class="flex flex-col md:flex-row items-left md:items-center gap-x-20 gap-y-1 w-3/4 justify-between"
@@ -106,7 +118,11 @@
   </section>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useIsMobile } from "~/composables/useIsMobile";
+
+const isMobile = useIsMobile();
+</script>
 
 <style scoped>
 .feature-item {

@@ -3,6 +3,7 @@
     <Hero />
     <Separator />
     <LivePreview />
+    <Pricing />
   </section>
 </template>
 <script setup lang="ts">

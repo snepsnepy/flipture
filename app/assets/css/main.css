@@ -29,6 +29,11 @@
   }
 }
 
+@theme {
+  --font-inter: "Inter", "sans-serif";
+  --font-poppins: "Poppins", "sans-serif";
+}
+
 /* Hide scrollbars for all elements */
 * {
   scrollbar-width: none; /* Firefox */

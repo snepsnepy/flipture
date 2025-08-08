@@ -9,8 +9,8 @@
       <div
         class="flex flex-col md:flex-row items-left md:items-center gap-x-20 gap-y-1 w-3/4 justify-between"
       >
-        <h4 class="text-poppins font-bold text-5xl">3D Flip Animation</h4>
-        <span class="text-poppins text-base font-medium"
+        <h4 class="font-poppins font-bold text-5xl">3D Flip Animation</h4>
+        <span class="font-poppins text-base font-medium"
           >Realistic page-turning with smooth transitions.</span
         >
       </div>
@@ -39,8 +39,8 @@
       <div
         class="flex flex-col md:flex-row items-left md:items-center gap-x-20 gap-y-1 w-3/4 justify-between"
       >
-        <h4 class="text-poppins font-bold text-5xl">Shareable Links</h4>
-        <span class="text-poppins text-base font-medium"
+        <h4 class="font-poppins font-bold text-5xl">Shareable Links</h4>
+        <span class="font-poppins text-base font-medium"
           >One-click link to share with anyone, anywhere.</span
         >
       </div>
@@ -68,8 +68,8 @@
       <div
         class="flex flex-col md:flex-row items-left md:items-center gap-x-20 gap-y-1 w-3/4 justify-between"
       >
-        <h4 class="text-poppins font-bold text-5xl">Mobile Friendly</h4>
-        <span class="text-poppins text-base font-medium"
+        <h4 class="font-poppins font-bold text-5xl">Mobile Friendly</h4>
+        <span class="font-poppins text-base font-medium"
           >Works perfectly on all devices and screen sizes.</span
         >
       </div>
@@ -96,8 +96,8 @@
       <div
         class="flex flex-col md:flex-row items-left md:items-center gap-x-20 gap-y-1 w-3/4 justify-between"
       >
-        <h4 class="text-poppins font-bold text-5xl">Ad-Free Viewing</h4>
-        <span class="text-poppins text-base font-medium"
+        <h4 class="font-poppins font-bold text-5xl">Ad-Free Viewing</h4>
+        <span class="font-poppins text-base font-medium"
           >No branding, no ads — just your content.</span
         >
       </div>

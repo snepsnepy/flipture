@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="container mx-auto py-6"
+    class="container mx-auto py-0 pt-6"
     role="navigation"
     aria-label="Main navigation"
   >
@@ -80,7 +80,8 @@
                 >Contact</NuxtLink
               >
             </li>
-            <li class="mt-4" role="none">
+            <HorizontalDivider />
+            <li class="pt-4" role="none">
               <button
                 type="button"
                 class="w-full py-2 px-4 md:px-10 text-center justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg"

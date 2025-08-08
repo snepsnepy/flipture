@@ -13,7 +13,7 @@
             See exactly what your readers <br />will experience
           </h2>
           <p
-            class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px] font-medium"
+            class="text-base-content text-sm md:text-base text-center font-poppins max-w-[650px] font-medium"
           >
             This is a live example of a 3D flipbook created with just one PDF
             upload. Flip through the pages, interact with the layout, and

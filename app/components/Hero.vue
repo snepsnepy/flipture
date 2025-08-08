@@ -1,6 +1,6 @@
 <template>
   <div class="container mx-auto py-0">
-    <div class="silk-container">
+    <div class="w-full relative overflow-hidden">
       <VueBitsSilk
         :speed="3"
         :scale="1"
@@ -22,7 +22,7 @@
           <header class="space-y-4 md:space-y-6">
             <h1
               id="hero-heading"
-              class="font-inter text-primary-content text-4xl md:text-[80px] font-bold leading-[102%]"
+              class="font-poppins text-primary-content text-4xl md:text-[80px] font-bold leading-[102%]"
             >
               A better way <br />
               to present, share <br />
@@ -35,11 +35,11 @@
               interactive 3D flipbook — ready to share with a simple link. No
               technical skills, no watermarks, no surprises. Just clean design,
               smooth performance, and a flat
-              <strong class="text-secondary text-lg">€6/month</strong>.
+              <strong class="text-secondary tracking-[10%]">€6/month</strong>.
             </p>
           </header>
           <button
-            class="flex flex-row items-center w-fit gap-x-1 py-2 md:py-3 px-6 md:px-8 border border-primary-content rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:text-primary font-inter font-bold text-base md:text-lg tracking-tight hover:scale-105 transition-all duration-300"
+            class="flex flex-row items-center w-fit gap-x-1 py-2 md:py-3 px-6 md:px-8 border border-primary-content rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:text-primary font-inter font-bold text-base md:text-lg tracking-wide hover:scale-105 transition-all duration-300"
             aria-label="See the flipbook in action"
           >
             <span>See it in action</span>
@@ -98,12 +98,5 @@
 <style scoped>
 button:hover .arrow-icon g {
   stroke: var(--color-primary) !important;
-}
-
-.silk-container {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  overflow: hidden;
 }
 </style>

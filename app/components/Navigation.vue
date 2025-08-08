@@ -139,7 +139,7 @@
       <div class="navbar-end hidden w-fit lg:flex">
         <button
           type="button"
-          class="w-fit py-3 px-6 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg"
+          class="w-fit py-3 px-6 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg hover:scale-105 transition-all duration-300"
         >
           Sign In
         </button>

@@ -1,7 +1,7 @@
 <template>
   <section class="container mx-auto">
     <VueBitsScrollVelocity
-      :texts="['Instant Upload • 3D Flipbook • €6/month Flat •']"
+      :texts="['One Plan • 3D Flipbook • Full Access • Instant Upload •']"
       :velocity="50"
       :damping="30"
       :stiffness="50"

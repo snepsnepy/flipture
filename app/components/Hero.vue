@@ -20,11 +20,12 @@
             id="hero-heading"
             class="font-inter text-primary-content text-4xl md:text-[80px] font-bold leading-[102%]"
           >
-            A better way to present, share, <br />
+            A better way <br />
+            to present, share <br />
             and impress.
           </h1>
           <p
-            class="font-poppins text-primary-content font-medium text-sm md:text-base"
+            class="font-poppins text-primary-content font-medium text-sm md:text-base max-w-[600px]"
           >
             Upload your PDF and instantly transform it into a sleek, interactive
             3D flipbook — ready to share with a simple link. No technical

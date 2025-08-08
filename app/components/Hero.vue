@@ -5,7 +5,7 @@
         :speed="3"
         :scale="1"
         color="#0046ff"
-        :noise-intensity="0.2"
+        :noise-intensity="0.5"
         :rotation="0"
         class="relative flex flex-row gap-x-10 bg-primary rounded-3xl py-10 md:py-40 px-5 md:px-14 overflow-hidden"
       >

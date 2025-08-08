@@ -1,6 +1,6 @@
 <template>
   <section class="bg-base-content">
-    <div class="container mx-auto py-32 flex flex-col gap-y-20">
+    <div class="container mx-auto py-32 flex flex-col gap-y-8">
       <!-- Header -->
       <header class="flex flex-col gap-y-6 items-center text-center">
         <h2
@@ -66,7 +66,7 @@
                 </p>
                 <div class="flex flex-row gap-2 items-start">
                   <h4
-                    class="font-poppins font-bold text-4xl md:text-6xl leading-[104%] text-secondary"
+                    class="font-poppins font-bold text-4xl md:text-6xl leading-[104%] text-primary-content"
                   >
                     €5.99
                   </h4>
@@ -77,7 +77,7 @@
                 </div>
                 <button
                   type="button"
-                  class="w-full py-3 px-6 md:px-10 bg-primary-content rounded-full text-base-content hover:cursor-pointer hover:bg-primary-content font-poppins font-bold text-sm md:text-lg hover:scale-105 transition-all duration-300"
+                  class="w-full py-3 px-6 md:px-10 bg-secondary rounded-full text-base-content hover:cursor-pointer hover:bg-primary-content font-poppins font-bold text-sm md:text-lg hover:scale-105 transition-all duration-300"
                 >
                   Get started
                 </button>

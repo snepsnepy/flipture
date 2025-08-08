@@ -4,6 +4,7 @@
     <Separator />
     <LivePreview />
     <Pricing />
+    <faqs />
   </section>
 </template>
 <script setup lang="ts">

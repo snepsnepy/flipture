@@ -3,6 +3,7 @@
     <div class="flex flex-col gap-y-4 lg:gap-y-8">
       <Navigation />
       <slot />
+      <Footer />
     </div>
   </div>
 </template>

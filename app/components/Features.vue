@@ -88,7 +88,7 @@
       </div>
     </div>
     <div
-      class="feature-item flex flex-row justify-between items-center py-5 border-t-2 border-base-content px-4 ease-out duration-500 transition-all relative overflow-hidden"
+      class="feature-item flex flex-row justify-between items-center py-5 border-y-2 border-base-content px-4 ease-out duration-500 transition-all relative overflow-hidden"
       :class="{
         'pointer-events-none': isMobile,
       }"
@@ -121,7 +121,7 @@
 <script lang="ts" setup>
 import { useIsMobile } from "~/composables/useIsMobile";
 
-const isMobile = useIsMobile();
+const { isMobile } = useIsMobile();
 </script>
 
 <style scoped>

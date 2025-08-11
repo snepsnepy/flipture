@@ -14,8 +14,13 @@ export default defineNuxtConfig({
     },
   },
   ssr: false,
-  modules: ["@pinia/nuxt", "@nuxt/fonts", "@vueuse/nuxt"],
+  modules: ["@pinia/nuxt", "@nuxt/fonts", "@vueuse/nuxt", "@nuxtjs/supabase"],
   typescript: {
     typeCheck: true,
+  },
+  supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
+    redirect: false,
   },
 });

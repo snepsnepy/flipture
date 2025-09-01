@@ -24,7 +24,14 @@
           </p>
         </header>
 
-        <div class="bg-base-content/50 h-[500px] rounded-3xl"></div>
+        <div class="bg-base-content/50 h-[900px] rounded-3xl">
+          <iframe
+            class="rounded-3xl"
+            src="https://flipture-view.netlify.app"
+            width="100%"
+            height="100%"
+          ></iframe>
+        </div>
       </div>
 
       <Features />

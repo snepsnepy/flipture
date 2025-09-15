@@ -8,7 +8,7 @@
       <div class="navbar-start w-full lg:w-fit justify-between">
         <a
           href="https://flipture.netlify.app"
-          class="font-poppins font-bold text-5xl text-base-content tracking-tighter"
+          class="font-poppins font-bold text-3xl md:text-5xl text-base-content tracking-tighter"
           aria-label="Flipture - Home"
         >
           Flipture.

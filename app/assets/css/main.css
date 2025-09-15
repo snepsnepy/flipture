@@ -11,6 +11,7 @@
   --color-base-content: oklch(0 0 0);
   --color-primary-content: oklch(1 0 0);
   --color-base-300: oklch(0.94 0.0052 247.88);
+  --color-neutral: oklch(0.6429 0 0);
 }
 
 @utility container {

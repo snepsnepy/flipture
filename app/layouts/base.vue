@@ -1,10 +1,10 @@
 <template>
-  <div class="bg-white min-h-screen">
-    <div class="flex flex-col gap-y-4 lg:gap-y-8">
-      <Navigation />
+  <div class="bg-white min-h-screen flex flex-col">
+    <Navigation />
+    <main class="flex-1">
       <slot />
-      <Footer />
-    </div>
+    </main>
+    <Footer />
   </div>
 </template>
 

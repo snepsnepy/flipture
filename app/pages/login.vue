@@ -28,13 +28,17 @@
           </h1>
           <p class="text-base-content text-base leading-4 font-poppins">
             New to Flipture?
-            <a href="#" class="text-primary font-semibold">Sign Up</a>
+            <span
+              class="text-primary font-semibold hover:cursor-pointer"
+              @click="goToRegister"
+              >Sign Up</span
+            >
           </p>
         </header>
 
         <section class="flex flex-col gap-6 md:gap-8">
           <div class="flex flex-col gap-4">
-            <div class="flex flex-col gap-4 md:gap-6">
+            <div class="flex flex-col gap-4">
               <fieldset class="fieldset p-0">
                 <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
                   Email
@@ -63,7 +67,7 @@
                   <input
                     type="email"
                     placeholder="Type your email"
-                    class="w-full font-poppins text-base leading-4"
+                    class="w-full font-poppins text-base leading-4 placeholder:text-sm"
                   />
                 </label>
               </fieldset>
@@ -104,16 +108,15 @@
                     placeholder="Password"
                     minlength="8"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                    class="font-poppins text-base leading-4"
+                    class="font-poppins text-base leading-4 placeholder:text-sm"
                   />
                 </label>
               </fieldset>
             </div>
 
-            <a
-              href="#"
-              class="text-sm leading-4 text-primary font-semibold font-poppins"
-              >Forget password</a
+            <span
+              class="text-sm leading-4 text-primary font-semibold font-poppins hover:cursor-pointer"
+              >Forget password</span
             >
           </div>
 
@@ -183,6 +186,8 @@ definePageMeta({
 });
 
 const { isMobile } = useIsMobile();
+
+const goToRegister = () => navigateTo({ name: "register" });
 </script>
 
 <style scoped></style>

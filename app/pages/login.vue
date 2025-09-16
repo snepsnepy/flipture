@@ -6,7 +6,7 @@
       <!-- Left Side -->
       <div
         v-if="!isMobile"
-        class="flex w-full flex-row bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end h-[800px] relative"
+        class="flex w-full flex-row bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end h-[750px] relative"
       >
         <!-- Dark overlay mask -->
         <div class="absolute inset-0 bg-base-content/70 rounded-3xl"></div>

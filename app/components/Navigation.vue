@@ -153,5 +153,7 @@
 <script lang="ts" setup>
 const route = useRoute();
 
-const isLoginPage = computed(() => route.path === "/login");
+const isLoginPage = computed(
+  () => route.path === "/login" || route.path === "/register"
+);
 </script>

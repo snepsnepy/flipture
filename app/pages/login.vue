@@ -1,29 +1,30 @@
 <template>
   <section class="container mx-auto">
-    <section class="flex flex-col-reverse md:flex-row gap-8 md:gap-12 py-12">
+    <section class="flex flex-col md:flex-row gap-8 md:gap-20 justify-center">
       <!-- Left Side -->
       <div
         v-if="!isMobile"
-        class="flex flex-row bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat w-full rounded-3xl items-end min-h-full relative"
+        class="flex w-full flex-row bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end min-h-full relative"
       >
         <!-- Dark overlay mask -->
-        <div class="absolute inset-0 bg-black/60 rounded-3xl"></div>
+        <div class="absolute inset-0 bg-base-content/60 rounded-3xl"></div>
         <p
-          class="text-primary-content text-2xl leading-6 md:text-5xl md:leading-10 font-medium p-6 relative z-10"
+          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-12 font-medium p-6 relative z-10"
         >
-          Flip the ordinary into extraordinary.
+          Flip the ordinary <br />
+          into extraordinary.
         </p>
       </div>
 
       <!-- Right Side -->
-      <div class="w-full flex flex-col gap-8 md:gap-10">
+      <div class="w-full flex flex-col gap-8 md:gap-10 lg:max-w-[500px]">
         <header class="flex flex-col gap-4">
           <h1
             class="text-[40px] leading-10 font-black font-poppins text-base-content"
           >
             Welcome back
           </h1>
-          <p class="text-base-content text-base leading-4">
+          <p class="text-base-content text-base leading-4 font-poppins">
             New to Flipture?
             <a href="#" class="text-primary font-semibold">Sign Up</a>
           </p>
@@ -33,7 +34,9 @@
           <div class="flex flex-col gap-4">
             <div class="flex flex-col gap-4 md:gap-6">
               <fieldset class="fieldset p-0">
-                <legend class="fieldset-legend pb-2 !pt-0">Email</legend>
+                <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                  Email
+                </legend>
                 <label
                   class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
                 >
@@ -58,14 +61,15 @@
                   <input
                     type="email"
                     placeholder="Type your email"
-                    required
-                    class="w-full"
+                    class="w-full font-poppins text-base leading-4"
                   />
                 </label>
               </fieldset>
 
               <fieldset class="fieldset p-0">
-                <legend class="fieldset-legend pb-2 !pt-0">Password</legend>
+                <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                  Password
+                </legend>
                 <label
                   class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
                 >
@@ -98,12 +102,15 @@
                     placeholder="Password"
                     minlength="8"
                     pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+                    class="font-poppins text-base leading-4"
                   />
                 </label>
               </fieldset>
             </div>
 
-            <a href="#" class="text-sm leading-4 text-primary font-semibold"
+            <a
+              href="#"
+              class="text-sm leading-4 text-primary font-semibold font-poppins"
               >Forget password</a
             >
           </div>
@@ -117,11 +124,12 @@
         </section>
 
         <section class="flex flex-col gap-4">
-          <span class="text-base-content text-base leading-4 text-center"
+          <span
+            class="text-base-content text-base leading-4 text-center font-poppins"
             >or</span
           >
           <button
-            class="btn bg-transparent border border-neutral shadow-none rounded-lg text-base-content py-4"
+            class="btn bg-transparent border border-neutral shadow-none rounded-lg text-base-content py-4 font-poppins"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +158,9 @@
           </button>
         </section>
 
-        <footer class="flex gap-2 text-sm leading-4 justify-center">
+        <footer
+          class="flex gap-2 text-sm leading-4 justify-center font-poppins"
+        >
           <a href="#" class="hover:text-primary whitespace-nowrap"
             >Customer Support</a
           >

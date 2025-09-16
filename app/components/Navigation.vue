@@ -13,7 +13,7 @@
         >
           Flipture.
         </a>
-        <div class="dropdown dropdown-end">
+        <div class="dropdown dropdown-end" v-if="!isLoginPage">
           <button
             type="button"
             tabindex="0"
@@ -93,7 +93,7 @@
           </ul>
         </div>
       </div>
-      <div class="navbar-center hidden lg:flex">
+      <div class="navbar-center hidden lg:flex" v-if="!isLoginPage">
         <ul
           class="menu menu-horizontal px-1 font-poppins font-bold text-lg"
           role="menubar"
@@ -137,7 +137,7 @@
           </li>
         </ul>
       </div>
-      <div class="navbar-end hidden w-fit lg:flex">
+      <div class="navbar-end hidden w-fit lg:flex" v-if="!isLoginPage">
         <button
           @click="navigateTo('/login')"
           type="button"
@@ -150,4 +150,8 @@
   </nav>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+const route = useRoute();
+
+const isLoginPage = computed(() => route.path === "/login");
+</script>

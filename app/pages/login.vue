@@ -1,15 +1,17 @@
 <template>
   <section class="container mx-auto">
-    <section class="flex flex-col md:flex-row gap-8 md:gap-20 justify-center">
+    <section
+      class="flex flex-col md:flex-row gap-8 md:gap-20 justify-center items-center"
+    >
       <!-- Left Side -->
       <div
         v-if="!isMobile"
-        class="flex w-full flex-row bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end min-h-full relative"
+        class="flex w-full flex-row bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end h-[800px] relative"
       >
         <!-- Dark overlay mask -->
-        <div class="absolute inset-0 bg-base-content/60 rounded-3xl"></div>
+        <div class="absolute inset-0 bg-base-content/70 rounded-3xl"></div>
         <p
-          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-12 font-medium p-6 relative z-10"
+          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-12 font-medium p-6 pb-8 relative z-10"
         >
           Flip the ordinary <br />
           into extraordinary.
@@ -177,7 +179,7 @@
 import { useIsMobile } from "~/composables/useIsMobile";
 
 definePageMeta({
-  layout: "base",
+  layout: "auth",
 });
 
 const { isMobile } = useIsMobile();

@@ -11,8 +11,4 @@
 definePageMeta({
   layout: "base",
 });
-
-const client = useSupabaseClient();
-
-console.log(client);
 </script>

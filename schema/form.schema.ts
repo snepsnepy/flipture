@@ -9,10 +9,7 @@ export const createLoginSchema = () => {
       .required("Email is required")
       .email("Please enter a valid email")
       .matches(emailRegex, "Please enter a valid email"),
-    password: string()
-      .trim()
-      .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+    password: string().trim().required("Password is required"),
   });
 };
 

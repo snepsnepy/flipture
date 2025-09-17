@@ -6,13 +6,13 @@
   >
     <div class="navbar p-0 flex flex-row justify-between">
       <div class="navbar-start w-full lg:w-fit justify-between">
-        <a
-          href="https://flipture.netlify.app"
+        <NuxtLink
           class="font-poppins font-bold text-3xl md:text-5xl text-base-content tracking-tighter"
           aria-label="Flipture - Home"
+          to="/"
         >
           Flipture.
-        </a>
+        </NuxtLink>
         <div class="dropdown dropdown-end" v-if="!isLoginPage">
           <button
             type="button"
@@ -103,9 +103,9 @@
           <li role="none">
             <NuxtLink
               class="hover:text-primary hover:cursor-pointer text-base-content hover:bg-transparent"
-              to="/"
+              to="/dashboard"
               role="menuitem"
-              >Home</NuxtLink
+              >Dashboard</NuxtLink
             >
           </li>
           <li role="none">
@@ -138,13 +138,21 @@
           </li>
         </ul>
       </div>
-      <div class="navbar-end hidden w-fit lg:flex" v-if="!isLoginPage">
+      <div class="navbar-end hidden w-fit lg:flex gap-2" v-if="!isLoginPage">
         <button
           @click="navigateTo('/login')"
           type="button"
           class="w-fit py-3 px-6 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg hover:scale-105 transition-all duration-300"
         >
           Sign Up
+        </button>
+        <button
+          @click="signOut"
+          type="button"
+          v-if="isLoggedIn"
+          class="w-fit py-3 px-6 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg hover:scale-105 transition-all duration-300"
+        >
+          Sign Out
         </button>
       </div>
     </div>
@@ -153,8 +161,16 @@
 
 <script lang="ts" setup>
 const route = useRoute();
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
 const isLoginPage = computed(
   () => route.path === "/login" || route.path === "/register"
 );
+
+const isLoggedIn = computed(() => user.value);
+
+const signOut = async () => {
+  const { error } = await client.auth.signOut();
+};
 </script>

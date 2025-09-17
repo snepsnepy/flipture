@@ -277,9 +277,9 @@
           type="button"
           class="w-full py-2 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base hover:scale-105 transition-all duration-300"
           :class="{
-            '!opacity-50 cursor-not-allowed': !isFormValid,
+            '!opacity-50 pointer-events-none': !isFormValid,
           }"
-          @click="onSubmit"
+          @click="signUp"
         >
           Create Account
         </button>
@@ -306,6 +306,9 @@ import { createRegisterSchema } from "~~/schema/form.schema";
 definePageMeta({
   layout: "auth",
 });
+
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
 const terms = ref(false);
 const { isMobile } = useIsMobile();
@@ -335,9 +338,24 @@ const isFormValid = computed(() => {
   );
 });
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values);
-});
+const signUp = async () => {
+  const { data, error } = await client.auth.signUp({
+    email: email.value as string,
+    password: password.value as string,
+    options: {
+      data: {
+        firstName: firstName.value as string,
+        lastName: lastName.value as string,
+      },
+    },
+  });
+
+  if (!error) {
+    return navigateTo("/");
+  } else {
+    console.log(error.message);
+  }
+};
 
 const goToLogin = () => navigateTo("/login");
 </script>

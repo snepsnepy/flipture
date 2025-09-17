@@ -22,7 +22,7 @@
       <div class="w-full flex flex-col gap-8 md:gap-10 lg:max-w-[500px]">
         <header class="flex flex-col gap-4">
           <h1
-            class="text-[40px] leading-10 font-black font-poppins text-base-content"
+            class="text-[40px] leading-10 font-black font-poppins text-base-content -tracking-[0.2%]"
           >
             Welcome back
           </h1>
@@ -126,9 +126,7 @@
           >
             Sign In
           </button>
-        </section>
 
-        <section class="flex flex-col gap-4">
           <span
             class="text-base-content text-base leading-4 text-center font-poppins"
             >or</span

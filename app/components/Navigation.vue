@@ -83,6 +83,7 @@
             <HorizontalDivider />
             <li class="pt-4" role="none">
               <button
+                @click="navigateTo('/login')"
                 type="button"
                 class="w-full py-2 px-4 md:px-10 text-center justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg"
                 role="menuitem"

@@ -38,6 +38,7 @@
 
         <section class="flex flex-col gap-6 md:gap-8">
           <div class="flex flex-col gap-4">
+            <!-- Email & Password -->
             <div class="flex flex-col gap-4">
               <fieldset class="fieldset p-0">
                 <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
@@ -65,11 +66,18 @@
                     </g>
                   </svg>
                   <input
-                    type="email"
+                    name="email"
+                    type="text"
+                    v-model="email"
                     placeholder="Type your email"
                     class="w-full font-poppins text-base leading-4 placeholder:text-sm"
                   />
                 </label>
+                <span
+                  class="text-error text-xs leading-3 font-poppins"
+                  v-if="emailErrors"
+                  >{{ emailErrors }}</span
+                >
               </fieldset>
 
               <fieldset class="fieldset p-0">
@@ -103,14 +111,18 @@
                     </g>
                   </svg>
                   <input
+                    name="password"
                     type="password"
-                    required
+                    v-model="password"
                     placeholder="Password"
-                    minlength="8"
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     class="font-poppins text-base leading-4 placeholder:text-sm"
                   />
                 </label>
+                <span
+                  class="text-error text-xs leading-3 font-poppins"
+                  v-if="passwordErrors"
+                  >{{ passwordErrors }}</span
+                >
               </fieldset>
             </div>
 
@@ -122,7 +134,12 @@
 
           <button
             type="button"
-            class="w-full py-2 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base hover:scale-105 transition-all duration-300"
+            :disabled="!isFormValid"
+            class="'w-full py-2 md:px-10 rounded-full font-poppins font-bold text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content hover:scale-105',"
+            :class="{
+              '!opacity-50 cursor-not-allowed': !isFormValid,
+            }"
+            @click="onSubmit"
           >
             Sign In
           </button>
@@ -178,12 +195,34 @@
 
 <script setup lang="ts">
 import { useIsMobile } from "~/composables/useIsMobile";
+import { useForm, useField } from "vee-validate";
+import { createLoginSchema } from "~~/schema/form.schema";
 
 definePageMeta({
   layout: "auth",
 });
 
 const { isMobile } = useIsMobile();
+
+const validationSchema = createLoginSchema();
+
+const { handleSubmit, errors } = useForm({
+  validationSchema,
+});
+
+const { value: email, errorMessage: emailErrors } = useField("email");
+const { value: password, errorMessage: passwordErrors } = useField("password");
+
+// Computed property to check if form is valid and has values
+const isFormValid = computed(() => {
+  return (
+    Object.keys(errors.value).length === 0 && email.value && password.value
+  );
+});
+
+const onSubmit = handleSubmit((values) => {
+  console.log(values);
+});
 
 const goToRegister = () => navigateTo({ name: "register" });
 </script>

@@ -88,11 +88,18 @@
                     class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
                   >
                     <input
+                      name="firstName"
+                      v-model="firstName"
                       type="text"
                       placeholder="Type your first name"
                       class="w-full font-poppins text-base leading-4 placeholder:text-sm"
                     />
                   </label>
+                  <span
+                    class="text-error text-xs leading-3 font-poppins"
+                    v-if="firstNameErrors"
+                    >{{ firstNameErrors }}</span
+                  >
                 </fieldset>
 
                 <!-- LastName -->
@@ -104,12 +111,18 @@
                     class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
                   >
                     <input
+                      name="lastName"
+                      v-model="lastName"
                       type="text"
-                      required
                       placeholder="Type your last name"
                       class="font-poppins text-base leading-4 placeholder:text-sm"
                     />
                   </label>
+                  <span
+                    class="text-error text-xs leading-3 font-poppins"
+                    v-if="lastNameErrors"
+                    >{{ lastNameErrors }}</span
+                  >
                 </fieldset>
               </div>
 
@@ -139,11 +152,18 @@
                     </g>
                   </svg>
                   <input
+                    name="email"
+                    v-model="email"
                     type="email"
                     placeholder="Type your email"
                     class="w-full font-poppins text-base leading-4 placeholder:text-sm"
                   />
                 </label>
+                <span
+                  class="text-error text-xs leading-3 font-poppins"
+                  v-if="emailErrors"
+                  >{{ emailErrors }}</span
+                >
               </fieldset>
 
               <fieldset class="fieldset p-0">
@@ -177,14 +197,18 @@
                     </g>
                   </svg>
                   <input
+                    name="password"
+                    v-model="password"
                     type="password"
-                    required
                     placeholder="Password"
-                    minlength="8"
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     class="font-poppins text-base leading-4 placeholder:text-sm"
                   />
                 </label>
+                <span
+                  class="text-error text-xs leading-3 font-poppins"
+                  v-if="passwordErrors"
+                  >{{ passwordErrors }}</span
+                >
               </fieldset>
 
               <fieldset class="fieldset p-0">
@@ -218,14 +242,18 @@
                     </g>
                   </svg>
                   <input
+                    name="confirmPassword"
+                    v-model="confirmPassword"
                     type="password"
-                    required
                     placeholder="Confirm Password"
-                    minlength="8"
-                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     class="font-poppins text-base leading-4 placeholder:text-sm"
                   />
                 </label>
+                <span
+                  class="text-error text-xs leading-3 font-poppins"
+                  v-if="confirmPasswordErrors"
+                  >{{ confirmPasswordErrors }}</span
+                >
               </fieldset>
             </div>
           </div>
@@ -234,7 +262,7 @@
         <label class="label">
           <input
             type="checkbox"
-            :checked="false"
+            v-model="terms"
             class="checkbox rounded-[6px] checked:bg-primary checked:text-primary-content"
           />
           <span
@@ -245,8 +273,13 @@
         </label>
 
         <button
+          :disabled="!isFormValid"
           type="button"
           class="w-full py-2 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base hover:scale-105 transition-all duration-300"
+          :class="{
+            '!opacity-50 cursor-not-allowed': !isFormValid,
+          }"
+          @click="onSubmit"
         >
           Create Account
         </button>
@@ -268,12 +301,43 @@
 
 <script setup lang="ts">
 import { useIsMobile } from "~/composables/useIsMobile";
+import { createRegisterSchema } from "~~/schema/form.schema";
 
 definePageMeta({
   layout: "auth",
 });
 
+const terms = ref(false);
 const { isMobile } = useIsMobile();
+const validationSchema = createRegisterSchema();
+
+const { handleSubmit, errors } = useForm({
+  validationSchema,
+});
+
+const { value: firstName, errorMessage: firstNameErrors } =
+  useField("firstName");
+const { value: lastName, errorMessage: lastNameErrors } = useField("lastName");
+const { value: email, errorMessage: emailErrors } = useField("email");
+const { value: password, errorMessage: passwordErrors } = useField("password");
+const { value: confirmPassword, errorMessage: confirmPasswordErrors } =
+  useField("confirmPassword");
+
+const isFormValid = computed(() => {
+  return (
+    Object.keys(errors.value).length === 0 &&
+    firstName.value &&
+    lastName.value &&
+    email.value &&
+    password.value &&
+    confirmPassword.value &&
+    terms.value
+  );
+});
+
+const onSubmit = handleSubmit((values) => {
+  console.log(values);
+});
 
 const goToLogin = () => navigateTo("/login");
 </script>

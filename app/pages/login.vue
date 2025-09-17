@@ -137,9 +137,9 @@
             :disabled="!isFormValid"
             class="'w-full py-2 md:px-10 rounded-full font-poppins font-bold text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content hover:scale-105',"
             :class="{
-              '!opacity-50 cursor-not-allowed': !isFormValid,
+              '!opacity-50 pointer-events-none': !isFormValid,
             }"
-            @click="onSubmit"
+            @click="signUp"
           >
             Sign In
           </button>
@@ -202,11 +202,14 @@ definePageMeta({
   layout: "auth",
 });
 
+const client = useSupabaseClient();
+const user = useSupabaseUser();
+
 const { isMobile } = useIsMobile();
 
 const validationSchema = createLoginSchema();
 
-const { handleSubmit, errors } = useForm({
+const { errors } = useForm({
   validationSchema,
 });
 
@@ -220,9 +223,18 @@ const isFormValid = computed(() => {
   );
 });
 
-const onSubmit = handleSubmit((values) => {
-  console.log(values);
-});
+const signUp = async () => {
+  const { data, error } = await client.auth.signInWithPassword({
+    email: email.value as string,
+    password: password.value as string,
+  });
+
+  if (!error) {
+    return navigateTo("/");
+  } else {
+    console.log(error.message);
+  }
+};
 
 const goToRegister = () => navigateTo({ name: "register" });
 </script>

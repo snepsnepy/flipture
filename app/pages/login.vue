@@ -216,6 +216,14 @@ const { errors } = useForm({
 const { value: email, errorMessage: emailErrors } = useField("email");
 const { value: password, errorMessage: passwordErrors } = useField("password");
 
+onMounted(() => {
+  watchEffect(() => {
+    if (user.value) {
+      return navigateTo("/");
+    }
+  });
+});
+
 // Computed property to check if form is valid and has values
 const isFormValid = computed(() => {
   return (
@@ -230,7 +238,7 @@ const signUp = async () => {
   });
 
   if (!error) {
-    return navigateTo("/");
+    return navigateTo({ name: "dashboard" });
   } else {
     console.log(error.message);
   }

@@ -89,10 +89,15 @@
                 <button
                   @click="handleAuthAction"
                   type="button"
-                  class="w-full py-2 px-4 md:px-10 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base"
+                  class="w-full py-2 px-4 md:px-10 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg disabled:opacity-50 disabled:pointer-events-none"
                   role="menuitem"
+                  :disabled="isLoading"
                 >
                   {{ isLoggedIn ? "Sign Out" : "Sign In" }}
+                  <span
+                    v-if="isLoading"
+                    class="loading loading-spinner loading-md"
+                  ></span>
                 </button>
               </li>
             </ul>
@@ -116,6 +121,8 @@ const route = useRoute();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 
+const isLoading = ref(false);
+
 const isLoginPage = computed(
   () => route.path === "/login" || route.path === "/register"
 );
@@ -131,6 +138,10 @@ const handleAuthAction = async () => {
 };
 
 const signOut = async () => {
+  isLoading.value = true;
   const { error } = await client.auth.signOut();
+  if (!error) {
+    isLoading.value = false;
+  }
 };
 </script>

@@ -273,15 +273,16 @@
         </label>
 
         <button
-          :disabled="!isFormValid"
+          :disabled="isButtonDisabled"
           type="button"
-          class="w-full py-2 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base hover:scale-105 transition-all duration-300"
-          :class="{
-            '!opacity-50 pointer-events-none': !isFormValid,
-          }"
+          class="w-full py-2 md:px-10 bg-primary rounded-full border border-primary-content text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none"
           @click="signUp"
         >
           Create Account
+          <span
+            v-if="isLoading"
+            class="loading loading-spinner loading-md"
+          ></span>
         </button>
 
         <footer
@@ -310,6 +311,7 @@ definePageMeta({
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 
+const isLoading = ref(false);
 const terms = ref(false);
 const { isMobile } = useIsMobile();
 const validationSchema = createRegisterSchema();
@@ -338,7 +340,10 @@ const isFormValid = computed(() => {
   );
 });
 
+const isButtonDisabled = computed(() => !isFormValid.value || isLoading.value);
+
 const signUp = async () => {
+  isLoading.value = true;
   const { data, error } = await client.auth.signUp({
     email: email.value as string,
     password: password.value as string,
@@ -354,6 +359,7 @@ const signUp = async () => {
     return navigateTo("/");
   } else {
     console.log(error.message);
+    isLoading.value = false;
   }
 };
 

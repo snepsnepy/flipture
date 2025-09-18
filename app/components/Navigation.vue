@@ -5,7 +5,7 @@
     aria-label="Main navigation"
   >
     <div
-      class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-10"
+      class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-5 md:pb-10"
     >
       <div class="w-full justify-between items-center flex flex-row">
         <!-- Logo -->
@@ -25,7 +25,6 @@
               tabindex="0"
               class="btn btn-ghost py-4 px-2 border border-base-content rounded-full hover:bg-primary-content hover:shadow-none"
               aria-label="Toggle navigation menu"
-              aria-expanded="false"
               aria-controls="mobile-menu"
             >
               <svg
@@ -50,48 +49,47 @@
               role="menu"
               aria-label="Mobile navigation menu"
             >
-              <li role="none">
-                <NuxtLink
-                  class="hover:text-primary hover:cursor-pointer text-base-content"
-                  to="/dashboard"
-                  role="menuitem"
-                  >Dashboard</NuxtLink
+              <li>
+                <a
+                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
+                  href="/dashboard"
+                  >Dashboard</a
                 >
               </li>
               <li role="none">
-                <NuxtLink
-                  class="hover:text-primary hover:cursor-pointer text-base-content"
+                <a
+                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
-                  >Features</NuxtLink
+                  >Features</a
                 >
               </li>
               <li role="none">
-                <NuxtLink
-                  class="hover:text-primary hover:cursor-pointer text-base-content"
+                <a
+                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
-                  >Pricing</NuxtLink
+                  >Pricing</a
                 >
               </li>
               <li role="none">
-                <NuxtLink
-                  class="hover:text-primary hover:cursor-pointer text-base-content"
+                <a
+                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
-                  >FAQs</NuxtLink
+                  >FAQs</a
                 >
               </li>
-              <li role="none">
-                <NuxtLink
-                  class="hover:text-primary hover:cursor-pointer text-base-content"
+              <li role="none" class="">
+                <a
+                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
-                  >Contact</NuxtLink
+                  >Contact</a
                 >
               </li>
               <HorizontalDivider />
               <li class="pt-4" role="none">
                 <button
-                  @click="isLoggedIn ? signOut() : navigateTo('/login')"
+                  @click="handleAuthAction"
                   type="button"
-                  class="w-full py-2 px-4 md:px-10 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg"
+                  class="w-full py-2 px-4 md:px-10 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base"
                   role="menuitem"
                 >
                   {{ isLoggedIn ? "Sign Out" : "Sign In" }}
@@ -104,7 +102,7 @@
           v-else
           @click="isLoginPage ? navigateTo('/register') : navigateTo('/login')"
           type="button"
-          class="w-fit py-3 px-6 md:px-10 bg-primary border border-primary-content rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg"
+          class="w-fit py-2 px-6 bg-primary border border-primary-content rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-semibold text-base"
         >
           {{ isLoginPage ? "Sign Up" : "Sign In" }}
         </button>
@@ -123,6 +121,14 @@ const isLoginPage = computed(
 );
 
 const isLoggedIn = computed(() => user.value);
+
+const handleAuthAction = async () => {
+  if (isLoggedIn.value) {
+    await signOut();
+  } else {
+    await navigateTo("/login");
+  }
+};
 
 const signOut = async () => {
   const { error } = await client.auth.signOut();

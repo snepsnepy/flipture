@@ -134,14 +134,15 @@
 
           <button
             type="button"
-            :disabled="!isFormValid"
-            class="'w-full py-2 md:px-10 rounded-full font-poppins font-bold text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content hover:scale-105',"
-            :class="{
-              '!opacity-50 pointer-events-none': !isFormValid,
-            }"
+            :disabled="isButtonDisabled"
+            class="'w-full py-2 md:px-10 rounded-full font-poppins font-bold border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
             @click="signUp"
           >
             Sign In
+            <span
+              v-if="isLoading"
+              class="loading loading-spinner loading-md"
+            ></span>
           </button>
 
           <span
@@ -216,6 +217,8 @@ const { errors } = useForm({
 const { value: email, errorMessage: emailErrors } = useField("email");
 const { value: password, errorMessage: passwordErrors } = useField("password");
 
+const isLoading = ref(false);
+
 onMounted(() => {
   watchEffect(() => {
     if (user.value) {
@@ -223,6 +226,8 @@ onMounted(() => {
     }
   });
 });
+
+const isButtonDisabled = computed(() => !isFormValid.value || isLoading.value);
 
 // Computed property to check if form is valid and has values
 const isFormValid = computed(() => {
@@ -232,6 +237,7 @@ const isFormValid = computed(() => {
 });
 
 const signUp = async () => {
+  isLoading.value = true;
   const { data, error } = await client.auth.signInWithPassword({
     email: email.value as string,
     password: password.value as string,
@@ -241,6 +247,7 @@ const signUp = async () => {
     return navigateTo({ name: "dashboard" });
   } else {
     console.log(error.message);
+    isLoading.value = false;
   }
 };
 

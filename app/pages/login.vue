@@ -150,6 +150,7 @@
             >or</span
           >
           <button
+            @click="signInWithGoogle"
             class="btn bg-transparent border border-neutral shadow-none rounded-lg text-base-content py-4 font-poppins"
           >
             <svg
@@ -251,7 +252,11 @@ const signUp = async () => {
   }
 };
 
+const signInWithGoogle = async () => {
+  await client.auth.signInWithOAuth({
+    provider: "google",
+  });
+};
+
 const goToRegister = () => navigateTo({ name: "register" });
 </script>
-
-<style scoped></style>

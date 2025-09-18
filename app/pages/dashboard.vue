@@ -13,10 +13,16 @@ definePageMeta({
 });
 
 const user = useSupabaseUser();
-const userMetadata = user.value?.user_metadata;
 
 const userFullName = computed(() => {
-  return `${userMetadata?.firstName} ${userMetadata?.lastName}`;
+  const appMetadata = user.value?.app_metadata;
+  const userMetadata = user.value?.user_metadata;
+
+  if (appMetadata?.provider === "google") {
+    return userMetadata?.full_name;
+  } else {
+    return `${userMetadata?.firstName} ${userMetadata?.lastName}`;
+  }
 });
 onMounted(() => {
   watchEffect(() => {

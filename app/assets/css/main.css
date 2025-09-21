@@ -10,9 +10,11 @@
   --color-secondary: oklch(0.8652 0.1768 90.38);
   --color-base-content: oklch(0 0 0);
   --color-primary-content: oklch(1 0 0);
+  --color-base-200: oklch(0.9702 0 0);
   --color-base-300: oklch(0.94 0.0052 247.88);
   --color-neutral: oklch(0.6429 0 0);
   --color-error: oklch(0.6576 0.229 28.72);
+  --color-success: oklch(0.6873 0.1792 138.02);
 }
 
 @utility container {

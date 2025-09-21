@@ -5,7 +5,7 @@
     aria-label="Main navigation"
   >
     <div
-      class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-5 md:pb-10"
+      class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-5"
     >
       <div class="w-full justify-between items-center flex flex-row">
         <!-- Logo -->
@@ -51,45 +51,45 @@
             >
               <li>
                 <a
-                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
+                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   href="/dashboard"
                   >Dashboard</a
                 >
               </li>
               <li role="none">
                 <a
-                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
+                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
                   >Features</a
                 >
               </li>
               <li role="none">
                 <a
-                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
+                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
                   >Pricing</a
                 >
               </li>
               <li role="none">
                 <a
-                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
+                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
                   >FAQs</a
                 >
               </li>
-              <li role="none" class="">
+              <li role="none" class="pb-2">
                 <a
-                  class="hover:text-primary hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
+                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
                   >Contact</a
                 >
               </li>
               <HorizontalDivider />
-              <li class="pt-4" role="none">
+              <li class="pt-2" role="none">
                 <button
                   @click="handleAuthAction"
                   type="button"
-                  class="w-full py-2 px-4 md:px-10 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-sm md:text-lg disabled:opacity-50 disabled:pointer-events-none"
+                  class="w-full py-2 px-4 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base leading-4 disabled:opacity-50 disabled:pointer-events-none"
                   role="menuitem"
                   :disabled="isLoading"
                 >

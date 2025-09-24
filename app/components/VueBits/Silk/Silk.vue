@@ -3,7 +3,7 @@
     ref="containerRef"
     :class="className"
     :style="style"
-    class="w-full h-full"
+    class="w-full !h-full"
   >
     <slot />
   </div>

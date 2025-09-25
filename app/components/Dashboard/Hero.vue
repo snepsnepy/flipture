@@ -5,17 +5,17 @@
     color="#0046ff"
     :noise-intensity="0.5"
     :rotation="0"
-    class="relative flex flex-row gap-x-10 bg-primary rounded-3xl p-8 overflow-hidden !h-full w-full xl:!w-1/2"
+    class="relative flex flex-row gap-x-10 bg-primary rounded-3xl p-6 md:p-8 overflow-hidden !h-full w-full xl:!w-1/2"
   >
     <section class="flex flex-col gap-20 w-full relative z-10">
       <header class="flex flex-col gap-4">
         <h1
-          class="text-primary-content text-[40px] leading-10 font-bold font-poppins"
+          class="text-primary-content text-[32px] leading-8 md:text-[40px] md:leading-10 font-bold font-poppins"
         >
           Turn Your Files Into <br />
           Interactive Flipbooks
         </h1>
-        <p class="text-primary-content text-sm leading-[14px] font-poppins">
+        <p class="text-primary-content text-base leading-4 font-poppins">
           Upload your PDF and watch it transform into an engaging digital
           experience in seconds.
         </p>
@@ -23,11 +23,12 @@
 
       <button
         type="button"
-        class="w-fit flex gap-4 py-2 px-4 hover:bg-base-200 pr-3 text-center border border-base-content justify-center items-center bg-primary-content rounded-full transition-all duration-300 text-base-content hover:cursor-pointer hover:border hover:border-base-content hover:text-primary font-poppins font-bold text-base leading-4 disabled:opacity-50 disabled:pointer-events-none"
+        class="w-fit flex gap-4 py-2 px-3 md:px-4 hover:bg-base-200 pr-3 text-center border border-base-content justify-center items-center bg-primary-content rounded-full transition-all duration-300 text-base-content hover:cursor-pointer hover:border hover:border-base-content hover:text-primary font-poppins font-bold text-sm md:text-base leading-4 disabled:opacity-50 disabled:pointer-events-none"
         role="menuitem"
+        @click="navigateToNewFlipbook"
       >
         Create Now
-        <span class="bg-primary rounded-full p-2"
+        <span class="bg-primary rounded-full p-1 md:p-2"
           ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -70,4 +71,8 @@
   </VueBitsSilk>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const navigateToNewFlipbook = () => {
+  return navigateTo("/new-flipbook");
+};
+</script>

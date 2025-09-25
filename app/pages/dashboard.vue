@@ -1,6 +1,6 @@
 <template>
-  <section class="container mx-auto py-0 flex flex-col gap-10">
-    <header class="flex flex-col xl:flex-row gap-8 xl:h-80">
+  <section class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
+    <header class="flex flex-col xl:flex-row gap-6 xl:h-80">
       <!-- Hero -->
       <DashboardHero />
 
@@ -10,9 +10,11 @@
 
     <!-- Content -->
     <div class="flex flex-col gap-6">
-      <header class="space-y-4">
+      <header class="space-y-2 md:space-y-4">
         <div class="flex flex-row justify-between items-center">
-          <h4 class="font-poppins font-bold text-[32px] leading-8">
+          <h4
+            class="font-poppins font-bold text-2xl leading-6 md:text-[32px] md:leading-8"
+          >
             Your Flipbooks
           </h4>
 
@@ -65,55 +67,22 @@
         <HorizontalDivider />
       </header>
 
-      <FileInput
-        v-if="hasFlipbooks"
-        @upload-success="handleUploadSuccess"
-        @upload-error="handleUploadError"
-        @upload-started="handleUploadStarted"
-        @file-cleared="handleFileCleared"
-      />
+      <FileInput v-if="hasFlipbooks" />
 
       <!-- No Flipbooks -->
-      <DashboardNoItems />
+      <DashboardNoItems v-else />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { useElementHover } from "@vueuse/core";
-import { useTemplateRef } from "vue";
-
 definePageMeta({
   layout: "base",
   middleware: "auth",
 });
 
 const user = useSupabaseUser();
-
-const buttonRef = useTemplateRef<HTMLElement>("createFlipbookButtonRef");
-const isHovered = useElementHover(buttonRef);
-
 const hasFlipbooks = ref(false);
-
-// Event handlers for FileInput component
-const handleUploadStarted = (file: File) => {
-  console.log("Upload started for:", file.name);
-};
-
-const handleUploadSuccess = (fileName: string) => {
-  console.log("Upload successful! File saved as:", fileName);
-  // You can add any post-upload logic here
-};
-
-const handleUploadError = (error: string, fileName?: string) => {
-  console.error("Upload error:", error, fileName);
-  // You can add error handling logic here
-};
-
-const handleFileCleared = () => {
-  console.log("File cleared");
-  // You can add cleanup logic here if needed
-};
 
 onMounted(() => {
   watchEffect(() => {

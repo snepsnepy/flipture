@@ -1,7 +1,7 @@
 <template>
   <!-- User Details Section -->
   <section
-    class="border w-full xl:!w-1/2 h-full border-neutral rounded-3xl bg-base-100 p-8 flex flex-col gap-6"
+    class="border w-full xl:!w-1/2 h-full border-neutral rounded-3xl bg-base-100 p-6 md:p-8 flex flex-col gap-4 md:gap-6"
   >
     <!-- Header -->
     <header class="flex flex-row items-center justify-between">
@@ -9,14 +9,17 @@
         <img
           src="@/assets/img/magazines.jpg"
           alt="Avatar"
-          class="w-20 h-20 rounded-full border border-neutral"
+          class="w-16 h-16 md:w-20 md:h-20 rounded-full border border-neutral"
         />
 
         <h2
-          class="text-neutral text-left text-base leading-4 font-poppins flex flex-col gap-1"
+          class="text-neutral text-left text-base md:text-base leading-4 font-poppins flex flex-col gap-1"
         >
-          <span class="text-neutral text-base leading-4">Welcome back, </span>
-          <span class="text-primary text-2xl leading-6 font-semibold"
+          <span
+            class="text-neutral text-sm leading-[14px] md:text-base md:leading-4"
+            >Welcome back,
+          </span>
+          <span class="text-primary text-xl md:text-2xl leading-6 font-semibold"
             >{{ userFullName }}
           </span>
         </h2>
@@ -56,13 +59,13 @@
     <HorizontalDivider />
 
     <!-- Stats -->
-    <div class="flex flex-col gap-4">
-      <h4 class="text-lg leading-4 font-poppins font-semibold">
+    <div class="flex flex-col gap-3 md:gap-4">
+      <h4 class="text-base md:text-lg leading-4 font-poppins font-semibold">
         Published Content
       </h4>
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+      <section class="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
         <div
-          class="bg-primary border border-neutral/50 w-full flex flex-col font-poppins p-4 rounded-2xl gap-6 shadow-lg"
+          class="bg-primary border border-neutral/50 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
         >
           <div class="flex flex-row justify-between items-center">
             <h4
@@ -97,7 +100,7 @@
           </p>
         </div>
         <div
-          class="bg-base-100 border border-neutral/50 w-full flex flex-col font-poppins p-4 rounded-2xl gap-6 shadow-lg"
+          class="bg-base-100 border border-neutral/50 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
         >
           <div class="flex flex-row justify-between items-center">
             <h4

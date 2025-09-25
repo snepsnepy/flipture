@@ -23,7 +23,7 @@
             <button
               type="button"
               tabindex="0"
-              class="btn btn-ghost py-4 px-2 border border-base-content rounded-full hover:bg-primary-content hover:shadow-none"
+              class="btn btn-ghost py-4 px-2 border border-base-content rounded-full hover:bg-secondary hover:shadow-none"
               aria-label="Toggle navigation menu"
               aria-controls="mobile-menu"
             >

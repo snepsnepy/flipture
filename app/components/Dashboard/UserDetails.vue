@@ -1,7 +1,7 @@
 <template>
   <!-- User Details Section -->
   <section
-    class="border w-full xl:w-2/3 h-full border-neutral rounded-3xl bg-base-100 p-8 flex flex-col gap-6"
+    class="border w-full xl:!w-1/2 h-full border-neutral rounded-3xl bg-base-100 p-8 flex flex-col gap-6"
   >
     <!-- Header -->
     <header class="flex flex-row items-center justify-between">

@@ -10,25 +10,79 @@
 
     <!-- Content -->
     <div class="flex flex-col gap-6">
-      <div class="space-y-4">
-        <h4 class="font-poppins font-bold text-[32px] leading-8">
-          Your Flipbooks
-        </h4>
+      <header class="space-y-4">
+        <div class="flex flex-row justify-between items-center">
+          <h4 class="font-poppins font-bold text-[32px] leading-8">
+            Your Flipbooks
+          </h4>
+
+          <button
+            v-if="hasFlipbooks"
+            ref="createFlipbookButtonRef"
+            type="button"
+            class="w-fit flex gap-4 py-2 hover:bg-base-200 px-4 pr-3 text-center border border-base-content justify-center items-center bg-primary-content rounded-full transition-all duration-300 text-base-content hover:cursor-pointer hover:border hover:border-base-content hover:text-primary font-poppins font-bold text-base leading-4 disabled:opacity-50 disabled:pointer-events-none"
+            role="menuitem"
+          >
+            Create Flipbook
+            <span class="bg-primary rounded-full p-2"
+              ><svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <g
+                  fill="none"
+                  stroke="#fff"
+                  stroke-dasharray="16"
+                  stroke-dashoffset="16"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                >
+                  <path d="M5 12h14">
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      dur="0.4s"
+                      values="16;0"
+                    />
+                  </path>
+                  <path d="M12 5v14">
+                    <animate
+                      fill="freeze"
+                      attributeName="stroke-dashoffset"
+                      begin="0.4s"
+                      dur="0.4s"
+                      values="16;0"
+                    />
+                  </path>
+                </g>
+              </svg>
+            </span>
+          </button>
+        </div>
         <HorizontalDivider />
-      </div>
+      </header>
 
       <FileInput
-        :max-file-size="MAX_FILE_SIZE"
+        v-if="hasFlipbooks"
         @upload-success="handleUploadSuccess"
         @upload-error="handleUploadError"
         @upload-started="handleUploadStarted"
         @file-cleared="handleFileCleared"
       />
+
+      <!-- No Flipbooks -->
+      <DashboardNoItems />
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { useElementHover } from "@vueuse/core";
+import { useTemplateRef } from "vue";
+
 definePageMeta({
   layout: "base",
   middleware: "auth",
@@ -36,8 +90,10 @@ definePageMeta({
 
 const user = useSupabaseUser();
 
-// Configuration
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB (adjust based on your Supabase plan)
+const buttonRef = useTemplateRef<HTMLElement>("createFlipbookButtonRef");
+const isHovered = useElementHover(buttonRef);
+
+const hasFlipbooks = ref(false);
 
 // Event handlers for FileInput component
 const handleUploadStarted = (file: File) => {

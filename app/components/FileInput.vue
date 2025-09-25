@@ -59,7 +59,7 @@
           </div>
 
           <p class="text-sm leading-[14px] font-poppins text-base-content/50">
-            PDF files only, max {{ formatFileSize(maxFileSize) }}
+            PDF files only, max {{ formatFileSize(MAX_FILE_SIZE) }}
           </p>
         </div>
       </div>
@@ -210,10 +210,6 @@
 </template>
 
 <script setup lang="ts">
-interface Props {
-  maxFileSize?: number;
-}
-
 interface FileInputEvents {
   uploadSuccess: [fileName: string];
   uploadError: [error: string, fileName?: string];
@@ -221,9 +217,8 @@ interface FileInputEvents {
   fileCleared: [];
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  maxFileSize: 5 * 1024 * 1024, // 5 MB default
-});
+// Configuration
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB (adjust based on your Supabase plan)
 
 const emit = defineEmits<FileInputEvents>();
 
@@ -266,9 +261,9 @@ const processFile = (file: File) => {
   }
 
   // Check file size
-  if (file.size > props.maxFileSize) {
+  if (file.size > MAX_FILE_SIZE) {
     const error = `File size exceeds ${formatFileSize(
-      props.maxFileSize
+      MAX_FILE_SIZE
     )} limit. Your file is ${formatFileSize(file.size)}.`;
     uploadError.value = error;
     fileName.value = file.name;

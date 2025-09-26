@@ -73,7 +73,7 @@
       <section
         class="bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat w-full rounded-3xl border-2 border-base-content z-10 relative shadow-md p-6 md:p-8"
       >
-        <div class="absolute inset-0 bg-base-content/70 rounded-3xl"></div>
+        <div class="absolute inset-0 bg-base-content/70 rounded-2xl"></div>
         <DashboardFlipbookForm class="relative z-10" />
       </section>
     </section>

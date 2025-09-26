@@ -7,7 +7,7 @@
         color="#0046ff"
         :noise-intensity="0.5"
         :rotation="0"
-        class="relative flex flex-row gap-x-10 bg-primary rounded-3xl py-10 md:py-40 px-5 md:px-14 overflow-hidden"
+        class="relative flex flex-row gap-x-10 bg-primary rounded-3xl py-10 md:py-40 px-5 md:px-14 overflow-hidden border-2 border-base-content"
       >
         <!-- Large background image positioned behind the blue container -->
         <img

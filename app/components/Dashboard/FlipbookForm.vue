@@ -12,7 +12,7 @@
               Flipbook Title
             </legend>
             <label
-              class="input validator border-2 bg-base-100 border-base-100 rounded-lg h-14 !outline-none !shadow-none w-full"
+              class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
             >
               <input
                 name="firstName"
@@ -31,7 +31,7 @@
               Company Name
             </legend>
             <label
-              class="input validator border-2 bg-base-100 border-base-100 rounded-lg h-14 !outline-none !shadow-none w-full"
+              class="input validator border-2 bg-base-100 rounded-2xl h-14 !outline-none !shadow-none w-full border-base-content"
             >
               <input
                 name="lastName"
@@ -51,7 +51,7 @@
             Description
           </legend>
           <textarea
-            class="textarea h-24 p-2 w-full font-poppins text-xl leading-4 placeholder:text-xl border-2 border-base-100 focus:outline-none focus:border-none"
+            class="textarea h-24 p-2 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl !border-2 border-base-content focus:outline-none focus:border-none"
             placeholder="Bio"
           ></textarea>
           <div class="label text-secondary font-poppins">Optional</div>

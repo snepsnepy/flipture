@@ -47,17 +47,37 @@
       >
     </button>
 
-    <div class="flex flex-col items-center justify-center w-full text-center">
-      <h1
-        class="font-poppins font-bold text-4xl md:text-5xl text-base-content mb-4"
+    <VueBitsSilk
+      :speed="3"
+      :scale="1"
+      color="#0046ff"
+      :noise-intensity="0.5"
+      :rotation="0"
+      class="relative !flex !flex-col !gap-y-8 bg-primary rounded-3xl p-6 md:p-8 overflow-hidden w-full"
+    >
+      <div
+        class="flex flex-col items-center justify-center w-full text-center bg-base-200 border border-neutral/50 p-8 rounded-3xl shadow-md z-10 relative"
       >
-        Create New Flipbook
-      </h1>
-      <p class="font-poppins text-lg md:text-xl text-neutral max-w-2xl mx-auto">
-        Please fill in the required fields below and upload your PDF file to
-        create your new flipbook.
-      </p>
-    </div>
+        <h1
+          class="font-poppins font-bold text-4xl md:text-5xl text-base-content mb-4"
+        >
+          Create New Flipbook
+        </h1>
+        <p
+          class="font-poppins text-lg md:text-xl text-neutral max-w-2xl mx-auto"
+        >
+          Please fill in the required fields below and upload your PDF file to
+          create your new flipbook.
+        </p>
+      </div>
+
+      <!-- Form -->
+      <section
+        class="bg-base-100 w-full h-[800px] rounded-3xl border border-neutral/50 z-10 relative shadow-md p-8"
+      >
+        <DashboardFlipbookForm />
+      </section>
+    </VueBitsSilk>
   </section>
 </template>
 

@@ -1,5 +1,7 @@
 <template>
-  <section class="container mx-auto py-0 flex flex-col gap-y-8 items-start">
+  <section
+    class="container mx-auto py-0 flex flex-col gap-6 md:gap-y-8 items-start"
+  >
     <button
       class="btn border-none bg-transparent shadow-none flex flex-row items-center gap-2 hover:text-primary"
       @click="navigateToDashboard"
@@ -47,17 +49,34 @@
       >
     </button>
 
-    <div class="flex flex-col items-center justify-center w-full text-center">
-      <h1
-        class="font-poppins font-bold text-4xl md:text-5xl text-base-content mb-4"
+    <section
+      class="relative !flex !flex-col gap-y-4 md:gap-y-8 rounded-3xl overflow-hidden w-full"
+    >
+      <!-- Header Info -->
+      <header
+        class="flex flex-col items-center justify-center w-full text-center bg-secondary border-2 border-base-content p-6 md:p-8 rounded-3xl shadow-md z-10 relative"
       >
-        Create New Flipbook
-      </h1>
-      <p class="font-poppins text-lg md:text-xl text-neutral max-w-2xl mx-auto">
-        Please fill in the required fields below and upload your PDF file to
-        create your new flipbook.
-      </p>
-    </div>
+        <h1
+          class="font-poppins font-bold text-4xl md:text-5xl text-base-content mb-4"
+        >
+          Create New Flipbook
+        </h1>
+        <p
+          class="font-poppins text-base leading-4 md:text-xl text-base-content/50 max-w-2xl mx-auto"
+        >
+          Please fill in the required fields below and upload your PDF file to
+          create your new flipbook.
+        </p>
+      </header>
+
+      <!-- Form -->
+      <section
+        class="bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat w-full rounded-3xl border-2 border-base-content z-10 relative shadow-md p-6 md:p-8"
+      >
+        <div class="absolute inset-0 bg-base-content/70 rounded-3xl"></div>
+        <DashboardFlipbookForm class="relative z-10" />
+      </section>
+    </section>
   </section>
 </template>
 

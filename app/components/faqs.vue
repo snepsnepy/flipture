@@ -25,7 +25,7 @@
           :data-hovered="hoveredIndex === index"
           @mouseenter="hoveredIndex = index"
           @mouseleave="hoveredIndex = null"
-          class="collapse border rounded-3xl px-4 py-5 md:py-8 transition-all duration-300 cursor-pointer"
+          class="collapse border-2 rounded-3xl px-4 py-5 md:py-8 transition-all duration-300 cursor-pointer"
           :class="[
             hoveredIndex === index
               ? 'bg-base-content text-primary-content border-primary-content'

@@ -1,7 +1,7 @@
 <template>
   <!-- User Details Section -->
   <section
-    class="border w-full xl:!w-1/2 h-full border-neutral rounded-3xl bg-base-100 p-6 md:p-8 flex flex-col gap-4 md:gap-6"
+    class="border-2 w-full xl:!w-1/2 h-full border-base-content rounded-3xl bg-base-100 p-6 md:p-8 flex flex-col gap-4 md:gap-6"
   >
     <!-- Header -->
     <header class="flex flex-row items-center justify-between">
@@ -35,7 +35,7 @@
           </div>
         </div>
         <button
-          class="btn bg-base-100 px-2 rounded-full border border-base-content hover:bg-secondary transition-all duration-300"
+          class="btn bg-base-100 px-2 rounded-full border-[1.5px] border-base-content hover:bg-secondary transition-all duration-300"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

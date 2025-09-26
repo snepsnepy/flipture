@@ -1,6 +1,6 @@
 <template>
   <section
-    class="flex flex-col gap-2 md:gap-6 items-center justify-center border border-base-300 rounded-3xl pb-12 px-6 md:px-8 shadow-md"
+    class="flex flex-col gap-2 md:gap-6 items-center justify-center border-2 border-base-content rounded-3xl pb-12 px-6 md:px-8 shadow-md"
   >
     <header class="flex flex-col items-center">
       <img

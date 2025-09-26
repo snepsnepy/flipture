@@ -5,7 +5,7 @@
     color="#0046ff"
     :noise-intensity="0.5"
     :rotation="0"
-    class="relative flex flex-row gap-x-10 bg-primary rounded-3xl p-6 md:p-8 overflow-hidden !h-full w-full xl:!w-1/2"
+    class="relative border-2 border-base-content flex flex-row gap-x-10 bg-primary rounded-3xl p-6 md:p-8 overflow-hidden !h-full w-full xl:!w-1/2"
   >
     <section class="flex flex-col gap-20 w-full relative z-10">
       <header class="flex flex-col gap-4">

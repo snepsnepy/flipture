@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-6">
     <!-- Custom File Drop Zone -->
     <div
-      class="relative border-2 border-dashed border-primary rounded-lg p-8 text-center bg-base-200 hover:bg-primary/5 transition-all duration-300"
+      class="relative border-2 border-secondary rounded-lg p-8 text-center bg-base-200 hover:bg-base-300 transition-all duration-300"
       :class="{
         'border-primary bg-primary/5': isDragOver,
         'opacity-50 pointer-events-none': selectedFile || uploadError,

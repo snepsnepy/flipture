@@ -41,11 +41,13 @@
             <!-- Email & Password -->
             <div class="flex flex-col gap-4">
               <fieldset class="fieldset p-0">
-                <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                <legend
+                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+                >
                   Email
                 </legend>
                 <label
-                  class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
+                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
                 >
                   <svg
                     class="h-[1em] opacity-50"
@@ -70,7 +72,7 @@
                     type="text"
                     v-model="email"
                     placeholder="Type your email"
-                    class="w-full font-poppins text-base leading-4 placeholder:text-sm"
+                    class="w-full font-poppins text-xl leading-4 placeholder:text-lg"
                   />
                 </label>
                 <span
@@ -81,11 +83,13 @@
               </fieldset>
 
               <fieldset class="fieldset p-0">
-                <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                <legend
+                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+                >
                   Password
                 </legend>
                 <label
-                  class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
+                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
                 >
                   <svg
                     class="h-[1em] opacity-50"
@@ -115,7 +119,7 @@
                     type="password"
                     v-model="password"
                     placeholder="Password"
-                    class="font-poppins text-base leading-4 placeholder:text-sm"
+                    class="font-poppins text-xl leading-4 placeholder:text-lg"
                   />
                 </label>
                 <span
@@ -135,7 +139,7 @@
           <button
             type="button"
             :disabled="isButtonDisabled"
-            class="'w-full py-2 md:px-10 rounded-full font-poppins font-bold border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
+            class="'w-full py-4 md:px-10 rounded-3xl font-poppins font-bold border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
             @click="signUp"
           >
             Sign In
@@ -151,7 +155,7 @@
           >
           <button
             @click="signInWithGoogle"
-            class="btn bg-transparent border border-neutral shadow-none rounded-lg text-base-content py-4 font-poppins"
+            class="btn bg-transparent border-2 border-base-content shadow-none rounded-2xl text-base-content font-poppins py-6 hover:bg-base-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

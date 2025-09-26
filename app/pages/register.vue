@@ -6,10 +6,10 @@
       <!-- Left Side -->
       <div
         v-if="!isMobile"
-        class="flex w-full flex-row bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end h-[750px] relative"
+        class="flex w-full flex-row bg-[url('@/assets/img/magazines.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end h-[750px] relative border-2 border-base-content"
       >
         <!-- Dark overlay mask -->
-        <div class="absolute inset-0 bg-base-content/70 rounded-3xl"></div>
+        <div class="absolute inset-0 bg-base-content/70 rounded-2xl"></div>
         <p
           class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-12 font-medium p-6 pb-8 relative z-10"
         >
@@ -81,18 +81,20 @@
               <div class="flex flex-col md:flex-row gap-4 w-full">
                 <!-- Fisrt Name -->
                 <fieldset class="fieldset p-0 w-full">
-                  <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                  <legend
+                    class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+                  >
                     First Name
                   </legend>
                   <label
-                    class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
+                    class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
                   >
                     <input
                       name="firstName"
                       v-model="firstName"
                       type="text"
                       placeholder="Type your first name"
-                      class="w-full font-poppins text-base leading-4 placeholder:text-sm"
+                      class="w-full font-poppins text-xl leading-4 placeholder:text-lg"
                     />
                   </label>
                   <span
@@ -104,18 +106,20 @@
 
                 <!-- LastName -->
                 <fieldset class="fieldset p-0 w-full">
-                  <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                  <legend
+                    class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+                  >
                     Last Name
                   </legend>
                   <label
-                    class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
+                    class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
                   >
                     <input
                       name="lastName"
                       v-model="lastName"
                       type="text"
                       placeholder="Type your last name"
-                      class="font-poppins text-base leading-4 placeholder:text-sm"
+                      class="font-poppins text-xl leading-4 placeholder:text-lg"
                     />
                   </label>
                   <span
@@ -127,11 +131,13 @@
               </div>
 
               <fieldset class="fieldset p-0">
-                <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                <legend
+                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+                >
                   Email
                 </legend>
                 <label
-                  class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
+                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
                 >
                   <svg
                     class="h-[1em] opacity-50"
@@ -156,7 +162,7 @@
                     v-model="email"
                     type="email"
                     placeholder="Type your email"
-                    class="w-full font-poppins text-base leading-4 placeholder:text-sm"
+                    class="w-full font-poppins text-xl leading-4 placeholder:text-lg"
                   />
                 </label>
                 <span
@@ -167,11 +173,13 @@
               </fieldset>
 
               <fieldset class="fieldset p-0">
-                <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                <legend
+                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+                >
                   Password
                 </legend>
                 <label
-                  class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
+                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
                 >
                   <svg
                     class="h-[1em] opacity-50"
@@ -201,7 +209,7 @@
                     v-model="password"
                     type="password"
                     placeholder="Password"
-                    class="font-poppins text-base leading-4 placeholder:text-sm"
+                    class="font-poppins text-xl leading-4 placeholder:text-lg"
                   />
                 </label>
                 <span
@@ -212,11 +220,13 @@
               </fieldset>
 
               <fieldset class="fieldset p-0">
-                <legend class="fieldset-legend pb-2 !pt-0 font-poppins">
+                <legend
+                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+                >
                   Confirm Password
                 </legend>
                 <label
-                  class="input validator bg-base-300/20 border-neutral rounded-lg h-10 !outline-none !shadow-none w-full"
+                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
                 >
                   <svg
                     class="h-[1em] opacity-50"
@@ -246,7 +256,7 @@
                     v-model="confirmPassword"
                     type="password"
                     placeholder="Confirm Password"
-                    class="font-poppins text-base leading-4 placeholder:text-sm"
+                    class="font-poppins text-xl leading-4 placeholder:text-lg"
                   />
                 </label>
                 <span
@@ -275,7 +285,7 @@
         <button
           :disabled="isButtonDisabled"
           type="button"
-          class="w-full py-2 md:px-10 bg-primary rounded-full border border-primary-content text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none"
+          class="w-full py-4 md:px-10 bg-primary rounded-3xl border border-primary-content text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none"
           @click="signUp"
         >
           Create Account

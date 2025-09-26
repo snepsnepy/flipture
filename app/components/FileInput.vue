@@ -2,10 +2,10 @@
   <div class="flex flex-col gap-6">
     <!-- Custom File Drop Zone -->
     <div
-      class="relative border-2 border-secondary rounded-lg p-8 text-center bg-base-200 hover:bg-base-300 transition-all duration-300"
+      class="relative border-2 border-base-content rounded-2xl p-8 text-center bg-base-200 hover:bg-base-300 transition-all duration-300"
       :class="{
         'border-primary bg-primary/5': isDragOver,
-        'opacity-50 pointer-events-none': selectedFile || uploadError,
+        'bg-base-100 pointer-events-none': selectedFile || uploadError,
       }"
       @dragover.prevent="isDragOver = true"
       @dragleave.prevent="isDragOver = false"
@@ -19,7 +19,12 @@
         accept=".pdf"
       />
 
-      <div class="space-y-4">
+      <div
+        class="space-y-4"
+        :class="{
+          'opacity-50 pointer-events-none': selectedFile || uploadError,
+        }"
+      >
         <svg
           class="mx-auto"
           xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +72,9 @@
 
     <!-- Success State -->
     <div v-if="selectedFile">
-      <div class="flex flex-row gap-2 items-center">
+      <div
+        class="flex flex-row gap-2 items-center bg-base-100 p-4 rounded-2xl border-2 border-base-content"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="48"
@@ -141,7 +148,10 @@
     </div>
 
     <!-- Error State -->
-    <div v-if="uploadError" class="flex flex-row gap-2 items-center">
+    <div
+      v-if="uploadError"
+      class="flex flex-row gap-2 items-center bg-base-100 p-4 rounded-2xl border-2 border-base-content"
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="48"

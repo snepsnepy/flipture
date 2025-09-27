@@ -51,7 +51,7 @@
             Description
           </legend>
           <textarea
-            class="textarea h-24 p-2 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl !border-2 border-base-content focus:outline-none focus:border-none"
+            class="textarea px-4 h-24 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl !border-2 border-base-content focus:outline-none focus:border-base-content"
             placeholder="Bio"
           ></textarea>
           <div class="label text-secondary font-poppins">Optional</div>
@@ -59,6 +59,14 @@
       </div>
     </div>
     <FileInput />
+
+    <button
+      type="button"
+      class="'w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-bold border-2 border-base-content text-base transition-all duration-300 bg-secondary text-base-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
+    >
+      Create Flipbook
+      <!-- <span v-if="isLoading" class="loading loading-spinner loading-md"></span> -->
+    </button>
   </section>
 </template>
 

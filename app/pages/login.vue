@@ -40,15 +40,15 @@
           <div class="flex flex-col gap-4">
             <!-- Email & Password -->
             <div class="flex flex-col gap-4">
-              <fieldset class="fieldset p-0">
-                <legend
-                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-                >
-                  Email
-                </legend>
-                <label
-                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
-                >
+              <Input
+                label="Email"
+                name="email"
+                type="text"
+                placeholder="Type your email"
+                v-model:model-value="email"
+                :error-message="emailErrors"
+              >
+                <template #icon>
                   <svg
                     class="h-[1em] opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
@@ -67,30 +67,18 @@
                       ></path>
                     </g>
                   </svg>
-                  <input
-                    name="email"
-                    type="text"
-                    v-model="email"
-                    placeholder="Type your email"
-                    class="w-full font-poppins text-xl leading-4 placeholder:text-lg"
-                  />
-                </label>
-                <span
-                  class="text-error text-xs leading-3 font-poppins"
-                  v-if="emailErrors"
-                  >{{ emailErrors }}</span
-                >
-              </fieldset>
+                </template>
+              </Input>
 
-              <fieldset class="fieldset p-0">
-                <legend
-                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-                >
-                  Password
-                </legend>
-                <label
-                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
-                >
+              <Input
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                v-model="password"
+                :error-message="passwordErrors"
+              >
+                <template #icon>
                   <svg
                     class="h-[1em] opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
@@ -114,20 +102,8 @@
                       ></circle>
                     </g>
                   </svg>
-                  <input
-                    name="password"
-                    type="password"
-                    v-model="password"
-                    placeholder="Password"
-                    class="font-poppins text-xl leading-4 placeholder:text-lg"
-                  />
-                </label>
-                <span
-                  class="text-error text-xs leading-3 font-poppins"
-                  v-if="passwordErrors"
-                  >{{ passwordErrors }}</span
-                >
-              </fieldset>
+                </template>
+              </Input>
             </div>
 
             <span
@@ -139,7 +115,7 @@
           <button
             type="button"
             :disabled="isButtonDisabled"
-            class="'w-full py-4 md:px-10 rounded-3xl font-poppins font-bold border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
+            class="'w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-bold border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
             @click="signUp"
           >
             Sign In
@@ -219,8 +195,9 @@ const { errors } = useForm({
   validationSchema,
 });
 
-const { value: email, errorMessage: emailErrors } = useField("email");
-const { value: password, errorMessage: passwordErrors } = useField("password");
+const { value: email, errorMessage: emailErrors } = useField<string>("email");
+const { value: password, errorMessage: passwordErrors } =
+  useField<string>("password");
 
 const isLoading = ref(false);
 
@@ -243,7 +220,7 @@ const isFormValid = computed(() => {
 
 const signUp = async () => {
   isLoading.value = true;
-  const { data, error } = await client.auth.signInWithPassword({
+  const { error } = await client.auth.signInWithPassword({
     email: email.value as string,
     password: password.value as string,
   });

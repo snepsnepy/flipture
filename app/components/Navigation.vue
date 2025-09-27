@@ -50,10 +50,11 @@
               aria-label="Mobile navigation menu"
             >
               <li>
-                <a
+                <NuxtLink
                   class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
-                  href="/dashboard"
-                  >Dashboard</a
+                  to="/dashboard"
+                  @click="close"
+                  >Dashboard</NuxtLink
                 >
               </li>
               <li role="none">
@@ -120,6 +121,7 @@
 const route = useRoute();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+const activeElement = useActiveElement();
 
 const isLoading = ref(false);
 
@@ -142,6 +144,13 @@ const signOut = async () => {
   const { error } = await client.auth.signOut();
   if (!error) {
     isLoading.value = false;
+  }
+};
+
+const close = () => {
+  // Close dropdown by removing focus from the dropdown button
+  if (activeElement.value) {
+    (activeElement.value as HTMLElement).blur();
   }
 };
 </script>

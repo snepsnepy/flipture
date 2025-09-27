@@ -79,66 +79,38 @@
             <div class="flex flex-col gap-4">
               <!-- First Name and Last Name -->
               <div class="flex flex-col md:flex-row gap-4 w-full">
-                <!-- Fisrt Name -->
-                <fieldset class="fieldset p-0 w-full">
-                  <legend
-                    class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-                  >
-                    First Name
-                  </legend>
-                  <label
-                    class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
-                  >
-                    <input
-                      name="firstName"
-                      v-model="firstName"
-                      type="text"
-                      placeholder="Type your first name"
-                      class="w-full font-poppins text-xl leading-4 placeholder:text-lg"
-                    />
-                  </label>
-                  <span
-                    class="text-error text-xs leading-3 font-poppins"
-                    v-if="firstNameErrors"
-                    >{{ firstNameErrors }}</span
-                  >
-                </fieldset>
+                <!-- First Name -->
+                <Input
+                  label="First Name"
+                  name="firstName"
+                  type="text"
+                  placeholder="Type your first name"
+                  v-model:model-value="firstName"
+                  :error-message="firstNameErrors"
+                  fieldset-class="w-full"
+                />
 
-                <!-- LastName -->
-                <fieldset class="fieldset p-0 w-full">
-                  <legend
-                    class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-                  >
-                    Last Name
-                  </legend>
-                  <label
-                    class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
-                  >
-                    <input
-                      name="lastName"
-                      v-model="lastName"
-                      type="text"
-                      placeholder="Type your last name"
-                      class="font-poppins text-xl leading-4 placeholder:text-lg"
-                    />
-                  </label>
-                  <span
-                    class="text-error text-xs leading-3 font-poppins"
-                    v-if="lastNameErrors"
-                    >{{ lastNameErrors }}</span
-                  >
-                </fieldset>
+                <!-- Last Name -->
+                <Input
+                  label="Last Name"
+                  name="lastName"
+                  type="text"
+                  placeholder="Type your last name"
+                  v-model:model-value="lastName"
+                  :error-message="lastNameErrors"
+                  fieldset-class="w-full"
+                />
               </div>
 
-              <fieldset class="fieldset p-0">
-                <legend
-                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-                >
-                  Email
-                </legend>
-                <label
-                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
-                >
+              <Input
+                label="Email"
+                name="email"
+                type="email"
+                placeholder="Type your email"
+                v-model:model-value="email"
+                :error-message="emailErrors"
+              >
+                <template #icon>
                   <svg
                     class="h-[1em] opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
@@ -157,30 +129,18 @@
                       ></path>
                     </g>
                   </svg>
-                  <input
-                    name="email"
-                    v-model="email"
-                    type="email"
-                    placeholder="Type your email"
-                    class="w-full font-poppins text-xl leading-4 placeholder:text-lg"
-                  />
-                </label>
-                <span
-                  class="text-error text-xs leading-3 font-poppins"
-                  v-if="emailErrors"
-                  >{{ emailErrors }}</span
-                >
-              </fieldset>
+                </template>
+              </Input>
 
-              <fieldset class="fieldset p-0">
-                <legend
-                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-                >
-                  Password
-                </legend>
-                <label
-                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
-                >
+              <Input
+                label="Password"
+                name="password"
+                type="password"
+                placeholder="Password"
+                v-model:model-value="password"
+                :error-message="passwordErrors"
+              >
+                <template #icon>
                   <svg
                     class="h-[1em] opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
@@ -204,30 +164,18 @@
                       ></circle>
                     </g>
                   </svg>
-                  <input
-                    name="password"
-                    v-model="password"
-                    type="password"
-                    placeholder="Password"
-                    class="font-poppins text-xl leading-4 placeholder:text-lg"
-                  />
-                </label>
-                <span
-                  class="text-error text-xs leading-3 font-poppins"
-                  v-if="passwordErrors"
-                  >{{ passwordErrors }}</span
-                >
-              </fieldset>
+                </template>
+              </Input>
 
-              <fieldset class="fieldset p-0">
-                <legend
-                  class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-                >
-                  Confirm Password
-                </legend>
-                <label
-                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
-                >
+              <Input
+                label="Confirm Password"
+                name="confirmPassword"
+                type="password"
+                placeholder="Confirm Password"
+                v-model:model-value="confirmPassword"
+                :error-message="confirmPasswordErrors"
+              >
+                <template #icon>
                   <svg
                     class="h-[1em] opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
@@ -251,20 +199,8 @@
                       ></circle>
                     </g>
                   </svg>
-                  <input
-                    name="confirmPassword"
-                    v-model="confirmPassword"
-                    type="password"
-                    placeholder="Confirm Password"
-                    class="font-poppins text-xl leading-4 placeholder:text-lg"
-                  />
-                </label>
-                <span
-                  class="text-error text-xs leading-3 font-poppins"
-                  v-if="confirmPasswordErrors"
-                  >{{ confirmPasswordErrors }}</span
-                >
-              </fieldset>
+                </template>
+              </Input>
             </div>
           </div>
         </section>
@@ -331,12 +267,14 @@ const { handleSubmit, errors } = useForm({
 });
 
 const { value: firstName, errorMessage: firstNameErrors } =
-  useField("firstName");
-const { value: lastName, errorMessage: lastNameErrors } = useField("lastName");
-const { value: email, errorMessage: emailErrors } = useField("email");
-const { value: password, errorMessage: passwordErrors } = useField("password");
+  useField<string>("firstName");
+const { value: lastName, errorMessage: lastNameErrors } =
+  useField<string>("lastName");
+const { value: email, errorMessage: emailErrors } = useField<string>("email");
+const { value: password, errorMessage: passwordErrors } =
+  useField<string>("password");
 const { value: confirmPassword, errorMessage: confirmPasswordErrors } =
-  useField("confirmPassword");
+  useField<string>("confirmPassword");
 
 const isFormValid = computed(() => {
   return (

@@ -28,5 +28,10 @@ export default defineNuxtConfig({
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,
     redirect: false,
+    cookieOptions: {
+      maxAge: 60 * 60 * 8, // 8 hours
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production", // Only secure in production
+    },
   },
 });

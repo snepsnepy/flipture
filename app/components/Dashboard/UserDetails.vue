@@ -2,6 +2,7 @@
   <!-- User Details Section -->
   <section
     class="border-2 w-full xl:!w-1/2 h-full border-base-content rounded-3xl bg-base-100 p-6 md:p-8 flex flex-col gap-4 md:gap-6"
+    :class="{ 'xl:!w-full': hasFlipbooks }"
   >
     <!-- Header -->
     <header class="flex flex-row items-center justify-between">
@@ -127,7 +128,8 @@
             </div>
           </div>
           <p class="text-base text-base-content leading-4 font-poppins">
-            <span class="font-bold">5</span> flipbooks
+            <span class="font-bold">{{ flipbooksLength }}</span>
+            {{ flipbooksLength > 1 ? "flipbooks" : "flipbook" }}
           </p>
         </div>
       </section>
@@ -136,6 +138,11 @@
 </template>
 
 <script setup lang="ts">
+defineProps<{
+  hasFlipbooks: boolean;
+  flipbooksLength: number;
+}>();
+
 const user = useSupabaseUser();
 
 const userFullName = computed(() => {

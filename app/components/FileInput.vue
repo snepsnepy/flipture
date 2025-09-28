@@ -228,7 +228,7 @@ interface FileInputEvents {
 }
 
 // Configuration
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5 MB (adjust based on your Supabase plan)
+const MAX_FILE_SIZE = 3 * 1024 * 1024; // 5 MB (adjust based on your Supabase plan)
 
 const emit = defineEmits<FileInputEvents>();
 
@@ -288,6 +288,9 @@ const processFile = (file: File) => {
   uploadError.value = null;
   fileName.value = undefined;
   uploadSuccess.value = false;
+
+  // Emit file selected event
+  emit("uploadStarted", file);
 };
 
 const uploadFile = async () => {

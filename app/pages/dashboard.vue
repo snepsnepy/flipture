@@ -2,10 +2,13 @@
   <section class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
     <header class="flex flex-col xl:flex-row gap-6 xl:h-80">
       <!-- Hero -->
-      <DashboardHero />
+      <DashboardHero v-if="!hasFlipbooks" />
 
       <!-- User Details -->
-      <DashboardUserDetails />
+      <DashboardUserDetails
+        :hasFlipbooks="hasFlipbooks"
+        :flipbooksLength="flipbooksLength!"
+      />
     </header>
 
     <!-- Content -->
@@ -67,7 +70,14 @@
         <HorizontalDivider />
       </header>
 
-      <FileInput v-if="hasFlipbooks" />
+      <!-- Content -->
+      <section
+        v-if="hasFlipbooks"
+        v-for="(flipbook, index) in flipbooks"
+        :key="index"
+      >
+        <DashboardFlipbook :flipbook="flipbook" />
+      </section>
 
       <!-- No Flipbooks -->
       <DashboardNoItems v-else />
@@ -76,19 +86,33 @@
 </template>
 
 <script setup lang="ts">
+import type { Flipbook } from "~/types";
+
 definePageMeta({
   layout: "base",
   middleware: "auth",
 });
 
+const client = useSupabaseClient();
 const user = useSupabaseUser();
 const hasFlipbooks = ref(false);
+const flipbooksLength = ref(0);
+const flipbooks = ref<Flipbook[]>([]);
 
-onMounted(() => {
+onMounted(async () => {
   watchEffect(() => {
     if (!user.value) {
       return navigateTo("/login");
     }
   });
+
+  const { data: flipbooksData } = await client
+    .from("flipbooks")
+    .select("*")
+    .eq("user_id", user.value?.id!);
+
+  flipbooks.value = flipbooksData || [];
+  flipbooksLength.value = flipbooks.value.length;
+  hasFlipbooks.value = flipbooksLength.value > 0;
 });
 </script>

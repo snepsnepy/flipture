@@ -15,12 +15,19 @@
               class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
             >
               <input
-                name="firstName"
+                name="title"
                 type="text"
                 placeholder="Flipbook Title"
                 class="w-full font-poppins text-xl leading-4 placeholder:text-xl"
+                v-model="title"
               />
             </label>
+            <span
+              class="text-error text-xs leading-3 font-poppins"
+              v-if="titleErrors"
+            >
+              {{ titleErrors }}
+            </span>
           </fieldset>
 
           <!-- LastName -->
@@ -34,12 +41,19 @@
               class="input validator border-2 bg-base-100 rounded-2xl h-14 !outline-none !shadow-none w-full border-base-content"
             >
               <input
-                name="lastName"
+                name="company"
                 type="text"
                 placeholder="Company Name"
                 class="w-full font-poppins text-xl leading-4 placeholder:text-xl"
+                v-model="company"
               />
             </label>
+            <span
+              class="text-error text-xs leading-3 font-poppins"
+              v-if="companyErrors"
+            >
+              {{ companyErrors }}
+            </span>
             <div class="label text-secondary font-poppins">Optional</div>
           </fieldset>
         </div>
@@ -52,23 +66,152 @@
           </legend>
           <textarea
             class="textarea px-4 h-24 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl !border-2 border-base-content focus:outline-none focus:border-base-content"
-            placeholder="Bio"
+            placeholder="Type a short description"
+            name="description"
+            v-model="description"
           ></textarea>
+          <span
+            class="text-error text-xs leading-3 font-poppins"
+            v-if="descriptionErrors"
+          >
+            {{ descriptionErrors }}
+          </span>
           <div class="label text-secondary font-poppins">Optional</div>
         </fieldset>
       </div>
     </div>
-    <FileInput />
+    <FileInput
+      @uploadSuccess="handleUploadSuccess"
+      @uploadError="handleUploadError"
+      @uploadStarted="handleFileUpload"
+      @fileCleared="clearFile"
+    />
 
     <button
       type="button"
-      :disabled="true"
+      @click="createFlipbook"
+      :disabled="isButtonDisabled"
       class="'w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-bold border-2 border-base-content text-base md:text-lg transition-all duration-300 bg-secondary text-base-content hover:cursor-pointer hover:bg-primary-content hover:border-2 hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:bg-secondary-content disabled:text-base-content/50"
     >
       Create Flipbook
-      <!-- <span v-if="isLoading" class="loading loading-spinner loading-md"></span> -->
+      <span v-if="isLoading" class="loading loading-spinner loading-md"></span>
     </button>
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { createFlipbookFormSchema } from "~~/schema/form.schema";
+import { useForm, useField } from "vee-validate";
+import type { Database } from "~/types/supabase";
+
+const isLoading = ref(false);
+const validationSchema = createFlipbookFormSchema();
+
+const client = useSupabaseClient<Database>();
+const user = useSupabaseUser();
+
+// File upload state
+const selectedFile = ref<File | null>(null);
+const uploadError = ref<string | null>(null);
+const isUploading = ref(false);
+const uploadSuccess = ref(false);
+
+const { errors } = useForm({
+  validationSchema,
+});
+
+const { value: title, errorMessage: titleErrors } = useField<string>("title");
+const { value: company, errorMessage: companyErrors } =
+  useField<string>("company");
+const { value: description, errorMessage: descriptionErrors } =
+  useField<string>("description");
+
+const isButtonDisabled = computed(() => !isFormValid.value || isLoading.value);
+
+const isFormValid = computed(() => {
+  return (
+    Object.keys(errors.value).length === 0 && title.value && selectedFile.value
+  );
+});
+
+// File upload methods
+const handleFileUpload = (file: File) => {
+  selectedFile.value = file;
+  uploadError.value = null;
+  uploadSuccess.value = false;
+};
+
+const handleUploadError = (error: string) => {
+  uploadError.value = error;
+  selectedFile.value = null;
+  uploadSuccess.value = false;
+};
+
+const handleUploadSuccess = () => {
+  uploadSuccess.value = true;
+  uploadError.value = null;
+};
+
+const clearFile = () => {
+  selectedFile.value = null;
+  uploadError.value = null;
+  uploadSuccess.value = false;
+};
+
+const createFlipbook = async () => {
+  if (!selectedFile.value || !user.value) {
+    console.error("No file selected or user not authenticated");
+    return;
+  }
+
+  isLoading.value = true;
+  isUploading.value = true;
+
+  try {
+    // Upload file to Supabase Storage
+    const fileExt = selectedFile.value.name.split(".").pop();
+    const fileName = `${user.value.id}/${Date.now()}.${fileExt}`;
+
+    const { error: uploadError } = await client.storage
+      .from("uploads")
+      .upload(fileName, selectedFile.value);
+
+    if (uploadError) {
+      throw new Error(`Upload failed: ${uploadError.message}`);
+    }
+
+    // Get public URL for the uploaded file
+    const {
+      data: { publicUrl },
+    } = client.storage.from("uploads").getPublicUrl(fileName);
+
+    // Create flipbook record with file data
+    const { error } = await client
+      .from("flipbooks")
+      .insert({
+        title: title.value,
+        company_name: company.value,
+        description: description.value,
+        user_id: user.value.id,
+        pdf_file_url: publicUrl,
+        pdf_file_name: selectedFile.value.name,
+        pdf_file_size: selectedFile.value.size,
+      })
+      .single();
+
+    if (error) {
+      // If database insert fails, clean up uploaded file
+      await client.storage.from("uploads").remove([fileName]);
+      throw new Error(`Database error: ${error.message}`);
+    }
+
+    // Success - navigate to dashboard
+    await navigateTo("/dashboard");
+  } catch (error: any) {
+    console.error("Error creating flipbook:", error);
+    uploadError.value = error.message;
+    isLoading.value = false;
+    isUploading.value = false;
+  }
+};
+</script>

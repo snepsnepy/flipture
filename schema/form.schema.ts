@@ -38,3 +38,20 @@ export const createRegisterSchema = () => {
       .oneOf([ref("password")], "Passwords must match"),
   });
 };
+
+export const createFlipbookFormSchema = () => {
+  return object({
+    title: string()
+      .trim()
+      .required("Title is required")
+      .min(3, "Title must be at least 3 characters")
+      .max(30, "Title must be less than 30 characters"),
+    company: string()
+      .trim()
+      .min(2, "Company name must be at least 2 characters")
+      .max(20, "Company name must be less than 20 characters"),
+    description: string()
+      .trim()
+      .max(100, "Description must be less than 100 characters"),
+  });
+};

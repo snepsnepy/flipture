@@ -16,6 +16,7 @@
     "@vee-validate/nuxt": "^4.15.1",
     "@vee-validate/yup": "^4.15.1",
     "@vueuse/nuxt": "13.6.0",
+    "dayjs": "^1.11.18",
     "gsap": "^3.13.0",
     "nuxt": "4.0.3",
     "ogl": "^1.0.11",

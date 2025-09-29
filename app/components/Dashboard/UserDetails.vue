@@ -2,7 +2,6 @@
   <!-- User Details Section -->
   <section
     class="border-2 w-full xl:!w-1/2 h-full border-base-content rounded-3xl bg-base-100 p-6 md:p-8 flex flex-col gap-4 md:gap-6"
-    :class="{ 'xl:!w-full': hasFlipbooks }"
   >
     <!-- Header -->
     <header class="flex flex-row items-center justify-between">
@@ -66,7 +65,7 @@
       </h4>
       <section class="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
         <div
-          class="bg-primary border border-neutral/50 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
+          class="bg-accent border border-base-300 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
         >
           <div class="flex flex-row justify-between items-center">
             <h4
@@ -101,7 +100,7 @@
           </p>
         </div>
         <div
-          class="bg-base-100 border border-neutral/50 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
+          class="bg-base-100 border border-base-300 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
         >
           <div class="flex flex-row justify-between items-center">
             <h4

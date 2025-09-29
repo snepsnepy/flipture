@@ -7,8 +7,13 @@
     :rotation="0"
     class="relative border-2 border-base-content flex flex-row gap-x-10 bg-primary rounded-3xl p-6 md:p-8 overflow-hidden !h-full w-full xl:!w-1/2"
   >
-    <section class="flex flex-col gap-20 w-full relative z-10">
-      <header class="flex flex-col gap-4">
+    <section class="flex flex-col gap-20 w-full relative z-10 h-full">
+      <header
+        class="flex flex-col gap-4"
+        :class="{
+          'justify-between h-full': hasFlipbooks,
+        }"
+      >
         <h1
           class="text-primary-content text-[32px] leading-8 md:text-[40px] md:leading-10 font-bold font-poppins"
         >
@@ -22,6 +27,7 @@
       </header>
 
       <button
+        v-if="!hasFlipbooks"
         type="button"
         class="w-fit flex gap-4 py-2 px-3 md:px-4 hover:bg-base-200 pr-3 text-center border border-base-content justify-center items-center bg-primary-content rounded-full transition-all duration-300 text-base-content hover:cursor-pointer hover:border hover:border-base-content hover:text-primary font-poppins font-bold text-sm md:text-base leading-4 disabled:opacity-50 disabled:pointer-events-none"
         role="menuitem"
@@ -72,6 +78,10 @@
 </template>
 
 <script setup lang="ts">
+defineProps<{
+  hasFlipbooks: boolean;
+}>();
+
 const navigateToNewFlipbook = () => {
   return navigateTo("/new-flipbook");
 };

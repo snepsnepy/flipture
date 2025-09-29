@@ -15,6 +15,7 @@
   --color-base-200: oklch(0.9702 0 0);
   --color-base-300: oklch(0.94 0.0052 247.88);
   --color-neutral: oklch(0.6429 0 0);
+  --color-accent: oklch(0.4618 0.1875 263.5831);
   --color-error: oklch(0.6576 0.229 28.72);
   --color-success: oklch(0.6873 0.1792 138.02);
 }
@@ -38,6 +39,7 @@
 @theme {
   --font-inter: "Inter", "sans-serif";
   --font-poppins: "Poppins", "sans-serif";
+  --font-oswald: "Oswald", "sans-serif";
 }
 
 /* Hide scrollbars for all elements */

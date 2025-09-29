@@ -1,0 +1,62 @@
+<template>
+  <div class="pdf-thumbnail">
+    <canvas ref="canvasRef" class="w-full rounded-2xl"></canvas>
+  </div>
+</template>
+
+<script lang="ts" setup>
+import * as pdfjsLib from "pdfjs-dist";
+
+// Set up the worker for PDF.js
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs`;
+
+interface Props {
+  pdfUrl: string;
+  width?: number;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  width: 300,
+});
+
+const canvasRef = ref<HTMLCanvasElement>();
+
+const renderPDF = async () => {
+  if (!canvasRef.value || !props.pdfUrl) return;
+
+  try {
+    // Load the PDF document
+    const loadingTask = pdfjsLib.getDocument(props.pdfUrl);
+    const pdf = await loadingTask.promise;
+
+    // Get the first page
+    const page = await pdf.getPage(1);
+
+    // Calculate scale to fit the desired width
+    const viewport = page.getViewport({ scale: 1 });
+    const scale = props.width / viewport.width;
+    const scaledViewport = page.getViewport({ scale });
+
+    // Set canvas dimensions
+    const canvas = canvasRef.value;
+    const context = canvas.getContext("2d");
+    canvas.height = scaledViewport.height;
+    canvas.width = scaledViewport.width;
+
+    // Render the page
+    const renderContext = {
+      canvasContext: context!,
+      viewport: scaledViewport,
+      canvas: canvas,
+    };
+
+    await page.render(renderContext).promise;
+  } catch (error) {
+    console.error("Error rendering PDF:", error);
+  }
+};
+
+onMounted(() => {
+  renderPDF();
+});
+</script>

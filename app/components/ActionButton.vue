@@ -1,7 +1,7 @@
 <template>
   <a class="relative inline-block text-lg group rounded-full">
     <span
-      class="relative z-10 block px-5 py-3 overflow-hidden font-medium leading-tight text-base-content transition-colors duration-300 ease-out border-2 border-base-content rounded-full group-hover:text-base-content"
+      class="relative z-10 block px-3 md:px-4 py-2 md:py-3 overflow-hidden font-medium leading-tight text-base-content transition-colors duration-300 ease-out border-2 border-base-content rounded-full group-hover:text-base-content"
     >
       <span
         class="absolute inset-0 w-full h-full px-5 py-3 rounded-full bg-base-100"
@@ -18,10 +18,10 @@
           '!bg-error': type === 'error',
         }"
       ></span>
-      <div class="flex gap-2 relative z-10">
+      <div class="flex gap-2 relative z-10 justify-center items-center">
         <span
           v-if="text"
-          class="relative whitespace-nowrap font-poppins font-bold"
+          class="relative whitespace-nowrap text-base md:text-lg leading-4 font-poppins font-bold"
         >
           {{ text }}
         </span>
@@ -29,7 +29,7 @@
       </div>
     </span>
     <span
-      class="absolute bottom-0 right-0 w-full h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-base-content rounded-full group-hover:mb-0 group-hover:mr-0"
+      class="absolute bottom-0 right-0 w-full h-10 md:h-12 -mb-1 -mr-1 transition-all duration-200 ease-linear bg-base-content rounded-full group-hover:mb-0 group-hover:mr-0"
       data-rounded="rounded-lg"
     ></span>
   </a>

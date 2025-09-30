@@ -33,7 +33,7 @@ const renderPDF = async () => {
     const page = await pdf.getPage(1);
 
     // Calculate scale to fit the desired width
-    const viewport = page.getViewport({ scale: 1 });
+    const viewport = page.getViewport({ scale: 0.5 });
     const scale = props.width / viewport.width;
     const scaledViewport = page.getViewport({ scale });
 

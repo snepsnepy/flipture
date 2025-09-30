@@ -91,7 +91,7 @@
                 <button
                   @click="handleAuthAction"
                   type="button"
-                  class="w-full py-2 px-4 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base leading-4 disabled:opacity-50 disabled:pointer-events-none"
+                  class="w-full py-2 px-4 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base leading-4 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300"
                   role="menuitem"
                   :disabled="isLoading"
                 >
@@ -109,7 +109,7 @@
           v-else
           @click="isLoginPage ? navigateTo('/register') : navigateTo('/login')"
           type="button"
-          class="w-fit py-2 px-6 bg-primary border border-primary-content rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-semibold text-base"
+          class="w-fit py-2 px-6 bg-primary border border-primary-content rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-semibold text-base transition-all duration-300"
         >
           {{ isLoginPage ? "Sign Up" : "Sign In" }}
         </button>

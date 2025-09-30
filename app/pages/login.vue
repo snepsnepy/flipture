@@ -112,6 +112,38 @@
             >
           </div>
 
+          <section
+            class="bg-error/20 border-2 border-error p-2 rounded-2xl flex flex-row gap-2 items-center"
+            v-if="errorMessage"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+            >
+              <g fill="none">
+                <path
+                  stroke="#ff3f33"
+                  stroke-linecap="round"
+                  stroke-width="1.5"
+                  d="M12 7v6"
+                />
+                <circle cx="12" cy="16" r="1" fill="#ff3f33" />
+                <path
+                  stroke="#ff3f33"
+                  stroke-linecap="round"
+                  stroke-width="1.5"
+                  d="M9.216 3c1.18-.667 1.954-1 2.784-1c1.114 0 2.128.6 4.157 1.802l.686.406c2.029 1.202 3.043 1.803 3.6 2.792c.557.99.557 2.19.557 4.594v.812c0 2.403 0 3.605-.557 4.594s-1.571 1.59-3.6 2.791l-.686.407C14.128 21.399 13.114 22 12 22s-2.128-.6-4.157-1.802l-.686-.407c-2.029-1.2-3.043-1.802-3.6-2.791C3 16.01 3 14.81 3 12.406v-.812C3 9.19 3 7.989 3.557 7C3.996 6.22 4.719 5.682 6 4.9"
+                />
+              </g>
+            </svg>
+            <span
+              class="text-error text-base leading-4 font-semibold font-poppins"
+              >{{ errorMessage }}</span
+            >
+          </section>
+
           <button
             type="button"
             :disabled="isButtonDisabled"
@@ -129,6 +161,7 @@
             class="text-base-content text-base leading-4 text-center font-poppins"
             >or</span
           >
+
           <button
             @click="signInWithGoogle"
             class="btn bg-transparent border-2 border-base-content shadow-none rounded-2xl text-base-content font-poppins py-6 hover:bg-base-300"
@@ -187,8 +220,8 @@ definePageMeta({
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 
+const errorMessage = ref("");
 const { isMobile } = useIsMobile();
-
 const validationSchema = createLoginSchema();
 
 const { errors } = useForm({
@@ -229,6 +262,7 @@ const signUp = async () => {
     return navigateTo({ name: "dashboard" });
   } else {
     console.log(error.message);
+    errorMessage.value = error.message;
     isLoading.value = false;
   }
 };

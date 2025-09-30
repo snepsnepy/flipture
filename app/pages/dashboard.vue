@@ -1,5 +1,18 @@
 <template>
-  <section class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
+  <!-- Loading Spinner -->
+  <div
+    v-if="isLoading"
+    class="flex justify-center flex-col items-center min-h-[calc(100vh-300px)]"
+  >
+    <LoadingSpinner />
+    <span
+      class="text-base-content text-2xl leading-8 font-semibold font-poppins"
+      >Loading...</span
+    >
+  </div>
+
+  <!-- Main Content -->
+  <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
     <header class="flex flex-col xl:flex-row gap-4 xl:h-80">
       <!-- Hero -->
       <DashboardHero :has-flipbooks="true" v-if="!isMobile" />
@@ -83,6 +96,7 @@ const user = useSupabaseUser();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
 const flipbooks = ref<Flipbook[]>([]);
+const isLoading = ref(true);
 const { isMobile } = useIsMobile();
 
 onMounted(async () => {
@@ -92,14 +106,22 @@ onMounted(async () => {
     }
   });
 
-  const { data: flipbooksData } = await client
-    .from("flipbooks")
-    .select("*")
-    .eq("user_id", user.value?.id!);
+  try {
+    isLoading.value = true;
 
-  flipbooks.value = flipbooksData || [];
-  flipbooksLength.value = flipbooks.value.length;
-  hasFlipbooks.value = flipbooksLength.value > 0;
+    const { data: flipbooksData } = await client
+      .from("flipbooks")
+      .select("*")
+      .eq("user_id", user.value?.id!);
+
+    flipbooks.value = flipbooksData || [];
+    flipbooksLength.value = flipbooks.value.length;
+    hasFlipbooks.value = flipbooksLength.value > 0;
+  } catch (error) {
+    console.error("Error fetching flipbooks:", error);
+  } finally {
+    isLoading.value = false;
+  }
 });
 
 const navigateToNewFlipbook = () => {

@@ -26,7 +26,8 @@
           <ActionButton
             v-if="hasFlipbooks"
             text="Create Flipbook"
-            class="w-full md:w-fit"
+            class="w-full md:w-fit hover:cursor-pointer"
+            @click="navigateToNewFlipbook"
           >
             <template #icon>
               <svg
@@ -100,4 +101,8 @@ onMounted(async () => {
   flipbooksLength.value = flipbooks.value.length;
   hasFlipbooks.value = flipbooksLength.value > 0;
 });
+
+const navigateToNewFlipbook = () => {
+  return navigateTo({ name: "new-flipbook" });
+};
 </script>

@@ -83,6 +83,6 @@ defineProps<{
 }>();
 
 const navigateToNewFlipbook = () => {
-  return navigateTo("/new-flipbook");
+  return navigateTo({ name: "new-flipbook" });
 };
 </script>

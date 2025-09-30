@@ -71,9 +71,10 @@
         v-if="hasFlipbooks"
       >
         <DashboardFlipbook
-          v-for="(flipbook, index) in flipbooks"
-          :key="index"
+          v-for="flipbook in flipbooks"
+          :key="flipbook.id"
           :flipbook="flipbook"
+          @deleted="handleFlipbookDeleted"
         />
       </section>
 
@@ -126,5 +127,16 @@ onMounted(async () => {
 
 const navigateToNewFlipbook = () => {
   return navigateTo({ name: "new-flipbook" });
+};
+
+const handleFlipbookDeleted = (deletedFlipbookId: string) => {
+  // Remove the deleted flipbook from the local state
+  flipbooks.value = flipbooks.value.filter(
+    (flipbook) => flipbook.id !== deletedFlipbookId
+  );
+
+  // Update the computed values
+  flipbooksLength.value = flipbooks.value.length;
+  hasFlipbooks.value = flipbooksLength.value > 0;
 };
 </script>

@@ -4,10 +4,10 @@
   >
     <section class="relative z-10 w-full flex flex-col gap-4">
       <div
-        class="flex flex-col-reverse md:flex-row w-full items-start rounded-2xl gap-4"
+        class="flex flex-col-reverse md:flex-row w-full items-start rounded-2xl gap-4 h-full"
       >
         <!-- Thumbnail -->
-        <div class="w-full bg-base-300 rounded-2xl shadow-md">
+        <div class="w-full rounded-2xl shadow-md">
           <PDFThumbnail :pdf-url="flipbook.pdf_file_url!" />
         </div>
 
@@ -45,7 +45,7 @@
       <!-- Actions -->
       <footer class="flex flex-col md:flex-row w-full justify-between gap-y-2">
         <div class="flex flex-row gap-2 w-full justify-between md:w-fit">
-          <ActionButton type="error">
+          <ActionButton type="error" @click="openDeleteModal">
             <template #icon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -109,13 +109,124 @@
       </footer>
     </section>
   </section>
+
+  <!-- Delete Confirmation Modal -->
+  <dialog ref="deleteModal" class="modal">
+    <div class="modal-box rounded-3xl p-6 flex flex-col gap-y-8 text-center">
+      <header class="flex flex-col justify-center items-center space-y-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="96"
+          height="96"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="none"
+            stroke="#ff3f33"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="1.5"
+            d="M9.172 14.828L12.001 12m2.828-2.828L12.001 12m0 0L9.172 9.172M12.001 12l2.828 2.828M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10"
+          />
+        </svg>
+        <p
+          class="text-base-content font-bold font-poppins text-2xl leading-6 text-center"
+        >
+          <span class="text-primary">{{ flipbook.title }}</span>
+          will be deleted permanently.
+        </p>
+      </header>
+      <p class="text-base-content font-poppins text-base leading-4">
+        All inserted data for this flipbook will be lost. Are you sure you want
+        to delete it?
+      </p>
+      <div class="modal-action mt-0 justify-start w-full">
+        <form method="dialog" class="w-full">
+          <div class="flex flex-row gap-x-2 w-full">
+            <ActionButton
+              type="secondary"
+              text="Cancel"
+              @click="closeDeleteModal"
+              class="w-1/2"
+            />
+            <ActionButton
+              type="confirmation"
+              text="Delete"
+              @click="confirmDelete"
+              class="w-1/2"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </dialog>
 </template>
 
 <script lang="ts" setup>
 import dayjs from "dayjs";
 import type { Flipbook } from "~/types";
 
-defineProps<{
+const props = defineProps<{
   flipbook: Flipbook;
 }>();
+
+const emit = defineEmits<{
+  deleted: [flipbookId: string];
+}>();
+
+const client = useSupabaseClient();
+const user = useSupabaseUser();
+const deleteModal = ref<HTMLDialogElement>();
+
+const openDeleteModal = () => {
+  deleteModal.value?.showModal();
+};
+
+const confirmDelete = () => {
+  deleteModal.value?.close();
+  handleDelete();
+};
+
+const closeDeleteModal = () => {
+  deleteModal.value?.close();
+};
+
+const handleDelete = async () => {
+  try {
+    // Delete the flipbook from the database
+    const { error } = await client
+      .from("flipbooks")
+      .delete()
+      .eq("id", props.flipbook.id)
+      .eq("user_id", user.value!.id);
+
+    if (error) {
+      console.error("Error deleting flipbook:", error);
+      alert("Failed to delete flipbook. Please try again.");
+      return;
+    }
+
+    // Optionally delete the PDF file from storage
+    if (props.flipbook.pdf_file_url) {
+      try {
+        // Extract the file path from the URL
+        const url = new URL(props.flipbook.pdf_file_url);
+        const pathSegments = url.pathname.split("/");
+        const fileName = pathSegments[pathSegments.length - 1];
+        const filePath = `${user.value!.id}/${fileName}`;
+
+        await client.storage.from("uploads").remove([filePath]);
+      } catch (storageError) {
+        console.error("Error deleting file from storage:", storageError);
+        // Don't show error to user as the main deletion succeeded
+      }
+    }
+
+    // Emit the deleted event to parent component
+    emit("deleted", props.flipbook.id);
+  } catch (error) {
+    console.error("Error during deletion:", error);
+    alert("Failed to delete flipbook. Please try again.");
+  }
+};
 </script>

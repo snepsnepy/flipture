@@ -20,29 +20,30 @@
         <section v-if="isLoggedIn">
           <!-- Menu -->
           <div class="dropdown dropdown-end">
-            <button
-              type="button"
-              tabindex="0"
-              class="btn btn-ghost py-4 px-2 border-[1.5px] border-base-content rounded-full hover:bg-secondary hover:shadow-none"
+            <ActionButton
               aria-label="Toggle navigation menu"
               aria-controls="mobile-menu"
+              tabindex="0"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="black"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </button>
+              <template #icon>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="black"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M4 6h16M4 12h8m-8 6h16"
+                  />
+                </svg>
+              </template>
+            </ActionButton>
+
             <ul
               id="mobile-menu"
               class="menu menu-lg dropdown-content bg-white border border-base-300 shadow-md rounded-box z-1 mt-2 w-52 p-2 drop-shadow-md font-poppins font-bold text-sm"

@@ -2,7 +2,7 @@
   <section class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
     <header class="flex flex-col xl:flex-row gap-4 xl:h-80">
       <!-- Hero -->
-      <DashboardHero :has-flipbooks="true" />
+      <DashboardHero :has-flipbooks="true" v-if="!isMobile" />
 
       <!-- User Details -->
       <DashboardUserDetails
@@ -13,15 +13,21 @@
 
     <!-- Content -->
     <div class="flex flex-col gap-6">
-      <header class="space-y-2 md:space-y-4">
-        <div class="flex flex-row justify-between items-center">
+      <header class="space-y-6">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start gap-y-2.5 md:items-center"
+        >
           <h4
             class="font-poppins font-bold text-2xl leading-6 md:text-4xl md:leading-8"
           >
             Your Flipbooks
           </h4>
 
-          <ActionButton v-if="hasFlipbooks" text="Create Flipbook">
+          <ActionButton
+            v-if="hasFlipbooks"
+            text="Create Flipbook"
+            class="w-full md:w-fit"
+          >
             <template #icon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +82,7 @@ const user = useSupabaseUser();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
 const flipbooks = ref<Flipbook[]>([]);
+const { isMobile } = useIsMobile();
 
 onMounted(async () => {
   watchEffect(() => {

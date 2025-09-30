@@ -3,11 +3,15 @@
     class="border-2 border-base-content flex flex-row gap-x-10 bg-base-200 p-4 rounded-3xl overflow-hidden !h-full"
   >
     <section class="relative z-10 w-full flex flex-col gap-4">
-      <div class="flex flex-row w-full items-start rounded-2xl gap-4">
-        <div class="max-w-[200px] bg-base-300 rounded-2xl shadow-md">
+      <div
+        class="flex flex-col-reverse md:flex-row w-full items-start rounded-2xl gap-4"
+      >
+        <!-- Thumbnail -->
+        <div class="w-full bg-base-300 rounded-2xl shadow-md">
           <PDFThumbnail :pdf-url="flipbook.pdf_file_url!" />
         </div>
 
+        <!-- Details -->
         <header
           class="flex flex-col gap-4 p-4 w-full bg-base-100 rounded-2xl h-full shadow-md justify-between"
         >
@@ -18,12 +22,14 @@
               {{ flipbook.title }}
             </h3>
 
-            <p class="font-poppins text-base leading-4 text-base-content/80">
+            <p
+              class="font-poppins text-sm leading-3 md:text-base md:leading-4 text-base-content/80"
+            >
               {{ flipbook.description }}
             </p>
           </div>
 
-          <p class="font-poppins text-sm leading-3 text-neutral">
+          <p class="font-poppins text-xs leading-3 text-neutral">
             Created by
             <span class="font-semibold text-primary">{{
               flipbook.company_name
@@ -36,8 +42,9 @@
         </header>
       </div>
 
-      <footer class="flex flex-row w-full justify-between">
-        <div class="flex flex-row gap-2">
+      <!-- Actions -->
+      <footer class="flex flex-col md:flex-row w-full justify-between gap-y-2">
+        <div class="flex flex-row gap-2 w-full justify-between md:w-fit">
           <ActionButton type="error">
             <template #icon>
               <svg

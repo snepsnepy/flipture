@@ -59,4 +59,13 @@ const renderPDF = async () => {
 onMounted(() => {
   renderPDF();
 });
+
+// Watch for changes in pdfUrl prop and re-render
+watch(
+  () => props.pdfUrl,
+  () => {
+    renderPDF();
+  },
+  { immediate: false }
+);
 </script>

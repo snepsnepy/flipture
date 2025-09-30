@@ -71,8 +71,8 @@
         v-if="hasFlipbooks"
       >
         <DashboardFlipbook
-          v-for="(flipbook, index) in flipbooks"
-          :key="index"
+          v-for="flipbook in flipbooks"
+          :key="flipbook.id"
           :flipbook="flipbook"
           @deleted="handleFlipbookDeleted"
         />

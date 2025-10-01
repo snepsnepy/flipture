@@ -1,6 +1,10 @@
 <template>
   <a
-    class="relative inline-block text-lg group rounded-full hover:cursor-pointer"
+    class="relative inline-block text-lg group rounded-full"
+    :class="{
+      'hover:cursor-pointer': !disabled,
+      'opacity-50 pointer-events-none': disabled,
+    }"
   >
     <span
       class="relative z-10 block px-3 md:px-4 py-2 md:py-3 overflow-hidden font-medium leading-tight text-base-content transition-colors duration-300 ease-out border-2 border-base-content rounded-full group-hover:text-base-content"
@@ -14,7 +18,7 @@
         }"
       ></span>
       <span
-        class="absolute left-0 w-64 h-64 -ml-2 transition-all duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-secondary group-hover:-rotate-180 ease"
+        class="absolute left-0 w-96 h-96 -ml-2 transition-all duration-300 origin-top-right -rotate-90 -translate-x-full translate-y-12 bg-secondary group-hover:-rotate-180 ease"
         :class="{
           '!bg-base-100': type === 'primary',
           '!bg-secondary': type === 'secondary',
@@ -46,6 +50,7 @@
 interface Props {
   text?: string;
   type?: "primary" | "secondary" | "error" | "confirmation";
+  disabled?: boolean;
 }
 
 defineProps<Props>();

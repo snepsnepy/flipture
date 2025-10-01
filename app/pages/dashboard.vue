@@ -15,7 +15,7 @@
   <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
     <header class="flex flex-col xl:flex-row gap-4 xl:h-80">
       <!-- Hero -->
-      <DashboardHero :has-flipbooks="true" v-if="!isMobile" />
+      <DashboardHero :has-flipbooks="true" />
 
       <!-- User Details -->
       <DashboardUserDetails
@@ -75,6 +75,7 @@
           :key="flipbook.id"
           :flipbook="flipbook"
           @deleted="handleFlipbookDeleted"
+          @updated="handleFlipbookUpdated"
         />
       </section>
 
@@ -138,5 +139,15 @@ const handleFlipbookDeleted = (deletedFlipbookId: string) => {
   // Update the computed values
   flipbooksLength.value = flipbooks.value.length;
   hasFlipbooks.value = flipbooksLength.value > 0;
+};
+
+const handleFlipbookUpdated = (updatedFlipbook: Flipbook) => {
+  // Update the flipbook in the local state
+  const index = flipbooks.value.findIndex(
+    (flipbook) => flipbook.id === updatedFlipbook.id
+  );
+  if (index !== -1) {
+    flipbooks.value[index] = updatedFlipbook;
+  }
 };
 </script>

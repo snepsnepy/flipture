@@ -7,7 +7,9 @@
         class="flex flex-col-reverse md:flex-row w-full items-start rounded-2xl gap-4 h-full"
       >
         <!-- Thumbnail -->
-        <div class="w-full rounded-2xl shadow-md">
+        <div
+          class="w-full rounded-2xl shadow-md h-full justify-center bg-base-100 p-1 flex items-center"
+        >
           <PDFThumbnail :pdf-url="flipbook.pdf_file_url!" />
         </div>
 
@@ -29,15 +31,16 @@
             </p>
           </div>
 
-          <p class="font-poppins text-xs leading-3 text-neutral">
-            Created by
+          <p class="font-poppins text-xs leading-3 text-neutral text-center">
+            Created
+            <span class="text-neutral">for </span>
             <span class="font-semibold text-primary">{{
               flipbook.company_name
             }}</span>
-            on
-            <span class="font-semibold text-base-content">
-              {{ dayjs(flipbook.created_at).format("DD-MM-YYYY") }}
-            </span>
+            <span class="text-neutral"> on </span>
+            <span class="font-semibold text-base-content">{{
+              dayjs(flipbook.created_at).format("DD-MM-YYYY")
+            }}</span>
           </p>
         </header>
       </div>
@@ -60,7 +63,7 @@
               </svg>
             </template>
           </ActionButton>
-          <ActionButton text="Edit" type="secondary">
+          <ActionButton text="Edit" type="secondary" @click="openEditModal">
             <template #icon>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -115,14 +118,18 @@
     ref="deleteModal"
     :title="flipbook.title"
     @confirm="handleDelete"
-    @cancel="closeDeleteModal"
   />
+
+  <!-- Edit Modal -->
+  <EditModal ref="editModal" :flipbook="flipbook" @confirm="handleEdit" />
 </template>
 
 <script lang="ts" setup>
 import dayjs from "dayjs";
 import type { Flipbook } from "~/types";
+import type { Database } from "~/types/supabase";
 import DeleteModal from "~/components/DeleteModal.vue";
+import EditModal from "~/components/EditModal.vue";
 
 const props = defineProps<{
   flipbook: Flipbook;
@@ -130,18 +137,58 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   deleted: [flipbookId: string];
+  updated: [flipbook: Flipbook];
 }>();
 
-const client = useSupabaseClient();
+const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();
 const deleteModal = ref<InstanceType<typeof DeleteModal>>();
+const editModal = ref<InstanceType<typeof EditModal>>();
 
 const openDeleteModal = () => {
   deleteModal.value?.openModal();
 };
 
-const closeDeleteModal = () => {
-  deleteModal.value?.closeModal();
+const openEditModal = () => {
+  editModal.value?.openModal();
+};
+
+const handleEdit = async (data: {
+  title: string;
+  company_name: string | null;
+  description: string | null;
+}) => {
+  try {
+    // Prepare the update payload
+    const updatePayload = {
+      title: data.title,
+      company_name: data.company_name,
+      description: data.description,
+    };
+
+    // Update the flipbook in the database
+    const { data: updatedFlipbook, error } = await client
+      .from("flipbooks")
+      .update(updatePayload)
+      .eq("id", props.flipbook.id)
+      .eq("user_id", user.value!.id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error updating flipbook:", error);
+      alert("Failed to update flipbook. Please try again.");
+      return;
+    }
+
+    // Emit the updated event with the updated flipbook
+    if (updatedFlipbook) {
+      emit("updated", updatedFlipbook as Flipbook);
+    }
+  } catch (error) {
+    console.error("Error during update:", error);
+    alert("Failed to update flipbook. Please try again.");
+  }
 };
 
 const handleDelete = async () => {

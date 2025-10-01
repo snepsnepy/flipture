@@ -48,7 +48,6 @@ export const createFlipbookFormSchema = () => {
       .max(30, "Title must be less than 30 characters"),
     company: string()
       .trim()
-      .min(2, "Company name must be at least 2 characters")
       .max(20, "Company name must be less than 20 characters"),
     description: string()
       .trim()

@@ -90,7 +90,7 @@
           </ActionButton>
         </div>
 
-        <ActionButton text="Share Link" type="primary">
+        <ActionButton text="Share Link" type="primary" @click="shareLink">
           <template #icon>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -151,6 +151,22 @@ const openDeleteModal = () => {
 
 const openEditModal = () => {
   editModal.value?.openModal();
+};
+
+const shareLink = async () => {
+  try {
+    const shareUrl = `https://flipture-view.netlify.app?id=${props.flipbook.id}`;
+
+    // Check if the Clipboard API is available
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(shareUrl);
+    } 
+
+    // Optional: Show a success message to the user
+    // You can replace this with a toast notification if you have one
+  } catch (error) {
+    console.error("Failed to copy link:", error);
+  }
 };
 
 const handleEdit = async (data: {

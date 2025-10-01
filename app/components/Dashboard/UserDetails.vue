@@ -1,7 +1,7 @@
 <template>
   <!-- User Details Section -->
   <section
-    class="border-2 w-full xl:!w-1/2 h-full border-base-content rounded-3xl bg-base-100 p-6 md:p-8 flex flex-col gap-4 md:gap-6"
+    class="border-2 w-full xl:!w-1/2 h-full border-base-content rounded-3xl bg-base-200 p-4 md:p-8 flex flex-col gap-4 md:gap-6"
   >
     <!-- Header -->
     <header class="flex flex-row items-center justify-between">
@@ -13,7 +13,8 @@
             class="text-neutral text-sm leading-[14px] md:text-base md:leading-4"
             >Welcome back,
           </span>
-          <span class="text-primary text-xl md:text-3xl leading-6 font-bold"
+          <span
+            class="text-primary text-3xl leading-6 md:text-4xl md:leading-8 font-bold"
             >{{ userFullName }}
           </span>
         </h2>
@@ -59,11 +60,11 @@
       </h4>
       <section class="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
         <div
-          class="bg-accent border border-base-300 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
+          class="bg-base-100 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
         >
           <div class="flex flex-row justify-between items-center">
             <h4
-              class="text-primary-content text-sm whitespace-nowrap leading-[14px]"
+              class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
             >
               Views
             </h4>
@@ -76,7 +77,7 @@
               >
                 <g
                   fill="none"
-                  stroke="#fff"
+                  stroke="#000"
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
@@ -89,16 +90,19 @@
               </svg>
             </div>
           </div>
-          <p class="text-base text-base-100 leading-4 font-poppins">
-            <span class="font-bold">100</span> views
+          <p class="text-sm text-base-content leading-3 font-poppins">
+            <span class="font-bold text-primary text-3xl leading-[30px]"
+              >100</span
+            >
+            views
           </p>
         </div>
         <div
-          class="bg-base-100 border border-base-300 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
+          class="bg-base-100 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
         >
           <div class="flex flex-row justify-between items-center">
             <h4
-              class="text-base-content text-sm whitespace-nowrap leading-[14px]"
+              class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
             >
               Activity
             </h4>
@@ -120,8 +124,10 @@
               </svg>
             </div>
           </div>
-          <p class="text-base text-base-content leading-4 font-poppins">
-            <span class="font-bold">{{ flipbooksLength }}</span>
+          <p class="text-sm text-base-content leading-3 font-poppins">
+            <span class="font-bold text-primary text-3xl leading-[30px]">{{
+              flipbooksLength
+            }}</span>
             {{ flipbooksLength > 1 ? "flipbooks" : "flipbook" }}
           </p>
         </div>

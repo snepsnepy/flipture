@@ -1,6 +1,6 @@
 <template>
   <a
-    class="relative inline-block text-lg group rounded-full"
+    class="relative inline-block text-lg group rounded-full transition-transform duration-200 ease-out active:scale-95"
     :class="{
       'hover:cursor-pointer': !disabled,
       'opacity-50 pointer-events-none': disabled,

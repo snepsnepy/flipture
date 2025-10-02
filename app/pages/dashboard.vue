@@ -26,7 +26,7 @@
 
     <!-- Content -->
     <div class="flex flex-col gap-6">
-      <header class="space-y-6">
+      <header class="space-y-4 md:space-y-6">
         <div
           class="flex flex-col md:flex-row justify-between items-start gap-y-2.5 md:items-center"
         >

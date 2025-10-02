@@ -92,17 +92,17 @@
         </fieldset>
       </form>
       <div class="modal-action mt-0 justify-start w-full">
-        <div class="flex flex-row gap-x-2 w-full">
+        <div class="flex flex-col-reverse md:flex-row gap-2.5 w-full">
           <ActionButton
             type="secondary"
             text="Cancel"
             @click="closeModal"
-            class="w-1/2"
+            class="w-full md:w-1/2"
           />
           <ActionButton
             type="primary"
             text="Save Changes"
-            class="w-1/2"
+            class="w-full md:w-1/2"
             @click="confirmEdit"
             :disabled="!isFormValid"
           />

@@ -12,6 +12,7 @@ export default {
     fontFamily: {
       inter: "Inter",
       anton: "Anton",
+      delight: "Delight",
     },
     screens: {
       sm: "768px",

@@ -19,7 +19,7 @@
         >
           <div class="space-y-4 w-full text-center">
             <h3
-              class="font-oswald font-extrabold text-2xl leading-6 md:text-4xl md:leading-8"
+              class="font-delight font-extrabold text-2xl leading-6 md:text-4xl md:leading-8"
             >
               {{ flipbook.title }}
             </h3>
@@ -160,7 +160,7 @@ const shareLink = async () => {
     // Check if the Clipboard API is available
     if (navigator.clipboard && window.isSecureContext) {
       await navigator.clipboard.writeText(shareUrl);
-    } 
+    }
 
     // Optional: Show a success message to the user
     // You can replace this with a toast notification if you have one

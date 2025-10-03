@@ -14,13 +14,13 @@
             >Welcome back,
           </span>
           <span
-            class="text-primary text-3xl leading-6 md:text-4xl md:leading-8 font-bold"
+            class="text-primary text-3xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
             >{{ userFullName }}
           </span>
         </h2>
       </div>
 
-      <ActionButton v-if="hasFlipbooks">
+      <ActionButton>
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"

@@ -20,7 +20,7 @@
         </h2>
       </div>
 
-      <ActionButton>
+      <ActionButton @click="toastTest">
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -133,6 +133,7 @@ defineProps<{
 }>();
 
 const user = useSupabaseUser();
+const { showToast } = useToast();
 
 const userFullName = computed(() => {
   const appMetadata = user.value?.app_metadata;
@@ -144,6 +145,13 @@ const userFullName = computed(() => {
     return `${userMetadata?.firstName} ${userMetadata?.lastName}`;
   }
 });
+
+const toastTest = () => {
+  showToast("success", {
+    title: "Flipbook created successfully!",
+    description: "Your flipbook is ready to view.",
+  });
+};
 </script>
 
 <style scoped>

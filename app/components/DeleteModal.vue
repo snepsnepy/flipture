@@ -51,6 +51,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useToast } from "~/composables/useToast";
+
 defineProps<{
   title: string;
 }>();
@@ -59,6 +61,8 @@ const emit = defineEmits<{
   confirm: [];
   cancel: [];
 }>();
+
+const { showToast } = useToast();
 
 const modal = ref<HTMLDialogElement>();
 
@@ -73,6 +77,10 @@ const closeModal = () => {
 
 const confirmDelete = () => {
   modal.value?.close();
+  showToast("success", {
+    title: "File uploaded successfully!",
+    description: "Your PDF is ready for conversion.",
+  });
   emit("confirm");
 };
 

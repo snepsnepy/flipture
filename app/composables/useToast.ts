@@ -1,31 +1,16 @@
-import type { Toast, ToastOptions } from "~/types";
-
-export interface ToastItem extends ToastOptions {
-  id: string;
-  type: Toast;
-  title: string;
-  description?: string;
-  duration?: number;
-  action?: {
-    label: string;
-    onClick: () => void;
-  };
-}
+import type { Toast, ToastItem, ToastOptions } from "~/types";
 
 const toasts = ref<ToastItem[]>([]);
 
 export const useToast = () => {
-  const showToast = (
-    type: Toast,
-    options: ToastOptions & { title: string }
-  ) => {
+  const showToast = (type: Toast, options: ToastOptions) => {
     const id = Math.random().toString(36).substring(2, 9);
-    const duration = options.duration || (type === "error" ? 0 : 5000); // Errors don't auto-dismiss
+    const duration = options.duration || 2500; // Errors don't auto-dismiss
 
     const toast: ToastItem = {
       id,
       type,
-      title: options.title,
+      toastTitle: options.toastTitle,
       description: options.description,
       duration,
       action: options.action,

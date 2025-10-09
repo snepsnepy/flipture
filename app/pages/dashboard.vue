@@ -114,7 +114,8 @@ onMounted(async () => {
     const { data: flipbooksData } = await client
       .from("flipbooks")
       .select("*")
-      .eq("user_id", user.value?.id!);
+      .eq("user_id", user.value?.id!)
+      .order("created_at", { ascending: false });
 
     flipbooks.value = flipbooksData || [];
     flipbooksLength.value = flipbooks.value.length;

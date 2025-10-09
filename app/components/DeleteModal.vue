@@ -52,6 +52,7 @@
 
 <script lang="ts" setup>
 import { useToast } from "~/composables/useToast";
+import { Toast } from "~/types";
 
 defineProps<{
   title: string;
@@ -77,9 +78,8 @@ const closeModal = () => {
 
 const confirmDelete = () => {
   modal.value?.close();
-  showToast("success", {
-    title: "File uploaded successfully!",
-    description: "Your PDF is ready for conversion.",
+  showToast(Toast.INFO, {
+    toastTitle: "Flipbook successfully removed!",
   });
   emit("confirm");
 };

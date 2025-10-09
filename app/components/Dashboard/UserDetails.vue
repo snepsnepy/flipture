@@ -127,6 +127,8 @@
 </template>
 
 <script setup lang="ts">
+import { Toast } from "~/types";
+
 defineProps<{
   hasFlipbooks: boolean;
   flipbooksLength: number;
@@ -147,9 +149,8 @@ const userFullName = computed(() => {
 });
 
 const toastTest = () => {
-  showToast("success", {
-    title: "Flipbook created successfully!",
-    description: "Your flipbook is ready to view.",
+  showToast(Toast.INFO, {
+    toastTitle: "Flipbook has been removed",
   });
 };
 </script>

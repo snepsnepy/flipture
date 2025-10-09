@@ -149,6 +149,7 @@ import { createFlipbookFormSchema } from "~~/schema/form.schema";
 import { useForm, useField } from "vee-validate";
 import type { Database } from "~/types/supabase";
 import { useToast } from "~/composables/useToast";
+import { Toast } from "~/types";
 
 const { showToast } = useToast();
 
@@ -259,9 +260,8 @@ const createFlipbook = async () => {
 
     // Success - navigate to dashboard
     await navigateTo("/dashboard");
-    showToast("success", {
-      title: "Flipbook created successfully!",
-      description: "Your flipbook is ready to view.",
+    showToast(Toast.SUCCESS, {
+      toastTitle: "Flipbook created successfully!",
     });
   } catch (error: any) {
     console.error("Error creating flipbook:", error);

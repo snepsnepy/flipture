@@ -38,7 +38,9 @@
   --color-neutral: oklch(0.6429 0 0);
   --color-accent: oklch(0.4618 0.1875 263.5831);
   --color-error: oklch(0.6576 0.229 28.72);
+  --color-error-content: oklch(0.8235 0.0765 28.72);
   --color-success: oklch(0.6873 0.1792 138.02);
+  --color-success-content: oklch(0.9176 0.0666 138.02);
   --color-warning: oklch(0.7788 0.17265 66.5653);
 }
 

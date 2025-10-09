@@ -10,10 +10,14 @@ export type Flipbook = {
   user_id: string;
 };
 
-export type Toast = "success" | "error";
+export enum Toast {
+  SUCCESS = "success",
+  ERROR = "error",
+  INFO = "info",
+}
 
 export interface ToastOptions {
-  title?: string;
+  toastTitle: string;
   description?: string;
   duration?: number;
   action?: {
@@ -27,4 +31,18 @@ export interface FileInputEvents {
   uploadError: [error: string, fileName?: string];
   uploadStarted: [file: File];
   fileCleared: [];
+}
+
+// TOAST TYPES
+
+export interface ToastItem extends ToastOptions {
+  id: string;
+  type: Toast;
+  toastTitle: string;
+  description?: string;
+  duration?: number;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
 }

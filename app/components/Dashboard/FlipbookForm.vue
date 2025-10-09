@@ -7,7 +7,7 @@
           <!-- Fisrt Name -->
           <fieldset class="fieldset p-0 w-full">
             <legend
-              class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-primary-content"
+              class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
             >
               Flipbook Title
             </legend>
@@ -33,7 +33,7 @@
           <!-- LastName -->
           <fieldset class="fieldset p-0 w-full">
             <legend
-              class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-primary-content"
+              class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
             >
               Company Name
             </legend>
@@ -54,13 +54,13 @@
             >
               {{ companyErrors }}
             </span>
-            <div class="label text-secondary font-poppins">Optional</div>
+            <div class="label text-primary font-poppins">Optional</div>
           </fieldset>
         </div>
 
         <fieldset class="fieldset p-0">
           <legend
-            class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-primary-content"
+            class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
           >
             Description
           </legend>
@@ -76,7 +76,52 @@
           >
             {{ descriptionErrors }}
           </span>
-          <div class="label text-secondary font-poppins">Optional</div>
+          <div class="label text-primary font-poppins">Optional</div>
+        </fieldset>
+
+        <fieldset class="fieldset p-0">
+          <legend
+            class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+          >
+            Cover Options
+          </legend>
+          <div class="flex flex-col gap-3">
+            <div class="form-control">
+              <label class="label cursor-pointer justify-start gap-3">
+                <input
+                  type="radio"
+                  name="cover-option"
+                  class="radio radio-primary"
+                  value="first-page"
+                  v-model="coverOption"
+                />
+                <span class="label-text font-poppins text-base">
+                  Use first page of PDF as cover
+                </span>
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="label cursor-pointer justify-start gap-3">
+                <input
+                  type="radio"
+                  name="cover-option"
+                  class="radio radio-primary"
+                  value="first-last-page"
+                  v-model="coverOption"
+                />
+                <span class="label-text font-poppins text-base">
+                  Use first page as cover and last page as back cover
+                </span>
+              </label>
+            </div>
+            <div class="mt-2 p-3 bg-base-200 rounded-lg border border-base-300">
+              <p class="text-sm font-poppins text-base-content/70">
+                <span class="font-semibold">Default:</span> A standard Flipture
+                cover will be used if no option is selected.
+              </p>
+            </div>
+          </div>
+          <div class="label text-primary font-poppins">Optional</div>
         </fieldset>
       </div>
     </div>
@@ -91,7 +136,7 @@
       type="button"
       @click="createFlipbook"
       :disabled="isButtonDisabled"
-      class="'w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-bold border-2 border-base-content text-base md:text-lg transition-all duration-300 bg-secondary text-base-content hover:cursor-pointer hover:bg-primary-content hover:border-2 hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:bg-secondary-content disabled:text-base-content/50"
+      class="w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-bold border-2 border-base-content text-base md:text-lg transition-all duration-300 bg-secondary text-base-content hover:cursor-pointer hover:bg-primary-content hover:border-2 hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:bg-secondary-content disabled:text-base-content/50"
     >
       Create Flipbook
       <span v-if="isLoading" class="loading loading-spinner loading-md"></span>
@@ -115,6 +160,9 @@ const selectedFile = ref<File | null>(null);
 const uploadError = ref<string | null>(null);
 const isUploading = ref(false);
 const uploadSuccess = ref(false);
+
+// Cover option state
+const coverOption = ref<string | null>(null);
 
 const { errors } = useForm({
   validationSchema,
@@ -196,6 +244,7 @@ const createFlipbook = async () => {
         pdf_file_url: publicUrl,
         pdf_file_name: selectedFile.value.name,
         pdf_file_size: selectedFile.value.size,
+        cover_options: coverOption.value,
       })
       .single();
 

@@ -20,7 +20,7 @@
         </h2>
       </div>
 
-      <ActionButton>
+      <ActionButton @click="toastTest">
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -127,12 +127,15 @@
 </template>
 
 <script setup lang="ts">
+import { Toast } from "~/types";
+
 defineProps<{
   hasFlipbooks: boolean;
   flipbooksLength: number;
 }>();
 
 const user = useSupabaseUser();
+const { showToast } = useToast();
 
 const userFullName = computed(() => {
   const appMetadata = user.value?.app_metadata;
@@ -144,6 +147,12 @@ const userFullName = computed(() => {
     return `${userMetadata?.firstName} ${userMetadata?.lastName}`;
   }
 });
+
+const toastTest = () => {
+  showToast(Toast.INFO, {
+    toastTitle: "Flipbook has been removed",
+  });
+};
 </script>
 
 <style scoped>

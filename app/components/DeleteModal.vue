@@ -51,6 +51,9 @@
 </template>
 
 <script lang="ts" setup>
+import { useToast } from "~/composables/useToast";
+import { Toast } from "~/types";
+
 defineProps<{
   title: string;
 }>();
@@ -59,6 +62,8 @@ const emit = defineEmits<{
   confirm: [];
   cancel: [];
 }>();
+
+const { showToast } = useToast();
 
 const modal = ref<HTMLDialogElement>();
 
@@ -73,6 +78,9 @@ const closeModal = () => {
 
 const confirmDelete = () => {
   modal.value?.close();
+  showToast(Toast.INFO, {
+    toastTitle: "Flipbook successfully removed!",
+  });
   emit("confirm");
 };
 

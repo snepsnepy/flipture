@@ -220,20 +220,12 @@
 </template>
 
 <script setup lang="ts">
-interface FileInputEvents {
-  uploadSuccess: [fileName: string];
-  uploadError: [error: string, fileName?: string];
-  uploadStarted: [file: File];
-  fileCleared: [];
-}
+import type { FileInputEvents } from "~/types";
 
 // Configuration
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 5 MB (adjust based on your Supabase plan)
 
 const emit = defineEmits<FileInputEvents>();
-
-const user = useSupabaseUser();
-const supabase = useSupabaseClient();
 
 const selectedFile = ref<File | null>(null);
 const uploadError = ref<string | null>(null);
@@ -291,52 +283,6 @@ const processFile = (file: File) => {
 
   // Emit file selected event
   emit("uploadStarted", file);
-};
-
-const uploadFile = async () => {
-  if (!selectedFile.value || !user.value) {
-    const error = "No file selected or user not authenticated";
-    uploadError.value = error;
-    emit("uploadError", error);
-    return;
-  }
-
-  isUploading.value = true;
-  uploadError.value = null;
-  uploadSuccess.value = false;
-  emit("uploadStarted", selectedFile.value);
-
-  try {
-    // Create a unique filename
-    const fileExt = selectedFile.value.name.split(".").pop();
-    const fileName = `${user.value.id}/${Date.now()}_${Math.random()
-      .toString(36)
-      .substring(2)}.${fileExt}`;
-
-    // Upload file to Supabase Storage
-    const { error } = await supabase.storage
-      .from("uploads") // You'll need to create this bucket in Supabase
-      .upload(fileName, selectedFile.value, {
-        cacheControl: "3600",
-        upsert: false,
-      });
-
-    if (error) {
-      throw error;
-    }
-
-    uploadSuccess.value = true;
-    emit("uploadSuccess", fileName);
-  } catch (error: any) {
-    const errorMessage = error.message || "An error occurred during upload";
-    uploadError.value = errorMessage;
-    fileName.value = selectedFile.value?.name;
-    selectedFile.value = null;
-    uploadSuccess.value = false;
-    emit("uploadError", errorMessage, fileName.value);
-  } finally {
-    isUploading.value = false;
-  }
 };
 
 const formatFileSize = (bytes: number): string => {

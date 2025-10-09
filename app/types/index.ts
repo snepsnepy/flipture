@@ -9,3 +9,40 @@ export type Flipbook = {
   pdf_file_size: number | null;
   user_id: string;
 };
+
+export enum Toast {
+  SUCCESS = "success",
+  ERROR = "error",
+  INFO = "info",
+}
+
+export interface ToastOptions {
+  toastTitle: string;
+  description?: string;
+  duration?: number;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
+}
+
+export interface FileInputEvents {
+  uploadSuccess: [fileName: string];
+  uploadError: [error: string, fileName?: string];
+  uploadStarted: [file: File];
+  fileCleared: [];
+}
+
+// TOAST TYPES
+
+export interface ToastItem extends ToastOptions {
+  id: string;
+  type: Toast;
+  toastTitle: string;
+  description?: string;
+  duration?: number;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
+}

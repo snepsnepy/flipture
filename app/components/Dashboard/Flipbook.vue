@@ -18,16 +18,11 @@
           class="flex flex-col gap-4 p-4 w-full bg-base-100 rounded-2xl h-full shadow-md justify-between"
         >
           <div class="space-y-4 w-full text-center">
-            <h3
+            <p
               class="font-delight font-extrabold text-2xl leading-6 md:text-4xl md:leading-8"
+              :class="titleHasSpaces ? 'break-words' : 'break-all'"
             >
               {{ flipbook.title }}
-            </h3>
-
-            <p
-              class="font-poppins text-sm leading-3 md:text-base md:leading-4 text-base-content/80"
-            >
-              {{ flipbook.description }}
             </p>
           </div>
 
@@ -139,6 +134,11 @@ const emit = defineEmits<{
   deleted: [flipbookId: string];
   updated: [flipbook: Flipbook];
 }>();
+
+// Smart text breaking: break by spaces if available, otherwise break-all
+const titleHasSpaces = computed(() => {
+  return props.flipbook.title.includes(" ");
+});
 
 const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();

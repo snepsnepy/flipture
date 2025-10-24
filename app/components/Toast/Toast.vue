@@ -77,8 +77,6 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const { dismissToast } = useToast();
-
 const alertClasses = computed(() => {
   const baseClasses = "rounded-2xl border-2 px-4";
 

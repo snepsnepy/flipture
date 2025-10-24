@@ -113,9 +113,10 @@
 </template>
 
 <script lang="ts" setup>
-import type { Flipbook } from "~/types";
+import { Toast, type Flipbook } from "~/types";
 import { createFlipbookFormSchema } from "~~/schema/form.schema";
 import { useForm, useField } from "vee-validate";
+const { showToast } = useToast();
 
 const props = defineProps<{
   flipbook: Flipbook;
@@ -176,6 +177,9 @@ const confirmEdit = () => {
     title: title.value,
     company_name: company.value?.trim() || null,
     description: description.value?.trim() || null,
+  });
+  showToast(Toast.INFO, {
+    toastTitle: "Flipbook updated successfully",
   });
 };
 

@@ -1,38 +1,233 @@
 <template>
   <div class="modal" :class="{ 'modal-open': isOpen }">
-    <div class="modal-box w-11/12 max-w-4xl">
-      <div class="flex justify-between items-center mb-6">
+    <div class="fixed inset-0 bg-base-content/60 z-40"></div>
+    <div
+      class="modal-box max-w-4xl rounded-3xl relative z-50 flex flex-col gap-y-6"
+    >
+      <!-- Modal Header -->
+      <div class="flex justify-between items-center">
         <h3 class="font-poppins font-bold text-2xl">Create New Flipbook</h3>
-        <button class="btn btn-sm btn-circle btn-ghost" @click="closeModal">
-          ✕
+        <button
+          class="btn btn-sm btn-circle btn-ghost p-1 border border-base-content"
+          @click="closeModal"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <g
+              fill="none"
+              stroke="#000"
+              stroke-dasharray="16"
+              stroke-dashoffset="16"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+            >
+              <path d="M7 7l10 10">
+                <animate
+                  fill="freeze"
+                  attributeName="stroke-dashoffset"
+                  dur="0.4s"
+                  values="16;0"
+                />
+              </path>
+              <path d="M17 7l-10 10">
+                <animate
+                  fill="freeze"
+                  attributeName="stroke-dashoffset"
+                  begin="0.4s"
+                  dur="0.4s"
+                  values="16;0"
+                />
+              </path>
+            </g>
+          </svg>
         </button>
       </div>
 
-      <!-- DaisyUI Steps -->
-      <div class="steps w-full mb-8">
-        <div
-          class="step"
-          :class="{ 'step-primary': flipbookStore.currentStep >= 1 }"
-        >
-          Upload PDF
-        </div>
-        <div
-          class="step"
-          :class="{ 'step-primary': flipbookStore.currentStep >= 2 }"
-        >
-          Details
-        </div>
-        <div
-          class="step"
-          :class="{ 'step-primary': flipbookStore.currentStep >= 3 }"
-        >
-          Cover Options
-        </div>
+      <!-- Custom Stepper -->
+      <div v-if="!showSuccess" class="pb-4">
+        <Stepper
+          :active-step="flipbookStore.currentStep - 1"
+          :steps="stepperSteps"
+        />
       </div>
 
       <!-- Dynamic Step Content -->
-      <div class="min-h-[400px]">
+      <div class="min-h-[550px]">
+        <!-- Success State -->
+        <div
+          v-if="showSuccess"
+          class="flex flex-col items-center justify-center min-h-[400px] p-6"
+        >
+          <div class="items-center flex flex-col gap-y-8">
+            <div class="gap-y-2 text-center items-center flex flex-col">
+              <!-- Success Icon -->
+              <div
+                class="rounded-full flex w-fit items-center justify-center border-2 border-success p-4"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="96"
+                  height="96"
+                  viewBox="0 0 24 24"
+                >
+                  <mask id="SVGkzXYXbbR">
+                    <g
+                      fill="none"
+                      stroke="#fff"
+                      stroke-dasharray="24"
+                      stroke-dashoffset="24"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    >
+                      <path d="M2 13.5l4 4l10.75 -10.75">
+                        <animate
+                          fill="freeze"
+                          attributeName="stroke-dashoffset"
+                          dur="0.4s"
+                          values="24;0"
+                        />
+                      </path>
+                      <path
+                        stroke="#000"
+                        stroke-width="6"
+                        d="M7.5 13.5l4 4l10.75 -10.75"
+                      >
+                        <animate
+                          fill="freeze"
+                          attributeName="stroke-dashoffset"
+                          begin="0.4s"
+                          dur="0.4s"
+                          values="24;0"
+                        />
+                      </path>
+                      <path d="M7.5 13.5l4 4l10.75 -10.75">
+                        <animate
+                          fill="freeze"
+                          attributeName="stroke-dashoffset"
+                          begin="0.4s"
+                          dur="0.4s"
+                          values="24;0"
+                        />
+                      </path>
+                    </g>
+                  </mask>
+                  <rect
+                    width="24"
+                    height="24"
+                    fill="#5cb338"
+                    mask="url(#SVGkzXYXbbR)"
+                  />
+                </svg>
+              </div>
+
+              <!-- Success Message -->
+              <h4
+                class="font-poppins font-bold text-2xl leading-6 text-success"
+              >
+                Flipbook Created Successfully!
+              </h4>
+              <p class="font-poppins text-neutral">
+                Your flipbook
+                <span class="text-primary">{{
+                  flipbookStore.formData.title
+                }}</span>
+                has been created and is ready to view.
+              </p>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="bg-base-300 rounded-2xl p-6 flex flex-col gap-y-4">
+              <h5 class="font-poppins font-semibold text-lg leading-4">
+                What's Next?
+              </h5>
+              <ul class="text-sm space-y-2 text-left font-poppins">
+                <li class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="#000"
+                      fill-rule="evenodd"
+                      d="M20.207 6.793a1 1 0 0 1 0 1.414l-9.5 9.5a1 1 0 0 1-1.414 0l-4.5-4.5a1 1 0 0 1 1.414-1.414L10 15.586l8.793-8.793a1 1 0 0 1 1.414 0"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  Your flipbook is now available in your dashboard
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="#000"
+                      fill-rule="evenodd"
+                      d="M20.207 6.793a1 1 0 0 1 0 1.414l-9.5 9.5a1 1 0 0 1-1.414 0l-4.5-4.5a1 1 0 0 1 1.414-1.414L10 15.586l8.793-8.793a1 1 0 0 1 1.414 0"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  You can share it with others or embed it on your website
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="#000"
+                      fill-rule="evenodd"
+                      d="M20.207 6.793a1 1 0 0 1 0 1.414l-9.5 9.5a1 1 0 0 1-1.414 0l-4.5-4.5a1 1 0 0 1 1.414-1.414L10 15.586l8.793-8.793a1 1 0 0 1 1.414 0"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  Edit settings anytime from the flipbook menu
+                </li>
+              </ul>
+            </div>
+
+            <!-- Close Button -->
+            <ActionButton
+              text="View My Flipbooks"
+              type="primary"
+              @click="handleSuccessClose"
+            >
+              <template #icon>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="none"
+                    stroke="#000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11 8h5m0 4h-5m5 4h-5m-5 4h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2m2-4"
+                  />
+                </svg>
+              </template>
+            </ActionButton>
+          </div>
+        </div>
+
+        <!-- Regular Step Content -->
         <component
+          v-else
           :is="currentStepComponent"
           @next="flipbookStore.nextStep"
           @prev="flipbookStore.prevStep"
@@ -43,42 +238,84 @@
       </div>
 
       <!-- Navigation Buttons -->
-      <div class="modal-action">
-        <button
+      <div v-if="!showSuccess" class="modal-action">
+        <ActionButton
           v-if="flipbookStore.currentStep > 1"
-          class="btn btn-outline"
+          type="secondary"
           @click="flipbookStore.prevStep"
         >
-          Previous
-        </button>
-        <button
+          <template #icon>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 512 512"
+            >
+              <path
+                fill="none"
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="48"
+                d="M244 400L100 256l144-144M120 256h292"
+              />
+            </svg>
+          </template>
+        </ActionButton>
+
+        <ActionButton
           v-if="flipbookStore.currentStep < 3"
-          class="btn btn-primary"
+          text="Next"
+          type="primary"
           @click="flipbookStore.nextStep"
           :disabled="!canProceed"
-          :class="{
-            'btn-error': flipbookStore.currentStep === 2 && hasValidationErrors,
-          }"
-          :title="
-            flipbookStore.currentStep === 2 && hasValidationErrors
-              ? 'Please fix validation errors before proceeding'
-              : ''
-          "
         >
-          Next
-        </button>
-        <button
+          <template #icon>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="none"
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 12H5m7 7l7-7l-7-7"
+              />
+            </svg>
+          </template>
+        </ActionButton>
+
+        <ActionButton
           v-if="flipbookStore.currentStep === 3"
-          class="btn btn-primary"
+          text="Create Flipbook"
+          type="secondary"
           @click="createFlipbook"
           :disabled="isLoading"
         >
-          <span
-            v-if="isLoading"
-            class="loading loading-spinner loading-sm"
-          ></span>
-          Create Flipbook
-        </button>
+          <template #icon>
+            <span
+              v-if="isLoading"
+              class="loading loading-spinner loading-sm"
+            ></span>
+            <svg
+              v-else
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="#000"
+                d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5v2H5v14h14v-5z"
+              />
+              <path fill="#000" d="M21 7h-4V3h-2v4h-4v2h4v4h2V9h4z" />
+            </svg>
+          </template>
+        </ActionButton>
       </div>
     </div>
   </div>
@@ -94,12 +331,23 @@ import { useFlipbookStore } from "~/stores/useFlipbookStore";
 import FileUploadStep from "~/components/CreateFlipbookModal/steps/FileUploadStep.vue";
 import FlipbookDetailsStep from "~/components/CreateFlipbookModal/steps/FlipbookDetailsStep.vue";
 import CoverOptionsStep from "~/components/CreateFlipbookModal/steps/CoverOptionsStep.vue";
+import Stepper from "~/components/Stepper.vue";
 import type { FlipbookFormData } from "~/types";
 
 const { createFlipbook: createFlipbookFn, isLoading } = useCreateFlipbook();
 const flipbookStore = useFlipbookStore();
 
-const props = defineProps<{
+// Stepper steps configuration
+const stepperSteps = [
+  { stepTitle: "Upload PDF" },
+  { stepTitle: "Details" },
+  { stepTitle: "Cover Options" },
+];
+
+// Success state
+const showSuccess = ref(false);
+
+defineProps<{
   isOpen: boolean;
 }>();
 
@@ -177,6 +425,11 @@ watch(
 );
 
 const closeModal = () => {
+  // Only reset form if we're in success state
+  if (showSuccess.value) {
+    showSuccess.value = false;
+    flipbookStore.resetForm();
+  }
   emit("close");
   flipbookStore.closeModal();
 };
@@ -194,9 +447,16 @@ const createFlipbook = async () => {
   const result = await createFlipbookFn(flipbookStore.formData);
 
   if (result.success) {
+    showSuccess.value = true;
     emit("success");
-    flipbookStore.resetForm();
-    closeModal();
   }
+};
+
+// Handle success close
+const handleSuccessClose = () => {
+  showSuccess.value = false;
+  flipbookStore.resetForm();
+  emit("close");
+  flipbookStore.closeModal();
 };
 </script>

@@ -1,8 +1,10 @@
 <template>
-  <div class="flex flex-col gap-6 p-6">
-    <div class="text-center mb-6">
-      <h4 class="font-poppins font-bold text-2xl mb-2">Flipbook Details</h4>
-      <p class="font-poppins text-base-content/70">
+  <div class="flex flex-col gap-6">
+    <div class="text-center space-y-2">
+      <h4 class="font-poppins font-bold text-2xl leading-6">
+        Flipbook Details
+      </h4>
+      <p class="font-poppins text-neutral">
         Provide information about your flipbook
       </p>
     </div>

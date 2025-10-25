@@ -64,11 +64,6 @@ export const useCreateFlipbook = () => {
         throw new Error(`Database error: ${error.message}`);
       }
 
-      // Success
-      showToast(Toast.SUCCESS, {
-        toastTitle: "Flipbook created successfully!",
-      });
-
       return { success: true, error: null };
     } catch (error: any) {
       console.error("Error creating flipbook:", error);

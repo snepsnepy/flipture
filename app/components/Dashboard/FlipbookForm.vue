@@ -157,7 +157,6 @@ const user = useSupabaseUser();
 // File upload state
 const selectedFile = ref<File | null>(null);
 const uploadError = ref<string | null>(null);
-const isUploading = ref(false);
 const uploadSuccess = ref(false);
 
 // Cover option state
@@ -211,8 +210,6 @@ const createFlipbook = async () => {
     return;
   }
 
-  isUploading.value = true;
-
   const result = await createFlipbookFn({
     file: selectedFile.value,
     title: title.value,
@@ -227,7 +224,5 @@ const createFlipbook = async () => {
   } else {
     uploadError.value = result.error || "Unknown error occurred";
   }
-
-  isUploading.value = false;
 };
 </script>

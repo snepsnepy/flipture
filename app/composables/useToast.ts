@@ -5,7 +5,7 @@ const toasts = ref<ToastItem[]>([]);
 export const useToast = () => {
   const showToast = (type: Toast, options: ToastOptions) => {
     const id = Math.random().toString(36).substring(2, 9);
-    const duration = options.duration || 2500; // Errors don't auto-dismiss
+    const duration = options.duration || 3000; // Errors don't auto-dismiss
 
     const toast: ToastItem = {
       id,

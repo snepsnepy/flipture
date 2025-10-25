@@ -225,15 +225,33 @@ import type { FileInputEvents } from "~/types";
 // Configuration
 const MAX_FILE_SIZE = 3 * 1024 * 1024; // 5 MB (adjust based on your Supabase plan)
 
+const props = defineProps<{
+  initialFile?: File | null;
+}>();
+
 const emit = defineEmits<FileInputEvents>();
 
-const selectedFile = ref<File | null>(null);
+const selectedFile = ref<File | null>(props.initialFile || null);
 const uploadError = ref<string | null>(null);
 const isUploading = ref(false);
 const uploadSuccess = ref(false);
 const isDragOver = ref(false);
 const fileInput = ref<HTMLInputElement>();
 const fileName = ref<string>();
+
+// Watch for prop changes to update selectedFile
+watch(
+  () => props.initialFile,
+  (newFile) => {
+    selectedFile.value = newFile || null;
+    if (newFile) {
+      uploadSuccess.value = true;
+      uploadError.value = null;
+    } else {
+      uploadSuccess.value = false;
+    }
+  }
+);
 
 const handleFileChange = (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0];

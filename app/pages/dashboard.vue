@@ -40,7 +40,7 @@
             v-if="hasFlipbooks"
             text="Create Flipbook"
             class="w-full md:w-fit hover:cursor-pointer"
-            @click="navigateToNewFlipbook"
+            @click="flipbookStore.openModal"
           >
             <template #icon>
               <svg
@@ -83,10 +83,18 @@
       <DashboardNoItems v-else />
     </div>
   </section>
+
+  <!-- Create Flipbook Modal -->
+  <CreateFlipbookModal
+    :is-open="flipbookStore.isModalOpen"
+    @close="flipbookStore.closeModal"
+    @success="handleFlipbookCreated"
+  />
 </template>
 
 <script setup lang="ts">
 import type { Flipbook } from "~/types";
+import { useFlipbookStore } from "~/stores/useFlipbookStore";
 
 definePageMeta({
   layout: "base",
@@ -95,6 +103,7 @@ definePageMeta({
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+const flipbookStore = useFlipbookStore();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
 const flipbooks = ref<Flipbook[]>([]);
@@ -127,8 +136,21 @@ onMounted(async () => {
   }
 });
 
-const navigateToNewFlipbook = () => {
-  return navigateTo({ name: "new-flipbook" });
+const handleFlipbookCreated = async () => {
+  // Refresh the flipbooks list
+  try {
+    const { data: flipbooksData } = await client
+      .from("flipbooks")
+      .select("*")
+      .eq("user_id", user.value?.id!)
+      .order("created_at", { ascending: false });
+
+    flipbooks.value = flipbooksData || [];
+    flipbooksLength.value = flipbooks.value.length;
+    hasFlipbooks.value = flipbooksLength.value > 0;
+  } catch (error) {
+    console.error("Error refreshing flipbooks:", error);
+  }
 };
 
 const handleFlipbookDeleted = (deletedFlipbookId: string) => {

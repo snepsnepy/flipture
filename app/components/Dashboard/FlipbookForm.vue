@@ -147,16 +147,11 @@
 <script setup lang="ts">
 import { createFlipbookFormSchema } from "~~/schema/form.schema";
 import { useForm, useField } from "vee-validate";
-import type { Database } from "~/types/supabase";
-import { useToast } from "~/composables/useToast";
-import { Toast } from "~/types";
+import { useCreateFlipbook } from "~/composables/useCreateFlipbook";
 
-const { showToast } = useToast();
-
-const isLoading = ref(false);
+const { createFlipbook: createFlipbookFn, isLoading } = useCreateFlipbook();
 const validationSchema = createFlipbookFormSchema();
 
-const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();
 
 // File upload state
@@ -216,58 +211,23 @@ const createFlipbook = async () => {
     return;
   }
 
-  isLoading.value = true;
   isUploading.value = true;
 
-  try {
-    // Upload file to Supabase Storage
-    const fileExt = selectedFile.value.name.split(".").pop();
-    const fileName = `${user.value.id}/${Date.now()}.${fileExt}`;
+  const result = await createFlipbookFn({
+    file: selectedFile.value,
+    title: title.value,
+    company: company.value,
+    description: description.value,
+    coverOption: coverOption.value,
+  });
 
-    const { error: uploadError } = await client.storage
-      .from("uploads")
-      .upload(fileName, selectedFile.value);
-
-    if (uploadError) {
-      throw new Error(`Upload failed: ${uploadError.message}`);
-    }
-
-    // Get public URL for the uploaded file
-    const {
-      data: { publicUrl },
-    } = client.storage.from("uploads").getPublicUrl(fileName);
-
-    // Create flipbook record with file data
-    const { error } = await client
-      .from("flipbooks")
-      .insert({
-        title: title.value,
-        company_name: company.value,
-        description: description.value,
-        user_id: user.value.id,
-        pdf_file_url: publicUrl,
-        pdf_file_name: selectedFile.value.name,
-        pdf_file_size: selectedFile.value.size,
-        cover_options: coverOption.value,
-      })
-      .single();
-
-    if (error) {
-      // If database insert fails, clean up uploaded file
-      await client.storage.from("uploads").remove([fileName]);
-      throw new Error(`Database error: ${error.message}`);
-    }
-
+  if (result.success) {
     // Success - navigate to dashboard
     await navigateTo("/dashboard");
-    showToast(Toast.SUCCESS, {
-      toastTitle: "Flipbook created successfully!",
-    });
-  } catch (error: any) {
-    console.error("Error creating flipbook:", error);
-    uploadError.value = error.message;
-    isLoading.value = false;
-    isUploading.value = false;
+  } else {
+    uploadError.value = result.error || "Unknown error occurred";
   }
+
+  isUploading.value = false;
 };
 </script>

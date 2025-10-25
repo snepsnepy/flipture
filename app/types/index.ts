@@ -33,6 +33,14 @@ export interface FileInputEvents {
   fileCleared: [];
 }
 
+export interface FlipbookFormData {
+  file: File | null;
+  title: string;
+  company: string;
+  description: string;
+  coverOption: string | null;
+}
+
 // TOAST TYPES
 
 export interface ToastItem extends ToastOptions {
@@ -46,3 +54,11 @@ export interface ToastItem extends ToastOptions {
     onClick: () => void;
   };
 }
+
+export type FormData = {
+  file: File | null;
+  title: string;
+  company: string;
+  description: string;
+  coverOption: string | null;
+};

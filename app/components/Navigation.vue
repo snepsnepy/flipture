@@ -58,6 +58,14 @@
                   >Dashboard</NuxtLink
                 >
               </li>
+              <li>
+                <NuxtLink
+                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
+                  to="/settings"
+                  @click="close"
+                  >Settings</NuxtLink
+                >
+              </li>
               <li role="none">
                 <a
                   class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"

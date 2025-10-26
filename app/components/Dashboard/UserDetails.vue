@@ -20,7 +20,7 @@
         </h2>
       </div>
 
-      <ActionButton @click="toastTest">
+      <ActionButton @click="navigateToSettings">
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -148,10 +148,8 @@ const userFullName = computed(() => {
   }
 });
 
-const toastTest = () => {
-  showToast(Toast.INFO, {
-    toastTitle: "Flipbook has been removed",
-  });
+const navigateToSettings = () => {
+  return navigateTo({ name: "settings" });
 };
 </script>
 

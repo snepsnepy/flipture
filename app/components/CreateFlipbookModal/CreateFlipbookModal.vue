@@ -6,7 +6,9 @@
     >
       <!-- Modal Header -->
       <div class="flex justify-between items-center">
-        <h3 class="font-poppins font-bold text-2xl">Create New Flipbook</h3>
+        <h3 class="font-delight font-semibold text-xl leading-5 md:text-2xl">
+          Create New Flipbook
+        </h3>
         <button
           class="btn btn-sm btn-circle btn-ghost p-1 border border-base-content"
           @click="closeModal"
@@ -57,11 +59,11 @@
       </div>
 
       <!-- Dynamic Step Content -->
-      <div class="min-h-[550px]">
+      <div class="md:min-h-[550px]">
         <!-- Success State -->
         <div
           v-if="showSuccess"
-          class="flex flex-col items-center justify-center min-h-[400px] p-6"
+          class="flex flex-col items-center justify-center md:min-h-[400px]"
         >
           <div class="items-center flex flex-col gap-y-8">
             <div class="gap-y-2 text-center items-center flex flex-col">
@@ -128,11 +130,13 @@
 
               <!-- Success Message -->
               <h4
-                class="font-poppins font-bold text-2xl leading-6 text-success"
+                class="font-poppins font-bold text-xl md:text-2xl leading-6 text-success"
               >
                 Flipbook Created Successfully!
               </h4>
-              <p class="font-poppins text-neutral">
+              <p
+                class="font-poppins text-neutral text-sm md:text-base leading-4"
+              >
                 Your flipbook
                 <span class="text-primary">{{
                   flipbookStore.formData.title
@@ -142,57 +146,73 @@
             </div>
 
             <!-- Additional Info -->
-            <div class="bg-base-300 rounded-2xl p-6 flex flex-col gap-y-4">
-              <h5 class="font-poppins font-semibold text-lg leading-4">
+            <div
+              class="bg-primary/10 rounded-2xl p-6 flex flex-col gap-y-4 shadow-md border border-primary"
+            >
+              <h5
+                class="font-poppins font-semibold text-primary text-base md:text-lg leading-4"
+              >
                 What's Next?
               </h5>
-              <ul class="text-sm space-y-2 text-left font-poppins">
-                <li class="flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="#000"
-                      fill-rule="evenodd"
-                      d="M20.207 6.793a1 1 0 0 1 0 1.414l-9.5 9.5a1 1 0 0 1-1.414 0l-4.5-4.5a1 1 0 0 1 1.414-1.414L10 15.586l8.793-8.793a1 1 0 0 1 1.414 0"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
+              <ul class="text-sm space-y-2 text-left font-poppins text-primary">
+                <li class="flex items-start gap-2">
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="#0046ff"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m5 12l5 5L20 7"
+                      />
+                    </svg>
+                  </div>
                   Your flipbook is now available in your dashboard
                 </li>
-                <li class="flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="#000"
-                      fill-rule="evenodd"
-                      d="M20.207 6.793a1 1 0 0 1 0 1.414l-9.5 9.5a1 1 0 0 1-1.414 0l-4.5-4.5a1 1 0 0 1 1.414-1.414L10 15.586l8.793-8.793a1 1 0 0 1 1.414 0"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
+                <li class="flex items-start gap-2">
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="#0046ff"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m5 12l5 5L20 7"
+                      />
+                    </svg>
+                  </div>
                   You can share it with others or embed it on your website
                 </li>
-                <li class="flex items-center gap-2">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="#000"
-                      fill-rule="evenodd"
-                      d="M20.207 6.793a1 1 0 0 1 0 1.414l-9.5 9.5a1 1 0 0 1-1.414 0l-4.5-4.5a1 1 0 0 1 1.414-1.414L10 15.586l8.793-8.793a1 1 0 0 1 1.414 0"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
+                <li class="flex items-start gap-2">
+                  <div>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        fill="none"
+                        stroke="#0046ff"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="m5 12l5 5L20 7"
+                      />
+                    </svg>
+                  </div>
                   Edit settings anytime from the flipbook menu
                 </li>
               </ul>

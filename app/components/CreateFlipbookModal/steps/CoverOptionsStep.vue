@@ -1,105 +1,155 @@
 <template>
   <div class="flex flex-col gap-8">
     <div class="text-center space-y-2">
-      <h4 class="font-poppins font-bold text-2xl leading-6">Cover Options</h4>
-      <p class="font-poppins text-neutral">
+      <h4 class="font-delight font-semibold text-2xl leading-6">
+        Cover Options
+      </h4>
+      <p class="font-delight text-neutral text-sm md:text-base">
         Choose how you want your flipbook cover to look
       </p>
     </div>
 
-    <fieldset class="fieldset p-0">
-      <legend
-        class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-      >
-        Cover Options
-      </legend>
-      <div class="flex flex-col gap-3">
-        <div class="form-control">
-          <label class="label cursor-pointer justify-start gap-3">
-            <input
-              type="radio"
-              name="cover-option"
-              class="radio border-base-content checked:text-blue-600 checked:border-base-content"
-              value="default"
-              v-model="localFormData.coverOption"
-              @change="updateFormData"
+    <!-- Info Box -->
+    <div
+      class="bg-primary/10 border border-primary rounded-lg p-3 flex gap-2 items-start"
+    >
+      <div class="pt-0.5">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          viewBox="0 0 48 48"
+        >
+          <g fill="none">
+            <path
+              stroke="#0046ff"
+              stroke-linejoin="round"
+              stroke-width="4"
+              d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"
             />
-            <span class="label-text font-poppins text-base">
-              Use default Flipture cover
-            </span>
-          </label>
-        </div>
-        <div class="form-control">
-          <label class="label cursor-pointer justify-start gap-3">
-            <input
-              type="radio"
-              name="cover-option"
-              class="radio border-base-content checked:text-blue-600 checked:border-base-content"
-              value="first-page"
-              v-model="localFormData.coverOption"
-              @change="updateFormData"
+            <path
+              fill="#0046ff"
+              fill-rule="evenodd"
+              d="M24 11a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5"
+              clip-rule="evenodd"
             />
-            <span class="label-text font-poppins text-base">
-              Use first page of PDF as cover
-            </span>
-          </label>
-        </div>
-        <div class="form-control">
-          <label class="label cursor-pointer justify-start gap-3">
-            <input
-              type="radio"
-              name="cover-option"
-              class="radio border-base-content checked:text-blue-600 checked:border-base-content"
-              value="first-last-page"
-              v-model="localFormData.coverOption"
-              @change="updateFormData"
+            <path
+              stroke="#0046ff"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="4"
+              d="M24.5 34V20h-2M21 34h7"
             />
-            <span class="label-text font-poppins text-base">
-              Use first page as cover and last page as back cover
-            </span>
-          </label>
-        </div>
-        <div class="mt-2 p-3 bg-warning/10 rounded-lg border border-warning">
-          <p class="text-sm leading-4 font-poppins text-warning">
-            <span class="font-semibold">Note:</span> This setting can be
-            modified later in the flipbook settings.
-          </p>
-        </div>
+          </g>
+        </svg>
+      </div>
+      <p class="text-sm leading-base text-primary font-poppins">
+        <span class="font-semibold">Flipture Branded Cover</span> uses our
+        branding, while <span class="font-semibold">PDF Cover</span> options use
+        the first or last pages from your uploaded PDF file as covers.
+      </p>
+    </div>
+
+    <fieldset class="p-0 flex flex-col gap-2 md:gap-3 max-w-full min-w-0">
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-3">
+          <input
+            type="radio"
+            name="cover-option"
+            class="radio border-base-content checked:text-blue-600 checked:border-base-content"
+            value="default"
+            v-model="localFormData.coverOption"
+            @change="updateFormData"
+          />
+          <span
+            class="label-text font-poppins text-sm md:text-base md:leading-4"
+          >
+            Flipture Branded Cover
+          </span>
+        </label>
+      </div>
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-3">
+          <input
+            type="radio"
+            name="cover-option"
+            class="radio border-base-content checked:text-blue-600 checked:border-base-content"
+            value="first-page"
+            v-model="localFormData.coverOption"
+            @change="updateFormData"
+          />
+          <span
+            class="label-text font-poppins text-sm md:text-base md:leading-4"
+          >
+            First Page as Cover
+          </span>
+        </label>
+      </div>
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-3">
+          <input
+            type="radio"
+            name="cover-option"
+            class="radio border-base-content checked:text-blue-600 checked:border-base-content"
+            value="first-last-page"
+            v-model="localFormData.coverOption"
+            @change="updateFormData"
+          />
+          <span
+            class="label-text font-poppins text-sm md:text-base md:leading-4"
+          >
+            First and Last Pages as Covers
+          </span>
+        </label>
+      </div>
+      <div class="mt-2 p-3 bg-warning/10 rounded-lg border border-warning">
+        <p class="text-sm leading-4 font-poppins text-warning">
+          <span class="font-semibold">Note:</span> This setting can be modified
+          later in the flipbook settings.
+        </p>
       </div>
     </fieldset>
 
     <!-- Summary -->
-    <div class="p-4 bg-base-200 rounded-lg flex flex-col gap-y-4">
+    <!-- <div
+      class="p-4 bg-base-200 border border-base-300 rounded-lg flex flex-col gap-y-4"
+    >
       <h5 class="font-poppins font-semibold text-lg leading-4 mb-3">Summary</h5>
-      <div class="space-y-2.5 text-base leading-4">
-        <div class="flex justify-between">
+      <div class="space-y-3 text-base leading-4">
+        <div class="flex flex-col md:flex-row gap-y-1 justify-between">
           <span class="text-base-content">Uploaded File:</span>
           <span class="font-medium">{{
             formData.file?.name || "No file selected"
           }}</span>
         </div>
-        <div class="flex justify-between">
+        <div class="flex flex-col md:flex-row gap-y-1 justify-between">
           <span class="text-base-content">Flipbook Title:</span>
           <span class="font-medium">{{
             formData.title || "Not specified"
           }}</span>
         </div>
-        <div v-if="formData.company" class="flex justify-between">
+        <div
+          v-if="formData.company"
+          class="flex flex-col md:flex-row gap-y-1 justify-between"
+        >
           <span class="text-base-content">Company Name:</span>
           <span class="font-medium">{{ formData.company }}</span>
         </div>
-        <div v-if="formData.description" class="flex justify-between">
+        <div
+          v-if="formData.description"
+          class="flex flex-col md:flex-row gap-y-1 justify-between"
+        >
           <span class="text-base-content">Flipbook Description:</span>
           <span class="font-medium">{{ formData.description }}</span>
         </div>
-        <div class="flex justify-between">
+        <div class="flex flex-col md:flex-row gap-y-1 justify-between">
           <span class="text-base-content">Flipbook Cover:</span>
           <span class="font-medium">
             {{ getCoverOptionText(formData.coverOption) }}
           </span>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -135,13 +185,13 @@ const updateFormData = () => {
 const getCoverOptionText = (option: string | null) => {
   switch (option) {
     case "default":
-      return "Default Flipture cover";
+      return "Flipture Branded Cover";
     case "first-page":
-      return "First page as cover";
+      return "PDF Cover Only (Front)";
     case "first-last-page":
-      return "First and last page as covers";
+      return "PDF Cover + Back Cover";
     default:
-      return "Default Flipture cover";
+      return "Flipture Branded Cover";
   }
 };
 </script>

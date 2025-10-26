@@ -93,9 +93,10 @@
 
         <section class="flex justify-between w-full items-center">
           <div class="flex flex-col gap-1">
-            <span class="font-semibold text-base leading-4 font-poppins">{{
-              selectedFile.name
-            }}</span>
+            <span
+              class="font-semibold text-base leading-4 font-poppins break-all"
+              >{{ selectedFile.name }}</span
+            >
 
             <div class="flex flex-row gap-2">
               <span class="text-base-content/50 font-medium font-poppins">{{

@@ -1,8 +1,10 @@
 <template>
   <div class="flex flex-col items-center justify-center gap-y-6">
     <div class="text-center space-y-2">
-      <h4 class="font-poppins font-bold text-2xl leading-6">Upload Your PDF</h4>
-      <p class="font-poppins text-neutral">
+      <h4 class="font-delight font-semibold text-2xl leading-6">
+        Upload Your PDF
+      </h4>
+      <p class="font-delight text-neutral text-sm md:text-base">
         Select the PDF file you want to convert into a flipbook
       </p>
     </div>

@@ -1,21 +1,21 @@
 <template>
   <div class="flex flex-col gap-6">
     <div class="text-center space-y-2">
-      <h4 class="font-poppins font-bold text-2xl leading-6">
+      <h4 class="font-delight font-semibold text-2xl leading-6">
         Flipbook Details
       </h4>
-      <p class="font-poppins text-neutral">
+      <p class="font-delight text-neutral text-sm md:text-base">
         Provide information about your flipbook
       </p>
     </div>
 
-    <div class="flex flex-col gap-4">
+    <div class="flex flex-col gap-4 md:gap-6">
       <!-- Title -->
       <fieldset class="fieldset p-0">
         <legend
-          class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+          class="fieldset-legend pb-2 md:pb-4 !pt-0 font-poppins text-sm md:text-base md:leading-4 text-base-content"
         >
-          Flipbook Title *
+          <p>Flipbook Title <span class="text-error">*</span></p>
         </legend>
         <label
           class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
@@ -39,9 +39,10 @@
       <!-- Company Name -->
       <fieldset class="fieldset p-0">
         <legend
-          class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+          class="fieldset-legend pb-2 md:pb-4 !pt-0 font-poppins text-sm md:text-base md:leading-4 text-base-content flex justify-between items-center w-full"
         >
-          Company Name
+          <p>Company Name</p>
+          <span class="text-primary text-xs">Optional</span>
         </legend>
         <label
           class="input validator border-2 bg-base-100 rounded-2xl h-14 !outline-none !shadow-none w-full border-base-content"
@@ -60,15 +61,15 @@
         >
           {{ companyError }}
         </span>
-        <div class="label text-primary font-poppins">Optional</div>
       </fieldset>
 
       <!-- Description -->
       <fieldset class="fieldset p-0">
         <legend
-          class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+          class="fieldset-legend pb-2 md:pb-4 !pt-0 font-poppins text-sm md:text-base md:leading-4 text-base-content flex justify-between items-center w-full"
         >
-          Description
+          <p>Description</p>
+          <span class="text-primary text-xs">Optional</span>
         </legend>
         <textarea
           class="textarea px-4 h-24 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl !border-2 border-base-content focus:outline-none focus:border-base-content"
@@ -82,7 +83,6 @@
         >
           {{ descriptionError }}
         </span>
-        <div class="label text-primary font-poppins">Optional</div>
       </fieldset>
     </div>
   </div>

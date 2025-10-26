@@ -69,7 +69,7 @@
             <div class="gap-y-2 text-center items-center flex flex-col">
               <!-- Success Icon -->
               <div
-                class="rounded-full flex w-fit items-center justify-center border-2 border-success p-4"
+                class="rounded-full flex w-fit items-center justify-center border-3 border-base-content bg-success-content p-4"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -77,54 +77,23 @@
                   height="96"
                   viewBox="0 0 24 24"
                 >
-                  <mask id="SVGkzXYXbbR">
-                    <g
-                      fill="none"
-                      stroke="#fff"
-                      stroke-dasharray="24"
-                      stroke-dashoffset="24"
+                  <g fill="none">
+                    <path
+                      fill="#5cb338"
+                      d="M1.987 13.704a1.084 1.084 0 0 0 0 1.534l5.203 5.204c.424.423 1.11.423 1.534 0l13.289-13.29a1.084 1.084 0 0 0 0-1.533l-2.06-2.06a1.084 1.084 0 0 0-1.533 0L7.957 14.022L5.58 11.644a1.085 1.085 0 0 0-1.534 0z"
+                    />
+                    <path
+                      fill="#deffd3"
+                      d="M7.957 17.167L20.76 4.365l-.809-.809a1.085 1.085 0 0 0-1.534 0L7.957 14.022L5.58 11.644a1.084 1.084 0 0 0-1.534 0l-.809.809z"
+                    />
+                    <path
+                      stroke="#000"
                       stroke-linecap="round"
                       stroke-linejoin="round"
-                      stroke-width="2"
-                    >
-                      <path d="M2 13.5l4 4l10.75 -10.75">
-                        <animate
-                          fill="freeze"
-                          attributeName="stroke-dashoffset"
-                          dur="0.4s"
-                          values="24;0"
-                        />
-                      </path>
-                      <path
-                        stroke="#000"
-                        stroke-width="6"
-                        d="M7.5 13.5l4 4l10.75 -10.75"
-                      >
-                        <animate
-                          fill="freeze"
-                          attributeName="stroke-dashoffset"
-                          begin="0.4s"
-                          dur="0.4s"
-                          values="24;0"
-                        />
-                      </path>
-                      <path d="M7.5 13.5l4 4l10.75 -10.75">
-                        <animate
-                          fill="freeze"
-                          attributeName="stroke-dashoffset"
-                          begin="0.4s"
-                          dur="0.4s"
-                          values="24;0"
-                        />
-                      </path>
-                    </g>
-                  </mask>
-                  <rect
-                    width="24"
-                    height="24"
-                    fill="#5cb338"
-                    mask="url(#SVGkzXYXbbR)"
-                  />
+                      d="M1.987 13.704a1.084 1.084 0 0 0 0 1.534l5.203 5.204c.424.423 1.11.423 1.534 0l13.289-13.29a1.084 1.084 0 0 0 0-1.533l-2.06-2.06a1.084 1.084 0 0 0-1.533 0L7.957 14.022L5.58 11.644a1.085 1.085 0 0 0-1.534 0z"
+                      stroke-width="1"
+                    />
+                  </g>
                 </svg>
               </div>
 

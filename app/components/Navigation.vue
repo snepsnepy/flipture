@@ -70,28 +70,7 @@
                 <a
                   class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   role="menuitem"
-                  >Features</a
-                >
-              </li>
-              <li role="none">
-                <a
-                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
-                  role="menuitem"
-                  >Pricing</a
-                >
-              </li>
-              <li role="none">
-                <a
-                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
-                  role="menuitem"
                   >FAQs</a
-                >
-              </li>
-              <li role="none" class="pb-2">
-                <a
-                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
-                  role="menuitem"
-                  >Contact</a
                 >
               </li>
               <HorizontalDivider />

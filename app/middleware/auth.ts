@@ -1,7 +1,10 @@
 export default defineNuxtRouteMiddleware((to, from) => {
   const user = useSupabaseUser();
 
-  if (!user.value && to.path === "/dashboard") {
+  // Protected routes that require authentication
+  const protectedRoutes = ["/dashboard", "/settings"];
+
+  if (!user.value && protectedRoutes.includes(to.path)) {
     return navigateTo("/login");
   }
 });

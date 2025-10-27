@@ -39,6 +39,20 @@ export const createRegisterSchema = () => {
   });
 };
 
+export const createPasswordChangeSchema = () => {
+  return object({
+    currentPassword: string().trim().required("Current password is required"),
+    newPassword: string()
+      .trim()
+      .required("New password is required")
+      .min(6, "Password must be at least 6 characters"),
+    confirmPassword: string()
+      .trim()
+      .required("Confirm password is required")
+      .oneOf([ref("newPassword")], "Passwords must match"),
+  });
+};
+
 export const createFlipbookFormSchema = () => {
   return object({
     title: string()

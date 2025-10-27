@@ -5,10 +5,6 @@
     class="flex justify-center flex-col items-center min-h-[calc(100vh-300px)]"
   >
     <LoadingSpinner />
-    <span
-      class="text-base-content text-2xl leading-8 font-semibold font-poppins"
-      >Loading...</span
-    >
   </div>
 
   <!-- Main Content -->

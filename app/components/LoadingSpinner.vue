@@ -1,39 +1,53 @@
 <template>
-  <div class="blobs">
-    <div class="blob-center"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
-    <div class="blob"></div>
+  <div class="loading-container">
+    <div class="blobs">
+      <div class="blob-center"></div>
+      <div class="blob"></div>
+      <div class="blob"></div>
+      <div class="blob"></div>
+      <div class="blob"></div>
+      <div class="blob"></div>
+      <div class="blob"></div>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs>
+        <filter id="goo">
+          <feGaussianBlur
+            in="SourceGraphic"
+            stdDeviation="10"
+            result="blur"
+          ></feGaussianBlur>
+          <feColorMatrix
+            in="blur"
+            mode="matrix"
+            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
+            result="goo"
+          ></feColorMatrix>
+          <feBlend in="SourceGraphic" in2="goo"></feBlend>
+        </filter>
+      </defs>
+    </svg>
+    <span
+      class="text-base-content text-2xl leading-8 font-semibold font-poppins"
+      >Loading...</span
+    >
   </div>
-  <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-    <defs>
-      <filter id="goo">
-        <feGaussianBlur
-          in="SourceGraphic"
-          stdDeviation="10"
-          result="blur"
-        ></feGaussianBlur>
-        <feColorMatrix
-          in="blur"
-          mode="matrix"
-          values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
-          result="goo"
-        ></feColorMatrix>
-        <feBlend in="SourceGraphic" in2="goo"></feBlend>
-      </filter>
-    </defs>
-  </svg>
 </template>
 
 <style scoped>
 /* From Uiverse.io by Nawsome */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
 .blobs {
   width: 300px;
   height: 300px;
-  position: absolute;
+  position: relative;
   overflow: hidden;
   border-radius: 70px;
   transform-style: preserve-3d;

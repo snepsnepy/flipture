@@ -5,12 +5,7 @@
       v-if="isLoading"
       class="flex justify-center flex-col items-center min-h-[calc(100vh-300px)]"
     >
-      <div class="loading loading-spinner loading-lg"></div>
-      <span
-        class="text-base-content text-2xl leading-8 font-semibold font-poppins"
-      >
-        Loading...
-      </span>
+      <LoadingSpinner />
     </div>
 
     <!-- Main Content -->
@@ -220,47 +215,111 @@
           <div class="space-y-6">
             <!-- Password Change -->
             <div class="space-y-10">
-              <div class="flex flex-col gap-10">
-                <fieldset class="fieldset p-0">
-                  <legend
-                    class="fieldset-legend pb-2 md:pb-4 !pt-0 font-poppins text-sm md:text-base md:leading-4 text-base-content"
-                  >
-                    <p>Change Password</p>
-                  </legend>
-                  <label
-                    class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
-                  >
-                    <input
-                      name="currentPassword"
-                      type="text"
-                      placeholder="Current Password"
-                      class="w-full font-poppins text-xl leading-4 placeholder:text-xl"
-                      v-model="currentPassword"
-                    />
-                  </label>
-                </fieldset>
-                <label
-                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
+              <div class="flex flex-col gap-4">
+                <Input
+                  label="Current Password"
+                  name="currentPassword"
+                  type="password"
+                  placeholder="Current Password"
+                  v-model:model-value="currentPassword"
+                  :error-message="currentPasswordErrors"
                 >
-                  <input
-                    name="newPassword"
-                    type="text"
-                    placeholder="New Password"
-                    class="w-full font-poppins text-xl leading-4 placeholder:text-xl"
-                    v-model="newPassword"
-                  />
-                </label>
-                <label
-                  class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
+                  <template #icon>
+                    <svg
+                      class="h-[1em] opacity-50"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                    >
+                      <g
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                        stroke-width="2.5"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+                        ></path>
+                        <circle
+                          cx="16.5"
+                          cy="7.5"
+                          r=".5"
+                          fill="currentColor"
+                        ></circle>
+                      </g>
+                    </svg>
+                  </template>
+                </Input>
+
+                <Input
+                  label="New Password"
+                  name="newPassword"
+                  type="password"
+                  placeholder="New Password"
+                  v-model:model-value="newPassword"
+                  :error-message="newPasswordErrors"
                 >
-                  <input
-                    name="confirmPassword"
-                    type="text"
-                    placeholder="Confirm Password"
-                    class="w-full font-poppins text-xl leading-4 placeholder:text-xl"
-                    v-model="confirmPassword"
-                  />
-                </label>
+                  <template #icon>
+                    <svg
+                      class="h-[1em] opacity-50"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                    >
+                      <g
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                        stroke-width="2.5"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+                        ></path>
+                        <circle
+                          cx="16.5"
+                          cy="7.5"
+                          r=".5"
+                          fill="currentColor"
+                        ></circle>
+                      </g>
+                    </svg>
+                  </template>
+                </Input>
+
+                <Input
+                  label="Confirm Password"
+                  name="confirmPassword"
+                  type="password"
+                  placeholder="Confirm Password"
+                  v-model:model-value="confirmPassword"
+                  :error-message="confirmPasswordErrors"
+                >
+                  <template #icon>
+                    <svg
+                      class="h-[1em] opacity-50"
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                    >
+                      <g
+                        stroke-linejoin="round"
+                        stroke-linecap="round"
+                        stroke-width="2.5"
+                        fill="none"
+                        stroke="currentColor"
+                      >
+                        <path
+                          d="M2.586 17.414A2 2 0 0 0 2 18.828V21a1 1 0 0 0 1 1h3a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h1a1 1 0 0 0 1-1v-1a1 1 0 0 1 1-1h.172a2 2 0 0 0 1.414-.586l.814-.814a6.5 6.5 0 1 0-4-4z"
+                        ></path>
+                        <circle
+                          cx="16.5"
+                          cy="7.5"
+                          r=".5"
+                          fill="currentColor"
+                        ></circle>
+                      </g>
+                    </svg>
+                  </template>
+                </Input>
               </div>
 
               <ActionButton
@@ -268,6 +327,7 @@
                 :text="isChangingPassword ? 'Changing...' : 'Change Password'"
                 @click="changePassword"
                 class="w-full md:w-1/2"
+                :disabled="!canChangePassword || isChangingPassword"
               >
                 <template #icon>
                   <svg
@@ -374,6 +434,7 @@
 
 <script setup lang="ts">
 import { Toast } from "~/types";
+import { createPasswordChangeSchema } from "~~/schema/form.schema";
 
 definePageMeta({
   layout: "base",
@@ -399,9 +460,19 @@ const storageUsed = ref("0 MB");
 const firstName = ref("");
 const lastName = ref("");
 const email = ref("");
-const currentPassword = ref("");
-const newPassword = ref("");
-const confirmPassword = ref("");
+
+// Password change form validation
+const validationSchema = createPasswordChangeSchema();
+const { handleSubmit, errors, resetForm } = useForm({
+  validationSchema,
+});
+
+const { value: currentPassword, errorMessage: currentPasswordErrors } =
+  useField<string>("currentPassword");
+const { value: newPassword, errorMessage: newPasswordErrors } =
+  useField<string>("newPassword");
+const { value: confirmPassword, errorMessage: confirmPasswordErrors } =
+  useField<string>("confirmPassword");
 
 // Computed properties
 const userProvider = computed(
@@ -415,11 +486,10 @@ const canSaveProfile = computed(() => {
 
 const canChangePassword = computed(() => {
   return (
-    currentPassword.value.trim() &&
-    newPassword.value.trim() &&
-    confirmPassword.value.trim() &&
-    newPassword.value === confirmPassword.value &&
-    newPassword.value.length >= 6
+    Object.keys(errors.value).length === 0 &&
+    currentPassword.value &&
+    newPassword.value &&
+    confirmPassword.value
   );
 });
 
@@ -505,7 +575,7 @@ const updateProfile = async () => {
   }
 };
 
-const changePassword = async () => {
+const changePassword = handleSubmit(async () => {
   try {
     isChangingPassword.value = true;
 
@@ -517,10 +587,14 @@ const changePassword = async () => {
       throw error;
     }
 
-    // Clear password form
-    currentPassword.value = "";
-    newPassword.value = "";
-    confirmPassword.value = "";
+    // Reset form with empty values to clear validation
+    resetForm({
+      values: {
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      },
+    });
 
     showToast(Toast.SUCCESS, {
       toastTitle: "Password changed successfully",
@@ -534,7 +608,7 @@ const changePassword = async () => {
   } finally {
     isChangingPassword.value = false;
   }
-};
+});
 
 const signOut = async () => {
   try {

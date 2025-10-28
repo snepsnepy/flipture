@@ -85,25 +85,51 @@
           </ActionButton>
         </div>
 
-        <ActionButton text="Share Link" type="primary" @click="shareLink">
-          <template #icon>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 1024 1024"
-            >
-              <path
-                fill="#000"
-                d="M768 256H353.6a32 32 0 1 1 0-64H800a32 32 0 0 1 32 32v448a32 32 0 0 1-64 0z"
-              />
-              <path
-                fill="#000"
-                d="M777.344 201.344a32 32 0 0 1 45.312 45.312l-544 544a32 32 0 0 1-45.312-45.312z"
-              />
-            </svg>
-          </template>
-        </ActionButton>
+        <div class="flex flex-row gap-2 w-full md:w-fit">
+          <ActionButton
+            text="Preview & Share"
+            type="primary"
+            @click="openPreviewModal"
+          >
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M1 12s4-8 11-8s11 8 11 8s-4 8-11 8s-11-8-11-8z"
+                />
+                <circle cx="12" cy="12" r="3" />
+              </svg>
+            </template>
+          </ActionButton>
+          <!-- <ActionButton text="Share Link" type="primary" @click="shareLink">
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 1024 1024"
+              >
+                <path
+                  fill="#000"
+                  d="M768 256H353.6a32 32 0 1 1 0-64H800a32 32 0 0 1 32 32v448a32 32 0 0 1-64 0z"
+                />
+                <path
+                  fill="#000"
+                  d="M777.344 201.344a32 32 0 0 1 45.312 45.312l-544 544a32 32 0 0 1-45.312-45.312z"
+                />
+              </svg>
+            </template>
+          </ActionButton> -->
+        </div>
       </footer>
     </section>
   </section>
@@ -117,14 +143,23 @@
 
   <!-- Edit Modal -->
   <EditModal ref="editModal" :flipbook="flipbook" @confirm="handleEdit" />
+
+  <!-- Live Preview Modal -->
+  <LivePreviewModal
+    :flipbook="flipbook"
+    :is-open="isPreviewModalOpen"
+    @close="closePreviewModal"
+  />
 </template>
 
 <script lang="ts" setup>
 import dayjs from "dayjs";
 import type { Flipbook } from "~/types";
 import type { Database } from "~/types/supabase";
+import { Toast } from "~/types";
 import DeleteModal from "~/components/DeleteModal.vue";
 import EditModal from "~/components/EditModal.vue";
+import LivePreviewModal from "~/components/LivePreviewModal.vue";
 
 const props = defineProps<{
   flipbook: Flipbook;
@@ -142,8 +177,10 @@ const titleHasSpaces = computed(() => {
 
 const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();
+const { showToast } = useToast();
 const deleteModal = ref<InstanceType<typeof DeleteModal>>();
 const editModal = ref<InstanceType<typeof EditModal>>();
+const isPreviewModalOpen = ref(false);
 
 const openDeleteModal = () => {
   deleteModal.value?.openModal();
@@ -153,19 +190,47 @@ const openEditModal = () => {
   editModal.value?.openModal();
 };
 
+const openPreviewModal = () => {
+  isPreviewModalOpen.value = true;
+};
+
+const closePreviewModal = () => {
+  isPreviewModalOpen.value = false;
+};
+
 const shareLink = async () => {
   try {
     const shareUrl = `https://flipture-view.netlify.app?id=${props.flipbook.id}`;
 
     // Check if the Clipboard API is available
-    if (navigator.clipboard && window.isSecureContext) {
+    if (navigator.clipboard && globalThis.isSecureContext) {
       await navigator.clipboard.writeText(shareUrl);
-    }
+      showToast(Toast.SUCCESS, {
+        toastTitle: "Link copied!",
+        description: "Share link has been copied to your clipboard.",
+        duration: 3000,
+      });
+    } else {
+      // Fallback for older browsers
+      const textArea = document.createElement("textarea");
+      textArea.value = shareUrl;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
 
-    // Optional: Show a success message to the user
-    // You can replace this with a toast notification if you have one
+      showToast(Toast.SUCCESS, {
+        toastTitle: "Link copied!",
+        description: "Share link has been copied to your clipboard.",
+        duration: 3000,
+      });
+    }
   } catch (error) {
     console.error("Failed to copy link:", error);
+    showToast(Toast.ERROR, {
+      toastTitle: "Copy failed",
+      description: "Unable to copy the link. Please try again.",
+    });
   }
 };
 
@@ -228,7 +293,7 @@ const handleDelete = async () => {
         // Extract the file path from the URL
         const url = new URL(props.flipbook.pdf_file_url);
         const pathSegments = url.pathname.split("/");
-        const fileName = pathSegments[pathSegments.length - 1];
+        const fileName = pathSegments.at(-1);
         const filePath = `${user.value!.id}/${fileName}`;
 
         await client.storage.from("uploads").remove([filePath]);

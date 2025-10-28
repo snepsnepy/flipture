@@ -64,13 +64,13 @@
       <!-- Content -->
       <div class="flex flex-col lg:flex-row gap-6">
         <!-- Preview Section -->
-        <div class="flex-1">
+        <div class="flex-1 flex flex-col">
           <div
-            class="bg-base-200 rounded-2xl h-full min-h-[300px] lg:min-h-[700px]"
+            class="bg-base-200 rounded-3xl flex-1 min-h-[400px] lg:min-h-[700px] border-2 border-base-content shadow-md flex flex-col"
           >
             <iframe
               :src="previewUrl"
-              class="w-full h-full rounded-2xl"
+              class="w-full flex-1 rounded-2xl"
               title="Flipbook Preview"
               allowfullscreen
               sandbox="allow-scripts allow-same-origin allow-presentation"
@@ -81,7 +81,7 @@
 
         <!-- Share Section -->
         <div
-          class="w-full lg:w-80 border border-base-300 rounded-2xl shadow-md bg-base-200 p-6"
+          class="w-full lg:w-80 border-2 border-base-content rounded-2xl shadow-md bg-base-200 p-6"
         >
           <div class="space-y-6">
             <!-- Share Actions -->
@@ -162,45 +162,6 @@
                     </svg>
                   </template>
                 </ActionButton>
-              </div>
-            </div>
-
-            <!-- Share URL Display -->
-            <div class="space-y-2">
-              <label
-                for="share-url-input"
-                class="text-sm font-medium text-base-content"
-                >Share URL:</label
-              >
-              <div
-                class="flex items-center gap-2 p-2 bg-base-100 rounded-xl border border-base-content"
-              >
-                <input
-                  id="share-url-input"
-                  :value="shareUrl"
-                  readonly
-                  class="flex-1 text-xs bg-transparent border-none outline-none text-base-content truncate"
-                />
-                <button
-                  @click="copyShareLink"
-                  class="btn-xs hover:bg-base-300 p-1.5 rounded-md hover:cursor-pointer"
-                  :disabled="isCopying"
-                  title="Copy to clipboard"
-                >
-                  <svg
-                    v-if="!isCopying"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"
-                    />
-                  </svg>
-                  <div v-else class="loading loading-spinner loading-xs"></div>
-                </button>
               </div>
             </div>
 

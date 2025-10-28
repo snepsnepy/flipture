@@ -20,7 +20,7 @@
         </h2>
       </div>
 
-      <ActionButton @click="navigateToSettings">
+      <ActionButton @click="navigateToSettings" text="Account">
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"

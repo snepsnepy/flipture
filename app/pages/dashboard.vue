@@ -9,7 +9,7 @@
 
   <!-- Main Content -->
   <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
-    <header class="flex flex-col xl:flex-row gap-4 xl:h-80">
+    <header class="flex flex-col xl:flex-row gap-4 xl:h-[362px]">
       <!-- Hero -->
       <DashboardHero v-if="!isMobile" />
 
@@ -20,6 +20,8 @@
       />
     </header>
 
+    <HorizontalDivider />
+
     <!-- Content -->
     <div class="flex flex-col gap-6">
       <header class="space-y-4 md:space-y-4">
@@ -27,7 +29,7 @@
           class="flex flex-col md:flex-row justify-between items-start gap-y-4 md:items-center"
         >
           <h4
-            class="font-delight font-bold text-3xl leading-6 md:text-4xl md:leading-8 w-full text-center md:text-left"
+            class="font-delight font-bold text-4xl leading-6 md:leading-8 w-full text-center md:text-left md:pt-2"
           >
             YOUR FLIPBOOKS
           </h4>
@@ -58,8 +60,10 @@
             </template>
           </ActionButton>
         </div>
-        <HorizontalDivider />
+        <!-- <HorizontalDivider /> -->
       </header>
+
+      <HorizontalDivider />
 
       <!-- Content -->
       <section

@@ -1,28 +1,145 @@
 <template>
   <!-- User Details Section -->
-  <section
-    class="border-2 w-full xl:!w-1/2 h-full border-base-content rounded-3xl bg-base-200 p-4 md:p-8 flex flex-col gap-4 md:gap-6"
+  <div
+    class="collapse bg-base-200 border-2 border-base-content p-2 md:p-4 rounded-3xl h-fit w-full"
   >
-    <!-- Header -->
-    <header
-      class="flex flex-col md:flex-row md:items-center justify-between gap-4"
+    <input type="checkbox" v-model="checkboxState" />
+    <!-- TITLE -->
+    <div
+      class="collapse-title p-2 md:p-4 flex flex-row items-center justify-between"
     >
-      <div class="items-center">
-        <h2
-          class="text-neutral text-left text-base md:text-base leading-4 font-poppins flex flex-col gap-1"
+      <!-- Header -->
+      <header class="flex flex-row md:items-center justify-between gap-4">
+        <div class="items-center">
+          <h2
+            class="text-neutral text-left text-base md:text-base leading-4 font-poppins flex flex-col gap-1"
+          >
+            <span
+              class="text-neutral text-sm leading-[14px] md:text-base md:leading-4"
+              >Welcome back,
+            </span>
+            <span
+              class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
+              >{{ userFullName }}
+            </span>
+          </h2>
+        </div>
+      </header>
+
+      <div class="p-2 bg-base-100 border border-base-content rounded-full">
+        <svg
+          :class="[
+            'w-4 h-4 transition-transform duration-300',
+            checkboxState ? 'rotate-180' : 'rotate-0',
+          ]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
         >
-          <span
-            class="text-neutral text-sm leading-[14px] md:text-base md:leading-4"
-            >Welcome back,
-          </span>
-          <span
-            class="text-primary text-3xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
-            >{{ userFullName }}
-          </span>
-        </h2>
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 9l-7 7-7-7"
+          />
+        </svg>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div
+      v-if="checkboxState"
+      class="collapse-content flex flex-col justify-between gap-4 p-2 md:p-4 pt-0"
+    >
+      <HorizontalDivider />
+
+      <h4 class="text-base md:text-lg leading-4 font-poppins font-semibold">
+        Published Content
+      </h4>
+
+      <!-- Stats -->
+      <div class="flex flex-col gap-3 md:gap-4">
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
+          <div
+            class="bg-base-100 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
+          >
+            <div class="flex flex-row justify-between items-center">
+              <h4
+                class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
+              >
+                Views
+              </h4>
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    fill="none"
+                    stroke="#000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                  >
+                    <path
+                      d="M21.257 10.962c.474.62.474 1.457 0 2.076C19.764 14.987 16.182 19 12 19s-7.764-4.013-9.257-5.962a1.69 1.69 0 0 1 0-2.076C4.236 9.013 7.818 5 12 5s7.764 4.013 9.257 5.962"
+                    />
+                    <circle cx="12" cy="12" r="3" />
+                  </g>
+                </svg>
+              </div>
+            </div>
+            <p class="text-sm text-base-content leading-3 font-poppins">
+              <span class="font-bold text-primary text-3xl leading-[30px]"
+                >100</span
+              >
+              views
+            </p>
+          </div>
+          <div
+            class="bg-base-100 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
+          >
+            <div class="flex flex-row justify-between items-center">
+              <h4
+                class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
+              >
+                Activity
+              </h4>
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 512 512"
+                >
+                  <path
+                    fill="none"
+                    stroke="#000"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="32"
+                    d="M256 160c16-63.16 76.43-95.41 208-96a15.94 15.94 0 0 1 16 16v288a16 16 0 0 1-16 16c-128 0-177.45 25.81-208 64c-30.37-38-80-64-208-64c-9.88 0-16-8.05-16-17.93V80a15.94 15.94 0 0 1 16-16c131.57.59 192 32.84 208 96m0 0v288"
+                  />
+                </svg>
+              </div>
+            </div>
+            <p class="text-sm text-base-content leading-3 font-poppins">
+              <span class="font-bold text-primary text-3xl leading-[30px]">{{
+                flipbooksLength
+              }}</span>
+              {{ flipbooksLength > 1 ? "flipbooks" : "flipbook" }}
+            </p>
+          </div>
+        </section>
       </div>
 
-      <ActionButton @click="navigateToSettings" text="Account">
+      <ActionButton
+        @click="navigateToSettings"
+        text="Account Settings"
+        class="w-full md:w-fit"
+      >
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -41,91 +158,8 @@
           </svg>
         </template>
       </ActionButton>
-    </header>
-
-    <HorizontalDivider />
-
-    <!-- Stats -->
-    <div class="flex flex-col gap-3 md:gap-4">
-      <h4 class="text-base md:text-lg leading-4 font-poppins font-semibold">
-        Published Content
-      </h4>
-      <section class="grid grid-cols-1 lg:grid-cols-2 gap-2 md:gap-4">
-        <div
-          class="bg-base-100 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
-        >
-          <div class="flex flex-row justify-between items-center">
-            <h4
-              class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
-            >
-              Views
-            </h4>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-              >
-                <g
-                  fill="none"
-                  stroke="#000"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                >
-                  <path
-                    d="M21.257 10.962c.474.62.474 1.457 0 2.076C19.764 14.987 16.182 19 12 19s-7.764-4.013-9.257-5.962a1.69 1.69 0 0 1 0-2.076C4.236 9.013 7.818 5 12 5s7.764 4.013 9.257 5.962"
-                  />
-                  <circle cx="12" cy="12" r="3" />
-                </g>
-              </svg>
-            </div>
-          </div>
-          <p class="text-sm text-base-content leading-3 font-poppins">
-            <span class="font-bold text-primary text-3xl leading-[30px]"
-              >100</span
-            >
-            views
-          </p>
-        </div>
-        <div
-          class="bg-base-100 w-full flex flex-col font-poppins p-3 md:p-4 rounded-2xl gap-6 shadow-md"
-        >
-          <div class="flex flex-row justify-between items-center">
-            <h4
-              class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
-            >
-              Activity
-            </h4>
-            <div>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  fill="none"
-                  stroke="#000"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="32"
-                  d="M256 160c16-63.16 76.43-95.41 208-96a15.94 15.94 0 0 1 16 16v288a16 16 0 0 1-16 16c-128 0-177.45 25.81-208 64c-30.37-38-80-64-208-64c-9.88 0-16-8.05-16-17.93V80a15.94 15.94 0 0 1 16-16c131.57.59 192 32.84 208 96m0 0v288"
-                />
-              </svg>
-            </div>
-          </div>
-          <p class="text-sm text-base-content leading-3 font-poppins">
-            <span class="font-bold text-primary text-3xl leading-[30px]">{{
-              flipbooksLength
-            }}</span>
-            {{ flipbooksLength > 1 ? "flipbooks" : "flipbook" }}
-          </p>
-        </div>
-      </section>
     </div>
-  </section>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -138,7 +172,19 @@ defineProps<{
 
 const user = useSupabaseUser();
 const { showToast } = useToast();
+const { isMobile } = useIsMobile();
 
+const checkboxState = ref(false);
+
+// Initialize collapsed state on mobile
+onMounted(() => {
+  checkboxState.value = !isMobile.value;
+});
+
+// Watch for screen size changes and update collapse state automatically
+watch(isMobile, (newIsMobile) => {
+  checkboxState.value = !newIsMobile;
+});
 const userFullName = computed(() => {
   const appMetadata = user.value?.app_metadata;
   const userMetadata = user.value?.user_metadata;
@@ -169,6 +215,12 @@ const navigateToSettings = () => {
   50% {
     transform: none;
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+  }
+}
+
+.collapse-arrow {
+  > .collapse-title:after {
+    top: 50%;
   }
 }
 </style>

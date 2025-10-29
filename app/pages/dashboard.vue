@@ -106,12 +106,11 @@ const flipbooks = ref<Flipbook[]>([]);
 const isLoading = ref(true);
 const { isMobile } = useIsMobile();
 
-onMounted(async () => {
-  watchEffect(() => {
-    if (!user.value) {
-      return navigateTo("/login");
-    }
-  });
+// Fetch flipbooks from API
+const fetchFlipbooks = async () => {
+  if (!user.value) {
+    return;
+  }
 
   try {
     isLoading.value = true;
@@ -119,10 +118,16 @@ onMounted(async () => {
     const { data: flipbooksData } = await client
       .from("flipbooks")
       .select("*")
-      .eq("user_id", user.value?.id!)
+      .eq("user_id", user.value.id)
       .order("created_at", { ascending: false });
 
-    flipbooks.value = flipbooksData || [];
+    const flipbooksList = flipbooksData || [];
+
+    // Update cache
+    flipbookStore.setCachedFlipbooks(flipbooksList);
+
+    // Update local state
+    flipbooks.value = flipbooksList;
     flipbooksLength.value = flipbooks.value.length;
     hasFlipbooks.value = flipbooksLength.value > 0;
   } catch (error) {
@@ -130,27 +135,41 @@ onMounted(async () => {
   } finally {
     isLoading.value = false;
   }
+};
+
+onMounted(async () => {
+  watchEffect(() => {
+    if (!user.value) {
+      return navigateTo("/login");
+    }
+  });
+
+  // Check if we have valid cached data
+  const cachedData = flipbookStore.getCachedFlipbooks();
+
+  if (cachedData.length > 0 && flipbookStore.hasCachedFlipbooks) {
+    // Use cached data
+    flipbooks.value = cachedData;
+    flipbooksLength.value = cachedData.length;
+    hasFlipbooks.value = cachedData.length > 0;
+    isLoading.value = false;
+  } else {
+    // Fetch from API
+    await fetchFlipbooks();
+  }
 });
 
 const handleFlipbookCreated = async () => {
-  // Refresh the flipbooks list
-  try {
-    const { data: flipbooksData } = await client
-      .from("flipbooks")
-      .select("*")
-      .eq("user_id", user.value?.id!)
-      .order("created_at", { ascending: false });
-
-    flipbooks.value = flipbooksData || [];
-    flipbooksLength.value = flipbooks.value.length;
-    hasFlipbooks.value = flipbooksLength.value > 0;
-  } catch (error) {
-    console.error("Error refreshing flipbooks:", error);
-  }
+  // Invalidate cache and fetch fresh data
+  flipbookStore.invalidateCache();
+  await fetchFlipbooks();
 };
 
 const handleFlipbookDeleted = (deletedFlipbookId: string) => {
-  // Remove the deleted flipbook from the local state
+  // Remove from cache
+  flipbookStore.removeCachedFlipbook(deletedFlipbookId);
+
+  // Remove from local state
   flipbooks.value = flipbooks.value.filter(
     (flipbook) => flipbook.id !== deletedFlipbookId
   );
@@ -161,7 +180,10 @@ const handleFlipbookDeleted = (deletedFlipbookId: string) => {
 };
 
 const handleFlipbookUpdated = (updatedFlipbook: Flipbook) => {
-  // Update the flipbook in the local state
+  // Update cache
+  flipbookStore.updateCachedFlipbook(updatedFlipbook);
+
+  // Update local state
   const index = flipbooks.value.findIndex(
     (flipbook) => flipbook.id === updatedFlipbook.id
   );

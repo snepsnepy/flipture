@@ -4,7 +4,9 @@
     class="border-2 w-full xl:!w-1/2 h-full border-base-content rounded-3xl bg-base-200 p-4 md:p-8 flex flex-col gap-4 md:gap-6"
   >
     <!-- Header -->
-    <header class="flex flex-row items-center justify-between">
+    <header
+      class="flex flex-col md:flex-row md:items-center justify-between gap-4"
+    >
       <div class="items-center">
         <h2
           class="text-neutral text-left text-base md:text-base leading-4 font-poppins flex flex-col gap-1"
@@ -20,7 +22,7 @@
         </h2>
       </div>
 
-      <ActionButton @click="navigateToSettings">
+      <ActionButton @click="navigateToSettings" text="Account">
         <template #icon>
           <svg
             xmlns="http://www.w3.org/2000/svg"

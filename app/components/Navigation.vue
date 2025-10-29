@@ -92,14 +92,23 @@
             </ul>
           </div>
         </section>
-        <button
-          v-else
-          @click="isLoginPage ? navigateTo('/register') : navigateTo('/login')"
-          type="button"
-          class="w-fit py-2 px-6 bg-primary border border-primary-content rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-semibold text-base transition-all duration-300"
-        >
-          {{ isLoginPage ? "Sign Up" : "Sign In" }}
-        </button>
+
+        <section v-else class="flex flex-row gap-2">
+          <button
+            @click="navigateToLogin"
+            type="button"
+            class="w-fit py-2 md:py-3 px-3 md:px-6 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-semibold text-sm md:text-base leading-4 transition-all duration-300"
+          >
+            Sign In
+          </button>
+          <button
+            @click="navigateToRegister"
+            type="button"
+            class="w-fit py-2 md:py-3 px-3 md:px-6 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-semibold text-sm md:text-base leading-4 transition-all duration-300"
+          >
+            Sign Up
+          </button>
+        </section>
       </div>
     </div>
   </nav>
@@ -123,7 +132,7 @@ const handleAuthAction = async () => {
   if (isLoggedIn.value) {
     await signOut();
   } else {
-    await navigateTo("/login");
+    await navigateTo({ name: "login" });
   }
 };
 
@@ -140,5 +149,13 @@ const close = () => {
   if (activeElement.value) {
     (activeElement.value as HTMLElement).blur();
   }
+};
+
+const navigateToLogin = () => {
+  return navigateTo({ name: "login" });
+};
+
+const navigateToRegister = () => {
+  return navigateTo({ name: "register" });
 };
 </script>

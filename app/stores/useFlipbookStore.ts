@@ -1,5 +1,8 @@
 import { defineStore } from "pinia";
-import type { FlipbookFormData } from "~/types";
+import type { FlipbookFormData, Flipbook } from "~/types";
+
+// Cache expiration time (5 minutes)
+const CACHE_EXPIRATION_MS = 5 * 60 * 1000;
 
 export const useFlipbookStore = defineStore("flipbook", () => {
   // State
@@ -13,6 +16,11 @@ export const useFlipbookStore = defineStore("flipbook", () => {
 
   const currentStep = ref(1);
   const isModalOpen = ref(false);
+
+  // Cache state
+  const cachedFlipbooks = ref<Flipbook[]>([]);
+  const cacheTimestamp = ref<number | null>(null);
+  const isLoading = ref(false);
 
   // Getters
   const hasFile = computed(() => formData.value.file !== null);
@@ -61,11 +69,68 @@ export const useFlipbookStore = defineStore("flipbook", () => {
     currentStep.value = step;
   };
 
+  // Cache getters
+  const isCacheValid = computed(() => {
+    if (!cacheTimestamp.value) {
+      return false;
+    }
+    const now = Date.now();
+    const age = now - cacheTimestamp.value;
+    return age < CACHE_EXPIRATION_MS;
+  });
+
+  const hasCachedFlipbooks = computed(() => {
+    return cachedFlipbooks.value.length > 0 && isCacheValid.value;
+  });
+
+  // Cache actions
+  const setCachedFlipbooks = (flipbooks: Flipbook[]) => {
+    cachedFlipbooks.value = flipbooks;
+    cacheTimestamp.value = Date.now();
+  };
+
+  const getCachedFlipbooks = (): Flipbook[] => {
+    if (hasCachedFlipbooks.value) {
+      return cachedFlipbooks.value;
+    }
+    return [];
+  };
+
+  const invalidateCache = () => {
+    cacheTimestamp.value = null;
+    cachedFlipbooks.value = [];
+  };
+
+  const updateCachedFlipbook = (updatedFlipbook: Flipbook) => {
+    const index = cachedFlipbooks.value.findIndex(
+      (flipbook) => flipbook.id === updatedFlipbook.id
+    );
+    if (index !== -1) {
+      cachedFlipbooks.value[index] = updatedFlipbook;
+    }
+  };
+
+  const removeCachedFlipbook = (flipbookId: string) => {
+    cachedFlipbooks.value = cachedFlipbooks.value.filter(
+      (flipbook) => flipbook.id !== flipbookId
+    );
+  };
+
+  const addCachedFlipbook = (flipbook: Flipbook) => {
+    // Add to the beginning of the array (most recent first)
+    cachedFlipbooks.value.unshift(flipbook);
+  };
+
   return {
     // State
     formData: readonly(formData),
     currentStep: readonly(currentStep),
     isModalOpen: readonly(isModalOpen),
+    isLoading: readonly(isLoading),
+
+    // Cache state
+    cachedFlipbooks: readonly(cachedFlipbooks),
+    cacheTimestamp: readonly(cacheTimestamp),
 
     // Getters
     hasFile,
@@ -73,6 +138,8 @@ export const useFlipbookStore = defineStore("flipbook", () => {
     canProceedToStep2,
     canProceedToStep3,
     canCreate,
+    isCacheValid,
+    hasCachedFlipbooks,
 
     // Actions
     openModal,
@@ -82,5 +149,13 @@ export const useFlipbookStore = defineStore("flipbook", () => {
     nextStep,
     prevStep,
     setStep,
+
+    // Cache actions
+    setCachedFlipbooks,
+    getCachedFlipbooks,
+    invalidateCache,
+    updateCachedFlipbook,
+    removeCachedFlipbook,
+    addCachedFlipbook,
   };
 });

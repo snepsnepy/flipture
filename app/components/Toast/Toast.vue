@@ -54,7 +54,7 @@
 
       <!-- Content -->
       <div>
-        <div class="font-semibold text-base leading-4 font-poppins">
+        <div class="font-semibold md:text-base leading-4 font-poppins">
           {{ toast.toastTitle }}
         </div>
         <div

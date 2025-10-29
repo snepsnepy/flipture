@@ -28,9 +28,9 @@
           </svg>
           <button
             @click="navigateToDashboard"
-            class="text-base-content text-base leading-4 font-poppins font-medium hover:cursor-pointer hover:text-primary"
+            class="text-base-content text-sm md:text-base leading-4 font-poppins font-medium hover:cursor-pointer hover:text-primary"
           >
-            Back To Dashboard
+            Back
           </button>
         </div>
 
@@ -620,7 +620,7 @@ const signOut = async () => {
       throw error;
     }
 
-    await navigateTo("/login");
+    await navigateTo({ name: "login" });
   } catch (error: any) {
     console.error("Error signing out:", error);
     showToast(Toast.ERROR, {

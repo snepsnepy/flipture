@@ -1,6 +1,8 @@
 <template>
   <Teleport to="body">
-    <div class="fixed bottom-4 right-4 z-[9999] space-y-2">
+    <div
+      class="fixed bottom-4 right-2 left-2 sm:left-auto sm:right-4 z-[9999] space-y-2 max-w-[calc(100vw-1rem)] sm:max-w-none"
+    >
       <TransitionGroup
         enter-active-class="transform transition-all duration-300 ease-out"
         enter-from-class="translate-x-full opacity-0"

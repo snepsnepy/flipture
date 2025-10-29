@@ -1,80 +1,63 @@
 <template>
-  <div class="modal" :class="{ 'modal-open': isOpen }">
-    <div class="fixed inset-0 bg-base-content/60 z-40"></div>
-    <div
-      class="modal-box max-w-full rounded-3xl relative z-50 flex flex-col gap-y-6"
-    >
-      <!-- Modal Header -->
-      <div class="flex justify-between items-center">
-        <div class="flex items-end gap-2">
-          <h3 class="font-delight font-bold text-xl leading-5 md:text-3xl">
-            {{ flipbook?.title }}
-          </h3>
-          <div class="flex items-end gap-1 text-sm leading-3 text-neutral">
-            <span>by</span>
-            <span class="font-semibold text-primary">{{
-              flipbook?.company_name
-            }}</span>
-          </div>
-        </div>
-        <button
-          class="btn btn-sm btn-circle btn-ghost p-1 border border-base-content"
-          @click="closeModal"
+  <div class="container mx-auto py-0 flex flex-col gap-6">
+    <!-- Navigation Header -->
+    <header class="flex flex-col gap-6 items-start">
+      <div class="flex flex-row items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-          >
-            <g
-              fill="none"
-              stroke="#000"
-              stroke-dasharray="16"
-              stroke-dashoffset="16"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-            >
-              <path d="M7 7l10 10">
-                <animate
-                  fill="freeze"
-                  attributeName="stroke-dashoffset"
-                  dur="0.4s"
-                  values="16;0"
-                />
-              </path>
-              <path d="M17 7l-10 10">
-                <animate
-                  fill="freeze"
-                  attributeName="stroke-dashoffset"
-                  begin="0.4s"
-                  dur="0.4s"
-                  values="16;0"
-                />
-              </path>
-            </g>
-          </svg>
+          <path
+            fill="#0046ff"
+            fill-rule="evenodd"
+            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-.47-13.53a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72H16a.75.75 0 0 0 0-1.5H9.81l1.72-1.72a.75.75 0 0 0 0-1.06"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <button
+          @click="navigateToDashboard"
+          class="text-base-content text-sm md:text-base leading-4 font-poppins font-medium hover:cursor-pointer hover:text-primary"
+        >
+          Back
         </button>
       </div>
 
-      <!-- Border separator -->
-      <div class="border-t border-base-300"></div>
+      <div class="flex flex-col justify-center items-center gap-2 w-full">
+        <h1 class="font-delight font-bold text-2xl leading-6 md:text-4xl">
+          {{ flipbook?.title }}
+        </h1>
+        <div class="flex items-end gap-1 text-sm leading-3 text-neutral">
+          <span>by</span>
+          <span class="font-semibold text-primary">{{
+            flipbook?.company_name
+          }}</span>
+        </div>
+      </div>
+    </header>
 
-      <!-- Content -->
-      <div class="flex flex-col lg:flex-row gap-6">
+    <HorizontalDivider />
+
+    <!-- Main Content -->
+    <section>
+      <div class="flex flex-col-reverse lg:flex-row gap-6">
         <!-- Preview Section -->
         <div class="flex-1 flex flex-col">
           <div
-            class="bg-base-200 rounded-3xl flex-1 min-h-[400px] lg:min-h-[700px] border-2 border-base-content shadow-md flex flex-col"
+            class="bg-base-200 rounded-3xl flex-1 min-h-[500px] lg:min-h-[700px] border-2 border-base-content shadow-md flex flex-col"
           >
             <iframe
-              src="https://flipture-view.netlify.app/?id=c01cea85-f49c-456a-ada2-30111e867ff0"
+              v-if="previewUrl"
+              :src="previewUrl"
               class="w-full flex-1 rounded-2xl"
               title="Flipbook Preview"
               width="100%"
               height="100%"
             ></iframe>
+            <div v-else class="flex items-center justify-center h-full">
+              <div class="loading loading-spinner loading-lg"></div>
+            </div>
           </div>
         </div>
 
@@ -194,7 +177,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -203,37 +186,39 @@ import type { Flipbook } from "~/types";
 import { Toast } from "~/types";
 import dayjs from "dayjs";
 
-interface Props {
-  flipbook: Flipbook | null;
-  isOpen: boolean;
-}
+definePageMeta({
+  layout: "base",
+  middleware: "auth",
+});
 
-const props = defineProps<Props>();
-const emit = defineEmits<{
-  close: [];
-}>();
-
+const route = useRoute();
+const router = useRouter();
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 const { showToast } = useToast();
+
+const flipbookId = route.params.id as string;
+const flipbook = ref<Flipbook | null>(null);
 const isCopying = ref(false);
+const isLoading = ref(true);
 
 // Computed properties
 const shareUrl = computed(() => {
-  if (!props.flipbook) return "";
-  return `https://flipture-view.netlify.app/?id=${props.flipbook.id}`;
+  if (!flipbook.value) return "";
+  return `https://flipture-view.netlify.app/?id=${flipbook.value.id}`;
 });
 
 const previewUrl = computed(() => {
-  if (!props.flipbook) return "";
-  return `https://flipture-view.netlify.app/?id=${props.flipbook.id}`;
+  if (!flipbook.value) return "";
+  return `https://flipture-view.netlify.app/?id=${flipbook.value.id}`;
 });
 
-// Methods
-const closeModal = () => {
-  emit("close");
+const navigateToDashboard = () => {
+  return navigateTo({ name: "dashboard" });
 };
 
 const copyShareLink = async () => {
-  if (!props.flipbook) return;
+  if (!flipbook.value) return;
 
   isCopying.value = true;
 
@@ -275,9 +260,9 @@ const copyShareLink = async () => {
 };
 
 const shareOnTwitter = () => {
-  if (!props.flipbook) return;
+  if (!flipbook.value) return;
 
-  const text = `Check out my flipbook "${props.flipbook.title}" created with Flipture!`;
+  const text = `Check out my flipbook "${flipbook.value.title}" created with Flipture!`;
   const url = shareUrl.value;
   const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
     text
@@ -287,9 +272,9 @@ const shareOnTwitter = () => {
 };
 
 const shareOnLinkedIn = () => {
-  if (!props.flipbook) return;
+  if (!flipbook.value) return;
 
-  const text = `Check out my flipbook "${props.flipbook.title}" created with Flipture!`;
+  const text = `Check out my flipbook "${flipbook.value.title}" created with Flipture!`;
   const url = shareUrl.value;
   const linkedInUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
     url
@@ -303,18 +288,39 @@ const formatDate = (dateString: string | null | undefined) => {
   return dayjs(dateString).format("MMM DD, YYYY");
 };
 
-// Close modal on Escape key
-onMounted(() => {
-  const handleEscape = (e: KeyboardEvent) => {
-    if (e.key === "Escape" && props.isOpen) {
-      closeModal();
+// Fetch flipbook data
+onMounted(async () => {
+  try {
+    isLoading.value = true;
+
+    const { data, error } = await client
+      .from("flipbooks")
+      .select("*")
+      .eq("id", flipbookId)
+      .eq("user_id", user.value?.id!)
+      .single();
+
+    if (error) {
+      console.error("Error fetching flipbook:", error);
+      showToast(Toast.ERROR, {
+        toastTitle: "Error",
+        description:
+          "Flipbook not found or you don't have permission to view it.",
+      });
+      router.push("/dashboard");
+      return;
     }
-  };
 
-  document.addEventListener("keydown", handleEscape);
-
-  onUnmounted(() => {
-    document.removeEventListener("keydown", handleEscape);
-  });
+    flipbook.value = data as Flipbook;
+  } catch (error) {
+    console.error("Error loading flipbook:", error);
+    showToast(Toast.ERROR, {
+      toastTitle: "Error",
+      description: "Failed to load flipbook. Please try again.",
+    });
+    router.push("/dashboard");
+  } finally {
+    isLoading.value = false;
+  }
 });
 </script>

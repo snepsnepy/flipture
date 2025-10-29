@@ -132,7 +132,7 @@ const handleAuthAction = async () => {
   if (isLoggedIn.value) {
     await signOut();
   } else {
-    await navigateTo("/login");
+    await navigateTo({ name: "login" });
   }
 };
 

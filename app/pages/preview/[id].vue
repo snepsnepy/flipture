@@ -49,6 +49,7 @@
           >
             <iframe
               v-if="previewUrl"
+              :key="iframeKey"
               :src="previewUrl"
               class="w-full flex-1 rounded-2xl"
               title="Flipbook Preview"
@@ -145,6 +146,38 @@
                   </template>
                 </ActionButton>
               </div>
+
+              <!-- Edit Button -->
+              <ActionButton
+                text="Edit Details"
+                type="secondary"
+                class="w-full"
+                @click="openEditModal"
+              >
+                <template #icon>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                  >
+                    <g
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                    >
+                      <path
+                        d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
+                      />
+                      <path
+                        d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"
+                      />
+                    </g>
+                  </svg>
+                </template>
+              </ActionButton>
             </div>
 
             <!-- Flipbook Info -->
@@ -178,13 +211,23 @@
         </div>
       </div>
     </section>
+
+    <!-- Edit Modal -->
+    <EditModal
+      v-if="flipbook"
+      ref="editModal"
+      :flipbook="flipbook"
+      @confirm="handleEdit"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { Flipbook } from "~/types";
+import type { Database } from "~/types/supabase";
 import { Toast } from "~/types";
 import dayjs from "dayjs";
+import EditModal from "~/components/EditModal.vue";
 
 definePageMeta({
   layout: "base",
@@ -193,7 +236,7 @@ definePageMeta({
 
 const route = useRoute();
 const router = useRouter();
-const client = useSupabaseClient();
+const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();
 const { showToast } = useToast();
 
@@ -201,6 +244,8 @@ const flipbookId = route.params.id as string;
 const flipbook = ref<Flipbook | null>(null);
 const isCopying = ref(false);
 const isLoading = ref(true);
+const editModal = ref<InstanceType<typeof EditModal>>();
+const iframeKey = ref(0);
 
 // Computed properties
 const shareUrl = computed(() => {
@@ -291,6 +336,50 @@ const shareOnLinkedIn = () => {
 const formatDate = (dateString: string | null | undefined) => {
   if (!dateString) return "Unknown";
   return dayjs(dateString).format("MMM DD, YYYY");
+};
+
+const openEditModal = () => {
+  editModal.value?.openModal();
+};
+
+const handleEdit = async (data: {
+  title: string;
+  company_name: string | null;
+  description: string | null;
+}) => {
+  try {
+    // Prepare the update payload
+    const updatePayload = {
+      title: data.title,
+      company_name: data.company_name,
+      description: data.description,
+    };
+
+    // Update the flipbook in the database
+    const { data: updatedFlipbook, error } = await client
+      .from("flipbooks")
+      .update(updatePayload)
+      .eq("id", flipbookId)
+      .eq("user_id", user.value!.id)
+      .select()
+      .single();
+
+    if (error) {
+      console.error("Error updating flipbook:", error);
+      alert("Failed to update flipbook. Please try again.");
+      return;
+    }
+
+    // Update the local flipbook data
+    if (updatedFlipbook) {
+      flipbook.value = updatedFlipbook as Flipbook;
+      // Force iframe reload by changing its key
+      iframeKey.value++;
+    }
+  } catch (error) {
+    console.error("Error during update:", error);
+    alert("Failed to update flipbook. Please try again.");
+  }
 };
 
 // Fetch flipbook data

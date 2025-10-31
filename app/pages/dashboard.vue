@@ -64,7 +64,7 @@
       <HorizontalDivider />
 
       <!-- Search and Sort -->
-      <section class="flex flex-row justify-between gap-4 items-center">
+      <section class="flex flex-row justify-between gap-2 items-center">
         <SearchText v-if="hasFlipbooks" v-model="searchQuery" />
         <SortButton v-if="hasFlipbooks" v-model="sortOption" />
       </section>

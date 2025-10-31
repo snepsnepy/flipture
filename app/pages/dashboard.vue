@@ -63,8 +63,11 @@
 
       <HorizontalDivider />
 
-      <SearchText v-if="hasFlipbooks" v-model="searchQuery" />
-      <SortButton v-if="hasFlipbooks" v-model="sortOption" />
+      <!-- Search and Sort -->
+      <section class="flex flex-row justify-between gap-4 items-center">
+        <SearchText v-if="hasFlipbooks" v-model="searchQuery" />
+        <SortButton v-if="hasFlipbooks" v-model="sortOption" />
+      </section>
 
       <!-- Content -->
       <section
@@ -106,7 +109,7 @@
 <script setup lang="ts">
 import type { Flipbook } from "~/types";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
-import type { SortOption } from "~/components/SortButton.vue";
+import type { SortOption } from "~/types";
 
 definePageMeta({
   layout: "base",

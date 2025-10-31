@@ -62,3 +62,14 @@ export type FormData = {
   description: string;
   coverOption: string | null;
 };
+
+export type SortOption =
+  | "title-asc"
+  | "title-desc"
+  | "date-newest"
+  | "date-oldest";
+
+export interface SortOptionConfig {
+  value: SortOption;
+  label: string;
+}

@@ -1,7 +1,7 @@
 <template>
   <label
     for="search-input"
-    class="input validator border-2 bg-base-100 h-12 md:h-14 !outline-none !shadow-none w-full lg:max-w-[400px] rounded-2xl border-base-content"
+    class="input validator border-2 bg-base-100 h-12 md:h-14 !outline-none !shadow-none w-full lg:max-w-[400px] rounded-2xl border-base-content focus:bg-base-300"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"

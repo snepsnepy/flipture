@@ -6,23 +6,23 @@
   >
     <div class="relative">
       <ListboxButton
-        class="btn bg-primary text-base-100 rounded-2xl border-none hover:bg-base-content/50 font-poppins text-base md:text-lg flex items-center justify-between w-full"
+        class="btn text-base-content bg-base-100 border-2 px-3 md:px-4 py-[22px] md:py-[26px] border-base-content rounded-2xl hover:bg-secondary font-poppins text-base md:text-lg flex items-center w-fit"
       >
-        <span>Sort by: {{ currentSortLabel }}</span>
-        <span class="pointer-events-none ml-2">
+        <span v-if="!isMobile">Sort by</span>
+        <span class="pointer-events-none">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            :class="[
-              'h-5 w-5 transition-transform duration-200',
-              { 'rotate-180': open },
-            ]"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+            width="24"
+            height="24"
+            viewBox="0 0 48 48"
           >
             <path
-              fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd"
+              fill="none"
+              stroke="#000"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="4"
+              d="m25 14l-9-9l-9 9m8.992 17V5M42 34l-9 9l-9-9m8.992-17v26"
             />
           </svg>
         </span>
@@ -34,7 +34,7 @@
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="bg-base-content text-base-100 rounded-2xl z-[999] min-w-[240px] mt-2 p-2 shadow-lg absolute focus:outline-none"
+          class="bg-base-100 border-2 border-base-content rounded-2xl z-[999] min-w-[240px] mt-2 p-2 shadow-lg absolute right-0 focus:outline-none text-base-content"
         >
           <ListboxOption
             v-for="option in sortOptions"
@@ -45,9 +45,9 @@
           >
             <div
               :class="[
-                'font-poppins text-base md:text-lg cursor-pointer p-2 rounded',
-                active ? 'bg-base-200' : '',
-                selected ? 'bg-base-200' : '',
+                'font-poppins text-base md:text-lg cursor-pointer p-2 rounded-xl hover:text-primary-content',
+                active ? 'bg-primary text-primary-content' : '',
+                selected ? 'bg-base-100' : '',
               ]"
             >
               {{ option.label }}
@@ -66,19 +66,10 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
+import type { SortOption, SortOptionConfig } from "~/types";
+import { useIsMobile } from "~/composables/useIsMobile";
 
-export type SortOption =
-  | "title-asc"
-  | "title-desc"
-  | "date-newest"
-  | "date-oldest";
-
-interface SortOptionConfig {
-  value: SortOption;
-  label: string;
-}
-
-const props = defineProps<{
+defineProps<{
   modelValue: SortOption;
 }>();
 
@@ -86,15 +77,12 @@ const emit = defineEmits<{
   "update:modelValue": [value: SortOption];
 }>();
 
+const { isMobile } = useIsMobile();
+
 const sortOptions: SortOptionConfig[] = [
   { value: "title-asc", label: "Title: A to Z" },
   { value: "title-desc", label: "Title: Z to A" },
-  { value: "date-newest", label: "Date Created: Newest First" },
-  { value: "date-oldest", label: "Date Created: Oldest First" },
+  { value: "date-newest", label: "Date: Newest First" },
+  { value: "date-oldest", label: "Date: Oldest First" },
 ];
-
-const currentSortLabel = computed(() => {
-  const option = sortOptions.find((opt) => opt.value === props.modelValue);
-  return option?.label || "Date Created: Newest First";
-});
 </script>

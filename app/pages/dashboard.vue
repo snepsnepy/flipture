@@ -59,12 +59,15 @@
             </template>
           </ActionButton>
         </div>
-        <!-- <HorizontalDivider /> -->
       </header>
 
       <HorizontalDivider />
 
-      <SearchText v-if="hasFlipbooks" v-model="searchQuery" />
+      <!-- Search and Sort -->
+      <section class="flex flex-row justify-between gap-2 items-center">
+        <SearchText v-if="hasFlipbooks" v-model="searchQuery" />
+        <SortButton v-if="hasFlipbooks" v-model="sortOption" />
+      </section>
 
       <!-- Content -->
       <section
@@ -106,6 +109,7 @@
 <script setup lang="ts">
 import type { Flipbook } from "~/types";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
+import type { SortOption } from "~/types";
 
 definePageMeta({
   layout: "base",
@@ -119,24 +123,67 @@ const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
 const flipbooks = ref<Flipbook[]>([]);
 const searchQuery = ref("");
+const sortOption = ref<SortOption>("date-newest");
 const isLoading = ref(true);
 const { isMobile } = useIsMobile();
 
 // Check if search query is empty
 const isSearchEmpty = computed(() => !searchQuery.value.trim());
 
+// Sort flipbooks based on selected sort option
+const sortFlipbooks = (flipbooks: Flipbook[]): Flipbook[] => {
+  const sorted = [...flipbooks];
+
+  switch (sortOption.value) {
+    case "date-newest":
+      // Default: newest first (by created_at desc)
+      return sorted.sort((a, b) => {
+        const dateA = new Date(a.created_at).getTime();
+        const dateB = new Date(b.created_at).getTime();
+        return dateB - dateA;
+      });
+
+    case "title-asc":
+      return sorted.sort((a, b) => {
+        const titleA = (a.title || "").toLowerCase();
+        const titleB = (b.title || "").toLowerCase();
+        return titleA.localeCompare(titleB);
+      });
+
+    case "title-desc":
+      return sorted.sort((a, b) => {
+        const titleA = (a.title || "").toLowerCase();
+        const titleB = (b.title || "").toLowerCase();
+        return titleB.localeCompare(titleA);
+      });
+
+    case "date-oldest":
+      return sorted.sort((a, b) => {
+        const dateA = new Date(a.created_at).getTime();
+        const dateB = new Date(b.created_at).getTime();
+        return dateA - dateB;
+      });
+
+    default:
+      return sorted;
+  }
+};
+
 // Filter flipbooks based on search query
 const filteredFlipbooks = computed(() => {
-  if (isSearchEmpty.value) {
-    return flipbooks.value;
+  let result = flipbooks.value;
+
+  // Apply search filter
+  if (!isSearchEmpty.value) {
+    const query = searchQuery.value.toLowerCase().trim();
+    result = result.filter((flipbook) => {
+      const title = flipbook.title?.toLowerCase() || "";
+      return title.includes(query);
+    });
   }
 
-  const query = searchQuery.value.toLowerCase().trim();
-  return flipbooks.value.filter((flipbook) => {
-    const title = flipbook.title?.toLowerCase() || "";
-
-    return title.includes(query);
-  });
+  // Apply sorting
+  return sortFlipbooks(result);
 });
 
 // Fetch flipbooks from API

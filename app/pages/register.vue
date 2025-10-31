@@ -304,7 +304,7 @@ const signUp = async () => {
   });
 
   if (!error) {
-    return navigateTo("/");
+    return navigateTo({ name: "login" });
   } else {
     console.log(error.message);
     isLoading.value = false;

@@ -9,7 +9,7 @@
 
   <!-- Main Content -->
   <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
-    <header class="flex flex-col xl:flex-row gap-4 xl:h-[362px]">
+    <header class="flex flex-col xl:flex-row gap-4 xl:h-[380px]">
       <!-- Hero -->
       <DashboardHero v-if="!isMobile" />
 
@@ -35,8 +35,7 @@
           </h4>
 
           <ActionButton
-            v-if="hasFlipbooks"
-            text="Create Flipbook"
+            text="Create New"
             class="w-full md:w-fit hover:cursor-pointer"
             @click="flipbookStore.openModal"
           >
@@ -65,13 +64,15 @@
 
       <HorizontalDivider />
 
+      <SearchText v-if="hasFlipbooks" v-model="searchQuery" />
+
       <!-- Content -->
       <section
         class="grid grid-cols-1 xl:grid-cols-2 w-full gap-4"
-        v-if="hasFlipbooks"
+        v-if="filteredFlipbooks.length > 0"
       >
         <DashboardFlipbook
-          v-for="flipbook in flipbooks"
+          v-for="flipbook in filteredFlipbooks"
           :key="flipbook.id"
           :flipbook="flipbook"
           @deleted="handleFlipbookDeleted"
@@ -80,7 +81,17 @@
       </section>
 
       <!-- No Flipbooks -->
-      <DashboardNoItems v-else />
+      <DashboardNoItems v-else-if="isSearchEmpty" />
+
+      <!-- No Search Results -->
+      <div v-else class="flex flex-col items-center justify-center py-12">
+        <p class="font-poppins text-lg leading-5 text-base-content text-center">
+          No flipbooks found matching "{{ searchQuery }}". <br />
+          <span class="text-sm leadin-3 text-neutral"
+            >Try again with a different search term.</span
+          >
+        </p>
+      </div>
     </div>
   </section>
 
@@ -107,8 +118,26 @@ const flipbookStore = useFlipbookStore();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
 const flipbooks = ref<Flipbook[]>([]);
+const searchQuery = ref("");
 const isLoading = ref(true);
 const { isMobile } = useIsMobile();
+
+// Check if search query is empty
+const isSearchEmpty = computed(() => !searchQuery.value.trim());
+
+// Filter flipbooks based on search query
+const filteredFlipbooks = computed(() => {
+  if (isSearchEmpty.value) {
+    return flipbooks.value;
+  }
+
+  const query = searchQuery.value.toLowerCase().trim();
+  return flipbooks.value.filter((flipbook) => {
+    const title = flipbook.title?.toLowerCase() || "";
+
+    return title.includes(query);
+  });
+});
 
 // Fetch flipbooks from API
 const fetchFlipbooks = async () => {
@@ -127,8 +156,8 @@ const fetchFlipbooks = async () => {
 
     const flipbooksList = flipbooksData || [];
 
-    // Update cache
-    flipbookStore.setCachedFlipbooks(flipbooksList);
+    // Update cache with user ID
+    flipbookStore.setCachedFlipbooks(flipbooksList, user.value.id);
 
     // Update local state
     flipbooks.value = flipbooksList;
@@ -142,16 +171,52 @@ const fetchFlipbooks = async () => {
 };
 
 onMounted(async () => {
+  // Reset sign-out state if user is present (in case of page refresh)
+  if (user.value) {
+    flipbookStore.setSigningOut(false);
+  }
+
   watchEffect(() => {
     if (!user.value) {
+      // Clear cache when user logs out
+      flipbookStore.invalidateCache();
       return navigateTo("/login");
     }
   });
 
-  // Check if we have valid cached data
-  const cachedData = flipbookStore.getCachedFlipbooks();
+  // Watch for user changes and invalidate cache if user changes
+  watch(
+    () => user.value?.id,
+    (newUserId, oldUserId) => {
+      if (oldUserId !== null && newUserId !== oldUserId) {
+        // User has changed - invalidate cache and reset sign-out state
+        flipbookStore.invalidateCache();
+        flipbookStore.setSigningOut(false);
+        flipbooks.value = [];
+        flipbooksLength.value = 0;
+        hasFlipbooks.value = false;
+        searchQuery.value = "";
+      } else if (newUserId !== null && oldUserId === null) {
+        // New user logged in - reset sign-out state
+        flipbookStore.setSigningOut(false);
+      }
+    }
+  );
 
-  if (cachedData.length > 0 && flipbookStore.hasCachedFlipbooks) {
+  // Check if we have valid cached data for the current user
+  const currentUserId = user.value?.id || null;
+  const cachedData = flipbookStore.getCachedFlipbooks(currentUserId);
+
+  // If cache exists but belongs to a different user, invalidate it
+  if (
+    flipbookStore.hasCachedFlipbooks &&
+    flipbookStore.cachedUserId !== currentUserId &&
+    currentUserId !== null
+  ) {
+    flipbookStore.invalidateCache();
+  }
+
+  if (cachedData.length > 0) {
     // Use cached data
     flipbooks.value = cachedData;
     flipbooksLength.value = cachedData.length;
@@ -181,6 +246,7 @@ const handleFlipbookDeleted = (deletedFlipbookId: string) => {
   // Update the computed values
   flipbooksLength.value = flipbooks.value.length;
   hasFlipbooks.value = flipbooksLength.value > 0;
+  searchQuery.value = "";
 };
 
 const handleFlipbookUpdated = (updatedFlipbook: Flipbook) => {

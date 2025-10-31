@@ -235,6 +235,10 @@ const { value: password, errorMessage: passwordErrors } =
 const isLoading = ref(false);
 
 onMounted(() => {
+  // Reset sign-out state when login page loads
+  const flipbookStore = useFlipbookStore();
+  flipbookStore.setSigningOut(false);
+
   watchEffect(() => {
     if (user.value) {
       return navigateTo("/");

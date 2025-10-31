@@ -435,6 +435,7 @@
 <script setup lang="ts">
 import { Toast } from "~/types";
 import { createPasswordChangeSchema } from "~~/schema/form.schema";
+import { useFlipbookStore } from "~/stores/useFlipbookStore";
 
 definePageMeta({
   layout: "base",
@@ -444,6 +445,7 @@ definePageMeta({
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const { showToast } = useToast();
+const flipbookStore = useFlipbookStore();
 
 // Loading states
 const isLoading = ref(true);
@@ -613,6 +615,7 @@ const changePassword = handleSubmit(async () => {
 const signOut = async () => {
   try {
     isSigningOut.value = true;
+    flipbookStore.setSigningOut(true);
 
     const { error } = await client.auth.signOut();
 
@@ -620,9 +623,14 @@ const signOut = async () => {
       throw error;
     }
 
+    // Clear flipbook cache on logout
+    flipbookStore.invalidateCache();
+
     await navigateTo({ name: "login" });
+    // Keep isSigningOut true until navigation completes
   } catch (error: any) {
     console.error("Error signing out:", error);
+    flipbookStore.setSigningOut(false);
     showToast(Toast.ERROR, {
       toastTitle: "Failed to sign out",
       description: error.message,

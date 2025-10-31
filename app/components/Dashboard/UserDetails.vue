@@ -19,9 +19,21 @@
               >Welcome back,
             </span>
             <span
+              v-if="!flipbookStore.isSigningOut && userFullName"
               class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
               >{{ userFullName }}
             </span>
+            <span
+              v-else-if="flipbookStore.isSigningOut"
+              class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold flex items-center gap-2"
+            >
+              <span class="loading loading-spinner loading-sm"></span>
+              Signing out...
+            </span>
+            <span
+              v-else
+              class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
+            ></span>
           </h2>
         </div>
       </header>
@@ -163,7 +175,7 @@
 </template>
 
 <script setup lang="ts">
-import { Toast } from "~/types";
+import { useFlipbookStore } from "~/stores/useFlipbookStore";
 
 defineProps<{
   hasFlipbooks: boolean;
@@ -171,8 +183,8 @@ defineProps<{
 }>();
 
 const user = useSupabaseUser();
-const { showToast } = useToast();
 const { isMobile } = useIsMobile();
+const flipbookStore = useFlipbookStore();
 
 const checkboxState = ref(false);
 
@@ -186,13 +198,24 @@ watch(isMobile, (newIsMobile) => {
   checkboxState.value = !newIsMobile;
 });
 const userFullName = computed(() => {
+  // Show loading indicator when signing out to prevent "undefined" flash
+  if (flipbookStore.isSigningOut) {
+    return "";
+  }
+
   const appMetadata = user.value?.app_metadata;
   const userMetadata = user.value?.user_metadata;
 
+  if (!userMetadata) {
+    return "";
+  }
+
   if (appMetadata?.provider === "google") {
-    return userMetadata?.full_name;
+    return userMetadata?.full_name || "";
   } else {
-    return `${userMetadata?.firstName} ${userMetadata?.lastName}`;
+    return `${userMetadata?.firstName || ""} ${
+      userMetadata?.lastName || ""
+    }`.trim();
   }
 });
 

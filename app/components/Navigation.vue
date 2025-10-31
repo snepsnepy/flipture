@@ -115,10 +115,13 @@
 </template>
 
 <script lang="ts" setup>
+import { useFlipbookStore } from "~/stores/useFlipbookStore";
+
 const route = useRoute();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const activeElement = useActiveElement();
+const flipbookStore = useFlipbookStore();
 
 const isLoading = ref(false);
 
@@ -138,8 +141,15 @@ const handleAuthAction = async () => {
 
 const signOut = async () => {
   isLoading.value = true;
+  flipbookStore.setSigningOut(true);
   const { error } = await client.auth.signOut();
   if (!error) {
+    // Clear flipbook cache on logout
+    flipbookStore.invalidateCache();
+    isLoading.value = false;
+    // Keep isSigningOut true until navigation completes
+  } else {
+    flipbookStore.setSigningOut(false);
     isLoading.value = false;
   }
 };

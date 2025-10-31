@@ -20,7 +20,9 @@ export const useFlipbookStore = defineStore("flipbook", () => {
   // Cache state
   const cachedFlipbooks = ref<Flipbook[]>([]);
   const cacheTimestamp = ref<number | null>(null);
+  const cachedUserId = ref<string | null>(null); // Track which user the cache belongs to
   const isLoading = ref(false);
+  const isSigningOut = ref(false); // Track sign-out state to prevent UI flashes
 
   // Getters
   const hasFile = computed(() => formData.value.file !== null);
@@ -84,13 +86,19 @@ export const useFlipbookStore = defineStore("flipbook", () => {
   });
 
   // Cache actions
-  const setCachedFlipbooks = (flipbooks: Flipbook[]) => {
+  const setCachedFlipbooks = (flipbooks: Flipbook[], userId: string) => {
     cachedFlipbooks.value = flipbooks;
     cacheTimestamp.value = Date.now();
+    cachedUserId.value = userId;
   };
 
-  const getCachedFlipbooks = (): Flipbook[] => {
-    if (hasCachedFlipbooks.value) {
+  const getCachedFlipbooks = (currentUserId: string | null): Flipbook[] => {
+    // Only return cached data if it belongs to the current user and is still valid
+    if (
+      hasCachedFlipbooks.value &&
+      cachedUserId.value === currentUserId &&
+      currentUserId !== null
+    ) {
       return cachedFlipbooks.value;
     }
     return [];
@@ -99,6 +107,11 @@ export const useFlipbookStore = defineStore("flipbook", () => {
   const invalidateCache = () => {
     cacheTimestamp.value = null;
     cachedFlipbooks.value = [];
+    cachedUserId.value = null;
+  };
+
+  const setSigningOut = (value: boolean) => {
+    isSigningOut.value = value;
   };
 
   const updateCachedFlipbook = (updatedFlipbook: Flipbook) => {
@@ -131,6 +144,8 @@ export const useFlipbookStore = defineStore("flipbook", () => {
     // Cache state
     cachedFlipbooks: readonly(cachedFlipbooks),
     cacheTimestamp: readonly(cacheTimestamp),
+    cachedUserId: readonly(cachedUserId),
+    isSigningOut: readonly(isSigningOut),
 
     // Getters
     hasFile,
@@ -157,5 +172,6 @@ export const useFlipbookStore = defineStore("flipbook", () => {
     updateCachedFlipbook,
     removeCachedFlipbook,
     addCachedFlipbook,
+    setSigningOut,
   };
 });

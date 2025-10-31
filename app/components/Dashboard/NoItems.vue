@@ -18,11 +18,12 @@
       </h4>
 
       <p
-        class="text-base-content text-sm leading-[14px] md:text-base md:leading-4 font-poppins text-center"
+        class="text-base-content text-sm leading-6 md:text-base md:leading-4 font-poppins text-center"
       >
-        You don't have any flipbooks yet. <br />Press the
-        <span class="text-primary font-boldç">Create Now</span> button to get
-        started.
+        You don't have any flipbooks yet. <br />
+        <span class="text-neutral text-sm leading-3"
+          >Press the Create New button to get started.
+        </span>
       </p>
     </div>
   </section>

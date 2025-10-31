@@ -9,7 +9,7 @@
 
   <!-- Main Content -->
   <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
-    <header class="flex flex-col xl:flex-row gap-4 xl:h-[380px]">
+    <header class="flex flex-col xl:flex-row gap-4 xl:h-[380px] w-full">
       <!-- Hero -->
       <DashboardHero v-if="!isMobile" />
 
@@ -17,6 +17,7 @@
       <DashboardUserDetails
         :hasFlipbooks="hasFlipbooks"
         :flipbooksLength="flipbooksLength!"
+        :flipbooks="flipbooks"
       />
     </header>
 

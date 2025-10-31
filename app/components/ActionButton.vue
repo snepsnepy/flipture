@@ -14,7 +14,8 @@
         :class="{
           '!bg-secondary': type === 'primary',
           '!bg-base-100': type === 'secondary' || type === 'error',
-          '!bg-error': type === 'confirmation',
+          '!bg-error':
+            type === 'confirmation' || (type === 'error' && isMobile),
         }"
       ></span>
       <span
@@ -57,4 +58,6 @@ defineProps<Props>();
 
 const slots = useSlots();
 const hasIcon = computed(() => !!slots.icon);
+
+const { isMobile } = useIsMobile();
 </script>

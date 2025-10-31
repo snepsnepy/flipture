@@ -1,7 +1,7 @@
 <template>
   <!-- User Details Section -->
   <div
-    class="collapse bg-base-200 border-2 border-base-content p-2 md:p-4 rounded-3xl h-fit w-full"
+    class="collapse bg-base-200 border-2 border-base-content p-2 md:p-4 rounded-3xl h-fit !w-full"
   >
     <input type="checkbox" v-model="checkboxState" />
     <!-- TITLE -->
@@ -79,7 +79,7 @@
               <h4
                 class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
               >
-                Views
+                Storage Used
               </h4>
               <div>
                 <svg
@@ -88,26 +88,23 @@
                   height="24"
                   viewBox="0 0 24 24"
                 >
-                  <g
-                    fill="none"
-                    stroke="#000"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                  >
+                  <g fill="none">
                     <path
-                      d="M21.257 10.962c.474.62.474 1.457 0 2.076C19.764 14.987 16.182 19 12 19s-7.764-4.013-9.257-5.962a1.69 1.69 0 0 1 0-2.076C4.236 9.013 7.818 5 12 5s7.764 4.013 9.257 5.962"
+                      d="m12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036q-.016-.004-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427q-.004-.016-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092q.019.005.029-.008l.004-.014l-.034-.614q-.005-.019-.02-.022m-.715.002a.02.02 0 0 0-.027.006l-.006.014l-.034.614q.001.018.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"
                     />
-                    <circle cx="12" cy="12" r="3" />
+                    <path
+                      fill="#000"
+                      d="M19 4a2 2 0 0 1 1.995 1.85L21 6v4a2 2 0 0 1-1.85 1.995L19 12H5a2 2 0 0 1-1.995-1.85L3 10V6a2 2 0 0 1 1.85-1.995L5 4zm0 2H5v4h14zm-9 1a1 1 0 0 1 .117 1.993L10 9H8a1 1 0 0 1-.117-1.993L8 7zm9 6a2 2 0 0 1 1.995 1.85L21 15v4a2 2 0 0 1-1.85 1.995L19 21H5a2 2 0 0 1-1.995-1.85L3 19v-4a2 2 0 0 1 1.85-1.995L5 13zm0 2H5v4h14zm-9 1a1 1 0 1 1 0 2H8a1 1 0 1 1 0-2z"
+                    />
                   </g>
                 </svg>
               </div>
             </div>
             <p class="text-sm text-base-content leading-3 font-poppins">
-              <span class="font-bold text-primary text-3xl leading-[30px]"
-                >100</span
-              >
-              views
+              <span class="font-bold text-primary text-3xl leading-[30px]">{{
+                formattedStorageSize.number
+              }}</span>
+              {{ formattedStorageSize.unit }}
             </p>
           </div>
           <div
@@ -176,10 +173,15 @@
 
 <script setup lang="ts">
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
+import type { Flipbook } from "~/types";
+import { useFileSize } from "~/composables/useFileSize";
 
-defineProps<{
+const { formatFileSize, calculateTotalStorageSize } = useFileSize();
+
+const props = defineProps<{
   hasFlipbooks: boolean;
   flipbooksLength: number;
+  flipbooks: Flipbook[];
 }>();
 
 const user = useSupabaseUser();
@@ -222,6 +224,21 @@ const userFullName = computed(() => {
 const navigateToSettings = () => {
   return navigateTo({ name: "settings" });
 };
+
+// Calculate total storage size
+const totalStorageSize = computed(() => {
+  return calculateTotalStorageSize(props.flipbooks);
+});
+
+// Split formatted file size into number and unit
+const formattedStorageSize = computed(() => {
+  const formatted = formatFileSize(totalStorageSize.value);
+  const parts = formatted.split(" ");
+  return {
+    number: parts[0],
+    unit: parts[1] || "",
+  };
+});
 </script>
 
 <style scoped>

@@ -436,6 +436,7 @@
 import { Toast } from "~/types";
 import { createPasswordChangeSchema } from "~~/schema/form.schema";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
+import { useFileSize } from "~/composables/useFileSize";
 
 definePageMeta({
   layout: "base",
@@ -446,6 +447,7 @@ const client = useSupabaseClient();
 const user = useSupabaseUser();
 const { showToast } = useToast();
 const flipbookStore = useFlipbookStore();
+const { formatFileSize, calculateTotalStorageSize } = useFileSize();
 
 // Loading states
 const isLoading = ref(true);
@@ -531,13 +533,9 @@ const loadUserData = async () => {
       .select("pdf_file_size")
       .eq("user_id", user.value?.id!);
 
-    const totalSize =
-      flipbooksWithSize?.reduce(
-        (sum, flipbook) => sum + ((flipbook as any).pdf_file_size || 0),
-        0
-      ) || 0;
+    const totalSize = calculateTotalStorageSize(flipbooksWithSize || []);
 
-    storageUsed.value = `${Math.round(totalSize / 1024 / 1024)} MB`;
+    storageUsed.value = formatFileSize(totalSize);
   } catch (error) {
     console.error("Error loading user data:", error);
     showToast(Toast.ERROR, {

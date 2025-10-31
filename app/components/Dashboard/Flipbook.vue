@@ -298,6 +298,7 @@ const titleHasSpaces = computed(() => {
 
 const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();
+const route = useRoute();
 const { showToast } = useToast();
 const deleteModal = ref<InstanceType<typeof DeleteModal>>();
 const editModal = ref<InstanceType<typeof EditModal>>();
@@ -313,7 +314,11 @@ const openEditModal = () => {
 };
 
 const openPreviewModal = () => {
-  navigateTo(`/preview/${props.flipbook.id}`);
+  // Preserve the current page query parameter when navigating to preview
+  navigateTo({
+    path: `/preview/${props.flipbook.id}`,
+    query: { page: route.query.page || "1" },
+  });
 };
 
 const shareLink = async () => {

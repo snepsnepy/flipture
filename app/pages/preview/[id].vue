@@ -214,7 +214,12 @@ const previewUrl = computed(() => {
 });
 
 const navigateToDashboard = () => {
-  return navigateTo({ name: "dashboard" });
+  // Navigate back to dashboard with the page query parameter
+  const page = route.query.page || "1";
+  return navigateTo({
+    path: "/dashboard",
+    query: { page },
+  });
 };
 
 const copyShareLink = async () => {

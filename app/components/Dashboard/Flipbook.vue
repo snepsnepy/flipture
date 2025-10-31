@@ -4,7 +4,7 @@
       v-if="isMobile"
       class="collapse bg-base-200 border-2 border-base-content rounded-3xl h-fit w-full"
     >
-      <input type="checkbox" />
+      <input type="checkbox" v-model="checkboxState" />
       <div class="collapse-title font-semibold !p-4 md:!p-6">
         <!-- HEADER -->
         <header class="flex flex-row items-center justify-between">
@@ -35,7 +35,7 @@
             <svg
               :class="[
                 'w-4 h-4 transition-transform duration-300',
-                // checkboxState ? 'rotate-180' : 'rotate-0',
+                checkboxState ? 'rotate-180' : 'rotate-0',
               ]"
               fill="none"
               stroke="currentColor"
@@ -302,6 +302,7 @@ const { showToast } = useToast();
 const deleteModal = ref<InstanceType<typeof DeleteModal>>();
 const editModal = ref<InstanceType<typeof EditModal>>();
 const { isMobile } = useIsMobile();
+const checkboxState = ref(false);
 
 const openDeleteModal = () => {
   deleteModal.value?.openModal();

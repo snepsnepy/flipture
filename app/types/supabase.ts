@@ -1,3 +1,5 @@
+import type { FlipbookView, FlipbookAnalytics } from "./analytics";
+
 export interface Database {
   public: {
     Tables: {
@@ -41,6 +43,16 @@ export interface Database {
           created_at?: string;
           updated_at?: string;
         };
+      };
+      flipbook_views: {
+        Row: FlipbookView;
+        Insert: Omit<FlipbookView, "id" | "created_at">;
+        Update: Partial<Omit<FlipbookView, "id" | "created_at">>;
+      };
+      flipbook_analytics: {
+        Row: FlipbookAnalytics;
+        Insert: Omit<FlipbookAnalytics, "id" | "created_at" | "updated_at">;
+        Update: Partial<Omit<FlipbookAnalytics, "id" | "created_at">>;
       };
     };
   };

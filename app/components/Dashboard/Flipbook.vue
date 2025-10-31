@@ -113,7 +113,27 @@
             </ActionButton>
           </div>
 
-          <div class="flex flex-row gap-2 w-full md:w-fit">
+          <div class="flex flex-col md:flex-row gap-2 w-full md:w-fit">
+            <ActionButton
+              class="w-full"
+              text="Analytics"
+              type="secondary"
+              @click="openAnalyticsModal"
+            >
+              <template #icon>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#000"
+                    d="M3 13h8V3H3zm0 8h8v-6H3zm10 0h8V11h-8zm0-18v6h8V3z"
+                  />
+                </svg>
+              </template>
+            </ActionButton>
             <ActionButton
               class="w-full"
               text="Preview & Share"
@@ -232,7 +252,27 @@
             </ActionButton>
           </div>
 
-          <div class="flex flex-row gap-2 w-full md:w-fit">
+          <div class="flex flex-col md:flex-row gap-2 w-full md:w-fit">
+            <ActionButton
+              class="w-full"
+              text="Analytics"
+              type="secondary"
+              @click="openAnalyticsModal"
+            >
+              <template #icon>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="#000"
+                    d="M3 13h8V3H3zm0 8h8v-6H3zm10 0h8V11h-8zm0-18v6h8V3z"
+                  />
+                </svg>
+              </template>
+            </ActionButton>
             <ActionButton
               class="w-full"
               text="Preview & Share"
@@ -271,6 +311,17 @@
 
     <!-- Edit Modal -->
     <EditModal ref="editModal" :flipbook="flipbook" @confirm="handleEdit" />
+
+    <!-- Analytics Modal -->
+    <div v-if="showAnalytics" class="modal modal-open">
+      <div class="modal-box max-w-2xl">
+        <DashboardAnalyticsCard
+          :flipbook-id="flipbook.id"
+          @close="showAnalytics = false"
+        />
+      </div>
+      <div class="modal-backdrop" @click="showAnalytics = false"></div>
+    </div>
   </section>
 </template>
 
@@ -304,6 +355,7 @@ const deleteModal = ref<InstanceType<typeof DeleteModal>>();
 const editModal = ref<InstanceType<typeof EditModal>>();
 const { isMobile } = useIsMobile();
 const checkboxState = ref(false);
+const showAnalytics = ref(false);
 
 const openDeleteModal = () => {
   deleteModal.value?.openModal();
@@ -311,6 +363,10 @@ const openDeleteModal = () => {
 
 const openEditModal = () => {
   editModal.value?.openModal();
+};
+
+const openAnalyticsModal = () => {
+  showAnalytics.value = true;
 };
 
 const openPreviewModal = () => {

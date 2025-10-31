@@ -73,10 +73,10 @@
       <!-- Content -->
       <section
         class="grid grid-cols-1 xl:grid-cols-2 w-full gap-4"
-        v-if="filteredFlipbooks.length > 0"
+        v-if="paginatedFlipbooks.length > 0"
       >
         <DashboardFlipbook
-          v-for="flipbook in filteredFlipbooks"
+          v-for="flipbook in paginatedFlipbooks"
           :key="flipbook.id"
           :flipbook="flipbook"
           @deleted="handleFlipbookDeleted"
@@ -85,10 +85,15 @@
       </section>
 
       <!-- No Flipbooks -->
-      <DashboardNoItems v-else-if="isSearchEmpty" />
+      <DashboardNoItems
+        v-else-if="isSearchEmpty && filteredFlipbooks.length === 0"
+      />
 
       <!-- No Search Results -->
-      <div v-else class="flex flex-col items-center justify-center py-12">
+      <div
+        v-else-if="filteredFlipbooks.length === 0"
+        class="flex flex-col items-center justify-center py-12"
+      >
         <p class="font-poppins text-lg leading-5 text-base-content text-center">
           No flipbooks found matching "{{ searchQuery }}". <br />
           <span class="text-sm leadin-3 text-neutral"
@@ -96,6 +101,16 @@
           >
         </p>
       </div>
+
+      <HorizontalDivider />
+
+      <!-- Pagination -->
+      <Pagination
+        v-if="filteredFlipbooks.length > 0 && totalPages > 1"
+        :current-page="currentPage"
+        :total-pages="totalPages"
+        @update:current-page="currentPage = $event"
+      />
     </div>
   </section>
 
@@ -119,6 +134,8 @@ definePageMeta({
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+const route = useRoute();
+const router = useRouter();
 const flipbookStore = useFlipbookStore();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
@@ -126,6 +143,9 @@ const flipbooks = ref<Flipbook[]>([]);
 const searchQuery = ref("");
 const sortOption = ref<SortOption>("date-newest");
 const isLoading = ref(true);
+// Initialize currentPage from URL query parameter, default to 1
+const currentPage = ref(parseInt(route.query.page as string) || 1);
+const itemsPerPage = ref(6); // Items per page
 const { isMobile } = useIsMobile();
 
 // Check if search query is empty
@@ -185,6 +205,38 @@ const filteredFlipbooks = computed(() => {
 
   // Apply sorting
   return sortFlipbooks(result);
+});
+
+// Calculate total pages
+const totalPages = computed(() => {
+  return Math.ceil(filteredFlipbooks.value.length / itemsPerPage.value);
+});
+
+// Paginated flipbooks
+const paginatedFlipbooks = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage.value;
+  const end = start + itemsPerPage.value;
+  return filteredFlipbooks.value.slice(start, end);
+});
+
+// Watch totalPages to ensure currentPage doesn't exceed it
+watch(totalPages, (newTotalPages) => {
+  if (currentPage.value > newTotalPages && newTotalPages > 0) {
+    currentPage.value = newTotalPages;
+  }
+});
+
+// Watch for search or sort changes to reset to page 1
+watch([searchQuery, sortOption], () => {
+  currentPage.value = 1;
+});
+
+// Watch for page changes to update URL query parameter
+watch(currentPage, (newPage) => {
+  // Update URL without triggering navigation
+  router.replace({
+    query: { ...route.query, page: newPage.toString() },
+  });
 });
 
 // Fetch flipbooks from API
@@ -280,6 +332,8 @@ const handleFlipbookCreated = async () => {
   // Invalidate cache and fetch fresh data
   flipbookStore.invalidateCache();
   await fetchFlipbooks();
+  // Reset to page 1 to show the newly created flipbook
+  currentPage.value = 1;
 };
 
 const handleFlipbookDeleted = (deletedFlipbookId: string) => {
@@ -295,6 +349,11 @@ const handleFlipbookDeleted = (deletedFlipbookId: string) => {
   flipbooksLength.value = flipbooks.value.length;
   hasFlipbooks.value = flipbooksLength.value > 0;
   searchQuery.value = "";
+
+  // Reset to page 1 if current page becomes empty
+  if (paginatedFlipbooks.value.length === 0 && currentPage.value > 1) {
+    currentPage.value = Math.max(1, totalPages.value);
+  }
 };
 
 const handleFlipbookUpdated = (updatedFlipbook: Flipbook) => {

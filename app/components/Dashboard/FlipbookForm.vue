@@ -216,6 +216,7 @@ const createFlipbook = async () => {
     company: company.value,
     description: description.value,
     coverOption: coverOption.value,
+    backgroundGradient: "deep-white",
   });
 
   if (result.success) {

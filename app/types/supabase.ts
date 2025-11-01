@@ -11,6 +11,7 @@ export interface Database {
           pdf_file_name: string | null;
           pdf_file_size: number | null;
           cover_options: string | null;
+          background_gradient: string | null;
           user_id: string;
           created_at: string;
           updated_at: string;
@@ -24,6 +25,7 @@ export interface Database {
           pdf_file_name?: string | null;
           pdf_file_size?: number | null;
           cover_options?: string | null;
+          background_gradient?: string | null;
           user_id: string;
           created_at?: string;
           updated_at?: string;
@@ -37,6 +39,7 @@ export interface Database {
           pdf_file_name?: string | null;
           pdf_file_size?: number | null;
           cover_options?: string | null;
+          background_gradient?: string | null;
           user_id?: string;
           created_at?: string;
           updated_at?: string;

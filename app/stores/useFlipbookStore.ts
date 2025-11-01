@@ -12,6 +12,7 @@ export const useFlipbookStore = defineStore("flipbook", () => {
     company: "",
     description: "",
     coverOption: "default",
+    backgroundGradient: "deep-white",
   });
 
   const currentStep = ref(1);
@@ -47,6 +48,7 @@ export const useFlipbookStore = defineStore("flipbook", () => {
       company: "",
       description: "",
       coverOption: "default",
+      backgroundGradient: "deep-white",
     };
     currentStep.value = 1;
   };

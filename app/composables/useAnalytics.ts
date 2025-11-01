@@ -16,19 +16,27 @@ export const useAnalytics = () => {
     flipbookId: string
   ): Promise<FlipbookAnalytics | null> => {
     try {
+      console.log("📊 [useAnalytics] Fetching analytics for:", flipbookId);
+
+      // Încearcă fără .single() mai întâi (poate returna array gol)
       const { data, error } = await client
         .from("flipbook_analytics")
         .select("*")
-        .eq("flipbook_id", flipbookId)
-        .single();
+        .eq("flipbook_id", flipbookId);
 
-      if (error && error.code !== "PGRST116") {
-        // PGRST116 = no rows returned (flipbook has no analytics yet)
-        console.error("Error fetching analytics:", error);
+      console.log("📊 [useAnalytics] Response:", {
+        data,
+        error,
+        count: data?.length,
+      });
+
+      if (error) {
+        console.error("❌ [useAnalytics] Error fetching analytics:", error);
         return null;
       }
 
-      return data as FlipbookAnalytics;
+      // Return first result or null if empty
+      return data && data.length > 0 ? (data[0] as FlipbookAnalytics) : null;
     } catch (error) {
       console.error("Error in getFlipbookAnalytics:", error);
       return null;

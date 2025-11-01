@@ -50,6 +50,13 @@
       </p>
     </div>
 
+    <div class="p-3 bg-warning/10 rounded-lg border border-warning">
+      <p class="text-sm leading-4 font-poppins text-warning">
+        <span class="font-semibold">Note:</span> This setting can be modified
+        later in the flipbook settings.
+      </p>
+    </div>
+
     <fieldset class="p-0 flex flex-col gap-2 md:gap-3 max-w-full min-w-0">
       <div class="form-control">
         <label class="label cursor-pointer justify-start gap-3">
@@ -102,54 +109,7 @@
           </span>
         </label>
       </div>
-      <div class="mt-2 p-3 bg-warning/10 rounded-lg border border-warning">
-        <p class="text-sm leading-4 font-poppins text-warning">
-          <span class="font-semibold">Note:</span> This setting can be modified
-          later in the flipbook settings.
-        </p>
-      </div>
     </fieldset>
-
-    <!-- Summary -->
-    <!-- <div
-      class="p-4 bg-base-200 border border-base-300 rounded-lg flex flex-col gap-y-4"
-    >
-      <h5 class="font-poppins font-semibold text-lg leading-4 mb-3">Summary</h5>
-      <div class="space-y-3 text-base leading-4">
-        <div class="flex flex-col md:flex-row gap-y-1 justify-between">
-          <span class="text-base-content">Uploaded File:</span>
-          <span class="font-medium">{{
-            formData.file?.name || "No file selected"
-          }}</span>
-        </div>
-        <div class="flex flex-col md:flex-row gap-y-1 justify-between">
-          <span class="text-base-content">Flipbook Title:</span>
-          <span class="font-medium">{{
-            formData.title || "Not specified"
-          }}</span>
-        </div>
-        <div
-          v-if="formData.company"
-          class="flex flex-col md:flex-row gap-y-1 justify-between"
-        >
-          <span class="text-base-content">Company Name:</span>
-          <span class="font-medium">{{ formData.company }}</span>
-        </div>
-        <div
-          v-if="formData.description"
-          class="flex flex-col md:flex-row gap-y-1 justify-between"
-        >
-          <span class="text-base-content">Flipbook Description:</span>
-          <span class="font-medium">{{ formData.description }}</span>
-        </div>
-        <div class="flex flex-col md:flex-row gap-y-1 justify-between">
-          <span class="text-base-content">Flipbook Cover:</span>
-          <span class="font-medium">
-            {{ getCoverOptionText(formData.coverOption) }}
-          </span>
-        </div>
-      </div>
-    </div> -->
   </div>
 </template>
 

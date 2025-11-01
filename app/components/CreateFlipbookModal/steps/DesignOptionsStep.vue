@@ -217,7 +217,7 @@ interface GradientOption {
 const backgroundGradients: GradientOption[] = [
   // Row 1
   {
-    id: "frost-white",
+    id: "deep-white",
     name: "Deep White",
     gradient: "bg-gradient-to-br from-[#FFFFFF] to-[#F0F0F0]",
   },

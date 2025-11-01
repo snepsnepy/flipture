@@ -281,7 +281,7 @@
         <ActionButton
           v-if="flipbookStore.currentStep === 3"
           text="Create Flipbook"
-          type="secondary"
+          type="primary"
           @click="createFlipbook"
           :disabled="isLoading"
         >
@@ -319,7 +319,7 @@ import { useFlipbookStore } from "~/stores/useFlipbookStore";
 // Step components
 import FileUploadStep from "~/components/CreateFlipbookModal/steps/FileUploadStep.vue";
 import FlipbookDetailsStep from "~/components/CreateFlipbookModal/steps/FlipbookDetailsStep.vue";
-import CoverOptionsStep from "~/components/CreateFlipbookModal/steps/CoverOptionsStep.vue";
+import CoverOptionsStep from "~/components/CreateFlipbookModal/steps/DesignOptionsStep.vue";
 import Stepper from "~/components/Stepper.vue";
 import type { FlipbookFormData } from "~/types";
 
@@ -330,7 +330,7 @@ const flipbookStore = useFlipbookStore();
 const stepperSteps = [
   { stepTitle: "Upload PDF" },
   { stepTitle: "Details" },
-  { stepTitle: "Cover Options" },
+  { stepTitle: "Design Options" },
 ];
 
 // Success state

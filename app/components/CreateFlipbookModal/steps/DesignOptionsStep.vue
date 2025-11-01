@@ -169,7 +169,7 @@ const localFormData = ref<{
   backgroundGradient: string | null;
 }>({
   coverOption: props.formData.coverOption,
-  backgroundGradient: props.formData.backgroundGradient || "ocean-blue",
+  backgroundGradient: props.formData.backgroundGradient || "deep-white",
 });
 
 // Watch for prop changes
@@ -183,21 +183,21 @@ watch(
 watch(
   () => props.formData.backgroundGradient,
   (newValue) => {
-    localFormData.value.backgroundGradient = newValue || "ocean-blue";
+    localFormData.value.backgroundGradient = newValue || "deep-white";
   }
 );
 
 const updateFormData = () => {
   flipbookStore.updateFormData({
     coverOption: localFormData.value.coverOption,
-    backgroundGradient: localFormData.value.backgroundGradient || "ocean-blue",
+    backgroundGradient: localFormData.value.backgroundGradient || "deep-white",
   });
 };
 
 // Initialize background gradient if not set when component mounts
 onMounted(() => {
   if (!localFormData.value.backgroundGradient) {
-    localFormData.value.backgroundGradient = "ocean-blue";
+    localFormData.value.backgroundGradient = "deep-white";
     updateFormData();
   }
 });

@@ -55,7 +55,7 @@ export const useCreateFlipbook = () => {
           pdf_file_name: formData.file.name,
           pdf_file_size: formData.file.size,
           cover_options: formData.coverOption,
-          background_gradient: formData.backgroundGradient || "ocean-blue",
+          background_gradient: formData.backgroundGradient || "deep-white",
         })
         .single();
 

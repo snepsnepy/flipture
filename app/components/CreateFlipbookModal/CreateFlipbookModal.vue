@@ -51,7 +51,7 @@
       </div>
 
       <!-- Custom Stepper -->
-      <div v-if="!showSuccess" class="pb-4">
+      <div class="pb-4">
         <Stepper
           :active-step="flipbookStore.currentStep - 1"
           :steps="stepperSteps"
@@ -60,163 +60,7 @@
 
       <!-- Dynamic Step Content -->
       <div class="md:min-h-[550px]">
-        <!-- Success State -->
-        <div
-          v-if="showSuccess"
-          class="flex flex-col items-center justify-center md:min-h-[400px]"
-        >
-          <div class="items-center flex flex-col gap-y-8">
-            <div class="gap-y-2 text-center items-center flex flex-col">
-              <!-- Success Icon -->
-              <div
-                class="rounded-full flex w-fit items-center justify-center border-3 border-base-content bg-success-content p-4"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="96"
-                  height="96"
-                  viewBox="0 0 24 24"
-                >
-                  <g fill="none">
-                    <path
-                      fill="#5cb338"
-                      d="M1.987 13.704a1.084 1.084 0 0 0 0 1.534l5.203 5.204c.424.423 1.11.423 1.534 0l13.289-13.29a1.084 1.084 0 0 0 0-1.533l-2.06-2.06a1.084 1.084 0 0 0-1.533 0L7.957 14.022L5.58 11.644a1.085 1.085 0 0 0-1.534 0z"
-                    />
-                    <path
-                      fill="#deffd3"
-                      d="M7.957 17.167L20.76 4.365l-.809-.809a1.085 1.085 0 0 0-1.534 0L7.957 14.022L5.58 11.644a1.084 1.084 0 0 0-1.534 0l-.809.809z"
-                    />
-                    <path
-                      stroke="#000"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M1.987 13.704a1.084 1.084 0 0 0 0 1.534l5.203 5.204c.424.423 1.11.423 1.534 0l13.289-13.29a1.084 1.084 0 0 0 0-1.533l-2.06-2.06a1.084 1.084 0 0 0-1.533 0L7.957 14.022L5.58 11.644a1.085 1.085 0 0 0-1.534 0z"
-                      stroke-width="1"
-                    />
-                  </g>
-                </svg>
-              </div>
-
-              <!-- Success Message -->
-              <h4
-                class="font-poppins font-bold text-xl md:text-2xl leading-6 text-success"
-              >
-                Flipbook Created Successfully!
-              </h4>
-              <p
-                class="font-poppins text-neutral text-sm md:text-base leading-4"
-              >
-                Your flipbook
-                <span class="text-primary">{{
-                  flipbookStore.formData.title
-                }}</span>
-                has been created and is ready to view.
-              </p>
-            </div>
-
-            <!-- Additional Info -->
-            <div
-              class="bg-primary/10 rounded-2xl p-6 flex flex-col gap-y-4 shadow-md border border-primary"
-            >
-              <h5
-                class="font-poppins font-semibold text-primary text-base md:text-lg leading-4"
-              >
-                What's Next?
-              </h5>
-              <ul class="text-sm space-y-2 text-left font-poppins text-primary">
-                <li class="flex items-start gap-2">
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="#0046ff"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m5 12l5 5L20 7"
-                      />
-                    </svg>
-                  </div>
-                  Your flipbook is now available in your dashboard
-                </li>
-                <li class="flex items-start gap-2">
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="#0046ff"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m5 12l5 5L20 7"
-                      />
-                    </svg>
-                  </div>
-                  You can share it with others or embed it on your website
-                </li>
-                <li class="flex items-start gap-2">
-                  <div>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="24"
-                      height="24"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        fill="none"
-                        stroke="#0046ff"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="m5 12l5 5L20 7"
-                      />
-                    </svg>
-                  </div>
-                  Edit settings anytime from the flipbook menu
-                </li>
-              </ul>
-            </div>
-
-            <!-- Close Button -->
-            <ActionButton
-              text="View My Flipbooks"
-              type="primary"
-              @click="handleSuccessClose"
-            >
-              <template #icon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="none"
-                    stroke="#000"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M11 8h5m0 4h-5m5 4h-5m-5 4h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2m2-4"
-                  />
-                </svg>
-              </template>
-            </ActionButton>
-          </div>
-        </div>
-
-        <!-- Regular Step Content -->
         <component
-          v-else
           :is="currentStepComponent"
           @next="flipbookStore.nextStep"
           @prev="flipbookStore.prevStep"
@@ -227,7 +71,7 @@
       </div>
 
       <!-- Navigation Buttons -->
-      <div v-if="!showSuccess" class="modal-action">
+      <div class="modal-action">
         <ActionButton
           v-if="flipbookStore.currentStep > 1"
           type="secondary"
@@ -315,6 +159,8 @@ import { createFlipbookFormSchema } from "~~/schema/form.schema";
 import { useForm } from "vee-validate";
 import { useCreateFlipbook } from "~/composables/useCreateFlipbook";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
+import { useToast } from "~/composables/useToast";
+import { Toast } from "~/types";
 
 // Step components
 import FileUploadStep from "~/components/CreateFlipbookModal/steps/FileUploadStep.vue";
@@ -325,6 +171,7 @@ import type { FlipbookFormData } from "~/types";
 
 const { createFlipbook: createFlipbookFn, isLoading } = useCreateFlipbook();
 const flipbookStore = useFlipbookStore();
+const { showToast } = useToast();
 
 // Stepper steps configuration
 const stepperSteps = [
@@ -332,9 +179,6 @@ const stepperSteps = [
   { stepTitle: "Details" },
   { stepTitle: "Design Options" },
 ];
-
-// Success state
-const showSuccess = ref(false);
 
 defineProps<{
   isOpen: boolean;
@@ -414,11 +258,6 @@ watch(
 );
 
 const closeModal = () => {
-  // Only reset form if we're in success state
-  if (showSuccess.value) {
-    showSuccess.value = false;
-    flipbookStore.resetForm();
-  }
   emit("close");
   flipbookStore.closeModal();
 };
@@ -436,16 +275,15 @@ const createFlipbook = async () => {
   const result = await createFlipbookFn(flipbookStore.formData);
 
   if (result.success) {
-    showSuccess.value = true;
+    showToast(Toast.SUCCESS, {
+      toastTitle: "Flipbook Created Successfully!",
+      description: `Your flipbook "${flipbookStore.formData.title}" has been created and is ready to view.`,
+      duration: 3000,
+    });
+    flipbookStore.resetForm();
     emit("success");
+    emit("close");
+    flipbookStore.closeModal();
   }
-};
-
-// Handle success close
-const handleSuccessClose = () => {
-  showSuccess.value = false;
-  flipbookStore.resetForm();
-  emit("close");
-  flipbookStore.closeModal();
 };
 </script>

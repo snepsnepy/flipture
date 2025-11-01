@@ -7,6 +7,7 @@ export type Flipbook = {
   pdf_file_url: string | null;
   pdf_file_name: string | null;
   pdf_file_size: number | null;
+  background_gradient: string | null;
   user_id: string;
 };
 
@@ -39,6 +40,7 @@ export interface FlipbookFormData {
   company: string;
   description: string;
   coverOption: string | null;
+  backgroundGradient: string | null;
 }
 
 // TOAST TYPES
@@ -61,6 +63,7 @@ export type FormData = {
   company: string;
   description: string;
   coverOption: string | null;
+  backgroundGradient: string | null;
 };
 
 export type SortOption =

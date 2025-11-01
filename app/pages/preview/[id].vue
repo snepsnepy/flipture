@@ -45,7 +45,7 @@
         <!-- Preview Section -->
         <div class="flex-1 flex flex-col">
           <div
-            class="bg-base-200 rounded-3xl flex-1 min-h-[500px] lg:min-h-[700px] border-2 border-base-content shadow-md flex flex-col"
+            class="bg-base-200 rounded-[18px] flex-1 min-h-[500px] lg:min-h-[700px] border-2 border-base-content shadow-md flex flex-col"
           >
             <iframe
               v-if="previewUrl"

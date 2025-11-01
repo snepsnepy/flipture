@@ -2,7 +2,7 @@
   <div class="modal" :class="{ 'modal-open': isOpen }">
     <div class="fixed inset-0 bg-base-content/60 z-40"></div>
     <div
-      class="modal-box max-w-4xl rounded-3xl relative z-50 flex flex-col gap-y-6"
+      class="modal-box max-w-2xl rounded-3xl relative z-50 flex flex-col gap-y-6"
     >
       <!-- Modal Header -->
       <div class="flex justify-between items-center">

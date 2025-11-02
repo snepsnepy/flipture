@@ -20,7 +20,9 @@
 
             <p class="font-poppins text-xs leading-3 text-neutral">
               Created
-              <span class="text-neutral">for </span>
+              <span class="text-neutral" v-if="flipbook.company_name"
+                >for
+              </span>
               <span class="font-semibold text-primary">{{
                 flipbook.company_name
               }}</span>
@@ -173,7 +175,9 @@
 
             <p class="font-poppins text-xs leading-3 text-neutral text-center">
               Created
-              <span class="text-neutral">for </span>
+              <span class="text-neutral" v-if="flipbook.company_name"
+                >for
+              </span>
               <span class="font-semibold text-primary">{{
                 flipbook.company_name
               }}</span>

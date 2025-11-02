@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-8">
+  <div class="flex flex-col gap-6">
     <div class="text-center space-y-2">
       <h4 class="font-delight font-semibold text-2xl leading-6">
         Design Options
@@ -10,8 +10,7 @@
     </div>
 
     <!-- Info Section -->
-
-    <div class="bg-primary/10 rounded-3xl flex items-center gap-4">
+    <div class="bg-primary/10 rounded-3xl flex items-center gap-2 md:gap-4">
       <div class="bg-primary px-4 py-6 rounded-l-3xl">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -42,7 +41,9 @@
           </g>
         </svg>
       </div>
-      <p class="text-sm leading-base text-primary font-poppins pr-2">
+      <p
+        class="text-xs md:text-sm leading-3 md:leading-4 text-primary font-poppins px-1 md:px-2"
+      >
         <span class="font-delight font-semibold">Flipture Branded Cover</span>
         uses our branding, while the other options use the
         <span class="font-semibold font-delight">first</span> or
@@ -53,7 +54,7 @@
 
     <!-- Cover Options Section -->
     <section class="space-y-4">
-      <p class="text-xl leading-4 font-delight text-base-content">
+      <p class="text-base md:text-xl leading-4 font-delight text-base-content">
         Choose the cover option for your flipbook
       </p>
       <fieldset class="p-0 flex flex-col gap-2 max-w-full min-w-0">
@@ -109,19 +110,19 @@
           </label>
         </div>
       </fieldset>
-      <div class="p-3 bg-warning-content/20 rounded-2xl border border-warning">
+      <!-- <div class="p-3 bg-warning-content/20 rounded-2xl border border-warning">
         <p class="text-sm leading-4 font-poppins text-warning">
           <span class="font-semibold">Note:</span> Cover options can be modified
           later in the flipbook settings page.
         </p>
-      </div>
+      </div> -->
     </section>
 
     <section class="space-y-4">
-      <p class="text-xl leading-4 font-delight text-base-content">
+      <p class="text-base md:text-xl leading-4 font-delight text-base-content">
         Choose the background gradient for your flipbook
       </p>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
         <div
           v-for="gradient in backgroundGradients"
           :key="gradient.id"
@@ -129,11 +130,11 @@
           @click="selectGradient(gradient.id)"
         >
           <div
-            class="w-20 h-20 rounded-full border-2 transition-all duration-200"
+            class="w-16 h-16 rounded-full border-2 transition-all duration-200"
             :class="[
               localFormData.backgroundGradient === gradient.id
                 ? 'border-primary ring-2 ring-primary ring-offset-2 scale-105'
-                : 'border-base-content/50 group-hover:border-base-content',
+                : 'border-base-content/30! group-hover:border-base-content!',
               gradient.gradient,
             ]"
           ></div>

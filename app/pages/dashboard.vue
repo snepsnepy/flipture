@@ -38,7 +38,7 @@
           <ActionButton
             text="Create New"
             class="w-full md:w-fit hover:cursor-pointer"
-            @click="flipbookStore.openModal"
+            @click="goToCreateFlipbook"
           >
             <template #icon>
               <svg
@@ -367,5 +367,9 @@ const handleFlipbookUpdated = (updatedFlipbook: Flipbook) => {
   if (index !== -1) {
     flipbooks.value[index] = updatedFlipbook;
   }
+};
+
+const goToCreateFlipbook = () => {
+  return navigateTo({ name: "create-flipbook" });
 };
 </script>

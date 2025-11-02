@@ -293,7 +293,10 @@ const createFlipbook = async () => {
       duration: 3000,
     });
     flipbookStore.resetForm();
-    return navigateTo({ name: "dashboard" });
+    // Invalidate cache so dashboard will fetch fresh data
+    flipbookStore.invalidateCache();
+    // Navigate to dashboard and reset to page 1 to show the newly created flipbook
+    return navigateTo({ name: "dashboard", query: { page: "1" } });
   }
 };
 </script>

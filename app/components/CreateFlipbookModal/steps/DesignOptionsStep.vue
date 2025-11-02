@@ -10,7 +10,6 @@
     </div>
 
     <!-- Info Section -->
-
     <div class="bg-primary/10 rounded-3xl flex items-center gap-4">
       <div class="bg-primary px-4 py-6 rounded-l-3xl">
         <svg

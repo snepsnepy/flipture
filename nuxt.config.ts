@@ -34,4 +34,10 @@ export default defineNuxtConfig({
       secure: process.env.NODE_ENV === "production", // Only secure in production
     },
   },
+  runtimeConfig: {
+    // Server-only runtime config (not exposed to client)
+    ga4PropertyId: process.env.GA4_PROPERTY_ID,
+    ga4ClientEmail: process.env.GA4_CLIENT_EMAIL,
+    ga4PrivateKey: process.env.GA4_PRIVATE_KEY,
+  },
 });

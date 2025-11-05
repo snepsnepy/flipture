@@ -9,6 +9,12 @@ export type Flipbook = {
   pdf_file_size: number | null;
   background_gradient: string | null;
   user_id: string;
+  analytics?: FlipbookAnalytics;
+};
+
+export type FlipbookAnalytics = {
+  views: number;
+  uniqueVisitors: number;
 };
 
 export enum Toast {

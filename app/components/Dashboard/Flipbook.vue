@@ -31,6 +31,55 @@
                 dayjs(flipbook.created_at).format("DD-MM-YYYY")
               }}</span>
             </p>
+
+            <!-- Analytics Stats -->
+            <div
+              v-if="flipbook.analytics"
+              class="flex flex-row gap-4 mt-2 text-xs"
+            >
+              <div class="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-primary"
+                >
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span class="font-semibold text-base-content"
+                  >{{ flipbook.analytics.views }} views</span
+                >
+              </div>
+              <div class="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-primary"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <span class="font-semibold text-base-content"
+                  >{{ flipbook.analytics.uniqueVisitors }} visitors</span
+                >
+              </div>
+            </div>
           </section>
 
           <div class="p-2 bg-base-100 border border-base-content rounded-full">
@@ -186,6 +235,55 @@
                 dayjs(flipbook.created_at).format("DD-MM-YYYY")
               }}</span>
             </p>
+
+            <!-- Analytics Stats -->
+            <div
+              v-if="flipbook.analytics"
+              class="flex flex-row gap-4 justify-center text-xs mt-2"
+            >
+              <div class="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-primary"
+                >
+                  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+                <span class="font-semibold text-base-content"
+                  >{{ flipbook.analytics.views }}</span
+                >
+              </div>
+              <div class="flex items-center gap-1">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-primary"
+                >
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                  <circle cx="9" cy="7" r="4" />
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                <span class="font-semibold text-base-content"
+                  >{{ flipbook.analytics.uniqueVisitors }}</span
+                >
+              </div>
+            </div>
           </header>
         </div>
 

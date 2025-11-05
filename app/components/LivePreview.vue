@@ -27,7 +27,7 @@
         <div class="bg-base-content/50 h-[500px] md:h-[800px] rounded-3xl">
           <iframe
             class="rounded-3xl"
-            src="https://flipture-view.netlify.app/?id=c01cea85-f49c-456a-ada2-30111e867ff0"
+            src="https://flipture-view.netlify.app/?id=c01cea85-f49c-456a-ada2-30111e867ff0&preview=true"
             width="100%"
             height="100%"
           ></iframe>

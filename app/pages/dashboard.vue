@@ -254,7 +254,11 @@ const fetchFlipbooks = async () => {
       .eq("user_id", user.value.id)
       .order("created_at", { ascending: false });
 
-    const flipbooksList = flipbooksData || [];
+    let flipbooksList: Flipbook[] = flipbooksData || [];
+
+    // Fetch and attach analytics data
+    const { attachAnalyticsToFlipbooks } = useFlipbookAnalytics();
+    flipbooksList = await attachAnalyticsToFlipbooks(flipbooksList);
 
     // Update cache with user ID
     flipbookStore.setCachedFlipbooks(flipbooksList, user.value.id);

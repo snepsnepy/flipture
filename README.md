@@ -14,6 +14,7 @@ Flipture is a modern web application that converts PDF documents into interactiv
 - **Customizable Covers**: Choose from default covers or use your PDF's first/last pages
 - **Embed Support**: Ready-to-use embed codes for websites and blogs
 - **Private by Default**: Secure hosting with unique, unlisted links
+- **Analytics Dashboard**: Track views and unique visitors for each flipbook (GA4 integration)
 
 ## 🚀 Live Demo
 
@@ -44,6 +45,7 @@ Both plans include:
 - **3D Graphics**: OGL (WebGL library)
 - **Animations**: GSAP
 - **Fonts**: Custom Delight font family
+- **Analytics**: Google Analytics 4 Data API
 
 ## 📁 Project Structure
 
@@ -75,6 +77,47 @@ flipture/
 - Node.js 18+
 - Yarn package manager
 - Supabase account
+- Google Analytics 4 account (optional, for analytics features)
+
+### Installation
+
+1. Clone the repository:
+
+```bash
+git clone https://github.com/yourusername/flipture.git
+cd flipture
+```
+
+2. Install dependencies:
+
+```bash
+yarn install
+```
+
+3. Set up environment variables:
+
+Create a `.env` file in the root directory:
+
+```env
+# Supabase Configuration
+SUPABASE_URL=your_supabase_url
+SUPABASE_KEY=your_supabase_anon_key
+
+# Google Analytics 4 (Optional - for analytics dashboard)
+GA4_PROPERTY_ID=your_ga4_property_id
+GA4_CLIENT_EMAIL=your-service-account@your-project.iam.gserviceaccount.com
+GA4_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\nYour private key here\n-----END PRIVATE KEY-----\n"
+```
+
+For detailed GA4 setup instructions, see [GA4_SETUP_GUIDE.md](./GA4_SETUP_GUIDE.md).
+
+4. Start the development server:
+
+```bash
+yarn dev
+```
+
+5. Open [http://localhost:3000](http://localhost:3000) in your browser
 
 ## 🔧 Key Components
 

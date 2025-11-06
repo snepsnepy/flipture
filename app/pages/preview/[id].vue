@@ -255,7 +255,7 @@ const shareUrl = computed(() => {
 
 const previewUrl = computed(() => {
   if (!flipbook.value) return "";
-  return `https://flipture-view.netlify.app/?id=${flipbook.value.id}`;
+  return `https://flipture-view.netlify.app/?id=${flipbook.value.id}&preview=true`;
 });
 
 const navigateToDashboard = () => {

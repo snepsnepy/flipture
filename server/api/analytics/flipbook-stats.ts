@@ -76,14 +76,6 @@ export default defineEventHandler(async (event) => {
       },
     });
 
-    // Debug: Log the raw response
-    console.log("=== GA4 Analytics Debug ===");
-    console.log("Query Date Range:", analyticsStartDate, "to today");
-    console.log("Requested Flipbook IDs:", ids);
-    console.log("Total rows returned:", response.rows?.length || 0);
-    console.log("Raw response:", JSON.stringify(response, null, 2));
-    console.log("===========================");
-
     // Parse the response into a map
     const analyticsMap: Record<
       string,
@@ -103,9 +95,6 @@ export default defineEventHandler(async (event) => {
       }
     });
 
-    // Debug: Log parsed analytics map
-    console.log("Parsed Analytics Map:", analyticsMap);
-
     // Ensure all requested flipbook IDs have an entry (even if 0)
     ids.forEach((id) => {
       if (!analyticsMap[id]) {
@@ -115,9 +104,6 @@ export default defineEventHandler(async (event) => {
         };
       }
     });
-
-    console.log("Final Analytics Map (with zeros):", analyticsMap);
-    console.log("=== End GA4 Debug ===\n");
 
     return analyticsMap;
   } catch (error: any) {

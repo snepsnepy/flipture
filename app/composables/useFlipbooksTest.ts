@@ -70,7 +70,7 @@ export const useFlipbooksTest = () => {
       console.log("💾 Inserting flipbook record...");
       const { data, error } = await client
         .from("flipbooks")
-        .insert(testData)
+        .insert(testData as unknown as never)
         .select()
         .single();
 

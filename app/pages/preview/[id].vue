@@ -358,7 +358,7 @@ const handleEdit = async (data: {
     // Update the flipbook in the database
     const { data: updatedFlipbook, error } = await client
       .from("flipbooks")
-      .update(updatePayload)
+      .update(updatePayload as unknown as never)
       .eq("id", flipbookId)
       .eq("user_id", user.value!.id)
       .select()

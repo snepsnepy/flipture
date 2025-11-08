@@ -257,9 +257,9 @@
                   <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                   <circle cx="12" cy="12" r="3" />
                 </svg>
-                <span class="font-semibold text-base-content"
-                  >{{ flipbook.analytics.views }}</span
-                >
+                <span class="font-semibold text-base-content">{{
+                  flipbook.analytics.views
+                }}</span>
               </div>
               <div class="flex items-center gap-1">
                 <svg
@@ -279,9 +279,9 @@
                   <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
                   <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                 </svg>
-                <span class="font-semibold text-base-content"
-                  >{{ flipbook.analytics.uniqueVisitors }}</span
-                >
+                <span class="font-semibold text-base-content">{{
+                  flipbook.analytics.uniqueVisitors
+                }}</span>
               </div>
             </div>
           </header>
@@ -475,8 +475,8 @@ const handleEdit = async (data: {
     // Update the flipbook in the database
     const { data: updatedFlipbook, error } = await client
       .from("flipbooks")
-      .update(updatePayload)
-      .eq("id", props.flipbook.id)
+      .update(updatePayload as unknown as never)
+      .eq("id", props.flipbook.id!)
       .eq("user_id", user.value!.id)
       .select()
       .single();

@@ -5,6 +5,11 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
+
+  nitro: {
+    preset: "netlify",
+  },
+
   vite: {
     plugins: [tailwindcss()],
     optimizeDeps: {
@@ -23,7 +28,7 @@ export default defineNuxtConfig({
       title: "Flipture",
     },
   },
-  ssr: false,
+  ssr: true,
   modules: [
     "@pinia/nuxt",
     "@nuxt/fonts",

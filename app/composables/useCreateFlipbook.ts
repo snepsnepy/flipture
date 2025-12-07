@@ -28,7 +28,7 @@ export const useCreateFlipbook = () => {
 
       // Upload file to Supabase Storage
       const fileExt = formData.file.name.split(".").pop();
-      const fileName = `${user.value.id}/${Date.now()}.${fileExt}`;
+      const fileName = `${user.value.sub}/${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await client.storage
         .from("uploads")
@@ -46,11 +46,11 @@ export const useCreateFlipbook = () => {
       // Create flipbook record
       const { error } = await client
         .from("flipbooks")
-        .insert({
+        .insert(        {
           title: formData.title,
           company_name: formData.company,
           description: formData.description,
-          user_id: user.value.id,
+          user_id: user.value.sub,
           pdf_file_url: publicUrl,
           pdf_file_name: formData.file.name,
           pdf_file_size: formData.file.size,

@@ -19,7 +19,7 @@
 
         <section v-if="isLoggedIn">
           <!-- Menu -->
-          <div class="dropdown dropdown-end">
+          <div class="dropdown dropdown-end z-9999">
             <ActionButton
               aria-label="Toggle navigation menu"
               aria-controls="mobile-menu"
@@ -147,6 +147,7 @@ const signOut = async () => {
     // Clear flipbook cache on logout
     flipbookStore.invalidateCache();
     isLoading.value = false;
+    await navigateTo({name: "login"});
     // Keep isSigningOut true until navigation completes
   } else {
     flipbookStore.setSigningOut(false);

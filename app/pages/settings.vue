@@ -464,6 +464,7 @@ const storageUsed = ref("0 MB");
 const firstName = ref("");
 const lastName = ref("");
 const email = ref("");
+const createdAt = ref(""); // Store created_at separately since it's not in JWT
 
 // Password change form validation
 const validationSchema = createPasswordChangeSchema();
@@ -482,7 +483,7 @@ const { value: confirmPassword, errorMessage: confirmPasswordErrors } =
 const userProvider = computed(
   () => user.value?.app_metadata?.provider || "email"
 );
-const userCreatedAt = computed(() => user.value?.created_at || "");
+const userCreatedAt = computed(() => createdAt.value || "");
 
 const canSaveProfile = computed(() => {
   return firstName.value.trim() && lastName.value.trim();
@@ -511,19 +512,25 @@ const loadUserData = async () => {
   try {
     isLoading.value = true;
 
+    // Load full user data (including created_at which is not in JWT)
+    const {
+      data: { user: fullUser },
+    } = await client.auth.getUser();
+
     // Load user profile data
-    if (user.value) {
-      const userMetadata = user.value.user_metadata;
+    if (fullUser) {
+      const userMetadata = fullUser.user_metadata;
       firstName.value = userMetadata?.firstName || "";
       lastName.value = userMetadata?.lastName || "";
-      email.value = user.value.email || "";
+      email.value = fullUser.email || "";
+      createdAt.value = fullUser.created_at || "";
     }
 
     // Load flipbooks count
     const { data: flipbooksData } = await client
       .from("flipbooks")
       .select("id")
-      .eq("user_id", user.value?.id!);
+      .eq("user_id", user.value?.sub!);
 
     flipbooksCount.value = flipbooksData?.length || 0;
 
@@ -531,7 +538,7 @@ const loadUserData = async () => {
     const { data: flipbooksWithSize } = await client
       .from("flipbooks")
       .select("pdf_file_size")
-      .eq("user_id", user.value?.id!);
+      .eq("user_id", user.value?.sub!);
 
     const totalSize = calculateTotalStorageSize(flipbooksWithSize || []);
 
@@ -560,6 +567,9 @@ const updateProfile = async () => {
     if (error) {
       throw error;
     }
+
+    // Refresh the user session to get updated metadata
+    await client.auth.refreshSession();
 
     showToast(Toast.SUCCESS, {
       toastTitle: "Profile updated successfully",

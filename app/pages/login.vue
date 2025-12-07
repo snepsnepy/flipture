@@ -239,11 +239,11 @@ onMounted(() => {
   const flipbookStore = useFlipbookStore();
   flipbookStore.setSigningOut(false);
 
-  watchEffect(() => {
-    if (user.value) {
-      return navigateTo("/");
-    }
-  });
+  // Only redirect if user is already authenticated when landing on login page
+  // This prevents redirect loops during page refresh
+  if (user.value) {
+    navigateTo("/dashboard");
+  }
 });
 
 const isButtonDisabled = computed(() => !isFormValid.value || isLoading.value);

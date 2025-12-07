@@ -251,7 +251,7 @@ const fetchFlipbooks = async () => {
     const { data: flipbooksData } = await client
       .from("flipbooks")
       .select("*")
-      .eq("user_id", user.value.id)
+      .eq("user_id", user.value.sub)
       .order("created_at", { ascending: false });
 
     let flipbooksList: Flipbook[] = flipbooksData || [];
@@ -261,7 +261,7 @@ const fetchFlipbooks = async () => {
     flipbooksList = await attachAnalyticsToFlipbooks(flipbooksList);
 
     // Update cache with user ID
-    flipbookStore.setCachedFlipbooks(flipbooksList, user.value.id);
+    flipbookStore.setCachedFlipbooks(flipbooksList, user.value.sub);
 
     // Update local state
     flipbooks.value = flipbooksList;
@@ -280,18 +280,10 @@ onMounted(async () => {
     flipbookStore.setSigningOut(false);
   }
 
-  watchEffect(() => {
-    if (!user.value) {
-      // Clear cache when user logs out
-      flipbookStore.invalidateCache();
-      return navigateTo("/login");
-    }
-  });
-
-  // Watch for user changes and invalidate cache if user changes
+  // Watch for user changes and fetch data when user becomes available
   watch(
-    () => user.value?.id,
-    (newUserId, oldUserId) => {
+    () => user.value?.sub,
+    async (newUserId, oldUserId) => {
       if (oldUserId !== null && newUserId !== oldUserId) {
         // User has changed - invalidate cache and reset sign-out state
         flipbookStore.invalidateCache();
@@ -300,36 +292,47 @@ onMounted(async () => {
         flipbooksLength.value = 0;
         hasFlipbooks.value = false;
         searchQuery.value = "";
+        await fetchFlipbooks();
       } else if (newUserId !== null && oldUserId === null) {
-        // New user logged in - reset sign-out state
+        // New user logged in - reset sign-out state and fetch data
         flipbookStore.setSigningOut(false);
+        await fetchFlipbooks();
+      } else if (oldUserId !== null && newUserId === null) {
+        // User logged out - redirect to login
+        flipbookStore.invalidateCache();
+        navigateTo("/login");
       }
-    }
+    },
+    { immediate: false }
   );
 
   // Check if we have valid cached data for the current user
-  const currentUserId = user.value?.id || null;
-  const cachedData = flipbookStore.getCachedFlipbooks(currentUserId);
+  const currentUserId = user.value?.sub || null;
 
-  // If cache exists but belongs to a different user, invalidate it
-  if (
-    flipbookStore.hasCachedFlipbooks &&
-    flipbookStore.cachedUserId !== currentUserId &&
-    currentUserId !== null
-  ) {
-    flipbookStore.invalidateCache();
-  }
+  // If user is already loaded, proceed with data loading
+  if (currentUserId) {
+    const cachedData = flipbookStore.getCachedFlipbooks(currentUserId);
 
-  if (cachedData.length > 0) {
-    // Use cached data
-    flipbooks.value = cachedData;
-    flipbooksLength.value = cachedData.length;
-    hasFlipbooks.value = cachedData.length > 0;
-    isLoading.value = false;
-  } else {
-    // Fetch from API
-    await fetchFlipbooks();
+    // If cache exists but belongs to a different user, invalidate it
+    if (
+      flipbookStore.hasCachedFlipbooks &&
+      flipbookStore.cachedUserId !== currentUserId
+    ) {
+      flipbookStore.invalidateCache();
+    }
+
+    if (cachedData.length > 0) {
+      // Use cached data
+      flipbooks.value = cachedData;
+      flipbooksLength.value = cachedData.length;
+      hasFlipbooks.value = cachedData.length > 0;
+      isLoading.value = false;
+    } else {
+      // Fetch from API
+      await fetchFlipbooks();
+    }
   }
+  // If user is not loaded yet, the watch will handle it when it becomes available
 });
 
 const handleFlipbookCreated = async () => {

@@ -360,7 +360,7 @@ const handleEdit = async (data: {
       .from("flipbooks")
       .update(updatePayload as unknown as never)
       .eq("id", flipbookId)
-      .eq("user_id", user.value!.id)
+      .eq("user_id", user.value!.sub)
       .select()
       .single();
 
@@ -391,7 +391,7 @@ onMounted(async () => {
       .from("flipbooks")
       .select("*")
       .eq("id", flipbookId)
-      .eq("user_id", user.value?.id!)
+      .eq("user_id", user.value?.sub!)
       .single();
 
     if (error) {

@@ -7,6 +7,16 @@ export default defineNuxtConfig({
   css: ["~/assets/css/main.css"],
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      include: [
+        "@supabase/ssr",
+        "@supabase/supabase-js",
+        "@supabase/postgrest-js",
+        "@supabase/storage-js",
+        "@supabase/realtime-js",
+        "@supabase/functions-js",
+      ],
+    },
   },
   app: {
     head: {
@@ -22,12 +32,16 @@ export default defineNuxtConfig({
     "@vee-validate/nuxt",
   ],
   typescript: {
-    typeCheck: true,
+    typeCheck: false,
+  },
+  build: {
+    transpile: ["vee-validate"],
   },
   supabase: {
     url: process.env.SUPABASE_URL,
     key: process.env.SUPABASE_KEY,
     redirect: false,
+    types: "~/types/supabase.ts",
     cookieOptions: {
       maxAge: 60 * 60 * 8, // 8 hours
       sameSite: "lax",

@@ -477,7 +477,7 @@ const handleEdit = async (data: {
       .from("flipbooks")
       .update(updatePayload as unknown as never)
       .eq("id", props.flipbook.id!)
-      .eq("user_id", user.value!.id)
+      .eq("user_id", user.value!.sub)
       .select()
       .single();
 
@@ -489,7 +489,11 @@ const handleEdit = async (data: {
 
     // Emit the updated event with the updated flipbook
     if (updatedFlipbook) {
-      emit("updated", updatedFlipbook as Flipbook);
+      // Preserve the analytics data from the original flipbook
+      emit("updated", {
+        ...(updatedFlipbook as Flipbook),
+        analytics: props.flipbook.analytics,
+      });
     }
   } catch (error) {
     console.error("Error during update:", error);
@@ -504,7 +508,7 @@ const handleDelete = async () => {
       .from("flipbooks")
       .delete()
       .eq("id", props.flipbook.id)
-      .eq("user_id", user.value!.id);
+      .eq("user_id", user.value!.sub);
 
     if (error) {
       console.error("Error deleting flipbook:", error);
@@ -519,7 +523,7 @@ const handleDelete = async () => {
         const url = new URL(props.flipbook.pdf_file_url);
         const pathSegments = url.pathname.split("/");
         const fileName = pathSegments.at(-1);
-        const filePath = `${user.value!.id}/${fileName}`;
+        const filePath = `${user.value!.sub}/${fileName}`;
 
         await client.storage.from("uploads").remove([filePath]);
       } catch (storageError) {

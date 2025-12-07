@@ -27,7 +27,7 @@
       <!-- Left Side -->
       <div
         v-if="!isMobile"
-        class="flex w-full flex-row bg-[url('@/assets/img/magazine_water.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end min-h-[750px] relative"
+        class="flex w-full flex-row bg-[url('@/assets/img/magazine_water.jpg')] bg-cover bg-center bg-no-repeat rounded-3xl items-end min-h-[780px] relative"
       >
         <!-- Dark overlay mask -->
         <div class="absolute inset-0 bg-base-content/70 rounded-3xl"></div>

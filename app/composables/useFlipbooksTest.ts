@@ -12,7 +12,7 @@ export const useFlipbooksTest = () => {
     }
 
     console.log("🔄 Creating test flipbook with PDF...");
-    console.log("👤 User ID:", user.value.id);
+    console.log("👤 User ID:", user.value.sub);
 
     try {
       // Fetch the PDF file from public directory
@@ -35,7 +35,7 @@ export const useFlipbooksTest = () => {
       // Upload PDF to Supabase Storage
       console.log("☁️ Uploading PDF to Supabase Storage...");
       const fileExt = file.name.split(".").pop();
-      const fileName = `${user.value.id}/${Date.now()}.${fileExt}`;
+      const fileName = `${user.value.sub}/${Date.now()}.${fileExt}`;
 
       const { data: uploadData, error: uploadError } = await client.storage
         .from("uploads")
@@ -64,7 +64,7 @@ export const useFlipbooksTest = () => {
         pdf_file_url: publicUrl,
         pdf_file_name: file.name,
         pdf_file_size: file.size,
-        user_id: user.value.id,
+        user_id: user.value.sub,
       };
 
       console.log("💾 Inserting flipbook record...");
@@ -96,12 +96,12 @@ export const useFlipbooksTest = () => {
       return [];
     }
 
-    console.log("🔄 Fetching flipbooks for user:", user.value.id);
+    console.log("🔄 Fetching flipbooks for user:", user.value.sub);
 
     const { data, error } = await client
       .from("flipbooks")
       .select("*")
-      .eq("user_id", user.value.id)
+      .eq("user_id", user.value.sub)
       .order("created_at", { ascending: false });
 
     if (error) {
@@ -126,7 +126,7 @@ export const useFlipbooksTest = () => {
       .from("flipbooks")
       .delete()
       .eq("id", flipbookId)
-      .eq("user_id", user.value.id);
+      .eq("user_id", user.value.sub);
 
     if (error) {
       console.error("❌ Error deleting flipbook:", error);
@@ -144,13 +144,13 @@ export const useFlipbooksTest = () => {
       return false;
     }
 
-    console.log("🧹 Cleaning up test files for user:", user.value.id);
+    console.log("🧹 Cleaning up test files for user:", user.value.sub);
 
     try {
       // List all files in user's folder
       const { data: files, error: listError } = await client.storage
         .from("uploads")
-        .list(user.value.id);
+        .list(user.value.sub);
 
       if (listError) {
         console.error("❌ Error listing files:", listError);
@@ -163,7 +163,7 @@ export const useFlipbooksTest = () => {
       }
 
       // Delete all files in user's folder
-      const filePaths = files.map((file) => `${user.value?.id}/${file.name}`);
+      const filePaths = files.map((file) => `${user.value?.sub}/${file.name}`);
       const { error: deleteError } = await client.storage
         .from("uploads")
         .remove(filePaths);

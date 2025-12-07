@@ -28,7 +28,7 @@ export default defineNuxtConfig({
       title: "Flipture",
     },
   },
-  ssr: true,
+  ssr: false,
   modules: [
     "@pinia/nuxt",
     "@nuxt/fonts",

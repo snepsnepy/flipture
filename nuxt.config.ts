@@ -14,10 +14,6 @@ export default defineNuxtConfig({
     "@vee-validate/nuxt",
   ],
 
-  nitro: {
-    preset: "netlify",
-  },
-
   experimental: {
     payloadExtraction: false,
   },

@@ -120,14 +120,9 @@ import { useFlipbookStore } from "~/stores/useFlipbookStore";
 const route = useRoute();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
-const activeElement = useActiveElement();
 const flipbookStore = useFlipbookStore();
 
 const isLoading = ref(false);
-
-const isLoginPage = computed(
-  () => route.path === "/login" || route.path === "/register"
-);
 
 const isLoggedIn = computed(() => user.value);
 
@@ -147,7 +142,7 @@ const signOut = async () => {
     // Clear flipbook cache on logout
     flipbookStore.invalidateCache();
     isLoading.value = false;
-    await navigateTo({name: "login"});
+    await navigateTo({ name: "login" });
     // Keep isSigningOut true until navigation completes
   } else {
     flipbookStore.setSigningOut(false);
@@ -157,8 +152,8 @@ const signOut = async () => {
 
 const close = () => {
   // Close dropdown by removing focus from the dropdown button
-  if (activeElement.value) {
-    (activeElement.value as HTMLElement).blur();
+  if (typeof document !== "undefined" && document.activeElement) {
+    (document.activeElement as HTMLElement).blur();
   }
 };
 

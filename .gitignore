@@ -25,3 +25,6 @@ logs
 
 # Google Analytics credentials
 flipture-a54f71d6de6a.json
+
+# Local Netlify folder
+.netlify

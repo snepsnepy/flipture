@@ -5,6 +5,14 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
+  modules: [
+    "@netlify/nuxt",
+    "@pinia/nuxt",
+    "@nuxt/fonts",
+    "@vueuse/nuxt",
+    "@nuxtjs/supabase",
+    "@vee-validate/nuxt",
+  ],
 
   nitro: {
     preset: "netlify",
@@ -33,13 +41,6 @@ export default defineNuxtConfig({
     },
   },
   ssr: true,
-  modules: [
-    "@pinia/nuxt",
-    "@nuxt/fonts",
-    "@vueuse/nuxt",
-    "@nuxtjs/supabase",
-    "@vee-validate/nuxt",
-  ],
   typescript: {
     typeCheck: false,
   },

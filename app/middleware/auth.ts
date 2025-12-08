@@ -1,4 +1,7 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
+  const user = useSupabaseUser();
+  const client = useSupabaseClient();
+
   // Protected routes that require authentication
   const protectedRoutes = ["/dashboard", "/settings", "/create-flipbook"];
 
@@ -11,13 +14,10 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return;
   }
 
-  const user = useSupabaseUser();
-  const client = useSupabaseClient();
-
-  // Check session from Supabase (works on both server and client)
-  // The @nuxtjs/supabase module automatically handles cookies on the server
+  // If user is not loaded yet, check the session directly from Supabase
   if (!user.value) {
     try {
+      // Check if there's an active session in Supabase
       const {
         data: { session },
         error,

@@ -143,7 +143,7 @@ const signOut = async () => {
   // we should still clear local data and redirect to login
   // Common error: "Session from session_id claim in JWT does not exist"
   if (!error || error.message?.includes("session") || error.status === 403) {
-    // Clear flipbook cache on logout
+    // Clear flipbook cache on logout 
     flipbookStore.invalidateCache();
     isLoading.value = false;
     await navigateTo({ name: "login" });

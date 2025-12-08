@@ -8,9 +8,10 @@ export default defineNuxtConfig({
 
   nitro: {
     preset: "netlify",
-    externals: {
-      inline: ["@google-analytics/data"],
-    },
+  },
+
+  experimental: {
+    payloadExtraction: false,
   },
 
   vite: {

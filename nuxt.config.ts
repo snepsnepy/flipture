@@ -6,13 +6,16 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   css: ["~/assets/css/main.css"],
   modules: [
-    "@netlify/nuxt",
     "@pinia/nuxt",
     "@nuxt/fonts",
     "@vueuse/nuxt",
     "@nuxtjs/supabase",
     "@vee-validate/nuxt",
   ],
+
+  nitro: {
+    preset: "netlify",
+  },
 
   experimental: {
     payloadExtraction: false,

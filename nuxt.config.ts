@@ -54,7 +54,15 @@ export default defineNuxtConfig({
     cookieOptions: {
       maxAge: 60 * 60 * 8, // 8 hours
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production", // Only secure in production
+      secure: true, // Always use secure cookies
+    },
+    clientOptions: {
+      auth: {
+        flowType: "pkce",
+        detectSessionInUrl: true,
+        persistSession: true,
+        autoRefreshToken: true,
+      },
     },
   },
   runtimeConfig: {

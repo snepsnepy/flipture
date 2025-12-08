@@ -138,16 +138,16 @@ export const useFlipbookStore = defineStore("flipbook", () => {
 
   return {
     // State
-    formData: readonly(formData),
-    currentStep: readonly(currentStep),
-    isModalOpen: readonly(isModalOpen),
-    isLoading: readonly(isLoading),
+    formData,
+    currentStep,
+    isModalOpen,
+    isLoading,
 
     // Cache state
-    cachedFlipbooks: readonly(cachedFlipbooks),
-    cacheTimestamp: readonly(cacheTimestamp),
-    cachedUserId: readonly(cachedUserId),
-    isSigningOut: readonly(isSigningOut),
+    cachedFlipbooks,
+    cacheTimestamp,
+    cachedUserId,
+    isSigningOut,
 
     // Getters
     hasFile,

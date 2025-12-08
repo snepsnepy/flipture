@@ -2,7 +2,7 @@ export default defineNuxtPlugin(() => {
   // Only add test functions in development
   if (process.dev) {
     // Make test functions available globally in browser console
-    if (process.client) {
+    if (import.meta.client) {
       const { $supabase } = useNuxtApp();
 
       // Add test functions to window object for easy console access

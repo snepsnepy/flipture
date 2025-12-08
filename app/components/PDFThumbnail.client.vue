@@ -5,11 +5,6 @@
 </template>
 
 <script lang="ts" setup>
-import * as pdfjsLib from "pdfjs-dist";
-
-// Set up the worker for PDF.js
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs`;
-
 interface Props {
   pdfUrl: string;
   width?: number;
@@ -22,9 +17,16 @@ const props = withDefaults(defineProps<Props>(), {
 const canvasRef = ref<HTMLCanvasElement>();
 
 const renderPDF = async () => {
-  if (!canvasRef.value || !props.pdfUrl) return;
+  // Only run on client side
+  if (!import.meta.client || !canvasRef.value || !props.pdfUrl) return;
 
   try {
+    // Dynamically import pdfjs-dist only on client side
+    const pdfjsLib = await import("pdfjs-dist");
+
+    // Set up the worker for PDF.js
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs`;
+
     // Load the PDF document
     const loadingTask = pdfjsLib.getDocument(props.pdfUrl);
     const pdf = await loadingTask.promise;

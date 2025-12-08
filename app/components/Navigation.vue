@@ -138,13 +138,19 @@ const signOut = async () => {
   isLoading.value = true;
   flipbookStore.setSigningOut(true);
   const { error } = await client.auth.signOut();
-  if (!error) {
+
+  // Even if there's an error (e.g., session already expired/deleted),
+  // we should still clear local data and redirect to login
+  // Common error: "Session from session_id claim in JWT does not exist"
+  if (!error || error.message?.includes("session") || error.status === 403) {
     // Clear flipbook cache on logout
     flipbookStore.invalidateCache();
     isLoading.value = false;
     await navigateTo({ name: "login" });
     // Keep isSigningOut true until navigation completes
   } else {
+    // Only keep user logged in for unexpected errors
+    console.error("Unexpected sign out error:", error);
     flipbookStore.setSigningOut(false);
     isLoading.value = false;
   }

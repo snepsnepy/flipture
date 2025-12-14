@@ -111,85 +111,51 @@
         <footer
           class="flex flex-col-reverse md:flex-row w-full justify-between gap-y-4"
         >
-          <div class="flex flex-row gap-2 w-full justify-between md:w-fit">
-            <ActionButton
-              text="Delete"
-              type="error"
-              @click="openDeleteModal"
-              class="w-full"
-            >
-              <template #icon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#000"
-                    d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"
-                  />
-                </svg>
-              </template>
-            </ActionButton>
-            <ActionButton
-              text="Edit"
-              type="secondary"
-              @click="openEditModal"
-              class="w-full"
-            >
-              <template #icon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <g
-                    fill="none"
-                    stroke="#000"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                    />
-                    <path
-                      d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"
-                    />
-                  </g>
-                </svg>
-              </template>
-            </ActionButton>
-          </div>
+          <ActionButton
+            text="Delete"
+            type="error"
+            @click="openDeleteModal"
+            class="w-full md:w-fit"
+          >
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#000"
+                  d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"
+                />
+              </svg>
+            </template>
+          </ActionButton>
 
-          <div class="flex flex-row gap-2 w-full md:w-fit">
-            <ActionButton
-              class="w-full"
-              text="Preview & Share"
-              type="primary"
-              @click="openPreviewModal"
-            >
-              <template #icon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 48 48"
-                >
-                  <path
-                    fill="none"
-                    stroke="#000"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="4"
-                    d="M28 6h14v14m0 9.474V39a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h9m7.8 16.2L41.1 6.9"
-                  />
-                </svg>
-              </template>
-            </ActionButton>
-          </div>
+          <ActionButton
+            class="w-full md:w-fit"
+            text="View & Share"
+            type="primary"
+            @click="openPreviewModal"
+          >
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 48 48"
+              >
+                <path
+                  fill="none"
+                  stroke="#000"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M28 6h14v14m0 9.474V39a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h9m7.8 16.2L41.1 6.9"
+                />
+              </svg>
+            </template>
+          </ActionButton>
         </footer>
       </div>
     </div>
@@ -291,75 +257,46 @@
         <footer
           class="flex flex-col md:flex-row w-full justify-between gap-y-4"
         >
-          <div class="flex flex-row gap-2 w-full justify-between md:w-fit">
-            <ActionButton type="error" @click="openDeleteModal">
-              <template #icon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="#000"
-                    d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"
-                  />
-                </svg>
-              </template>
-            </ActionButton>
-            <ActionButton text="Edit" type="secondary" @click="openEditModal">
-              <template #icon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                >
-                  <g
-                    fill="none"
-                    stroke="#000"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                  >
-                    <path
-                      d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"
-                    />
-                    <path
-                      d="M18.375 2.625a1 1 0 0 1 3 3l-9.013 9.014a2 2 0 0 1-.853.505l-2.873.84a.5.5 0 0 1-.62-.62l.84-2.873a2 2 0 0 1 .506-.852z"
-                    />
-                  </g>
-                </svg>
-              </template>
-            </ActionButton>
-          </div>
+          <ActionButton type="error" @click="openDeleteModal">
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="#000"
+                  d="M7 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2h4a1 1 0 1 1 0 2h-1.069l-.867 12.142A2 2 0 0 1 17.069 22H6.93a2 2 0 0 1-1.995-1.858L4.07 8H3a1 1 0 0 1 0-2h4zm2 2h6V4H9zM6.074 8l.857 12H17.07l.857-12zM10 10a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1m4 0a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1"
+                />
+              </svg>
+            </template>
+          </ActionButton>
 
-          <div class="flex flex-row gap-2 w-full md:w-fit">
-            <ActionButton
-              class="w-full"
-              text="Preview & Share"
-              type="primary"
-              @click="openPreviewModal"
-            >
-              <template #icon>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 48 48"
-                >
-                  <path
-                    fill="none"
-                    stroke="#000"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="4"
-                    d="M28 6h14v14m0 9.474V39a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h9m7.8 16.2L41.1 6.9"
-                  />
-                </svg>
-              </template>
-            </ActionButton>
-          </div>
+          <ActionButton
+            class="w-full md:w-fit"
+            text="View & Share"
+            type="primary"
+            @click="openPreviewModal"
+          >
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 48 48"
+              >
+                <path
+                  fill="none"
+                  stroke="#000"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="4"
+                  d="M28 6h14v14m0 9.474V39a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V9a3 3 0 0 1 3-3h9m7.8 16.2L41.1 6.9"
+                />
+              </svg>
+            </template>
+          </ActionButton>
         </footer>
       </section>
     </section>
@@ -370,9 +307,6 @@
       :title="flipbook.title"
       @confirm="handleDelete"
     />
-
-    <!-- Edit Modal -->
-    <EditModal ref="editModal" :flipbook="flipbook" @confirm="handleEdit" />
   </section>
 </template>
 
@@ -380,9 +314,7 @@
 import dayjs from "dayjs";
 import type { Flipbook } from "~/types";
 import type { Database } from "~/types/supabase";
-import { Toast } from "~/types";
 import DeleteModal from "~/components/DeleteModal.vue";
-import EditModal from "~/components/EditModal.vue";
 
 const props = defineProps<{
   flipbook: Flipbook;
@@ -403,16 +335,11 @@ const user = useSupabaseUser();
 const route = useRoute();
 const { showToast } = useToast();
 const deleteModal = ref<InstanceType<typeof DeleteModal>>();
-const editModal = ref<InstanceType<typeof EditModal>>();
 const { isMobile } = useIsMobile();
 const checkboxState = ref(false);
 
 const openDeleteModal = () => {
   deleteModal.value?.openModal();
-};
-
-const openEditModal = () => {
-  editModal.value?.openModal();
 };
 
 const openPreviewModal = () => {
@@ -421,84 +348,6 @@ const openPreviewModal = () => {
     path: `/preview/${props.flipbook.id}`,
     query: { page: route.query.page || "1" },
   });
-};
-
-const shareLink = async () => {
-  try {
-    const shareUrl = `https://flipture-view.netlify.app?id=${props.flipbook.id}`;
-
-    // Check if the Clipboard API is available
-    if (navigator.clipboard && globalThis.isSecureContext) {
-      await navigator.clipboard.writeText(shareUrl);
-      showToast(Toast.SUCCESS, {
-        toastTitle: "Link copied!",
-        description: "Share link has been copied to your clipboard.",
-        duration: 3000,
-      });
-    } else {
-      // Fallback for older browsers
-      const textArea = document.createElement("textarea");
-      textArea.value = shareUrl;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      textArea.remove();
-
-      showToast(Toast.SUCCESS, {
-        toastTitle: "Link copied!",
-        description: "Share link has been copied to your clipboard.",
-        duration: 3000,
-      });
-    }
-  } catch (error) {
-    console.error("Failed to copy link:", error);
-    showToast(Toast.ERROR, {
-      toastTitle: "Copy failed",
-      description: "Unable to copy the link. Please try again.",
-    });
-  }
-};
-
-const handleEdit = async (data: {
-  title: string;
-  company_name: string | null;
-  description: string | null;
-}) => {
-  try {
-    // Prepare the update payload
-    const updatePayload = {
-      title: data.title,
-      company_name: data.company_name,
-      description: data.description,
-    };
-
-    // Update the flipbook in the database
-    const { data: updatedFlipbook, error } = await client
-      .from("flipbooks")
-      .update(updatePayload as unknown as never)
-      .eq("id", props.flipbook.id!)
-      .eq("user_id", user.value!.sub)
-      .select()
-      .single();
-
-    if (error) {
-      console.error("Error updating flipbook:", error);
-      alert("Failed to update flipbook. Please try again.");
-      return;
-    }
-
-    // Emit the updated event with the updated flipbook
-    if (updatedFlipbook) {
-      // Preserve the analytics data from the original flipbook
-      emit("updated", {
-        ...(updatedFlipbook as Flipbook),
-        analytics: props.flipbook.analytics,
-      });
-    }
-  } catch (error) {
-    console.error("Error during update:", error);
-    alert("Failed to update flipbook. Please try again.");
-  }
 };
 
 const handleDelete = async () => {

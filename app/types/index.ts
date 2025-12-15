@@ -17,6 +17,22 @@ export type FlipbookAnalytics = {
   uniqueVisitors: number;
 };
 
+export type ComprehensiveAnalytics = {
+  views: number;
+  uniqueVisitors: number;
+  countries: Record<string, { views: number; visitors: number }>;
+  previousViews: number;
+  previousVisitors: number;
+  dailyData: Array<{ date: string; views: number; visitors: number }>;
+};
+
+export type DateRangeOption = "30" | "60" | "180" | "365";
+
+export interface DateRangeConfig {
+  value: DateRangeOption;
+  label: string;
+}
+
 export enum Toast {
   SUCCESS = "success",
   ERROR = "error",

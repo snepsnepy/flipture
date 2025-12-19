@@ -11,35 +11,99 @@
   <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
     <!-- Header -->
     <header class="flex flex-col gap-4">
+      <div class="flex flex-row items-center gap-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="#0046ff"
+            fill-rule="evenodd"
+            d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-.47-13.53a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72H16a.75.75 0 0 0 0-1.5H9.81l1.72-1.72a.75.75 0 0 0 0-1.06"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <button
+          @click="navigateToDashboard"
+          class="text-base-content text-sm md:text-base leading-4 font-poppins font-medium hover:cursor-pointer hover:text-primary"
+        >
+          Back
+        </button>
+      </div>
+
       <div
         class="flex flex-col md:flex-row justify-between items-start gap-y-4 md:items-center"
       >
         <div>
           <h4
-            class="font-delight font-bold text-4xl leading-6 md:leading-8 text-center md:text-left md:pt-2"
+            class="font-delight font-bold text-4xl leading-8 md:leading-8 text-center md:text-left md:pt-2"
           >
             ANALYTICS DASHBOARD
           </h4>
-          <p class="text-sm text-gray-600 mt-2 font-poppins text-center md:text-left">
+          <p
+            class="text-sm text-gray-600 mt-2 font-poppins text-center md:text-left"
+          >
             Comprehensive analytics for all your flipbooks
           </p>
         </div>
 
-        <!-- Date Range Filter -->
-        <div class="w-full md:w-auto">
-          <select
-            v-model="selectedDateRange"
-            class="select select-bordered w-full md:w-auto font-poppins"
-            @change="fetchData"
+        <!-- Filters -->
+        <div class="flex flex-row gap-3 w-full md:w-auto">
+          <!-- Flipbook Filter -->
+          <FilterDropdown
+            v-model="selectedFlipbookId"
+            :options="flipbookOptions"
+            button-label="Flipbook"
+            :hide-on-mobile="true"
+            @update:model-value="updateFilteredAnalytics"
           >
-            <option
-              v-for="option in dateRangeOptions"
-              :key="option.value"
-              :value="option.value"
-            >
-              {{ option.label }}
-            </option>
-          </select>
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="none"
+                  stroke="#000"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m6 10l6 6l6-6"
+                />
+              </svg>
+            </template>
+          </FilterDropdown>
+
+          <!-- Date Range Filter -->
+          <FilterDropdown
+            v-model="selectedDateRange"
+            :options="dateRangeOptions"
+            button-label="Period"
+            :hide-on-mobile="true"
+            @update:model-value="fetchData"
+          >
+            <template #icon>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill="none"
+                  stroke="#000"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m6 10l6 6l6-6"
+                />
+              </svg>
+            </template>
+          </FilterDropdown>
         </div>
       </div>
     </header>
@@ -107,16 +171,20 @@
         <StatsStatCard
           title="Total Views"
           :value="aggregatedData.views"
-          :percentage-change="viewsChange"
+          :show-change="false"
         />
         <StatsStatCard
           title="Unique Visitors"
           :value="aggregatedData.uniqueVisitors"
-          :percentage-change="visitorsChange"
+          :show-change="false"
         />
         <StatsStatCard
-          title="Total Flipbooks"
-          :value="flipbooks.length"
+          :title="
+            selectedFlipbookId === 'all'
+              ? 'Total Flipbooks'
+              : 'Selected Flipbook'
+          "
+          :value="selectedFlipbookId === 'all' ? flipbooks.length : 1"
           :show-change="false"
         />
         <StatsStatCard
@@ -197,7 +265,9 @@
       <HorizontalDivider />
 
       <!-- Detailed Country Table -->
-      <div class="bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden">
+      <div
+        class="bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden"
+      >
         <div class="p-6 border-b border-gray-100">
           <h5 class="font-delight font-bold text-xl">Geographic Breakdown</h5>
         </div>
@@ -233,21 +303,31 @@
                 :key="country.name"
                 :class="index % 2 === 0 ? 'bg-white' : 'bg-gray-50'"
               >
-                <td class="px-6 py-4 whitespace-nowrap font-poppins text-sm font-medium text-gray-900">
+                <td
+                  class="px-6 py-4 whitespace-nowrap font-poppins text-sm font-medium text-gray-900"
+                >
                   {{ country.name }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap font-poppins text-sm text-gray-700">
+                <td
+                  class="px-6 py-4 whitespace-nowrap font-poppins text-sm text-gray-700"
+                >
                   {{ country.views.toLocaleString() }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap font-poppins text-sm text-gray-700">
+                <td
+                  class="px-6 py-4 whitespace-nowrap font-poppins text-sm text-gray-700"
+                >
                   {{ country.visitors.toLocaleString() }}
                 </td>
-                <td class="px-6 py-4 whitespace-nowrap font-poppins text-sm text-gray-700">
+                <td
+                  class="px-6 py-4 whitespace-nowrap font-poppins text-sm text-gray-700"
+                >
                   <div class="flex items-center">
                     <div class="w-16 mr-2">
                       {{ country.percentage.toFixed(1) }}%
                     </div>
-                    <div class="flex-1 bg-gray-200 rounded-full h-2 max-w-[100px]">
+                    <div
+                      class="flex-1 bg-gray-200 rounded-full h-2 max-w-[100px]"
+                    >
                       <div
                         class="bg-blue-600 h-2 rounded-full"
                         :style="{ width: `${country.percentage}%` }"
@@ -265,7 +345,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Flipbook, DateRangeOption, ComprehensiveAnalytics } from "~/types";
+import type {
+  Flipbook,
+  DateRangeOption,
+  ComprehensiveAnalytics,
+} from "~/types";
 import { useComprehensiveAnalytics } from "~/composables/useComprehensiveAnalytics";
 
 definePageMeta({
@@ -275,19 +359,15 @@ definePageMeta({
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
-const router = useRouter();
 
 const isLoading = ref(true);
 const flipbooks = ref<Flipbook[]>([]);
 const analyticsData = ref<Record<string, ComprehensiveAnalytics>>({});
 const selectedDateRange = ref<DateRangeOption>("30");
+const selectedFlipbookId = ref<string>("all");
 
-const {
-  isLoadingAnalytics,
-  fetchComprehensiveAnalytics,
-  calculatePercentageChange,
-  aggregateAnalytics,
-} = useComprehensiveAnalytics();
+const { fetchComprehensiveAnalytics, aggregateAnalytics } =
+  useComprehensiveAnalytics();
 
 const dateRangeOptions = [
   { value: "30", label: "Last 30 Days" },
@@ -298,28 +378,35 @@ const dateRangeOptions = [
 
 const hasFlipbooks = computed(() => flipbooks.value.length > 0);
 
+const flipbookOptions = computed(() => {
+  const options = [{ value: "all", label: "All Flipbooks" }];
+  flipbooks.value.forEach((flipbook) => {
+    options.push({
+      value: flipbook.id,
+      label: flipbook.title,
+    });
+  });
+  return options;
+});
+
+const filteredAnalyticsData = computed(() => {
+  if (selectedFlipbookId.value === "all") {
+    return analyticsData.value;
+  }
+
+  // Return only the selected flipbook's analytics
+  const selectedData = analyticsData.value[selectedFlipbookId.value];
+  return selectedData ? { [selectedFlipbookId.value]: selectedData } : {};
+});
+
 const aggregatedData = computed(() => {
-  return aggregateAnalytics(analyticsData.value);
-});
-
-const viewsChange = computed(() => {
-  return calculatePercentageChange(
-    aggregatedData.value.views,
-    aggregatedData.value.previousViews
-  );
-});
-
-const visitorsChange = computed(() => {
-  return calculatePercentageChange(
-    aggregatedData.value.uniqueVisitors,
-    aggregatedData.value.previousVisitors
-  );
+  return aggregateAnalytics(filteredAnalyticsData.value);
 });
 
 // Daily chart data
 const dailyChartData = computed(() => {
   const data = aggregatedData.value.dailyData;
-  
+
   // Format dates nicely
   const labels = data.map((d) => {
     const date = d.date;
@@ -327,7 +414,10 @@ const dailyChartData = computed(() => {
     const month = date.substring(4, 6);
     const day = date.substring(6, 8);
     const dateObj = new Date(`${year}-${month}-${day}`);
-    return dateObj.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+    return dateObj.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+    });
   });
 
   return {
@@ -356,7 +446,7 @@ const countryChartData = computed(() => {
 // Sorted countries for table
 const sortedCountries = computed(() => {
   const totalViews = aggregatedData.value.views;
-  
+
   return Object.entries(aggregatedData.value.countries)
     .map(([name, stats]) => ({
       name,
@@ -370,18 +460,18 @@ const sortedCountries = computed(() => {
 // Generate colors for country bars
 const generateCountryColors = (count: number): string[] => {
   const colors = [
-    "rgba(59, 130, 246, 0.8)",   // blue
-    "rgba(16, 185, 129, 0.8)",   // green
-    "rgba(249, 115, 22, 0.8)",   // orange
-    "rgba(236, 72, 153, 0.8)",   // pink
-    "rgba(139, 92, 246, 0.8)",   // purple
-    "rgba(245, 158, 11, 0.8)",   // amber
-    "rgba(20, 184, 166, 0.8)",   // teal
-    "rgba(239, 68, 68, 0.8)",    // red
-    "rgba(99, 102, 241, 0.8)",   // indigo
-    "rgba(168, 85, 247, 0.8)",   // violet
+    "rgba(59, 130, 246, 0.8)", // blue
+    "rgba(16, 185, 129, 0.8)", // green
+    "rgba(249, 115, 22, 0.8)", // orange
+    "rgba(236, 72, 153, 0.8)", // pink
+    "rgba(139, 92, 246, 0.8)", // purple
+    "rgba(245, 158, 11, 0.8)", // amber
+    "rgba(20, 184, 166, 0.8)", // teal
+    "rgba(239, 68, 68, 0.8)", // red
+    "rgba(99, 102, 241, 0.8)", // indigo
+    "rgba(168, 85, 247, 0.8)", // violet
   ];
-  
+
   return Array(count)
     .fill(0)
     .map((_, i) => colors[i % colors.length]!);
@@ -409,12 +499,27 @@ const fetchData = async () => {
         flipbookIds,
         selectedDateRange.value
       );
+    } else {
+      // Reset analytics if no flipbooks
+      analyticsData.value = {};
     }
+
+    // Reset to "all" when fetching new data
+    selectedFlipbookId.value = "all";
   } catch (error) {
     console.error("Error fetching data:", error);
   } finally {
     isLoading.value = false;
   }
+};
+
+const updateFilteredAnalytics = () => {
+  // This function is called when flipbook selection changes
+  // The computed properties will automatically update based on selectedFlipbookId
+};
+
+const navigateToDashboard = () => {
+  return navigateTo({ name: "dashboard" });
 };
 
 const goToCreateFlipbook = () => {
@@ -445,4 +550,3 @@ onMounted(async () => {
   }
 });
 </script>
-

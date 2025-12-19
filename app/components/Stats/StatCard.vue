@@ -54,7 +54,7 @@
               />
             </svg>
             {{ Math.abs(percentageChange).toFixed(1) }}%
-            <span class="ml-1 text-gray-600">vs previous period</span>
+            <span class="ml-1 text-gray-600">{{ comparisonLabel }}</span>
           </span>
         </div>
       </div>
@@ -79,6 +79,7 @@ interface Props {
   iconBgColor?: string;
   iconColor?: string;
   formatAsNumber?: boolean;
+  comparisonLabel?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -87,6 +88,7 @@ const props = withDefaults(defineProps<Props>(), {
   iconBgColor: "bg-blue-100",
   iconColor: "text-blue-600",
   formatAsNumber: true,
+  comparisonLabel: "vs previous period",
 });
 
 const formattedValue = computed(() => {

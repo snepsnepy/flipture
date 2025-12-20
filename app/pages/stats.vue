@@ -33,10 +33,8 @@
         </button>
       </div>
 
-      <div
-        class="flex flex-col md:flex-row justify-between items-start gap-y-4 md:items-center"
-      >
-        <div>
+      <div class="flex flex-col xl:flex-row justify-between gap-y-4">
+        <div class="w-full items-center xl:items-start flex flex-col">
           <h4
             class="font-delight font-bold text-4xl leading-8 md:leading-8 text-center md:text-left md:pt-2"
           >
@@ -50,13 +48,14 @@
         </div>
 
         <!-- Filters -->
-        <div class="flex flex-row gap-3 w-full md:w-auto">
+        <div
+          class="flex flex-col md:flex-row gap-3 w-full justify-end items-center"
+        >
           <!-- Flipbook Filter -->
           <FilterDropdown
             v-model="selectedFlipbookId"
             :options="flipbookOptions"
-            button-label="Flipbook"
-            :hide-on-mobile="true"
+            :button-label="`Flipbook: ${selectedFlipbookLabel}`"
             @update:model-value="updateFilteredAnalytics"
           >
             <template #icon>
@@ -82,8 +81,7 @@
           <FilterDropdown
             v-model="selectedDateRange"
             :options="dateRangeOptions"
-            button-label="Period"
-            :hide-on-mobile="true"
+            :button-label="`Period: ${selectedDateRangeLabel}`"
             @update:model-value="fetchData"
           >
             <template #icon>
@@ -199,7 +197,7 @@
       <!-- Charts Section -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Views Over Time -->
-        <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+        <div class="rounded-2xl shadow-md p-6 border-2 border-base-content">
           <h5 class="font-delight font-bold text-xl mb-4">Views Over Time</h5>
           <div class="h-[300px]">
             <StatsLineChart
@@ -209,15 +207,15 @@
                 {
                   label: 'Views',
                   data: dailyChartData.views,
-                  borderColor: 'rgb(59, 130, 246)',
-                  backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                  borderColor: 'oklch(0.5096 0.274811 263.5831)',
+                  backgroundColor: 'oklch(0.5096 0.274811 263.5831 / 0.1)',
                   fill: true,
                 },
                 {
                   label: 'Unique Visitors',
                   data: dailyChartData.visitors,
-                  borderColor: 'rgb(16, 185, 129)',
-                  backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                  borderColor: 'rgb(250, 204, 21)',
+                  backgroundColor: 'rgba(250, 204, 21, 0.1)',
                   fill: true,
                 },
               ]"
@@ -232,7 +230,7 @@
         </div>
 
         <!-- Top Countries -->
-        <div class="bg-white rounded-lg shadow-md p-6 border border-gray-100">
+        <div class="rounded-2xl shadow-md p-6 border-2 border-base-content">
           <h5 class="font-delight font-bold text-xl mb-4">
             Top Countries by Views
           </h5>
@@ -266,32 +264,32 @@
 
       <!-- Detailed Country Table -->
       <div
-        class="bg-white rounded-lg shadow-md border border-gray-100 overflow-hidden"
+        class="rounded-2xl shadow-md border-2 border-base-content overflow-hidden"
       >
         <div class="p-6 border-b border-gray-100">
           <h5 class="font-delight font-bold text-xl">Geographic Breakdown</h5>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full">
-            <thead class="bg-gray-50">
+            <thead class="bg-neutral/10">
               <tr>
                 <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-poppins"
+                  class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider font-poppins"
                 >
                   Country
                 </th>
                 <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-poppins"
+                  class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider font-poppins"
                 >
                   Views
                 </th>
                 <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-poppins"
+                  class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider font-poppins"
                 >
                   Unique Visitors
                 </th>
                 <th
-                  class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider font-poppins"
+                  class="px-6 py-3 text-left text-xs font-medium text-base-content uppercase tracking-wider font-poppins"
                 >
                   % of Total Views
                 </th>
@@ -329,7 +327,7 @@
                       class="flex-1 bg-gray-200 rounded-full h-2 max-w-[100px]"
                     >
                       <div
-                        class="bg-blue-600 h-2 rounded-full"
+                        class="bg-primary h-2 rounded-full"
                         :style="{ width: `${country.percentage}%` }"
                       ></div>
                     </div>
@@ -374,7 +372,7 @@ const dateRangeOptions = [
   { value: "60", label: "Last 60 Days" },
   { value: "180", label: "Last 6 Months" },
   { value: "365", label: "Last 12 Months" },
-];
+]; 
 
 const hasFlipbooks = computed(() => flipbooks.value.length > 0);
 
@@ -387,6 +385,20 @@ const flipbookOptions = computed(() => {
     });
   });
   return options;
+});
+
+const selectedFlipbookLabel = computed(() => {
+  const option = flipbookOptions.value.find(
+    (opt) => opt.value === selectedFlipbookId.value
+  );
+  return option?.label || "All Flipbooks";
+});
+
+const selectedDateRangeLabel = computed(() => {
+  const option = dateRangeOptions.find(
+    (opt) => opt.value === selectedDateRange.value
+  );
+  return option?.label || "Last 30 Days";
 });
 
 const filteredAnalyticsData = computed(() => {
@@ -460,8 +472,8 @@ const sortedCountries = computed(() => {
 // Generate colors for country bars
 const generateCountryColors = (count: number): string[] => {
   const colors = [
-    "rgba(59, 130, 246, 0.8)", // blue
-    "rgba(16, 185, 129, 0.8)", // green
+    "oklch(0.5096 0.274811 263.5831)", // blue
+    "rgb(163, 230, 53, 0.8)", // green
     "rgba(249, 115, 22, 0.8)", // orange
     "rgba(236, 72, 153, 0.8)", // pink
     "rgba(139, 92, 246, 0.8)", // purple

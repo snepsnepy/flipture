@@ -4,14 +4,14 @@
     :model-value="modelValue"
     @update:model-value="emit('update:modelValue', $event)"
   >
-    <div class="relative w-full md:w-fit">
+    <div class="relative w-full xl:w-fit">
       <ListboxButton
         :class="[
           buttonClass ||
-            'btn w-full text-base-content bg-base-100 border-2 px-3 md:px-3 py-[22px] md:py-[26px] border-base-content rounded-2xl hover:bg-secondary font-poppins text-base md:text-lg flex items-center md:w-fit whitespace-nowrap',
+            'btn w-full text-base-content bg-base-100 border-2 px-3 md:px-3 py-[22px] md:py-[26px] border-base-content rounded-2xl hover:bg-secondary font-poppins text-base md:text-lg flex items-center xl:w-fit whitespace-nowrap',
         ]"
       >
-        <span v-if="buttonLabel && (!hideOnMobile || !isMobile)">
+        <span v-if="buttonLabel">
           {{ buttonLabel }}
         </span>
         <span v-else>
@@ -63,7 +63,6 @@ import {
   ListboxOptions,
   ListboxOption,
 } from "@headlessui/vue";
-import { useIsMobile } from "~/composables/useIsMobile";
 
 interface OptionConfig {
   value: string;
@@ -74,7 +73,6 @@ interface Props {
   modelValue: string;
   options: OptionConfig[];
   buttonLabel?: string;
-  hideOnMobile?: boolean;
   buttonClass?: string;
   dropdownClass?: string;
 }
@@ -84,8 +82,6 @@ const props = defineProps<Props>();
 const emit = defineEmits<{
   "update:modelValue": [value: string];
 }>();
-
-const { isMobile } = useIsMobile();
 
 const selectedLabel = computed(() => {
   const selected = props.options.find((opt) => opt.value === props.modelValue);

@@ -1,10 +1,12 @@
 <template>
   <div
-    class="bg-white rounded-lg shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow"
+    class="rounded-2xl shadow-md p-6 border-2 border-base-content transition-shadow"
   >
     <div class="flex items-start justify-between">
       <div class="flex-1">
-        <p class="text-sm font-medium text-gray-600 uppercase tracking-wide">
+        <p
+          class="text-base leading-4 font-medium text-base-content/50 uppercase tracking-normal"
+        >
           {{ title }}
         </p>
         <p class="mt-2 text-3xl font-bold text-gray-900">

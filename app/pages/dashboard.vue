@@ -39,6 +39,7 @@
             text="Create New"
             class="w-full md:w-fit hover:cursor-pointer"
             @click="goToCreateFlipbook"
+            type="primary"
           >
             <template #icon>
               <svg
@@ -65,9 +66,34 @@
       <HorizontalDivider />
 
       <!-- Search and Sort -->
-      <section class="flex flex-row justify-between gap-2 items-center">
+      <section
+        class="flex flex-col xl:flex-row justify-between gap-2 items-center"
+      >
         <SearchText v-if="hasFlipbooks" v-model="searchQuery" />
-        <SortButton v-if="hasFlipbooks" v-model="sortOption" />
+        <FilterDropdown
+          v-if="hasFlipbooks"
+          v-model="sortOption"
+          :options="SORT_OPTIONS"
+          button-label="Sort by"
+        >
+          <template #icon>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 48 48"
+            >
+              <path
+                fill="none"
+                stroke="#000"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="4"
+                d="m25 14l-9-9l-9 9m8.992 17V5M42 34l-9 9l-9-9m8.992-17v26"
+              />
+            </svg>
+          </template>
+        </FilterDropdown>
       </section>
 
       <!-- Content -->
@@ -123,7 +149,7 @@
 </template>
 
 <script setup lang="ts">
-import type { Flipbook } from "~/types";
+import type { Flipbook, SortOptionConfig } from "~/types";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
 import type { SortOption } from "~/types";
 
@@ -131,6 +157,13 @@ definePageMeta({
   layout: "base",
   middleware: "auth",
 });
+
+const SORT_OPTIONS: SortOptionConfig[] = [
+  { value: "title-asc", label: "Title: A to Z" },
+  { value: "title-desc", label: "Title: Z to A" },
+  { value: "date-newest", label: "Date: Newest First" },
+  { value: "date-oldest", label: "Date: Oldest First" },
+];
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();

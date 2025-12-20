@@ -67,14 +67,14 @@
 
       <!-- Search and Sort -->
       <section
-        class="flex flex-col xl:flex-row justify-between gap-2 items-center"
+        class="flex flex-col md:flex-row justify-between gap-2 items-center"
       >
         <SearchText v-if="hasFlipbooks" v-model="searchQuery" />
         <FilterDropdown
           v-if="hasFlipbooks"
           v-model="sortOption"
           :options="SORT_OPTIONS"
-          button-label="Sort by"
+          class="w-full md:w-fit"
         >
           <template #icon>
             <svg

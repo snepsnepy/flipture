@@ -1,7 +1,7 @@
 <template>
   <!-- Loading Spinner -->
   <div
-    v-if="true"
+    v-if="isLoading"
     class="flex justify-center flex-col items-center min-h-[calc(100vh-300px)]"
   >
     <LoadingSpinner />

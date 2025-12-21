@@ -1,7 +1,7 @@
 <template>
   <!-- Loading Spinner -->
   <div
-    v-if="isLoading"
+    v-if="true"
     class="flex justify-center flex-col items-center min-h-[calc(100vh-300px)]"
   >
     <LoadingSpinner />
@@ -177,7 +177,7 @@ const searchQuery = ref("");
 const sortOption = ref<SortOption>("date-newest");
 const isLoading = ref(true);
 // Initialize currentPage from URL query parameter, default to 1
-const currentPage = ref(parseInt(route.query.page as string) || 1);
+const currentPage = ref(Number.parseInt(route.query.page as string) || 1);
 const itemsPerPage = ref(6); // Items per page
 const { isMobile } = useIsMobile();
 

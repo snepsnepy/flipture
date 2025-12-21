@@ -9,24 +9,6 @@
       <div class="blob"></div>
       <div class="blob"></div>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
-      <defs>
-        <filter id="goo">
-          <feGaussianBlur
-            in="SourceGraphic"
-            stdDeviation="10"
-            result="blur"
-          ></feGaussianBlur>
-          <feColorMatrix
-            in="blur"
-            mode="matrix"
-            values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7"
-            result="goo"
-          ></feColorMatrix>
-          <feBlend in="SourceGraphic" in2="goo"></feBlend>
-        </filter>
-      </defs>
-    </svg>
     <span
       class="text-base-content text-2xl leading-8 font-semibold font-poppins"
       >Loading...</span
@@ -41,7 +23,6 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
 }
 
 .blobs {

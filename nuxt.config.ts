@@ -70,5 +70,13 @@ export default defineNuxtConfig({
     ga4PropertyId: process.env.GA4_PROPERTY_ID,
     ga4ClientEmail: process.env.GA4_CLIENT_EMAIL,
     ga4PrivateKey: process.env.GA4_PRIVATE_KEY,
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+    supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    public: {
+      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+      stripeStandardPriceId: process.env.STRIPE_STANDARD_PRICE_ID,
+      stripePremiumPriceId: process.env.STRIPE_PREMIUM_PRICE_ID,
+    },
   },
 });

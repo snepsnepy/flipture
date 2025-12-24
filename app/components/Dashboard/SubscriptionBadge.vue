@@ -7,9 +7,13 @@
       {{ badgeText }}
     </div>
 
-    <!-- Manage Button -->
+    <!-- Manage Button - Only show for active or past_due subscriptions -->
     <button
-      v-if="subscriptionData.stripe_customer_id"
+      v-if="
+        subscriptionData.stripe_customer_id &&
+        (subscriptionData.subscription_status === 'active' ||
+          subscriptionData.subscription_status === 'past_due')
+      "
       @click="handleManageSubscription"
       :disabled="portalLoading"
       class="btn btn-sm btn-ghost"
@@ -57,6 +61,8 @@
 </template>
 
 <script setup lang="ts">
+import { Toast } from "~/types";
+
 const { profile: subscriptionData, loading } = useUserProfile();
 const { redirectToCustomerPortal } = useStripe();
 const { showToast } = useToast();
@@ -73,8 +79,10 @@ const badgeClass = computed(() => {
     return "badge-primary";
   } else if (status === "active" && plan === "standard") {
     return "badge-secondary";
-  } else if (status === "canceled" || status === "past_due") {
-    return "badge-warning";
+  } else if (status === "past_due") {
+    return "badge-warning"; // Warning for payment issues
+  } else if (status === "canceled") {
+    return "badge-ghost"; // Back to free tier
   }
 
   return "badge-ghost";
@@ -91,7 +99,7 @@ const badgeText = computed(() => {
   if (status === "active") {
     return plan.charAt(0).toUpperCase() + plan.slice(1);
   } else if (status === "canceled") {
-    return "Canceled";
+    return "Free"; // Show as Free when canceled
   } else if (status === "past_due") {
     return "Past Due";
   }
@@ -101,7 +109,10 @@ const badgeText = computed(() => {
 
 const handleManageSubscription = async () => {
   if (!subscriptionData.value?.stripe_customer_id) {
-    showToast("No subscription found", "error");
+    showToast(Toast.ERROR, {
+      toastTitle: "No subscription found",
+      description: "You don't have an active subscription.",
+    });
     return;
   }
 
@@ -111,7 +122,20 @@ const handleManageSubscription = async () => {
     await redirectToCustomerPortal(subscriptionData.value.stripe_customer_id);
   } catch (error: any) {
     console.error("Portal error:", error);
-    showToast("Failed to open subscription management", "error");
+
+    // Handle deleted customer error
+    if (error.message?.includes("No such customer")) {
+      showToast(Toast.ERROR, {
+        toastTitle: "Subscription not found",
+        description: "Please subscribe to a new plan.",
+      });
+    } else {
+      showToast(Toast.ERROR, {
+        toastTitle: "Failed to open subscription management",
+        description: "Please try again later.",
+      });
+    }
+
     portalLoading.value = false;
   }
 };

@@ -214,7 +214,14 @@ const handleManageSubscription = async () => {
     await redirectToCustomerPortal(userData.value.stripe_customer_id);
   } catch (error: any) {
     console.error('Portal error:', error);
-    showToast('Failed to open subscription management', 'error');
+    
+    // Handle deleted customer error
+    if (error.message?.includes('No such customer')) {
+      showToast('Subscription not found. Please subscribe to a new plan.', 'error');
+    } else {
+      showToast('Failed to open subscription management', 'error');
+    }
+    
     portalLoading.value = false;
   }
 };

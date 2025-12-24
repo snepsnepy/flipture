@@ -24,6 +24,7 @@ This integration allows users to subscribe to monthly plans (Standard and Premiu
 ### Plans Available
 
 - **Standard Plan**: $9/month
+
   - Up to 10 flipbooks
   - Basic analytics
   - Standard support
@@ -129,21 +130,23 @@ yarn add stripe @stripe/stripe-js
 3. Create two products:
 
 **Standard Plan:**
+
 - Name: `Standard Plan`
 - Price: `$9.00`
 - Billing: `Monthly`
 - Copy the **Price ID** (starts with `price_`)
 
 **Premium Plan:**
-- Name: `Premium Plan`  
+
+- Name: `Premium Plan`
 - Price: `$19.00`
 - Billing: `Monthly`
 - Copy the **Price ID** (starts with `price_`)
 
-#### Step 4: Get Supabase Service Role Key
+#### Step 4: Get Supabase Secret Key (Service Role)
 
 1. Go to [Supabase Dashboard → Settings → API](https://supabase.com/dashboard/project/_/settings/api)
-2. Copy the **`service_role`** key (⚠️ Keep this secret!)
+2. Copy the **`service_role`** key (starts with `sb_secret_`) (⚠️ Keep this secret!)
 
 #### Step 5: Configure Environment Variables
 
@@ -153,7 +156,7 @@ Your `.env` file should have:
 # Supabase
 SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_KEY=your_anon_key
-SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
+SUPABASE_SECRET_KEY=your_service_role_key
 
 # Stripe
 STRIPE_SECRET_KEY=sk_test_...
@@ -178,7 +181,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   avatar_url TEXT,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  
+
   -- Stripe subscription fields
   subscription_status TEXT,
   subscription_plan TEXT,
@@ -199,7 +202,7 @@ CREATE POLICY "Users can view their own profile" ON profiles FOR SELECT USING (a
 CREATE POLICY "Users can update their own profile" ON profiles FOR UPDATE USING (auth.uid() = id);
 
 -- Auto-create profile on signup
-CREATE OR REPLACE FUNCTION public.handle_new_user() 
+CREATE OR REPLACE FUNCTION public.handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
   INSERT INTO public.profiles (id, email, full_name)
@@ -275,7 +278,7 @@ Go to Netlify Dashboard → Site settings → Environment variables and add all 
 ```
 SUPABASE_URL=...
 SUPABASE_KEY=...
-SUPABASE_SERVICE_ROLE_KEY=... (⚠️ Important!)
+SUPABASE_SECRET_KEY=... (⚠️ Important!)
 STRIPE_SECRET_KEY=sk_test_... (or sk_live_... for production)
 STRIPE_PUBLISHABLE_KEY=pk_test_... (or pk_live_... for production)
 STRIPE_STANDARD_PRICE_ID=price_...
@@ -291,10 +294,12 @@ GA4_PRIVATE_KEY=...
 1. **Get your production URL** (e.g., `https://your-app.netlify.app`)
 
 2. **Go to Stripe Dashboard**:
+
    - Navigate to: [Developers → Webhooks](https://dashboard.stripe.com/test/webhooks)
    - Click **"Add endpoint"**
 
 3. **Configure the endpoint**:
+
    - **Endpoint URL**: `https://your-app.netlify.app/api/stripe/webhook`
    - **Description**: `Flipture Production Webhook`
    - **Events to send**: Select these events:
@@ -305,6 +310,7 @@ GA4_PRIVATE_KEY=...
      - ✅ `invoice.payment_failed`
 
 4. **Get the signing secret**:
+
    - After creating the endpoint, click on it
    - Click **"Reveal"** next to "Signing secret"
    - Copy the secret (starts with `whsec_...`)
@@ -316,6 +322,7 @@ GA4_PRIVATE_KEY=...
 #### Step 4: Test in Production
 
 Use Stripe test cards:
+
 - Success: `4242 4242 4242 4242`
 - Declined: `4000 0000 0000 0002`
 - Requires Authentication: `4000 0025 0000 3155`
@@ -342,17 +349,20 @@ server/api/stripe/
 ```
 
 **`create-checkout-session.post.ts`**
+
 - Creates a Stripe checkout session
 - Validates user and price data
 - Returns session URL for redirect
 
 **`webhook.post.ts`**
+
 - Receives webhook events from Stripe
 - Verifies webhook signatures
 - Updates Supabase database with subscription data
 - Handles: checkout complete, subscription updates, cancellations
 
 **`create-portal-session.post.ts`**
+
 - Creates Stripe customer portal session
 - Allows users to manage subscriptions
 
@@ -371,22 +381,26 @@ app/
 ```
 
 **`useStripe.ts`**
+
 - Loads Stripe.js library
 - Creates checkout sessions
 - Redirects to checkout
 - Opens customer portal
 
 **`useUserProfile.ts`**
+
 - Fetches user profile from database
 - Automatically creates profile if missing
 - Returns subscription data
 
 **`SubscriptionBadge.vue`**
+
 - Displays current subscription plan
 - Shows badge color based on plan
 - Provides "Manage Subscription" button
 
 **`pricing.vue`**
+
 - Displays pricing cards
 - Handles plan selection
 - Initiates checkout process
@@ -433,6 +447,7 @@ Expired Card: 4000 0000 0000 0069
 ```
 
 **Details for all test cards:**
+
 - Expiry: Any future date (e.g., `12/34`)
 - CVC: Any 3 digits (e.g., `123`)
 - ZIP: Any 5 digits (e.g., `12345`)
@@ -450,6 +465,7 @@ Expired Card: 4000 0000 0000 0069
 ### Verifying Webhooks
 
 **Expected webhook events for new subscription:**
+
 ```
 ✅ checkout.session.completed
 ✅ customer.created
@@ -462,6 +478,7 @@ Expired Card: 4000 0000 0000 0069
 ```
 
 **What to check:**
+
 - Terminal logs show: `✅ Subscription created for user [id]: [plan] plan`
 - Supabase profiles table shows:
   - `subscription_status`: `active`
@@ -477,22 +494,26 @@ Expired Card: 4000 0000 0000 0069
 ### Issue: Database not updating after payment
 
 **Symptoms:**
+
 - Payment succeeds
 - Webhook says success
 - Database still shows `subscription_status`: `null`
 
 **Solution:**
-- Check you're using `SUPABASE_SERVICE_ROLE_KEY` (not `SUPABASE_KEY`)
+
+- Check you're using `SUPABASE_SECRET_KEY` (not `SUPABASE_KEY`)
 - Verify key is in both `.env` and `nuxt.config.ts`
 - Restart dev server after adding key
 
 ### Issue: "Missing required fields" error
 
 **Symptoms:**
+
 - Error when clicking "Get Started"
 - Toast notification appears empty
 
 **Solution:**
+
 - Check user is logged in
 - Verify user has email in auth object
 - Check browser console for errors
@@ -501,10 +522,12 @@ Expired Card: 4000 0000 0000 0069
 ### Issue: Webhook signature verification failed
 
 **Symptoms:**
+
 - Error in terminal: `Webhook signature verification failed`
 - Webhooks not processing
 
 **Solution:**
+
 - Check `STRIPE_WEBHOOK_SECRET` matches CLI output
 - Restart dev server after updating secret
 - For production: verify secret matches Stripe Dashboard
@@ -512,10 +535,12 @@ Expired Card: 4000 0000 0000 0069
 ### Issue: `current_period_end` is null
 
 **Symptoms:**
+
 - Subscription created
 - But `subscription_current_period_end` is `null`
 
 **Solution:**
+
 - **Already fixed!** We're using API version `2024-11-20.acacia`
 - If issue persists, check Stripe API version in webhook handler
 - Verify subscription object has `current_period_end` in logs
@@ -523,10 +548,12 @@ Expired Card: 4000 0000 0000 0069
 ### Issue: Stripe CLI not forwarding webhooks
 
 **Symptoms:**
+
 - No webhook events in terminal
 - Stripe CLI shows connection but no events
 
 **Solution:**
+
 ```bash
 # Stop the CLI (Ctrl+C)
 # Login again
@@ -539,10 +566,12 @@ stripe listen --forward-to localhost:3000/api/stripe/webhook --log-level debug
 ### Issue: User object missing `id` field
 
 **Symptoms:**
+
 - Error: "No user ID found"
 - User is logged in but subscription fails
 
 **Solution:**
+
 - User ID is in `sub` field for Supabase users
 - **Already handled!** Code checks both `user.id` and `user.sub`
 - If issue persists, check `useSupabaseUser()` composable
@@ -554,16 +583,19 @@ stripe listen --forward-to localhost:3000/api/stripe/webhook --log-level debug
 ### Adding a New Plan
 
 1. **Create product in Stripe Dashboard**:
+
    - Go to Products → Add product
    - Set name and price
    - Copy Price ID
 
 2. **Add to environment variables**:
+
    ```env
    STRIPE_ENTERPRISE_PRICE_ID=price_...
    ```
 
 3. **Update `nuxt.config.ts`**:
+
    ```typescript
    public: {
      stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
@@ -574,6 +606,7 @@ stripe listen --forward-to localhost:3000/api/stripe/webhook --log-level debug
    ```
 
 4. **Add to pricing page**:
+
    ```vue
    <!-- Add new pricing card in app/pages/pricing.vue -->
    <div class="card bg-base-100 shadow-xl">
@@ -616,14 +649,17 @@ stripe trigger invoice.payment_failed
 ### Checking Webhook Logs
 
 **Local:**
+
 - Check dev server terminal
 - Look for: `✅ Subscription created/updated/canceled`
 
 **Production:**
+
 - Netlify Dashboard → Functions → Select webhook function
 - View logs for errors and success messages
 
 **Stripe Dashboard:**
+
 - Developers → Webhooks → Select endpoint
 - View webhook attempts and responses
 
@@ -642,15 +678,18 @@ stripe refunds create --charge ch_xxxxx
 ## 🔐 Security Best Practices
 
 1. **Never expose secret keys**:
+
    - ✅ `STRIPE_SECRET_KEY` only in server-side code
-   - ✅ `SUPABASE_SERVICE_ROLE_KEY` only in server-side code
+   - ✅ `SUPABASE_SECRET_KEY` only in server-side code
    - ❌ Never commit `.env` to Git
 
 2. **Always verify webhook signatures**:
+
    - ✅ Already implemented in `webhook.post.ts`
    - Uses `stripe.webhooks.constructEvent()`
 
 3. **Use Row Level Security (RLS)**:
+
    - ✅ Already enabled on profiles table
    - Users can only read/update their own profile
 
@@ -714,4 +753,3 @@ If you encounter issues not covered in this guide:
 **Last Updated**: December 23, 2025  
 **Stripe API Version**: 2024-11-20.acacia  
 **Integration Status**: ✅ Fully Functional
-

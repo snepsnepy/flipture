@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
     // Initialize Supabase client with service role key to bypass RLS
     const supabase = createClient(
       process.env.SUPABASE_URL!,
-      config.supabaseServiceRoleKey!
+      config.supabaseSecretKey!
     );
 
     // Handle different event types
@@ -110,13 +110,20 @@ export default defineEventHandler(async (event) => {
               ).toISOString()
             : null;
 
+          // Build update data - only update fields that have values
+          const updateData: any = {
+            subscription_status: subscription.status,
+            subscription_plan: planType,
+          };
+
+          // Only update period end if we have a value (prevents overwriting with null)
+          if (periodEnd) {
+            updateData.subscription_current_period_end = periodEnd;
+          }
+
           const { error } = await supabase
             .from("profiles")
-            .update({
-              subscription_status: subscription.status,
-              subscription_plan: planType,
-              subscription_current_period_end: periodEnd,
-            })
+            .update(updateData)
             .eq("id", userId);
 
           if (error) {

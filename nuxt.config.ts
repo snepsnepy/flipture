@@ -72,7 +72,7 @@ export default defineNuxtConfig({
     ga4PrivateKey: process.env.GA4_PRIVATE_KEY,
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
-    supabaseServiceRoleKey: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    supabaseSecretKey: process.env.SUPABASE_SECRET_KEY,
     public: {
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       stripeStandardPriceId: process.env.STRIPE_STANDARD_PRICE_ID,

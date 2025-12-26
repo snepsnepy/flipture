@@ -10,7 +10,7 @@
   <!-- Main Content -->
   <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
     <!-- Header -->
-    <header class="flex flex-col gap-4">
+    <header class="flex flex-col gap-8">
       <div class="flex flex-row items-center gap-2">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -372,7 +372,7 @@ const dateRangeOptions = [
   { value: "60", label: "Last 60 Days" },
   { value: "180", label: "Last 6 Months" },
   { value: "365", label: "Last 12 Months" },
-]; 
+];
 
 const hasFlipbooks = computed(() => flipbooks.value.length > 0);
 

@@ -1,160 +1,243 @@
 <template>
-  <div class="min-h-screen bg-base-200 py-12 px-4 sm:px-6 lg:px-8">
-    <div class="max-w-7xl mx-auto">
+  <section>
+    <div class="container mx-auto flex flex-col py-0 gap-6 md:gap-8">
       <!-- Header -->
-      <div class="text-center mb-12">
-        <h1 class="text-4xl font-bold mb-4">Choose Your Plan</h1>
-        <p class="text-lg text-base-content/70">
-          Select the perfect plan for your flipbook needs
-        </p>
-      </div>
-
-      <!-- Pricing Cards -->
-      <div class="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-        <!-- Standard Plan -->
-        <div class="card bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title text-2xl justify-center">Standard</h2>
-            <div class="text-center my-6">
-              <div class="text-5xl font-bold">$9</div>
-              <div class="text-base-content/70 mt-2">per month</div>
-            </div>
-            
-            <ul class="space-y-3 mb-6">
-              <li class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Up to 10 flipbooks</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Basic analytics</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Standard support</span>
-              </li>
-            </ul>
-
-            <div class="card-actions justify-center">
-              <button
-                @click="handleSubscribe('standard')"
-                :disabled="loading || (userData?.subscription_plan === 'standard')"
-                class="btn btn-primary btn-block"
-              >
-                <span v-if="loading && selectedPlan === 'standard'" class="loading loading-spinner"></span>
-                <span v-else-if="userData?.subscription_plan === 'standard'">Current Plan</span>
-                <span v-else>Get Started</span>
-              </button>
-            </div>
-          </div>
+      <header>
+        <div class="flex flex-row items-center gap-2">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="#0046ff"
+              fill-rule="evenodd"
+              d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-.47-13.53a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72H16a.75.75 0 0 0 0-1.5H9.81l1.72-1.72a.75.75 0 0 0 0-1.06"
+              clip-rule="evenodd"
+            />
+          </svg>
+          <button
+            @click="navigateToDashboard"
+            class="text-base-content text-sm md:text-base leading-4 font-poppins font-medium hover:cursor-pointer hover:text-primary"
+          >
+            Back
+          </button>
         </div>
+      </header>
+
+      <!-- Title and Description -->
+      <section class="flex flex-col gap-y-6 items-center text-center">
+        <h2
+          class="font-poppins font-bold text-3xl md:text-5xl text-base-content"
+        >
+          Choose the perfect plan <br />for your needs
+        </h2>
+        <p
+          class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px] font-medium"
+        >
+          Transform your PDFs into stunning 3D flipbooks with our flexible
+          pricing plans. Start free and scale as you grow —
+          <b class="text-primary"> no hidden fees, cancel anytime.</b>
+        </p>
+      </section>
+
+      <!-- Content -->
+      <section class="flex flex-col xl:flex-row gap-6 lg:gap-5 gap-y-5">
+        <!-- Free Plan -->
+        <PricingCard
+          plan-type="free"
+          title="FREE"
+          description="Try it out with essential features at no cost."
+          price="€0"
+          period="/Forever"
+          :features="freePlan"
+          background-type="solid"
+          border-class="border-base-content/50"
+          :button-state="freeButtonState"
+          button-variant="default"
+          @subscribe="handleSubscribe"
+        />
+
+        <!-- Standard Plan -->
+        <PricingCard
+          plan-type="standard"
+          title="STANDARD"
+          description="Unlock unlimited flipbooks with full analytics."
+          price="€5.99"
+          period="/Month"
+          :features="standardPlan"
+          background-type="animated"
+          border-class="border-base-content"
+          :badge="{ text: 'Popular', variant: 'popular' }"
+          :button-state="standardButtonState"
+          button-variant="secondary"
+          @subscribe="handleSubscribe"
+        />
 
         <!-- Premium Plan -->
-        <div class="card bg-primary text-primary-content shadow-xl border-4 border-primary">
-          <div class="badge badge-secondary absolute -top-3 left-1/2 -translate-x-1/2">
-            POPULAR
-          </div>
-          <div class="card-body">
-            <h2 class="card-title text-2xl justify-center">Premium</h2>
-            <div class="text-center my-6">
-              <div class="text-5xl font-bold">$19</div>
-              <div class="text-primary-content/70 mt-2">per month</div>
-            </div>
-            
-            <ul class="space-y-3 mb-6">
-              <li class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Unlimited flipbooks</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Advanced analytics</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Priority support</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Custom branding</span>
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-5 h-5 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                <span>Export options</span>
-              </li>
-            </ul>
-
-            <div class="card-actions justify-center">
-              <button
-                @click="handleSubscribe('premium')"
-                :disabled="loading || (userData?.subscription_plan === 'premium')"
-                class="btn btn-secondary btn-block"
-              >
-                <span v-if="loading && selectedPlan === 'premium'" class="loading loading-spinner"></span>
-                <span v-else-if="userData?.subscription_plan === 'premium'">Current Plan</span>
-                <span v-else>Get Started</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+        <PricingCard
+          plan-type="premium"
+          title="PREMIUM"
+          description="Best value for regular publishing."
+          price="€59.99"
+          period="/Year"
+          :features="premiumPlan"
+          background-type="primary"
+          border-class="border-base-content"
+          :button-state="premiumButtonState"
+          button-variant="primary"
+          @subscribe="handleSubscribe"
+        />
+      </section>
 
       <!-- Manage Subscription -->
-      <div v-if="userData?.stripe_customer_id" class="text-center mt-12">
-        <p class="mb-4 text-base-content/70">
+      <footer
+        v-if="
+          userData?.stripe_customer_id &&
+          userData?.subscription_status === 'active'
+        "
+        class="text-center relative z-10"
+      >
+        <p class="mb-4 text-base-content/90 font-poppins">
           Already subscribed? Manage your subscription
         </p>
         <button
           @click="handleManageSubscription"
           :disabled="portalLoading"
-          class="btn btn-outline"
+          class="btn btn-outline text-base-content border-base-content hover:bg-primary-content hover:text-base-content"
         >
           <span v-if="portalLoading" class="loading loading-spinner"></span>
           <span v-else>Manage Subscription</span>
         </button>
-      </div>
+      </footer>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 definePageMeta({
-  layout: 'base',
-  middleware: 'auth',
+  layout: "base",
+  middleware: "auth",
 });
 
 const user = useSupabaseUser();
 const { profile: userData } = useUserProfile();
 const { redirectToCheckout, redirectToCustomerPortal } = useStripe();
 const config = useRuntimeConfig();
-const { showToast } = useToast();
 
 const loading = ref(false);
 const portalLoading = ref(false);
-const selectedPlan = ref<'standard' | 'premium' | null>(null);
+const selectedPlan = ref<"standard" | "premium" | null>(null);
 
-const handleSubscribe = async (plan: 'standard' | 'premium') => {
-  console.log('handleSubscribe called', { plan, user: user.value });
-  
+const freePlan = [
+  "Up to 3 flipbooks",
+  "5MB per flipbook limit",
+  "Watermark on flipbooks",
+  "No analytics",
+  "Auto-remove after 30 days of no visits",
+];
+
+const standardPlan = [
+  "Up to 100 flipbooks",
+  "30MB per flipbook limit",
+  "No watermark",
+  "Full analytics & insights",
+  "Full customization options",
+  "Cancel anytime",
+];
+
+const premiumPlan = [
+  "Up to 100 flipbooks",
+  "50MB per flipbook limit",
+  "No watermark",
+  "Full analytics & insights",
+  "Cancel anytime",
+  "Save 2 months with annual billing",
+  "One simple annual invoice",
+];
+
+// Computed button states
+const freeButtonState = computed(() => {
+  const isFree =
+    !userData.value?.subscription_plan ||
+    userData.value?.subscription_status !== "active";
+
+  return {
+    text: isFree ? "Current Plan" : "Included in Your Plan",
+    disabled: true,
+    loading: false,
+  };
+});
+
+const standardButtonState = computed(() => {
+  const isStandardActive =
+    userData.value?.subscription_plan === "standard" &&
+    userData.value?.subscription_status === "active";
+  const isPremiumActive =
+    userData.value?.subscription_plan === "premium" &&
+    userData.value?.subscription_status === "active";
+  const isStandardCanceled =
+    userData.value?.subscription_plan === "standard" &&
+    userData.value?.subscription_status === "canceled";
+
+  let text = "Subscribe Now";
+  if (loading.value && selectedPlan.value === "standard") {
+    text = "";
+  } else if (isStandardActive) {
+    text = "Current Plan";
+  } else if (isPremiumActive) {
+    text = "Included in Your Plan";
+  } else if (isStandardCanceled) {
+    text = "Reactivate";
+  }
+
+  return {
+    text,
+    disabled: loading.value || isStandardActive || isPremiumActive,
+    loading: loading.value && selectedPlan.value === "standard",
+  };
+});
+
+const premiumButtonState = computed(() => {
+  const isPremiumActive =
+    userData.value?.subscription_plan === "premium" &&
+    userData.value?.subscription_status === "active";
+  const isPremiumCanceled =
+    userData.value?.subscription_plan === "premium" &&
+    userData.value?.subscription_status === "canceled";
+  const isStandardActive =
+    userData.value?.subscription_plan === "standard" &&
+    userData.value?.subscription_status === "active";
+
+  let text = "Subscribe Now";
+  if (loading.value && selectedPlan.value === "premium") {
+    text = "";
+  } else if (isPremiumActive) {
+    text = "Current Plan";
+  } else if (isPremiumCanceled) {
+    text = "Reactivate";
+  } else if (isStandardActive) {
+    text = "Upgrade";
+  }
+
+  return {
+    text,
+    disabled: loading.value || isPremiumActive,
+    loading: loading.value && selectedPlan.value === "premium",
+  };
+});
+
+const handleSubscribe = async (plan: string) => {
+  if (plan === "free") {
+    // Free plan doesn't need subscription
+    return;
+  }
+
+  console.log("handleSubscribe called", { plan, user: user.value });
+
   if (!user.value) {
-    console.error('No user found');
-    showToast('Please log in to subscribe', 'error');
+    console.error("No user found");
     return;
   }
 
@@ -164,39 +247,33 @@ const handleSubscribe = async (plan: 'standard' | 'premium') => {
 
   // Validate required fields
   if (!userId) {
-    console.error('No user ID found');
-    showToast('User ID not found. Please try logging in again.', 'error');
+    console.error("No user ID found");
     return;
   }
 
   if (!userEmail) {
-    console.error('No user email found');
-    showToast('User email not found. Please try logging in again.', 'error');
+    console.error("No user email found");
     return;
   }
 
   loading.value = true;
-  selectedPlan.value = plan;
+  selectedPlan.value = plan as "standard" | "premium";
 
   try {
-    const priceId = plan === 'standard' 
-      ? config.public.stripeStandardPriceId 
-      : config.public.stripePremiumPriceId;
+    const priceId =
+      plan === "standard"
+        ? config.public.stripeStandardPriceId
+        : config.public.stripePremiumPriceId;
 
-    console.log('Checkout details:', {
+    console.log("Checkout details:", {
       priceId,
       userId,
       userEmail,
     });
 
-    await redirectToCheckout(
-      priceId,
-      userId,
-      userEmail
-    );
+    await redirectToCheckout(priceId, userId, userEmail);
   } catch (error: any) {
-    console.error('Subscription error:', error);
-    showToast(error.message || 'Failed to start subscription process', 'error');
+    console.error("Subscription error:", error);
     loading.value = false;
     selectedPlan.value = null;
   }
@@ -204,7 +281,6 @@ const handleSubscribe = async (plan: 'standard' | 'premium') => {
 
 const handleManageSubscription = async () => {
   if (!userData.value?.stripe_customer_id) {
-    showToast('No subscription found', 'error');
     return;
   }
 
@@ -213,17 +289,13 @@ const handleManageSubscription = async () => {
   try {
     await redirectToCustomerPortal(userData.value.stripe_customer_id);
   } catch (error: any) {
-    console.error('Portal error:', error);
-    
-    // Handle deleted customer error
-    if (error.message?.includes('No such customer')) {
-      showToast('Subscription not found. Please subscribe to a new plan.', 'error');
-    } else {
-      showToast('Failed to open subscription management', 'error');
-    }
-    
+    console.error("Portal error:", error);
+
     portalLoading.value = false;
   }
 };
-</script>
 
+const navigateToDashboard = () => {
+  return navigateTo({ name: "dashboard" });
+};
+</script>

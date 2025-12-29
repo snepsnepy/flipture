@@ -17,195 +17,212 @@
         </p>
       </header>
 
-      <!-- Content -->
-      <section class="flex flex-col lg:flex-row gap-10 gap-y-5">
-        <!-- Monthly -->
-        <div class="w-full relative overflow-hidden">
-          <VueBitsSilk
-            :speed="3"
-            :scale="1"
-            color="#0046ff"
-            :noise-intensity="0.5"
-            :rotation="0"
-            class="relative rounded-3xl p-8 md:p-14 overflow-hidden"
-          >
-            <!-- Container -->
-            <section class="flex flex-col gap-y-8 md:gap-y-10">
-              <!-- Badges -->
-              <div
-                class="flex flex-col gap-2 items-left md:flex-row md:items-center justify-between z-10 relative"
-              >
-                <span
-                  class="w-fit font-poppins font-medium text-base tracking-[8%] leading-[130%] text-primary-content py-1.5 px-5 border border-primary-content rounded-full hover:cursor-default"
-                  >STANDARD</span
-                >
-                <span
-                  class="w-fit flex flex-row items-center gap-1 font-poppins font-medium text-base tracking-[8%] leading-[130%] text-base-content py-1.5 px-5 bg-secondary rounded-full hover:cursor-default"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="#000"
-                      d="M12 19.875q-.425 0-.825-.187t-.7-.538L2.825 10q-.225-.275-.337-.6t-.113-.675q0-.225.038-.462t.162-.438L4.45 4.1q.275-.5.738-.8T6.225 3h11.55q.575 0 1.038.3t.737.8l1.875 3.725q.125.2.163.437t.037.463q0 .35-.112.675t-.338.6l-7.65 9.15q-.3.35-.7.538t-.825.187M9.625 8h4.75l-1.5-3h-1.75zM11 16.675V10H5.45zm2 0L18.55 10H13zM16.6 8h2.65l-1.5-3H15.1zM4.75 8H7.4l1.5-3H6.25z"
-                    />
-                  </svg>
-                  Popular
-                </span>
-              </div>
+      <section class="flex flex-col xl:flex-row gap-6 lg:gap-5 gap-y-5">
+        <!-- Free Plan -->
+        <PricingCard
+          plan-type="free"
+          title="FREE"
+          description="Try it out with essential features at no cost."
+          price="€0"
+          period="/Forever"
+          :features="freePlan"
+          background-type="solid"
+          border-class="border-base-content/50"
+          :button-state="freeButtonState"
+          button-variant="default"
+          @subscribe="handleSubscribe"
+        />
 
-              <!-- Content -->
-              <section class="flex flex-col gap-4 md:gap-5 z-10 relative">
-                <p
-                  class="font-poppins font-medium text-base md:text-lg leading-[131%] text-primary-content"
-                >
-                  Flexible, pay‑as‑you‑go — perfect for getting started
-                </p>
-                <div class="flex flex-row gap-2 items-start">
-                  <h4
-                    class="font-poppins font-bold text-4xl md:text-6xl leading-[104%] text-primary-content"
-                  >
-                    €5.99
-                  </h4>
-                  <span
-                    class="text-primary-content/80 text-sm md:text-lg font-poppins"
-                    >/Month</span
-                  >
-                </div>
-                <button
-                  type="button"
-                  class="w-full py-3 px-6 md:px-10 bg-secondary rounded-full text-base-content hover:cursor-pointer hover:bg-primary-content font-poppins font-bold text-sm md:text-lg hover:scale-105 transition-all duration-300"
-                >
-                  Get started
-                </button>
-              </section>
-              <HorizontalDivider class="relative z-10" />
+        <!-- Standard Plan -->
+        <PricingCard
+          plan-type="standard"
+          title="STANDARD"
+          description="Unlock unlimited flipbooks with full analytics."
+          price="€5.99"
+          period="/Month"
+          :features="standardPlan"
+          background-type="animated"
+          border-class="border-base-content"
+          :badge="{ text: 'Popular', variant: 'popular' }"
+          :button-state="standardButtonState"
+          button-variant="secondary"
+          @subscribe="handleSubscribe"
+        />
 
-              <!-- Bullet Points -->
-              <section class="flex flex-col gap-y-4 z-10 relative">
-                <div
-                  class="flex flex-row gap-2"
-                  v-for="feature in standardPlan"
-                  :key="feature"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="#fff"
-                      fill-rule="evenodd"
-                      d="M12 21a9 9 0 1 0 0-18a9 9 0 0 0 0 18m-.232-5.36l5-6l-1.536-1.28l-4.3 5.159l-2.225-2.226l-1.414 1.414l3 3l.774.774z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <span
-                    class="font-poppins text-sm md:text-base text-primary-content"
-                    >{{ feature }}</span
-                  >
-                </div>
-              </section>
-            </section>
-          </VueBitsSilk>
-        </div>
-
-        <!-- Yearly -->
-        <div class="w-full relative overflow-hidden">
-          <div
-            class="relative bg-primary-content rounded-3xl p-8 md:p-14 overflow-hidden"
-          >
-            <!-- Container -->
-            <section class="flex flex-col gap-y-8 md:gap-y-10">
-              <!-- Badges -->
-              <div
-                class="flex flex-row items-center justify-between z-10 relative"
-              >
-                <span
-                  class="font-poppins font-medium text-base tracking-[8%] leading-[130%] text-base-content py-1.5 px-5 border border-base-content rounded-full hover:cursor-default"
-                  >PREMIUM</span
-                >
-              </div>
-
-              <!-- Content -->
-              <section class="flex flex-col gap-4 md:gap-5 z-10 relative">
-                <p
-                  class="font-poppins font-medium text-base md:text-lg leading-[131%] text-base-content"
-                >
-                  Best value if you publish regularly.
-                </p>
-                <div class="flex flex-row gap-2 items-start">
-                  <h4
-                    class="font-poppins font-bold text-4xl md:text-6xl leading-[104%] text-base-content"
-                  >
-                    €59.99
-                  </h4>
-                  <span
-                    class="text-base-content/80 text-sm md:text-lg font-poppins"
-                    >/Year</span
-                  >
-                </div>
-                <button
-                  type="button"
-                  class="w-full py-3 px-6 md:px-10 bg-primary rounded-full text-primary-content hover:cursor-pointer font-poppins font-bold text-sm md:text-lg hover:scale-105 transition-all duration-300"
-                >
-                  Get started
-                </button>
-              </section>
-              <HorizontalDivider class="relative z-10" />
-
-              <!-- Bullet Points -->
-              <section class="flex flex-col gap-y-4 z-10 relative">
-                <div
-                  class="flex flex-row gap-2"
-                  v-for="feature in premiumPlan"
-                  :key="feature"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      fill="#000"
-                      fill-rule="evenodd"
-                      d="M12 21a9 9 0 1 0 0-18a9 9 0 0 0 0 18m-.232-5.36l5-6l-1.536-1.28l-4.3 5.159l-2.225-2.226l-1.414 1.414l3 3l.774.774z"
-                      clip-rule="evenodd"
-                    />
-                  </svg>
-                  <span
-                    class="font-poppins text-sm md:text-base text-base-content"
-                    >{{ feature }}</span
-                  >
-                </div>
-              </section>
-            </section>
-          </div>
-        </div>
+        <!-- Premium Plan -->
+        <PricingCard
+          plan-type="premium"
+          title="PREMIUM"
+          description="Best value for regular publishing."
+          price="€59.99"
+          period="/Year"
+          :features="premiumPlan"
+          background-type="primary"
+          border-class="border-base-content"
+          :button-state="premiumButtonState"
+          button-variant="primary"
+          @subscribe="handleSubscribe"
+        />
       </section>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+const user = useSupabaseUser();
+const { profile: userData } = useUserProfile();
+const { redirectToCheckout } = useStripe();
+const config = useRuntimeConfig();
+
+const loading = ref(false);
+const selectedPlan = ref<"standard" | "premium" | null>(null);
+
+const freePlan = [
+  "Up to 3 flipbooks",
+  "5MB per flipbook limit",
+  "Watermark on flipbooks",
+  "No analytics",
+  "Auto-remove after 30 days of no visits",
+];
+
 const standardPlan = [
-  "All features included",
-  "No ads or hidden fees",
+  "Up to 100 flipbooks",
+  "30MB per flipbook limit",
+  "No watermark",
+  "Full analytics & insights",
+  "Full customization options",
   "Cancel anytime",
-  "Friendly email support",
 ];
 
 const premiumPlan = [
-  "All features included",
-  "No ads or hidden fees",
+  "Up to 100 flipbooks",
+  "50MB per flipbook limit",
+  "No watermark",
+  "Full analytics & insights",
   "Cancel anytime",
-  "Friendly email support",
   "Save 2 months with annual billing",
   "One simple annual invoice",
 ];
+
+// Computed button states
+const freeButtonState = computed(() => {
+  const isFree =
+    !userData.value?.subscription_plan ||
+    userData.value?.subscription_status !== "active";
+
+  return {
+    text: isFree ? "Current Plan" : "Included in Your Plan",
+    disabled: true,
+    loading: false,
+  };
+});
+
+const standardButtonState = computed(() => {
+  const isStandardActive =
+    userData.value?.subscription_plan === "standard" &&
+    userData.value?.subscription_status === "active";
+  const isPremiumActive =
+    userData.value?.subscription_plan === "premium" &&
+    userData.value?.subscription_status === "active";
+  const isStandardCanceled =
+    userData.value?.subscription_plan === "standard" &&
+    userData.value?.subscription_status === "canceled";
+
+  let text = "Subscribe Now";
+  if (loading.value && selectedPlan.value === "standard") {
+    text = "";
+  } else if (isStandardActive) {
+    text = "Current Plan";
+  } else if (isPremiumActive) {
+    text = "Included in Your Plan";
+  } else if (isStandardCanceled) {
+    text = "Reactivate";
+  }
+
+  return {
+    text,
+    disabled: loading.value || isStandardActive || isPremiumActive,
+    loading: loading.value && selectedPlan.value === "standard",
+  };
+});
+
+const premiumButtonState = computed(() => {
+  const isPremiumActive =
+    userData.value?.subscription_plan === "premium" &&
+    userData.value?.subscription_status === "active";
+  const isPremiumCanceled =
+    userData.value?.subscription_plan === "premium" &&
+    userData.value?.subscription_status === "canceled";
+  const isStandardActive =
+    userData.value?.subscription_plan === "standard" &&
+    userData.value?.subscription_status === "active";
+
+  let text = "Subscribe Now";
+  if (loading.value && selectedPlan.value === "premium") {
+    text = "";
+  } else if (isPremiumActive) {
+    text = "Current Plan";
+  } else if (isPremiumCanceled) {
+    text = "Reactivate";
+  } else if (isStandardActive) {
+    text = "Upgrade";
+  }
+
+  return {
+    text,
+    disabled: loading.value || isPremiumActive,
+    loading: loading.value && selectedPlan.value === "premium",
+  };
+});
+
+const handleSubscribe = async (plan: string) => {
+  if (plan === "free") {
+    // Free plan doesn't need subscription
+    return;
+  }
+
+  console.log("handleSubscribe called", { plan, user: user.value });
+
+  if (!user.value) {
+    console.error("No user found");
+    return;
+  }
+
+  // Get user ID from either id or sub field
+  const userId = (user.value as any).id || (user.value as any).sub;
+  const userEmail = user.value.email;
+
+  // Validate required fields
+  if (!userId) {
+    console.error("No user ID found");
+    return;
+  }
+
+  if (!userEmail) {
+    console.error("No user email found");
+    return;
+  }
+
+  loading.value = true;
+  selectedPlan.value = plan as "standard" | "premium";
+
+  try {
+    const priceId =
+      plan === "standard"
+        ? config.public.stripeStandardPriceId
+        : config.public.stripePremiumPriceId;
+
+    console.log("Checkout details:", {
+      priceId,
+      userId,
+      userEmail,
+    });
+
+    await redirectToCheckout(priceId, userId, userEmail);
+  } catch (error: any) {
+    console.error("Subscription error:", error);
+    loading.value = false;
+    selectedPlan.value = null;
+  }
+};
 </script>

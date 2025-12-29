@@ -61,6 +61,14 @@
               <li>
                 <NuxtLink
                   class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
+                  to="/settings"
+                  @click="close"
+                  >Account</NuxtLink
+                >
+              </li>
+              <li>
+                <NuxtLink
+                  class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
                   to="/stats"
                   @click="close"
                   >Analytics</NuxtLink
@@ -69,9 +77,9 @@
               <li>
                 <NuxtLink
                   class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
-                  to="/settings"
+                  to="/pricing"
                   @click="close"
-                  >Settings</NuxtLink
+                  >Pricing</NuxtLink
                 >
               </li>
               <li role="none">
@@ -151,7 +159,7 @@ const signOut = async () => {
   // we should still clear local data and redirect to login
   // Common error: "Session from session_id claim in JWT does not exist"
   if (!error || error.message?.includes("session") || error.status === 403) {
-    // Clear flipbook cache on logout 
+    // Clear flipbook cache on logout
     flipbookStore.invalidateCache();
     isLoading.value = false;
     await navigateTo({ name: "login" });

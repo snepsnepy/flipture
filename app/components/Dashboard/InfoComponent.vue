@@ -1,6 +1,6 @@
 <template>
   <section
-    class="flex flex-row gap-4 items-center border-2 border-primary bg-base-200 p-2 rounded-2xl"
+    class="flex flex-row gap-2 items-start md:items-center border-2 border-primary bg-base-200 p-2 rounded-2xl"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -14,7 +14,7 @@
       />
     </svg>
     <div class="flex flex-row items-center justify-between flex-1 gap-4">
-      <p class="text-sm">
+      <p class="text-xs md:text-sm">
         You are currently on a <strong class="font-semibold">Free Plan</strong>
         and have limited access to features. Upgrade to unlock all features and
         benefits.

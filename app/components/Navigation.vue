@@ -61,9 +61,9 @@
               <li>
                 <NuxtLink
                   class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
-                  to="/pricing"
+                  to="/settings"
                   @click="close"
-                  >Pricing</NuxtLink
+                  >Account</NuxtLink
                 >
               </li>
               <li>
@@ -77,9 +77,9 @@
               <li>
                 <NuxtLink
                   class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
-                  to="/settings"
+                  to="/pricing"
                   @click="close"
-                  >Settings</NuxtLink
+                  >Pricing</NuxtLink
                 >
               </li>
               <li role="none">

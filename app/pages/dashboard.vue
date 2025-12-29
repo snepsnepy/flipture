@@ -10,7 +10,7 @@
   <!-- Main Content -->
   <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
     <!-- <DashboardSubscriptionBadge /> -->
-    <DashboardInfoComponent />
+    <DashboardInfoComponent v-if="!isLoadingProfile && isFreePlan" />
 
     <header class="flex flex-col xl:flex-row gap-4 xl:h-[380px] w-full">
       <!-- Hero -->
@@ -173,6 +173,7 @@ const user = useSupabaseUser();
 const route = useRoute();
 const router = useRouter();
 const flipbookStore = useFlipbookStore();
+const { isFreePlan, isLoadingProfile } = useSubscriptionPlan();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
 const flipbooks = ref<Flipbook[]>([]);

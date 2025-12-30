@@ -106,6 +106,16 @@ const premiumPlan = [
 
 // Computed button states
 const freeButtonState = computed(() => {
+  // If user is not logged in, show "Get Started"
+  if (!user.value) {
+    return {
+      text: "Get Started",
+      disabled: false,
+      loading: false,
+    };
+  }
+
+  // If user is logged in, check their subscription status
   const isFree =
     !userData.value?.subscription_plan ||
     userData.value?.subscription_status !== "active";
@@ -118,6 +128,15 @@ const freeButtonState = computed(() => {
 });
 
 const standardButtonState = computed(() => {
+  // If user is not logged in, show "Get Started"
+  if (!user.value) {
+    return {
+      text: "Get Started",
+      disabled: false,
+      loading: false,
+    };
+  }
+
   const isStandardActive =
     userData.value?.subscription_plan === "standard" &&
     userData.value?.subscription_status === "active";
@@ -147,6 +166,15 @@ const standardButtonState = computed(() => {
 });
 
 const premiumButtonState = computed(() => {
+  // If user is not logged in, show "Get Started"
+  if (!user.value) {
+    return {
+      text: "Get Started",
+      disabled: false,
+      loading: false,
+    };
+  }
+
   const isPremiumActive =
     userData.value?.subscription_plan === "premium" &&
     userData.value?.subscription_status === "active";
@@ -176,15 +204,15 @@ const premiumButtonState = computed(() => {
 });
 
 const handleSubscribe = async (plan: string) => {
-  if (plan === "free") {
-    // Free plan doesn't need subscription
-    return;
-  }
-
   console.log("handleSubscribe called", { plan, user: user.value });
 
+  // If user is not logged in, redirect to register page
   if (!user.value) {
-    console.error("No user found");
+    return navigateTo({ name: "register" });
+  }
+
+  // If free plan and user is logged in, no action needed
+  if (plan === "free") {
     return;
   }
 

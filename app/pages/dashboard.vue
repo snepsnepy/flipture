@@ -39,7 +39,7 @@
           </h4>
 
           <ActionButton
-            text="Create New"
+            text="Create New Flipbook"
             class="w-full md:w-fit hover:cursor-pointer"
             @click="goToCreateFlipbook"
             type="primary"

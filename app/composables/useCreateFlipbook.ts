@@ -46,7 +46,7 @@ export const useCreateFlipbook = () => {
       // Create flipbook record
       const { error } = await client
         .from("flipbooks")
-        .insert(        {
+        .insert({
           title: formData.title,
           company_name: formData.company,
           description: formData.description,

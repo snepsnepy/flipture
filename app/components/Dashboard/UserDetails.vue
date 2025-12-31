@@ -1,9 +1,10 @@
 <template>
   <!-- User Details Section -->
   <div
-    class="collapse bg-base-200 border-2 border-base-content p-2 md:p-4 rounded-3xl h-fit !w-full"
+    class="collapse bg-base-200 border-2 border-base-content p-2 md:p-4 rounded-3xl h-fit w-full!"
   >
     <input type="checkbox" v-model="checkboxState" />
+
     <!-- TITLE -->
     <div
       class="collapse-title p-2 md:p-4 flex flex-row items-center justify-between"
@@ -18,22 +19,24 @@
               class="text-neutral text-sm leading-[14px] md:text-base md:leading-4"
               >Welcome back,
             </span>
-            <span
-              v-if="!flipbookStore.isSigningOut && userFullName"
-              class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
-              >{{ userFullName }}
-            </span>
-            <span
-              v-else-if="flipbookStore.isSigningOut"
-              class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold flex items-center gap-2"
-            >
-              <span class="loading loading-spinner loading-sm"></span>
-              Signing out...
-            </span>
-            <span
-              v-else
-              class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
-            ></span>
+            <div class="flex items-center gap-2 flex-wrap">
+              <span
+                v-if="!flipbookStore.isSigningOut && userFullName"
+                class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
+                >{{ userFullName }}
+              </span>
+              <span
+                v-else-if="flipbookStore.isSigningOut"
+                class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold flex items-center gap-2"
+              >
+                <span class="loading loading-spinner loading-sm"></span>
+                Signing out...
+              </span>
+              <span
+                v-else
+                class="text-primary text-2xl leading-6 md:text-4xl md:leading-8 font-delight font-semibold"
+              ></span>
+            </div>
           </h2>
         </div>
       </header>
@@ -65,9 +68,19 @@
     >
       <HorizontalDivider />
 
-      <h4 class="text-base md:text-lg leading-4 font-poppins font-semibold">
-        Published Content
-      </h4>
+      <section class="flex gap-2 items-center justify-between">
+        <h4 class="text-base md:text-lg leading-4 font-poppins font-semibold">
+          Quick Overview
+        </h4>
+        <!-- Subscription Badge -->
+        <div
+          v-if="!flipbookStore.isSigningOut && userFullName"
+          class="badge font-semibold text-xs md:text-sm font-poppins"
+          :class="planBadgeClass"
+        >
+          {{ planBadgeText }}
+        </div>
+      </section>
 
       <!-- Stats -->
       <div class="flex flex-col gap-3 md:gap-4">
@@ -200,6 +213,8 @@ const { formatFileSize, calculateTotalStorageSize } = useFileSize();
 const props = defineProps<{
   hasFlipbooks: boolean;
   flipbooksLength: number;
+  currentPlan: string;
+  subscriptionStatus: string;
   flipbooks: Flipbook[];
 }>();
 
@@ -218,6 +233,46 @@ onMounted(() => {
 watch(isMobile, (newIsMobile) => {
   checkboxState.value = !newIsMobile;
 });
+
+// Subscription badge styling
+const planBadgeClass = computed(() => {
+  if (!props.currentPlan) return "badge-ghost";
+
+  const plan = props.currentPlan;
+  const status = props.subscriptionStatus;
+
+  if (status === "active" && plan === "premium") {
+    return "badge-primary";
+  } else if (status === "active" && plan === "standard") {
+    return "badge-secondary";
+  } else if (status === "past_due") {
+    return "badge-warning";
+  } else if (status === "canceled") {
+    return "badge-neutral";
+  }
+
+  return "badge-neutral";
+});
+
+const planBadgeText = computed(() => {
+  if (!props.currentPlan) {
+    return "Free";
+  }
+
+  const plan = props.currentPlan;
+  const status = props.subscriptionStatus;
+
+  if (status === "active") {
+    return plan.charAt(0).toUpperCase() + plan.slice(1);
+  } else if (status === "canceled") {
+    return "Free";
+  } else if (status === "past_due") {
+    return "Past Due";
+  }
+
+  return plan.charAt(0).toUpperCase() + plan.slice(1);
+});
+
 const userFullName = computed(() => {
   // Show loading indicator when signing out to prevent "undefined" flash
   if (flipbookStore.isSigningOut) {
@@ -285,5 +340,16 @@ const formattedStorageSize = computed(() => {
   > .collapse-title:after {
     top: 50%;
   }
+}
+
+/* Custom styling for neutral badge */
+.badge.badge-neutral {
+  background-color: var(--color-base-content);
+  color: var(--color-primary-content);
+  border: none;
+}
+
+.badge.badge-secondary {
+  color: var(--color-base-content) / 0.5;
 }
 </style>

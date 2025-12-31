@@ -1,7 +1,7 @@
 <template>
   <!-- Loading Spinner -->
   <div
-    v-if="isLoading"
+    v-if="isPageLoading"
     class="flex justify-center flex-col items-center min-h-[calc(100vh-300px)]"
   >
     <LoadingSpinner />
@@ -33,6 +33,8 @@
         :hasFlipbooks="hasFlipbooks"
         :flipbooksLength="flipbooksLength!"
         :flipbooks="flipbooks"
+        :currentPlan="currentPlan"
+        :subscriptionStatus="subscriptionStatus"
       />
     </header>
 
@@ -190,7 +192,8 @@ const user = useSupabaseUser();
 const route = useRoute();
 const router = useRouter();
 const flipbookStore = useFlipbookStore();
-const { isFreePlan, isLoadingProfile } = useSubscriptionPlan();
+const { isFreePlan, isLoadingProfile, currentPlan, subscriptionStatus } =
+  useSubscriptionPlan();
 const { canCreateFlipbook, currentLimits } = useSubscriptionLimits();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
@@ -202,6 +205,9 @@ const isLoading = ref(true);
 const currentPage = ref(Number.parseInt(route.query.page as string) || 1);
 const itemsPerPage = ref(6); // Items per page
 const { isMobile } = useIsMobile();
+
+// Combined loading state - wait for both flipbooks and profile data
+const isPageLoading = computed(() => isLoading.value || isLoadingProfile.value);
 
 // Check if search query is empty
 const isSearchEmpty = computed(() => !searchQuery.value.trim());
@@ -315,9 +321,6 @@ const fetchFlipbooks = async () => {
     const { attachAnalyticsToFlipbooks } = useFlipbookAnalytics();
     flipbooksList = await attachAnalyticsToFlipbooks(flipbooksList);
 
-    // Update cache with user ID
-    flipbookStore.setCachedFlipbooks(flipbooksList, user.value.sub);
-
     // Update local state
     flipbooks.value = flipbooksList;
     flipbooksLength.value = flipbooks.value.length;
@@ -325,7 +328,21 @@ const fetchFlipbooks = async () => {
   } catch (error) {
     console.error("Error fetching flipbooks:", error);
   } finally {
-    isLoading.value = false;
+    // Wait for profile to load before hiding loading spinner
+    if (isLoadingProfile.value) {
+      const stopWatching = watch(
+        isLoadingProfile,
+        (loading) => {
+          if (!loading) {
+            isLoading.value = false;
+            stopWatching();
+          }
+        },
+        { immediate: true }
+      );
+    } else {
+      isLoading.value = false;
+    }
   }
 };
 
@@ -340,8 +357,7 @@ onMounted(async () => {
     () => user.value?.sub,
     async (newUserId, oldUserId) => {
       if (oldUserId !== null && newUserId !== oldUserId) {
-        // User has changed - invalidate cache and reset sign-out state
-        flipbookStore.invalidateCache();
+        // User has changed - reset sign-out state
         flipbookStore.setSigningOut(false);
         flipbooks.value = [];
         flipbooksLength.value = 0;
@@ -354,54 +370,27 @@ onMounted(async () => {
         await fetchFlipbooks();
       } else if (oldUserId !== null && newUserId === null) {
         // User logged out - redirect to login
-        flipbookStore.invalidateCache();
         navigateTo("/login");
       }
     },
     { immediate: false }
   );
 
-  // Check if we have valid cached data for the current user
-  const currentUserId = user.value?.sub || null;
-
-  // If user is already loaded, proceed with data loading
-  if (currentUserId) {
-    const cachedData = flipbookStore.getCachedFlipbooks(currentUserId);
-
-    // If cache exists but belongs to a different user, invalidate it
-    if (
-      flipbookStore.hasCachedFlipbooks &&
-      flipbookStore.cachedUserId !== currentUserId
-    ) {
-      flipbookStore.invalidateCache();
-    }
-
-    if (cachedData.length > 0) {
-      // Use cached data
-      flipbooks.value = cachedData;
-      flipbooksLength.value = cachedData.length;
-      hasFlipbooks.value = cachedData.length > 0;
-      isLoading.value = false;
-    } else {
-      // Fetch from API
-      await fetchFlipbooks();
-    }
+  // If user is already loaded, fetch data immediately
+  if (user.value?.sub) {
+    await fetchFlipbooks();
   }
   // If user is not loaded yet, the watch will handle it when it becomes available
 });
 
 const handleFlipbookCreated = async () => {
-  // Invalidate cache and fetch fresh data
-  flipbookStore.invalidateCache();
+  // Fetch fresh data
   await fetchFlipbooks();
   // Reset to page 1 to show the newly created flipbook
   currentPage.value = 1;
 };
 
 const handleFlipbookDeleted = (deletedFlipbookId: string) => {
-  // Remove from cache
-  flipbookStore.removeCachedFlipbook(deletedFlipbookId);
-
   // Remove from local state
   flipbooks.value = flipbooks.value.filter(
     (flipbook) => flipbook.id !== deletedFlipbookId
@@ -419,9 +408,6 @@ const handleFlipbookDeleted = (deletedFlipbookId: string) => {
 };
 
 const handleFlipbookUpdated = (updatedFlipbook: Flipbook) => {
-  // Update cache
-  flipbookStore.updateCachedFlipbook(updatedFlipbook);
-
   // Update local state
   const index = flipbooks.value.findIndex(
     (flipbook) => flipbook.id === updatedFlipbook.id

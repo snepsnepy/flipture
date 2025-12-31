@@ -86,7 +86,7 @@
                   : 'bg-secondary text-base-content',
               ]"
             >
-              {{ planName }} Plan
+              {{ planName }}
             </div>
             <div
               :class="[

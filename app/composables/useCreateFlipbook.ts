@@ -2,8 +2,28 @@ import type { Database } from "~/types/supabase";
 import { useToast } from "~/composables/useToast";
 import { type FlipbookFormData, Toast } from "~/types";
 
+type ValidationResponse =
+  | {
+      success: true;
+      plan: string;
+      limits: {
+        maxFlipbooks: number;
+        maxFileSize: number;
+        currentFlipbooks: number;
+        remainingFlipbooks: number;
+      };
+    }
+  | {
+      success: false;
+      error: string;
+      message: string;
+      limit: number;
+      currentValue: number;
+    };
+
 export const useCreateFlipbook = () => {
   const { showToast } = useToast();
+  const { isFileSizeValid, getFileSizeErrorMessage } = useSubscriptionLimits();
   const isLoading = ref(false);
 
   const createFlipbook = async (formData: FlipbookFormData) => {
@@ -16,6 +36,23 @@ export const useCreateFlipbook = () => {
       return { success: false, error: "Missing required information" };
     }
 
+    // Validate file size based on subscription plan (client-side)
+    if (!isFileSizeValid(formData.file.size)) {
+      const errorMessage = getFileSizeErrorMessage(formData.file.size);
+      showToast(Toast.ERROR, {
+        toastTitle: "File Too Large",
+        description: errorMessage,
+        duration: 6000,
+        action: {
+          label: "Upgrade",
+          onClick: () => {
+            navigateTo("/pricing");
+          },
+        },
+      });
+      return { success: false, error: "File size exceeds plan limit" };
+    }
+
     isLoading.value = true;
 
     try {
@@ -24,6 +61,39 @@ export const useCreateFlipbook = () => {
 
       if (!user.value) {
         throw new Error("User not authenticated");
+      }
+
+      // Server-side validation - verify limits before uploading
+      const validationResponse = await $fetch<ValidationResponse>(
+        "/api/flipbooks/validate-create",
+        {
+          method: "POST",
+          body: {
+            userId: user.value.sub,
+            fileSize: formData.file.size,
+          },
+        }
+      );
+
+      if (!validationResponse.success) {
+        showToast(Toast.ERROR, {
+          toastTitle:
+            validationResponse.error === "file_size_exceeded"
+              ? "File Too Large"
+              : "Limit Reached",
+          description: validationResponse.message || validationResponse.error,
+          duration: 6000,
+          action: {
+            label: "Upgrade",
+            onClick: () => {
+              navigateTo("/pricing");
+            },
+          },
+        });
+        return {
+          success: false,
+          error: validationResponse.message || validationResponse.error,
+        };
       }
 
       // Upload file to Supabase Storage

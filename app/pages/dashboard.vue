@@ -9,8 +9,20 @@
 
   <!-- Main Content -->
   <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
-    <!-- <DashboardSubscriptionBadge /> -->
-    <DashboardInfoComponent v-if="!isLoadingProfile && isFreePlan" />
+    <!-- Show LimitReached when user has reached max flipbooks -->
+    <DashboardLimitReached
+      v-if="
+        !isLoadingProfile &&
+        !canCreateFlipbook(flipbooksLength) &&
+        flipbooksLength > 0
+      "
+      :currentLimits="currentLimits"
+    />
+
+    <!-- Show InfoComponent for free users who haven't reached limit yet -->
+    <DashboardInfoComponent
+      v-else-if="!isLoadingProfile && isFreePlan && flipbooksLength > 0"
+    />
 
     <header class="flex flex-col xl:flex-row gap-4 xl:h-[380px] w-full">
       <!-- Hero -->
@@ -40,9 +52,15 @@
 
           <ActionButton
             text="Create New Flipbook"
-            class="w-full md:w-fit hover:cursor-pointer"
+            class="w-full md:w-fit"
+            :class="
+              canCreateFlipbook(flipbooksLength)
+                ? 'hover:cursor-pointer'
+                : 'opacity-50 cursor-not-allowed'
+            "
             @click="goToCreateFlipbook"
             type="primary"
+            :disabled="!canCreateFlipbook(flipbooksLength)"
           >
             <template #icon>
               <svg
@@ -152,9 +170,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Flipbook, SortOptionConfig } from "~/types";
+import type { Flipbook, SortOptionConfig, SortOption } from "~/types";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
-import type { SortOption } from "~/types";
 
 definePageMeta({
   layout: "base",
@@ -174,6 +191,7 @@ const route = useRoute();
 const router = useRouter();
 const flipbookStore = useFlipbookStore();
 const { isFreePlan, isLoadingProfile } = useSubscriptionPlan();
+const { canCreateFlipbook, currentLimits } = useSubscriptionLimits();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
 const flipbooks = ref<Flipbook[]>([]);
@@ -414,6 +432,12 @@ const handleFlipbookUpdated = (updatedFlipbook: Flipbook) => {
 };
 
 const goToCreateFlipbook = () => {
+  // Verifică dacă utilizatorul poate crea mai multe flipbook-uri
+  if (!canCreateFlipbook(flipbooksLength.value)) {
+    // Button is already disabled, but prevent navigation just in case
+    return;
+  }
+
   return navigateTo({ name: "create-flipbook" });
 };
 </script>

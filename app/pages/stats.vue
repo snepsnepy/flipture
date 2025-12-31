@@ -1,7 +1,129 @@
 <template>
+  <!-- No Access Message for Free Plan -->
+  <section
+    v-if="!currentLimits.hasAnalytics"
+    class="container mx-auto py-0 flex flex-col gap-6 md:gap-8"
+  >
+    <div class="flex flex-row items-center gap-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="#0046ff"
+          fill-rule="evenodd"
+          d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10s-4.477 10-10 10m-.47-13.53a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 0 0 0 1.06l3 3a.75.75 0 1 0 1.06-1.06l-1.72-1.72H16a.75.75 0 0 0 0-1.5H9.81l1.72-1.72a.75.75 0 0 0 0-1.06"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <button
+        @click="navigateToDashboard"
+        class="text-base-content text-sm md:text-base leading-4 font-poppins font-medium hover:cursor-pointer hover:text-primary"
+      >
+        Back to Dashboard
+      </button>
+    </div>
+
+    <div class="flex flex-col items-center justify-center gap-6">
+      <div class="rounded-full bg-primary/20 p-6 border-2 border-base-content">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="64"
+          height="64"
+          viewBox="0 0 32 32"
+        >
+          <path fill="#000" d="M4 2H2v26a2 2 0 0 0 2 2h26v-2H4Z" />
+          <path
+            fill="#000"
+            d="M30 9h-7v2h3.59L19 18.59l-4.29-4.3a1 1 0 0 0-1.42 0L6 21.59L7.41 23L14 16.41l4.29 4.3a1 1 0 0 0 1.42 0l8.29-8.3V16h2Z"
+          />
+        </svg>
+      </div>
+
+      <div class="text-center space-y-4 max-w-lg">
+        <h3
+          class="text-3xl font-bold text-base-content font-delight tracking-wide"
+        >
+          Analytics Not Available
+        </h3>
+        <p class="text-base text-neutral font-poppins leading-relaxed px-4">
+          Analytics and insights are available on
+          <strong class="text-primary">Standard</strong> and
+          <strong class="text-primary">Premium</strong> plans. Upgrade now to
+          unlock detailed analytics, visitor tracking, and geographic insights
+          for all your flipbooks.
+        </p>
+      </div>
+
+      <ActionButton text="View Pricing" type="primary" @click="goToPricing">
+        <template #icon>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+          >
+            <defs><path id="SVGS9q3IkIf" d="M21.5 11v10h-19V11z" /></defs>
+            <g fill="none">
+              <use href="#SVGS9q3IkIf" />
+              <path
+                d="M12 13.5a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5m5.136-7.209L19 5.67l1.824 5.333H3.002L3 11.004L14.146 2.1z"
+              />
+              <path
+                stroke="#000"
+                stroke-linecap="square"
+                stroke-width="2"
+                d="M21 11.003h-.176L19.001 5.67L3.354 11.003L3 11m-.5.004H3L14.146 2.1l2.817 3.95"
+              />
+              <g stroke="#000" stroke-linecap="square" stroke-width="2">
+                <path d="M14.5 16a2.5 2.5 0 1 1-5 0a2.5 2.5 0 0 1 5 0Z" />
+                <use href="#SVGS9q3IkIf" />
+                <path
+                  d="M2.5 11h2a2 2 0 0 1-2 2zm19 0h-2a2 2 0 0 0 2 2zm-19 10h2.002A2 2 0 0 0 2.5 18.998zm19 0h-2a2 2 0 0 1 2-2z"
+                />
+              </g>
+            </g>
+          </svg>
+        </template>
+      </ActionButton>
+
+      <!-- Feature Preview -->
+      <div
+        class="mt-4 p-6 bg-base-200 rounded-2xl border-2 flex flex-col border-base-content max-w-2xl gap-4"
+      >
+        <h4 class="font-delight font-bold text-xl text-center">
+          What you'll get with Analytics:
+        </h4>
+        <ul class="space-y-2 text-left font-poppins">
+          <li
+            v-for="(feature, index) in analyticsFeatures"
+            :key="index"
+            class="flex items-center gap-2"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              class="text-primary shrink-0"
+            >
+              <path
+                fill="currentColor"
+                d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"
+              />
+            </svg>
+            <span>{{ feature }}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- Loading Spinner -->
   <div
-    v-if="isLoading"
+    v-else-if="isLoading"
     class="flex justify-center flex-col items-center min-h-[calc(100vh-300px)]"
   >
     <LoadingSpinner />
@@ -357,6 +479,7 @@ definePageMeta({
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+const { currentLimits } = useSubscriptionLimits();
 
 const isLoading = ref(true);
 const flipbooks = ref<Flipbook[]>([]);
@@ -372,6 +495,13 @@ const dateRangeOptions = [
   { value: "60", label: "Last 60 Days" },
   { value: "180", label: "Last 6 Months" },
   { value: "365", label: "Last 12 Months" },
+];
+
+const analyticsFeatures = [
+  "Track views and unique visitors for each flipbook",
+  "View engagement trends over time with interactive charts",
+  "Geographic breakdown showing where your audience is from",
+  "Filter by date range and individual flipbooks",
 ];
 
 const hasFlipbooks = computed(() => flipbooks.value.length > 0);
@@ -484,9 +614,7 @@ const generateCountryColors = (count: number): string[] => {
     "rgba(168, 85, 247, 0.8)", // violet
   ];
 
-  return Array(count)
-    .fill(0)
-    .map((_, i) => colors[i % colors.length]!);
+  return new Array(count).fill(0).map((_, i) => colors[i % colors.length]!);
 };
 
 const fetchData = async () => {
@@ -536,6 +664,10 @@ const navigateToDashboard = () => {
 
 const goToCreateFlipbook = () => {
   return navigateTo({ name: "create-flipbook" });
+};
+
+const goToPricing = () => {
+  return navigateTo({ name: "pricing" });
 };
 
 onMounted(async () => {

@@ -38,6 +38,18 @@
           />
         </svg>
         <svg
+          v-else-if="toast.type === Toast.WARNING"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+        >
+          <path
+            fill="#fbbf24"
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10s10-4.48 10-10S17.52 2 12 2m-1 15v-2h2v2zm0-4V7h2v6z"
+          />
+        </svg>
+        <svg
           v-else
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -82,11 +94,13 @@ const alertClasses = computed(() => {
 
   switch (props.toast.type) {
     case Toast.SUCCESS:
-      return `${baseClasses} bg-success-content border-success text-success`;
+      return `${baseClasses} bg-primary-content border-success text-success`;
     case Toast.ERROR:
       return `${baseClasses} bg-error-content border-error text-error`;
     case Toast.INFO:
       return `${baseClasses} bg-base-100 border-primary text-primary`;
+    case Toast.WARNING:
+      return `${baseClasses} bg-warning-content border-warning text-warning`;
     default:
       return `${baseClasses} alert-info border-base-content`;
   }

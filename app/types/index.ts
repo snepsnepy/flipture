@@ -37,6 +37,7 @@ export enum Toast {
   SUCCESS = "success",
   ERROR = "error",
   INFO = "info",
+  WARNING = "warning",
 }
 
 export interface ToastOptions {

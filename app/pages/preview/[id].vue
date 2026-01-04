@@ -29,7 +29,7 @@
           {{ flipbook?.title }}
         </h1>
         <div class="flex items-end gap-1 text-sm leading-3 text-neutral">
-          <span>by</span>
+          <span v-if="flipbook?.company_name">by</span>
           <span class="font-semibold text-primary">{{
             flipbook?.company_name
           }}</span>
@@ -152,6 +152,10 @@
                 text="Edit Details"
                 type="secondary"
                 class="w-full"
+                :class="
+                  !hasActiveSubscription ? 'opacity-50 cursor-not-allowed' : ''
+                "
+                :disabled="!hasActiveSubscription"
                 @click="openEditModal"
               >
                 <template #icon>
@@ -178,12 +182,27 @@
                   </svg>
                 </template>
               </ActionButton>
+
+              <!-- Subscription Warning -->
+              <div
+                v-if="!hasActiveSubscription"
+                class="text-xs text-warning bg-warning/5 p-3 rounded-lg text-center border border-neutral"
+              >
+                <p
+                  class="font-semibold font-poppins text-warning text-sm leading-3"
+                >
+                  Active subscription required
+                </p>
+                <p class="text-base-content/60 mt-1">
+                  Upgrade to edit your flipbook details
+                </p>
+              </div>
             </div>
 
             <!-- Flipbook Info -->
-            <div class="space-y-3 pt-4 border-t border-base-content/20">
+            <div class="space-y-2 pt-4 border-t border-base-content/20">
               <h4 class="font-medium text-base-content">Flipbook Details</h4>
-              <div class="space-y-2 text-sm">
+              <div class="space-y-2 text-sm leading-4">
                 <div class="flex justify-between">
                   <span class="text-neutral">Created:</span>
                   <span class="text-base-content">{{
@@ -239,6 +258,7 @@ const router = useRouter();
 const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();
 const { showToast } = useToast();
+const { hasActiveSubscription } = useSubscriptionPlan();
 
 const flipbookId = route.params.id as string;
 const flipbook = ref<Flipbook | null>(null);
@@ -348,37 +368,42 @@ const handleEdit = async (data: {
   description: string | null;
 }) => {
   try {
-    // Prepare the update payload
-    const updatePayload = {
-      title: data.title,
-      company_name: data.company_name,
-      description: data.description,
-    };
+    // Use secure server endpoint that validates subscription
+    const response = (await $fetch("/api/flipbooks/update", {
+      method: "POST",
+      body: {
+        flipbookId: flipbookId,
+        userId: user.value!.sub,
+        title: data.title,
+        company_name: data.company_name,
+        description: data.description,
+      },
+    })) as { success: boolean; flipbook?: Flipbook };
 
-    // Update the flipbook in the database
-    const { data: updatedFlipbook, error } = await client
-      .from("flipbooks")
-      .update(updatePayload as unknown as never)
-      .eq("id", flipbookId)
-      .eq("user_id", user.value!.sub)
-      .select()
-      .single();
-
-    if (error) {
-      console.error("Error updating flipbook:", error);
-      alert("Failed to update flipbook. Please try again.");
-      return;
-    }
-
-    // Update the local flipbook data
-    if (updatedFlipbook) {
-      flipbook.value = updatedFlipbook as Flipbook;
+    if (response.success && response.flipbook) {
+      // Update the local flipbook data
+      flipbook.value = response.flipbook;
       // Force iframe reload by changing its key
       iframeKey.value++;
     }
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error during update:", error);
-    alert("Failed to update flipbook. Please try again.");
+
+    // Handle specific error cases
+    if (error.statusCode === 403) {
+      showToast(Toast.WARNING, {
+        toastTitle: "Subscription Required",
+        description:
+          error.data?.message ||
+          "Active subscription required to edit flipbooks",
+        duration: 5000,
+      });
+    } else {
+      showToast(Toast.ERROR, {
+        toastTitle: "Update Failed",
+        description: "Failed to update flipbook. Please try again.",
+      });
+    }
   }
 };
 

@@ -142,6 +142,14 @@ export default defineEventHandler(async (event) => {
         const userId = subscription.metadata?.userId;
 
         if (userId) {
+          // Get user profile to fetch email and details
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("email, full_name, subscription_plan")
+            .eq("id", userId)
+            .single();
+
+          // Update subscription status in database
           const { error } = await supabase
             .from("profiles")
             .update({
@@ -156,6 +164,37 @@ export default defineEventHandler(async (event) => {
             console.error("Error canceling subscription:", error);
           } else {
             console.log(`✅ Subscription canceled for user ${userId}`);
+
+            // Send cancellation email notification
+            if (profile?.email) {
+              const userName = profile.full_name || "there";
+              const planName =
+                profile.subscription_plan === "premium"
+                  ? "Premium"
+                  : "Standard";
+
+              try {
+                const { sendEmail, emailTemplates } = await import(
+                  "../../utils/sendEmail"
+                );
+                const emailContent = emailTemplates.subscriptionCancelled(
+                  userName,
+                  planName
+                );
+
+                await sendEmail({
+                  to: profile.email,
+                  subject: emailContent.subject,
+                  html: emailContent.html,
+                  text: emailContent.text,
+                });
+
+                console.log(`📧 Cancellation email sent to ${profile.email}`);
+              } catch (emailError) {
+                console.error("Error sending cancellation email:", emailError);
+                // Don't fail the webhook if email fails
+              }
+            }
           }
         }
         break;
@@ -170,8 +209,39 @@ export default defineEventHandler(async (event) => {
 
       case "invoice.payment_failed": {
         const invoice = stripeEvent.data.object as Stripe.Invoice;
+        const customerId = invoice.customer as string;
+
         console.error(`Payment failed for invoice ${invoice.id}`);
-        // You can add logic to notify the user or handle the failed payment
+
+        // Get user by Stripe customer ID
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("id, email, full_name")
+          .eq("stripe_customer_id", customerId)
+          .single();
+
+        if (profile?.email) {
+          const userName = profile.full_name || "there";
+
+          try {
+            const { sendEmail, emailTemplates } = await import(
+              "../../utils/sendEmail"
+            );
+            const emailContent = emailTemplates.paymentFailed(userName);
+
+            await sendEmail({
+              to: profile.email,
+              subject: emailContent.subject,
+              html: emailContent.html,
+              text: emailContent.text,
+            });
+
+            console.log(`📧 Payment failed email sent to ${profile.email}`);
+          } catch (emailError) {
+            console.error("Error sending payment failed email:", emailError);
+            // Don't fail the webhook if email fails
+          }
+        }
         break;
       }
 

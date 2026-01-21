@@ -127,7 +127,7 @@
               <h4
                 class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
               >
-                Activity
+                Flipbooks
               </h4>
               <div>
                 <svg
@@ -147,12 +147,20 @@
                 </svg>
               </div>
             </div>
-            <p class="text-sm text-base-content leading-3 font-poppins">
-              <span class="font-bold text-primary text-3xl leading-[30px]">{{
-                flipbooksLength
-              }}</span>
-              {{ flipbooksLength > 1 ? "flipbooks" : "flipbook" }}
-            </p>
+            <div class="flex flex-col gap-1">
+              <p class="text-sm text-base-content leading-3 font-poppins">
+                <span 
+                  class="font-bold text-3xl leading-[30px]"
+                  :class="flipbooksLength > flipbookLimit ? 'text-error' : 'text-primary'"
+                >
+                  {{ flipbooksLength }}
+                </span>
+                <span class="text-neutral text-2xl leading-[24px]"> / {{ flipbookLimit }}</span>
+              </p>
+              <p class="text-xs leading-3 text-neutral font-medium">
+                {{ remainingCount > 0 ? `${remainingCount} remaining` : 'Limit reached' }}
+              </p>
+            </div>
           </div>
         </section>
       </div>
@@ -207,8 +215,10 @@
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
 import type { Flipbook } from "~/types";
 import { useFileSize } from "~/composables/useFileSize";
+import { useSubscriptionLimits } from "~/composables/useSubscriptionLimits";
 
 const { formatFileSize, calculateTotalStorageSize } = useFileSize();
+const { currentLimits, remainingFlipbooks } = useSubscriptionLimits();
 
 const props = defineProps<{
   hasFlipbooks: boolean;
@@ -217,6 +227,12 @@ const props = defineProps<{
   subscriptionStatus: string;
   flipbooks: Flipbook[];
 }>();
+
+// Get flipbook limit for current plan
+const flipbookLimit = computed(() => currentLimits.value.maxFlipbooks);
+
+// Calculate remaining flipbooks
+const remainingCount = computed(() => remainingFlipbooks(props.flipbooksLength));
 
 const user = useSupabaseUser();
 const { isMobile } = useIsMobile();

@@ -2,7 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 
 /**
  * Secure endpoint to update flipbook details
- * Validates subscription status before allowing updates
+ * Follows soft limit strategy: users can always edit their existing flipbooks
  */
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
@@ -32,39 +32,9 @@ export default defineEventHandler(async (event) => {
       config.supabaseSecretKey!
     );
 
-    // CRITICAL: Check user's subscription status
-    const { data: profile, error: profileError } = await supabase
-      .from("profiles")
-      .select("subscription_status, subscription_plan")
-      .eq("id", userId)
-      .single();
-
-    if (profileError) {
-      console.error("Error fetching user profile:", profileError);
-      throw createError({
-        statusCode: 500,
-        message: "Failed to validate user subscription",
-      });
-    }
-
-    // Validate subscription - user must have active paid subscription
-    const hasActiveSubscription =
-      profile.subscription_status === "active" &&
-      profile.subscription_plan &&
-      profile.subscription_plan !== "free";
-
-    if (!hasActiveSubscription) {
-      console.warn(
-        `⚠️ Unauthorized edit attempt by user ${userId} (subscription: ${profile.subscription_status}, plan: ${profile.subscription_plan})`
-      );
-      throw createError({
-        statusCode: 403,
-        message:
-          "Active subscription required to edit flipbook details. Please upgrade your plan.",
-      });
-    }
-
     // Verify the flipbook belongs to the user
+    // NOTE: We DON'T check subscription status for editing existing flipbooks
+    // This follows the "soft limit" strategy where users can always manage their existing content
     const { data: flipbook, error: flipbookError } = await supabase
       .from("flipbooks")
       .select("id, user_id")

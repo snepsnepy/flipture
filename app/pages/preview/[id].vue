@@ -152,10 +152,6 @@
                 text="Edit Details"
                 type="secondary"
                 class="w-full"
-                :class="
-                  !hasActiveSubscription ? 'opacity-50 cursor-not-allowed' : ''
-                "
-                :disabled="!hasActiveSubscription"
                 @click="openEditModal"
               >
                 <template #icon>
@@ -182,21 +178,6 @@
                   </svg>
                 </template>
               </ActionButton>
-
-              <!-- Subscription Warning -->
-              <div
-                v-if="!hasActiveSubscription"
-                class="text-xs text-warning bg-warning/5 p-3 rounded-lg text-center border border-neutral"
-              >
-                <p
-                  class="font-semibold font-poppins text-warning text-sm leading-3"
-                >
-                  Active subscription required
-                </p>
-                <p class="text-base-content/60 mt-1">
-                  Upgrade to edit your flipbook details
-                </p>
-              </div>
             </div>
 
             <!-- Flipbook Info -->
@@ -258,7 +239,6 @@ const router = useRouter();
 const client = useSupabaseClient<Database>();
 const user = useSupabaseUser();
 const { showToast } = useToast();
-const { hasActiveSubscription } = useSubscriptionPlan();
 
 const flipbookId = route.params.id as string;
 const flipbook = ref<Flipbook | null>(null);
@@ -388,22 +368,10 @@ const handleEdit = async (data: {
     }
   } catch (error: any) {
     console.error("Error during update:", error);
-
-    // Handle specific error cases
-    if (error.statusCode === 403) {
-      showToast(Toast.WARNING, {
-        toastTitle: "Subscription Required",
-        description:
-          error.data?.message ||
-          "Active subscription required to edit flipbooks",
-        duration: 5000,
-      });
-    } else {
-      showToast(Toast.ERROR, {
-        toastTitle: "Update Failed",
-        description: "Failed to update flipbook. Please try again.",
-      });
-    }
+    showToast(Toast.ERROR, {
+      toastTitle: "Update Failed",
+      description: "Failed to update flipbook. Please try again.",
+    });
   }
 };
 

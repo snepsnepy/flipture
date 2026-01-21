@@ -54,101 +54,143 @@
 
     <!-- Cover Options Section -->
     <section class="space-y-4">
-      <p class="text-base md:text-xl leading-4 font-delight text-base-content">
-        Choose the cover option for your flipbook
-      </p>
+      <div class="flex justify-between items-center">
+        <p class="text-base md:text-xl leading-4 font-delight text-base-content">
+          Choose the cover option for your flipbook
+        </p>
+        <span
+          v-if="isFreePlan"
+          class="text-xs text-neutral font-poppins"
+        >
+          1 / {{ coverOptions.length }} available
+        </span>
+      </div>
       <fieldset class="p-0 flex flex-col gap-2 max-w-full min-w-0">
-        <div class="form-control">
-          <label class="label cursor-pointer justify-start gap-3">
-            <input
-              type="radio"
-              name="cover-option"
-              class="radio border-base-content checked:text-blue-600 checked:border-base-content"
-              value="default"
-              v-model="localFormData.coverOption"
-              @change="updateFormData"
-            />
-            <span
-              class="label-text font-poppins text-base-content text-sm md:text-base md:leading-4"
+        <div 
+          v-for="option in coverOptions" 
+          :key="option.value"
+          class="form-control"
+        >
+          <Tooltip
+            :text="option.isPremium && isFreePlan ? 'Upgrade to Standard or Premium to unlock this cover option' : ''"
+            :hidden="!(option.isPremium && isFreePlan)"
+            class="w-full"
+          >
+            <label 
+              class="label justify-start gap-3"
+              :class="[
+                option.isPremium && isFreePlan 
+                  ? 'cursor-not-allowed opacity-60' 
+                  : 'cursor-pointer'
+              ]"
+              @click="selectCoverOption(option.value)"
             >
-              Flipture Branded Cover
-            </span>
-          </label>
-        </div>
-        <div class="form-control">
-          <label class="label cursor-pointer justify-start gap-3">
-            <input
-              type="radio"
-              name="cover-option"
-              class="radio border-base-content checked:text-blue-600 checked:border-base-content"
-              value="first-page"
-              v-model="localFormData.coverOption"
-              @change="updateFormData"
-            />
-            <span
-              class="label-text font-poppins text-base-content text-sm md:text-base md:leading-4"
-            >
-              First Page as Cover
-            </span>
-          </label>
-        </div>
-        <div class="form-control">
-          <label class="label cursor-pointer justify-start gap-3">
-            <input
-              type="radio"
-              name="cover-option"
-              class="radio border-base-content checked:text-blue-600 checked:border-base-content"
-              value="first-last-page"
-              v-model="localFormData.coverOption"
-              @change="updateFormData"
-            />
-            <span
-              class="label-text font-poppins text-base-content text-sm md:text-base md:leading-4"
-            >
-              First and Last Pages as Covers
-            </span>
-          </label>
+              <input
+                type="radio"
+                name="cover-option"
+                class="radio border-base-content checked:text-blue-600 checked:border-base-content"
+                :value="option.value"
+                v-model="localFormData.coverOption"
+                :disabled="option.isPremium && isFreePlan"
+                @change="updateFormData"
+              />
+              <span
+                class="label-text font-poppins text-base-content text-sm md:text-base md:leading-4 flex items-center gap-2"
+              >
+                {{ option.label }}
+                <span
+                  v-if="option.isPremium && isFreePlan"
+                  class="text-[10px] bg-warning/20 text-warning px-1.5 py-0.5 rounded-full font-semibold"
+                >
+                  PRO
+                </span>
+              </span>
+            </label>
+          </Tooltip>
         </div>
       </fieldset>
-      <!-- <div class="p-3 bg-warning-content/20 rounded-2xl border border-warning">
-        <p class="text-sm leading-4 font-poppins text-warning">
-          <span class="font-semibold">Note:</span> Cover options can be modified
-          later in the flipbook settings page.
-        </p>
-      </div> -->
     </section>
 
     <section class="space-y-4">
-      <p class="text-base md:text-xl leading-4 font-delight text-base-content">
-        Choose the background gradient for your flipbook
-      </p>
+      <div class="flex justify-between items-center">
+        <p class="text-base md:text-xl leading-4 font-delight text-base-content">
+          Choose the background gradient for your flipbook
+        </p>
+        <span
+          v-if="isFreePlan"
+          class="text-xs text-neutral font-poppins"
+        >
+          {{ availableGradientsCount }} / {{ backgroundGradients.length }} available
+        </span>
+      </div>
       <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
-        <div
+        <Tooltip
           v-for="gradient in backgroundGradients"
           :key="gradient.id"
-          class="flex flex-col items-center gap-2 cursor-pointer group"
-          @click="selectGradient(gradient.id)"
+          :text="gradient.isPremium && isFreePlan ? 'Upgrade to Standard or Premium to unlock this background' : ''"
+          :hidden="!(gradient.isPremium && isFreePlan)"
+          class="flex flex-col items-center gap-2"
         >
           <div
-            class="w-16 h-16 rounded-full border-2 transition-all duration-200"
+            class="flex flex-col items-center gap-2 group relative"
             :class="[
-              localFormData.backgroundGradient === gradient.id
-                ? 'border-primary ring-2 ring-primary ring-offset-2 scale-105'
-                : 'border-base-content/30! group-hover:border-base-content!',
-              gradient.gradient,
+              gradient.isPremium && isFreePlan
+                ? 'cursor-not-allowed opacity-60'
+                : 'cursor-pointer',
             ]"
-          ></div>
-          <span
-            class="text-xs md:text-sm font-poppins text-center text-base-content"
-            :class="[
-              localFormData.backgroundGradient === gradient.id
-                ? 'font-semibold text-primary'
-                : '',
-            ]"
+            @click="selectGradient(gradient.id)"
           >
-            {{ gradient.name }}
-          </span>
-        </div>
+            <div
+              class="w-16 h-16 rounded-full border-2 transition-all duration-200 relative"
+              :class="[
+                localFormData.backgroundGradient === gradient.id
+                  ? 'border-primary ring-2 ring-primary ring-offset-2 scale-105'
+                  : gradient.isPremium && isFreePlan
+                  ? 'border-base-content/20'
+                  : 'border-base-content/30! group-hover:border-base-content!',
+                gradient.gradient,
+              ]"
+            >
+              <!-- Lock Icon for Premium Backgrounds on FREE plan -->
+              <div
+                v-if="gradient.isPremium && isFreePlan"
+                class="absolute inset-0 flex items-center justify-center bg-base-content/40 rounded-full backdrop-blur-sm"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+            </div>
+            <span
+              class="text-xs md:text-sm font-poppins text-center text-base-content flex items-center gap-1"
+              :class="[
+                localFormData.backgroundGradient === gradient.id
+                  ? 'font-semibold text-primary'
+                  : '',
+                gradient.isPremium && isFreePlan ? 'text-neutral' : '',
+              ]"
+            >
+              {{ gradient.name }}
+              <span
+                v-if="gradient.isPremium && isFreePlan"
+                class="text-[10px] bg-warning/20 text-warning px-1.5 py-0.5 rounded-full font-semibold"
+              >
+                PRO
+              </span>
+            </span>
+          </div>
+        </Tooltip>
       </div>
     </section>
   </div>
@@ -157,12 +199,16 @@
 <script setup lang="ts">
 import type { FlipbookFormData } from "~/types";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
+import { useToast } from "~/composables/useToast";
+import { Toast } from "~/types";
 
 const props = defineProps<{
   formData: FlipbookFormData;
 }>();
 
 const flipbookStore = useFlipbookStore();
+const { isFreePlan } = useSubscriptionPlan();
+const { showToast } = useToast();
 
 // Local form data
 const localFormData = ref<{
@@ -203,59 +249,118 @@ onMounted(() => {
   }
 });
 
+const selectCoverOption = (optionValue: string) => {
+  const option = coverOptions.find((o) => o.value === optionValue);
+
+  // Prevent selecting premium cover options on FREE plan
+  if (option?.isPremium && isFreePlan.value) {
+    return;
+  }
+
+  localFormData.value.coverOption = optionValue;
+  updateFormData();
+};
+
 const selectGradient = (gradientId: string) => {
+  const gradient = backgroundGradients.find((g) => g.id === gradientId);
+
+  // Prevent selecting premium backgrounds on FREE plan
+  if (gradient?.isPremium && isFreePlan.value) {
+    return;
+  }
+
   localFormData.value.backgroundGradient = gradientId;
   updateFormData();
 };
+
+// Cover options
+interface CoverOption {
+  value: string;
+  label: string;
+  isPremium: boolean; // TRUE = Standard/Premium only, FALSE = FREE
+}
+
+const coverOptions: CoverOption[] = [
+  {
+    value: "default",
+    label: "Flipture Branded Cover",
+    isPremium: false, // FREE
+  },
+  {
+    value: "first-page",
+    label: "First Page as Cover",
+    isPremium: true, // PREMIUM
+  },
+  {
+    value: "first-last-page",
+    label: "First and Last Pages as Covers",
+    isPremium: true, // PREMIUM
+  },
+];
 
 // Background gradient options
 interface GradientOption {
   id: string;
   name: string;
   gradient: string;
+  isPremium: boolean; // TRUE = Standard/Premium only, FALSE = FREE
 }
 
 const backgroundGradients: GradientOption[] = [
-  // Row 1
+  // FREE Backgrounds (available to all users)
   {
     id: "deep-white",
     name: "Deep White",
     gradient: "bg-gradient-to-br from-[#FFFFFF] to-[#F0F0F0]",
+    isPremium: false,
   },
   {
     id: "deep-black",
     name: "Deep Black",
     gradient: "bg-gradient-to-br from-[#000000] to-[#212121]",
+    isPremium: false,
   },
+  // PREMIUM Backgrounds (Standard/Premium only)
   {
     id: "royal-blue",
     name: "Royal Blue",
     gradient: "bg-gradient-to-br from-[#091E3A] via-[#2F80ED] to-[#2D9EE0]",
+    isPremium: true,
   },
   {
     id: "purple-dream",
     name: "Purple Dream",
     gradient: "bg-gradient-to-br from-[#9400D3] to-[#4B0082]",
+    isPremium: true,
   },
   {
     id: "sunset-orange",
     name: "Sunset Orange",
     gradient: "bg-gradient-to-br from-[#E65C00] to-[#F9D423]",
+    isPremium: true,
   },
   {
     id: "fire-red",
     name: "Fire Red",
     gradient: "bg-gradient-to-br from-[#E52D27] to-[#B31217]",
+    isPremium: true,
   },
   {
     id: "spring-green",
     name: "Spring Green",
     gradient: "bg-gradient-to-br from-[#ADD100] to-[#7B920A]",
+    isPremium: true,
   },
   {
     id: "arctic-blue",
     name: "Arctic Blue",
     gradient: "bg-gradient-to-br from-[#00F5FF] via-[#00CED1] to-[#20B2AA]",
+    isPremium: true,
   },
 ];
+
+// Count available gradients for FREE users
+const availableGradientsCount = computed(() => {
+  return backgroundGradients.filter((g) => !g.isPremium).length;
+});
 </script>

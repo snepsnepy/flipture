@@ -180,7 +180,10 @@ const { isMobile } = useIsMobile();
 const { createFlipbook: createFlipbookFn, isLoading } = useCreateFlipbook();
 const flipbookStore = useFlipbookStore();
 const { showToast } = useToast();
-const router = useRouter();
+const { canCreateFlipbook, currentLimits } = useSubscriptionLimits();
+const { fetchProfile } = useUserProfile();
+const client = useSupabaseClient();
+const user = useSupabaseUser();
 
 // Stepper steps configuration
 const stepperSteps = [
@@ -258,9 +261,36 @@ watch(
 );
 
 // Reset form when component is mounted
-onMounted(() => {
+onMounted(async () => {
   if (flipbookStore.currentStep !== 1) {
     flipbookStore.resetForm();
+  }
+
+  // Check if user can create flipbooks
+  if (user.value) {
+    try {
+      // CRITICAL: Refresh profile first to get latest subscription data
+      // This ensures we have fresh data after any subscription changes
+      await fetchProfile();
+
+      const { count } = await client
+        .from("flipbooks")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", user.value.sub);
+
+      const currentCount = count || 0;
+
+      if (!canCreateFlipbook(currentCount)) {
+        showToast(Toast.ERROR, {
+          toastTitle: "Flipbook Limit Reached",
+          description: `You've reached the maximum of ${currentLimits.value.maxFlipbooks} flipbooks on your ${currentLimits.value.displayName} plan. Upgrade to create more!`,
+          duration: 5000
+        });
+        navigateTo({ name: "dashboard" });
+      }
+    } catch (error) {
+      console.error("Error checking flipbook limit:", error);
+    }
   }
 });
 

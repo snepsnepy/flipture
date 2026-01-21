@@ -20,9 +20,17 @@
       <p
         class="text-xs md:text-base font-medium font-poppins leading-4 text-primary-content"
       >
-        You've reached the maximum of {{ currentLimits.maxFlipbooks }} flipbooks
-        on your {{ currentLimits.displayName }} plan. Upgrade to create more and
-        unlock premium features!
+        <template v-if="currentCount > currentLimits.maxFlipbooks">
+          You have {{ currentCount }} flipbooks, but your
+          {{ currentLimits.displayName }} plan allows only
+          {{ currentLimits.maxFlipbooks }}. You can't create new flipbooks until
+          you upgrade or delete some existing ones.
+        </template>
+        <template v-else>
+          You've reached the maximum of {{ currentLimits.maxFlipbooks }} flipbooks
+          on your {{ currentLimits.displayName }} plan. Upgrade to create more and
+          unlock premium features!
+        </template>
       </p>
       <NuxtLink
         to="/pricing"
@@ -37,5 +45,6 @@
 <script setup lang="ts">
 defineProps<{
   currentLimits: Record<string, any>;
+  currentCount: number;
 }>();
 </script>

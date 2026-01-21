@@ -59,7 +59,7 @@
           Choose the cover option for your flipbook
         </p>
         <span
-          v-if="isFreePlan"
+          v-if="isFreePlan && !isLoadingProfile"
           class="text-xs text-neutral font-poppins"
         >
           1 / {{ coverOptions.length }} available
@@ -72,14 +72,14 @@
           class="form-control"
         >
           <Tooltip
-            :text="option.isPremium && isFreePlan ? 'Upgrade to Standard or Premium to unlock this cover option' : ''"
-            :hidden="!(option.isPremium && isFreePlan)"
+            :text="option.isPremium && isFreePlan && !isLoadingProfile ? 'Upgrade to Standard or Premium to unlock this cover option' : ''"
+            :hidden="!(option.isPremium && isFreePlan && !isLoadingProfile)"
             class="w-full"
           >
             <label 
               class="label justify-start gap-3"
               :class="[
-                option.isPremium && isFreePlan 
+                option.isPremium && isFreePlan && !isLoadingProfile
                   ? 'cursor-not-allowed opacity-60' 
                   : 'cursor-pointer'
               ]"
@@ -91,7 +91,7 @@
                 class="radio border-base-content checked:text-blue-600 checked:border-base-content"
                 :value="option.value"
                 v-model="localFormData.coverOption"
-                :disabled="option.isPremium && isFreePlan"
+                :disabled="option.isPremium && isFreePlan && !isLoadingProfile"
                 @change="updateFormData"
               />
               <span
@@ -99,7 +99,7 @@
               >
                 {{ option.label }}
                 <span
-                  v-if="option.isPremium && isFreePlan"
+                  v-if="option.isPremium && isFreePlan && !isLoadingProfile"
                   class="text-[10px] bg-warning/20 text-warning px-1.5 py-0.5 rounded-full font-semibold"
                 >
                   PRO
@@ -117,7 +117,7 @@
           Choose the background gradient for your flipbook
         </p>
         <span
-          v-if="isFreePlan"
+          v-if="isFreePlan && !isLoadingProfile"
           class="text-xs text-neutral font-poppins"
         >
           {{ availableGradientsCount }} / {{ backgroundGradients.length }} available
@@ -127,14 +127,14 @@
         <Tooltip
           v-for="gradient in backgroundGradients"
           :key="gradient.id"
-          :text="gradient.isPremium && isFreePlan ? 'Upgrade to Standard or Premium to unlock this background' : ''"
-          :hidden="!(gradient.isPremium && isFreePlan)"
+          :text="gradient.isPremium && isFreePlan && !isLoadingProfile ? 'Upgrade to Standard or Premium to unlock this background' : ''"
+          :hidden="!(gradient.isPremium && isFreePlan && !isLoadingProfile)"
           class="flex flex-col items-center gap-2"
         >
           <div
             class="flex flex-col items-center gap-2 group relative"
             :class="[
-              gradient.isPremium && isFreePlan
+              gradient.isPremium && isFreePlan && !isLoadingProfile
                 ? 'cursor-not-allowed opacity-60'
                 : 'cursor-pointer',
             ]"
@@ -145,7 +145,7 @@
               :class="[
                 localFormData.backgroundGradient === gradient.id
                   ? 'border-primary ring-2 ring-primary ring-offset-2 scale-105'
-                  : gradient.isPremium && isFreePlan
+                  : gradient.isPremium && isFreePlan && !isLoadingProfile
                   ? 'border-base-content/20'
                   : 'border-base-content/30! group-hover:border-base-content!',
                 gradient.gradient,
@@ -153,7 +153,7 @@
             >
               <!-- Lock Icon for Premium Backgrounds on FREE plan -->
               <div
-                v-if="gradient.isPremium && isFreePlan"
+                v-if="gradient.isPremium && isFreePlan && !isLoadingProfile"
                 class="absolute inset-0 flex items-center justify-center bg-base-content/40 rounded-full backdrop-blur-sm"
               >
                 <svg
@@ -178,12 +178,12 @@
                 localFormData.backgroundGradient === gradient.id
                   ? 'font-semibold text-primary'
                   : '',
-                gradient.isPremium && isFreePlan ? 'text-neutral' : '',
+                gradient.isPremium && isFreePlan && !isLoadingProfile ? 'text-neutral' : '',
               ]"
             >
               {{ gradient.name }}
               <span
-                v-if="gradient.isPremium && isFreePlan"
+                v-if="gradient.isPremium && isFreePlan && !isLoadingProfile"
                 class="text-[10px] bg-warning/20 text-warning px-1.5 py-0.5 rounded-full font-semibold"
               >
                 PRO
@@ -207,7 +207,7 @@ const props = defineProps<{
 }>();
 
 const flipbookStore = useFlipbookStore();
-const { isFreePlan } = useSubscriptionPlan();
+const { isFreePlan, isLoadingProfile } = useSubscriptionPlan();
 const { showToast } = useToast();
 
 // Local form data

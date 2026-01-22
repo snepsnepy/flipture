@@ -635,7 +635,7 @@ const user = useSupabaseUser();
 const { showToast } = useToast();
 const flipbookStore = useFlipbookStore();
 const { formatFileSize, calculateTotalStorageSize } = useFileSize();
-const { profile: userData } = useUserProfile();
+const userStore = useUserStore();
 const { redirectToCustomerPortal } = useStripe();
 
 // Loading states
@@ -690,7 +690,9 @@ const canChangePassword = computed(() => {
 });
 
 // Subscription & Plan computed properties
-const { currentPlan, subscriptionStatus, isFreePlan } = useSubscriptionPlan();
+const currentPlan = computed(() => userStore.currentPlan);
+const subscriptionStatus = computed(() => userStore.subscriptionStatus);
+const isFreePlan = computed(() => userStore.isFreePlan);
 
 const planName = computed(() => {
   const plan = currentPlan.value;
@@ -935,14 +937,14 @@ const navigateToPricing = () => {
 };
 
 const handleManageSubscription = async () => {
-  if (!userData.value?.stripe_customer_id) {
+  if (!userStore.profile?.stripe_customer_id) {
     return;
   }
 
   portalLoading.value = true;
 
   try {
-    await redirectToCustomerPortal(userData.value.stripe_customer_id);
+    await redirectToCustomerPortal(userStore.profile.stripe_customer_id);
   } catch (error: any) {
     console.error("Portal error:", error);
     showToast(Toast.ERROR, {

@@ -94,8 +94,8 @@
       <!-- Manage Subscription -->
       <footer
         v-if="
-          userData?.stripe_customer_id &&
-          userData?.subscription_status === 'active'
+          userStore.profile?.stripe_customer_id &&
+          userStore.profile?.subscription_status === 'active'
         "
         class="text-center relative z-10"
       >
@@ -122,7 +122,7 @@ definePageMeta({
 });
 
 const user = useSupabaseUser();
-const { profile: userData } = useUserProfile();
+const userStore = useUserStore();
 const { redirectToCheckout, redirectToCustomerPortal } = useStripe();
 const config = useRuntimeConfig();
 
@@ -160,8 +160,8 @@ const premiumPlan = [
 // Computed button states
 const freeButtonState = computed(() => {
   const isFree =
-    !userData.value?.subscription_plan ||
-    userData.value?.subscription_status !== "active";
+    !userStore.profile?.subscription_plan ||
+    userStore.profile?.subscription_status !== "active";
 
   return {
     text: isFree ? "Current Plan" : "Included in Your Plan",
@@ -172,14 +172,14 @@ const freeButtonState = computed(() => {
 
 const standardButtonState = computed(() => {
   const isStandardActive =
-    userData.value?.subscription_plan === "standard" &&
-    userData.value?.subscription_status === "active";
+    userStore.profile?.subscription_plan === "standard" &&
+    userStore.profile?.subscription_status === "active";
   const isPremiumActive =
-    userData.value?.subscription_plan === "premium" &&
-    userData.value?.subscription_status === "active";
+    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_status === "active";
   const isStandardCanceled =
-    userData.value?.subscription_plan === "standard" &&
-    userData.value?.subscription_status === "canceled";
+    userStore.profile?.subscription_plan === "standard" &&
+    userStore.profile?.subscription_status === "canceled";
 
   let text = "Subscribe Now";
   if (loading.value && selectedPlan.value === "standard") {
@@ -201,14 +201,14 @@ const standardButtonState = computed(() => {
 
 const premiumButtonState = computed(() => {
   const isPremiumActive =
-    userData.value?.subscription_plan === "premium" &&
-    userData.value?.subscription_status === "active";
+    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_status === "active";
   const isPremiumCanceled =
-    userData.value?.subscription_plan === "premium" &&
-    userData.value?.subscription_status === "canceled";
+    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_status === "canceled";
   const isStandardActive =
-    userData.value?.subscription_plan === "standard" &&
-    userData.value?.subscription_status === "active";
+    userStore.profile?.subscription_plan === "standard" &&
+    userStore.profile?.subscription_status === "active";
 
   let text = "Subscribe Now";
   if (loading.value && selectedPlan.value === "premium") {
@@ -280,14 +280,14 @@ const handleSubscribe = async (plan: string) => {
 };
 
 const handleManageSubscription = async () => {
-  if (!userData.value?.stripe_customer_id) {
+  if (!userStore.profile?.stripe_customer_id) {
     return;
   }
 
   portalLoading.value = true;
 
   try {
-    await redirectToCustomerPortal(userData.value.stripe_customer_id);
+    await redirectToCustomerPortal(userStore.profile.stripe_customer_id);
   } catch (error: any) {
     console.error("Portal error:", error);
 

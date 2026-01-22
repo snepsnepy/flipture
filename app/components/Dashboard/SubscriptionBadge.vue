@@ -1,7 +1,7 @@
 <template>
-  <div v-if="loading" class="skeleton h-8 w-32"></div>
+  <div v-if="userStore.isLoadingProfile" class="skeleton h-8 w-32"></div>
 
-  <div v-else-if="subscriptionData" class="flex items-center gap-3">
+  <div v-else-if="userStore.profile" class="flex items-center gap-3">
     <!-- Badge -->
     <div class="badge badge-lg font-semibold" :class="badgeClass">
       {{ badgeText }}
@@ -10,9 +10,9 @@
     <!-- Manage Button - Only show for active or past_due subscriptions -->
     <button
       v-if="
-        subscriptionData.stripe_customer_id &&
-        (subscriptionData.subscription_status === 'active' ||
-          subscriptionData.subscription_status === 'past_due')
+        userStore.profile.stripe_customer_id &&
+        (userStore.profile.subscription_status === 'active' ||
+          userStore.profile.subscription_status === 'past_due')
       "
       @click="handleManageSubscription"
       :disabled="portalLoading"
@@ -45,14 +45,14 @@
     <!-- Upgrade Button for Free/Standard users -->
     <NuxtLink
       v-if="
-        !subscriptionData.subscription_plan ||
-        subscriptionData.subscription_plan === 'standard'
+        !userStore.profile.subscription_plan ||
+        userStore.profile.subscription_plan === 'standard'
       "
       to="/pricing"
       class="btn btn-sm btn-primary"
     >
       {{
-        subscriptionData.subscription_plan === "standard"
+        userStore.profile.subscription_plan === "standard"
           ? "Upgrade"
           : "Subscribe"
       }}
@@ -63,17 +63,17 @@
 <script setup lang="ts">
 import { Toast } from "~/types";
 
-const { profile: subscriptionData, loading } = useUserProfile();
+const userStore = useUserStore();
 const { redirectToCustomerPortal } = useStripe();
 const { showToast } = useToast();
 
 const portalLoading = ref(false);
 
 const badgeClass = computed(() => {
-  if (!subscriptionData.value) return "badge-ghost";
+  if (!userStore.profile) return "badge-ghost";
 
-  const plan = subscriptionData.value.subscription_plan;
-  const status = subscriptionData.value.subscription_status;
+  const plan = userStore.profile.subscription_plan;
+  const status = userStore.profile.subscription_status;
 
   if (status === "active" && plan === "premium") {
     return "badge-primary";
@@ -89,12 +89,12 @@ const badgeClass = computed(() => {
 });
 
 const badgeText = computed(() => {
-  if (!subscriptionData.value?.subscription_plan) {
+  if (!userStore.profile?.subscription_plan) {
     return "Free";
   }
 
-  const plan = subscriptionData.value.subscription_plan;
-  const status = subscriptionData.value.subscription_status;
+  const plan = userStore.profile.subscription_plan;
+  const status = userStore.profile.subscription_status;
 
   if (status === "active") {
     return plan.charAt(0).toUpperCase() + plan.slice(1);
@@ -108,7 +108,7 @@ const badgeText = computed(() => {
 });
 
 const handleManageSubscription = async () => {
-  if (!subscriptionData.value?.stripe_customer_id) {
+  if (!userStore.profile?.stripe_customer_id) {
     showToast(Toast.ERROR, {
       toastTitle: "No subscription found",
       description: "You don't have an active subscription.",
@@ -119,7 +119,7 @@ const handleManageSubscription = async () => {
   portalLoading.value = true;
 
   try {
-    await redirectToCustomerPortal(subscriptionData.value.stripe_customer_id);
+    await redirectToCustomerPortal(userStore.profile.stripe_customer_id);
   } catch (error: any) {
     console.error("Portal error:", error);
 

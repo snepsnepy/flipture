@@ -1,6 +1,6 @@
 <template>
   <div class="pdf-thumbnail">
-    <canvas ref="canvasRef" class="w-full h-[400px] rounded-2xl"></canvas>
+    <canvas ref="canvasRef" class="w-full max-h-[400px] rounded-2xl"></canvas>
   </div>
 </template>
 

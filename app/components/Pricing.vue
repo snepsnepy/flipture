@@ -70,7 +70,7 @@
 
 <script setup lang="ts">
 const user = useSupabaseUser();
-const { profile: userData } = useUserProfile();
+const userStore = useUserStore();
 const { redirectToCheckout } = useStripe();
 const config = useRuntimeConfig();
 
@@ -117,8 +117,8 @@ const freeButtonState = computed(() => {
 
   // If user is logged in, check their subscription status
   const isFree =
-    !userData.value?.subscription_plan ||
-    userData.value?.subscription_status !== "active";
+    !userStore.profile?.subscription_plan ||
+    userStore.profile?.subscription_status !== "active";
 
   return {
     text: isFree ? "Current Plan" : "Included in Your Plan",
@@ -138,14 +138,14 @@ const standardButtonState = computed(() => {
   }
 
   const isStandardActive =
-    userData.value?.subscription_plan === "standard" &&
-    userData.value?.subscription_status === "active";
+    userStore.profile?.subscription_plan === "standard" &&
+    userStore.profile?.subscription_status === "active";
   const isPremiumActive =
-    userData.value?.subscription_plan === "premium" &&
-    userData.value?.subscription_status === "active";
+    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_status === "active";
   const isStandardCanceled =
-    userData.value?.subscription_plan === "standard" &&
-    userData.value?.subscription_status === "canceled";
+    userStore.profile?.subscription_plan === "standard" &&
+    userStore.profile?.subscription_status === "canceled";
 
   let text = "Subscribe Now";
   if (loading.value && selectedPlan.value === "standard") {
@@ -176,14 +176,14 @@ const premiumButtonState = computed(() => {
   }
 
   const isPremiumActive =
-    userData.value?.subscription_plan === "premium" &&
-    userData.value?.subscription_status === "active";
+    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_status === "active";
   const isPremiumCanceled =
-    userData.value?.subscription_plan === "premium" &&
-    userData.value?.subscription_status === "canceled";
+    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_status === "canceled";
   const isStandardActive =
-    userData.value?.subscription_plan === "standard" &&
-    userData.value?.subscription_status === "active";
+    userStore.profile?.subscription_plan === "standard" &&
+    userStore.profile?.subscription_status === "active";
 
   let text = "Subscribe Now";
   if (loading.value && selectedPlan.value === "premium") {

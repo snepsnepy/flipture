@@ -1,47 +1,16 @@
+/**
+ * @deprecated Use useUserStore() instead for better state management
+ * This composable is kept for backward compatibility
+ */
 export const useSubscriptionPlan = () => {
-  const { profile: userData, loading } = useUserProfile();
-
-  // Check if user is on free plan
-  const isFreePlan = computed(() => {
-    if (
-      !userData.value?.subscription_plan ||
-      userData.value?.subscription_status !== "active"
-    ) {
-      return true;
-    }
-    return userData.value.subscription_plan === "free";
-  });
-
-  // Get current plan name
-  const currentPlan = computed(() => {
-    if (
-      !userData.value?.subscription_plan ||
-      userData.value?.subscription_status !== "active"
-    ) {
-      return "free";
-    }
-    return userData.value.subscription_plan;
-  });
-
-  // Get subscription status
-  const subscriptionStatus = computed(() => {
-    return userData.value?.subscription_status || "free";
-  });
-
-  // Check if user has active subscription
-  const hasActiveSubscription = computed(() => {
-    return (
-      userData.value?.subscription_status === "active" &&
-      userData.value?.subscription_plan !== "free"
-    );
-  });
+  const userStore = useUserStore();
 
   return {
-    isFreePlan,
-    currentPlan,
-    subscriptionStatus,
-    hasActiveSubscription,
-    isLoadingProfile: loading,
+    isFreePlan: userStore.isFreePlan,
+    currentPlan: userStore.currentPlan,
+    subscriptionStatus: userStore.subscriptionStatus,
+    hasActiveSubscription: userStore.hasActiveSubscription,
+    isLoadingProfile: userStore.isLoadingProfile,
   };
 };
 

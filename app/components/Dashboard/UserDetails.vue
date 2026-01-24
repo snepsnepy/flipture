@@ -155,7 +155,7 @@
                 >
                   {{ flipbooksLength }}
                 </span>
-                <span class="text-neutral text-2xl leading-[24px]"> / {{ flipbookLimit }}</span>
+                <span class="text-neutral text-lg leading-4">/{{ flipbookLimit }}</span>
               </p>
               <p class="text-xs leading-3 text-neutral font-medium">
                 {{ remainingCount > 0 ? `${remainingCount} remaining` : 'Limit reached' }}

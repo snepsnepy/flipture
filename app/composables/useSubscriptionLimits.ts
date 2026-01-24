@@ -1,5 +1,6 @@
 export const useSubscriptionLimits = () => {
-  const { currentPlan } = useSubscriptionPlan();
+  const userStore = useUserStore();
+  const currentPlan = computed(() => userStore.currentPlan);
 
   // Definiții limite per plan
   const PLAN_LIMITS = {

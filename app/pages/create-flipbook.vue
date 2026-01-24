@@ -179,9 +179,9 @@ definePageMeta({
 const { isMobile } = useIsMobile();
 const { createFlipbook: createFlipbookFn, isLoading } = useCreateFlipbook();
 const flipbookStore = useFlipbookStore();
+const userStore = useUserStore();
 const { showToast } = useToast();
 const { canCreateFlipbook, currentLimits } = useSubscriptionLimits();
-const { fetchProfile } = useUserProfile();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 
@@ -271,7 +271,7 @@ onMounted(async () => {
     try {
       // CRITICAL: Refresh profile first to get latest subscription data
       // This ensures we have fresh data after any subscription changes
-      await fetchProfile();
+      await userStore.fetchProfile();
 
       const { count } = await client
         .from("flipbooks")

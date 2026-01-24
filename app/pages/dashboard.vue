@@ -12,7 +12,7 @@
     <!-- Show LimitReached when user has reached max flipbooks -->
     <DashboardLimitReached
       v-if="
-        !isLoadingProfile &&
+        !userStore.isLoadingProfile &&
         !canCreateFlipbook(flipbooksLength) &&
         flipbooksLength > 0
       "
@@ -22,10 +22,10 @@
 
     <!-- Show InfoComponent for free users who haven't reached limit yet -->
     <DashboardInfoComponent
-      v-else-if="!isLoadingProfile && isFreePlan && flipbooksLength > 0"
+      v-else-if="!userStore.isLoadingProfile && userStore.isFreePlan && flipbooksLength > 0"
     />
 
-    <header class="flex flex-col xl:flex-row gap-4 xl:h-[380px] w-full">
+    <header class="flex flex-col xl:flex-row gap-4 xl:h-[400px] w-full">
       <!-- Hero -->
       <DashboardHero v-if="!isMobile" />
 
@@ -34,8 +34,8 @@
         :hasFlipbooks="hasFlipbooks"
         :flipbooksLength="flipbooksLength!"
         :flipbooks="flipbooks"
-        :currentPlan="currentPlan"
-        :subscriptionStatus="subscriptionStatus"
+        :currentPlan="userStore.currentPlan"
+        :subscriptionStatus="userStore.subscriptionStatus"
       />
     </header>
 
@@ -199,10 +199,8 @@ const user = useSupabaseUser();
 const route = useRoute();
 const router = useRouter();
 const flipbookStore = useFlipbookStore();
-const { isFreePlan, isLoadingProfile, currentPlan, subscriptionStatus } =
-  useSubscriptionPlan();
+const userStore = useUserStore();
 const { canCreateFlipbook, currentLimits } = useSubscriptionLimits();
-const { fetchProfile } = useUserProfile();
 const hasFlipbooks = ref(false);
 const flipbooksLength = ref(0);
 const flipbooks = ref<Flipbook[]>([]);
@@ -215,7 +213,7 @@ const itemsPerPage = ref(6); // Items per page
 const { isMobile } = useIsMobile();
 
 // Combined loading state - wait for both flipbooks and profile data
-const isPageLoading = computed(() => isLoading.value || isLoadingProfile.value);
+const isPageLoading = computed(() => isLoading.value || userStore.isLoadingProfile);
 
 // Check if search query is empty
 const isSearchEmpty = computed(() => !searchQuery.value.trim());
@@ -319,7 +317,7 @@ const fetchFlipbooks = async () => {
 
     // CRITICAL: Refresh profile first to get latest subscription data
     // This ensures we have fresh data after any subscription changes
-    await fetchProfile();
+    await userStore.fetchProfile();
 
     const { data: flipbooksData } = await client
       .from("flipbooks")
@@ -341,9 +339,9 @@ const fetchFlipbooks = async () => {
     console.error("Error fetching flipbooks:", error);
   } finally {
     // Wait for profile to load before hiding loading spinner
-    if (isLoadingProfile.value) {
+    if (userStore.isLoadingProfile) {
       const stopWatching = watch(
-        isLoadingProfile,
+        () => userStore.isLoadingProfile,
         (loading) => {
           if (!loading) {
             isLoading.value = false;

@@ -33,7 +33,9 @@
 
           <section class="w-full flex flex-col gap-6">
             <!-- Flipture Image -->
-            <img src="@/assets/img/flipture_light.svg" alt="Flipture" class="h-30 md:h-full w-auto">
+             <div class="w-full flex justify-center items-center">
+              <img src="@/assets/img/flipture_light.svg" alt="Flipture" class="w-2/3">
+             </div>
 
             <!-- Copyright and Social Media Links -->
             <section class="flex flex-col md:flex-row justify-between w-full gap-4 md:gap-0">

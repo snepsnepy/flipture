@@ -14,7 +14,7 @@
           aria-label="Flipture - Home"
           to="/"
         >
-          Flipture.
+          Flipture
         </NuxtLink>
 
         <section v-if="isLoggedIn">
@@ -89,7 +89,7 @@
                   >FAQs</a
                 >
               </li>
-              <HorizontalDivider />
+              <HorizontalDivider class="pt-2 pb-1"/>
               <li class="pt-2" role="none">
                 <button
                   @click="handleAuthAction"

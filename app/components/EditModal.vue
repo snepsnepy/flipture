@@ -2,26 +2,27 @@
   <dialog ref="modal" class="modal">
     <div class="modal-box rounded-3xl p-6 flex flex-col gap-y-8">
       <header class="flex flex-col justify-center items-center space-y-4">
+        <div class="text-base-content font-bold font-poppins text-2xl leading-6 text-center space-y-2">
+          <p>
+            Edit details for
+          </p>
+          <span class="text-primary font-poppins">{{ flipbook.title }}</span>
+        </div>
+        
         <p
-          class="text-base-content font-bold font-poppins text-2xl leading-6 text-center"
-        >
-          Edit details for <br />
-          <span class="text-primary">{{ flipbook.title }}</span>
-        </p>
-        <p
-          class="text-base-content font-poppins text-base leading-4 text-center"
+          class="text-neutral font-poppins text-base leading-4 text-center"
         >
           Update your flipbook details below.
         </p>
       </header>
 
-      <form @submit.prevent="confirmEdit" class="flex flex-col gap-4">
+      <form @submit.prevent="confirmEdit" class="flex flex-col gap-6">
         <!-- Title -->
         <fieldset class="fieldset p-0 w-full">
           <legend
-            class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
+            class="fieldset-legend gap-1 pb-4 pt-0! font-poppins text-base leading-4 text-base-content"
           >
-            Flipbook Title
+            Flipbook Title<span class="text-error">*</span>
           </legend>
           <label
             class="input validator border-2 bg-base-100 h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
@@ -44,13 +45,16 @@
 
         <!-- Company Name -->
         <fieldset class="fieldset p-0 w-full">
-          <legend
-            class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-          >
-            Company Name
-          </legend>
+          <div class="flex justify-between items-center">
+            <legend
+              class="fieldset-legend pt-0 font-poppins text-base leading-4 text-base-content"
+            >
+              Company Name
+            </legend>
+            <span class="label text-primary font-poppins font-bold">Optional</span>
+          </div>
           <label
-            class="input validator border-2 bg-base-100 rounded-2xl h-14 !outline-none !shadow-none w-full border-base-content"
+            class="input validator border-2 bg-base-100 rounded-2xl h-14 outline-none! !shadow-none w-full border-base-content"
           >
             <input
               name="company"
@@ -66,18 +70,21 @@
           >
             {{ companyErrors }}
           </span>
-          <div class="label text-secondary font-poppins">Optional</div>
+          
         </fieldset>
 
         <!-- Description -->
         <fieldset class="fieldset p-0">
-          <legend
-            class="fieldset-legend pb-4 !pt-0 font-poppins text-base leading-4 text-base-content"
-          >
-            Description
-          </legend>
+          <div class="flex justify-between items-center">
+            <legend
+              class="fieldset-legend pt-0! font-poppins text-base leading-4 text-base-content"
+            >
+              Description
+            </legend>
+            <span class="label text-primary font-poppins font-bold">Optional</span>
+          </div>
           <textarea
-            class="textarea px-4 h-24 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl !border-2 border-base-content focus:outline-none focus:border-base-content"
+            class="textarea px-4 h-24 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl border-2 border-base-content focus:outline-none focus:border-base-content"
             placeholder="Type a short description"
             name="description"
             v-model="description"
@@ -88,10 +95,12 @@
           >
             {{ descriptionErrors }}
           </span>
-          <div class="label text-secondary font-poppins">Optional</div>
+         
         </fieldset>
       </form>
-      <div class="modal-action mt-0 justify-start w-full">
+
+      <!-- Modal Footer -->
+      <footer class="modal-action mt-0 justify-start w-full">
         <div class="flex flex-col-reverse md:flex-row gap-2.5 w-full">
           <ActionButton
             type="secondary"
@@ -107,7 +116,7 @@
             :disabled="!isFormValid"
           />
         </div>
-      </div>
+      </footer>
     </div>
   </dialog>
 </template>

@@ -18,7 +18,7 @@
       </header>
 
       <!-- Content -->
-      <section class="flex flex-col gap-4">
+      <section ref="faqsContainer" class="flex flex-col gap-4">
         <div
           v-for="(faq, index) in faqs"
           :key="index"
@@ -27,7 +27,7 @@
           @mouseleave="hoveredIndex = null"
           class="collapse border-2 rounded-3xl px-4 py-5 md:py-8 transition-all duration-300 cursor-pointer"
           :class="[
-            hoveredIndex === index
+            hoveredIndex === index || activeIndex === index
               ? 'bg-base-content text-primary-content border-primary-content'
               : 'bg-primary-content text-base-content border',
             activeIndex === index ? 'collapse-open' : 'collapse-close',
@@ -50,7 +50,7 @@
             <div
               class="w-8 h-8 min-w-8 rounded-full transition-all duration-300 flex items-center justify-center"
               :class="
-                hoveredIndex === index
+                hoveredIndex === index || activeIndex === index
                   ? 'bg-primary-content'
                   : 'bg-base-content'
               "
@@ -59,7 +59,7 @@
                 :class="[
                   'w-4 h-4 transition-transform duration-300',
                   activeIndex === index ? 'rotate-180' : 'rotate-0',
-                  hoveredIndex === index
+                  hoveredIndex === index || activeIndex === index
                     ? 'text-base-content'
                     : 'text-primary-content',
                 ]"
@@ -89,9 +89,17 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { onClickOutside } from "@vueuse/core";
 
 const hoveredIndex = ref<number | null>(null);
 const activeIndex = ref<number | null>(null);
+const faqsContainer = useTemplateRef("faqsContainer")
+
+onClickOutside(faqsContainer, () => {
+  if (activeIndex.value !== null) {
+    activeIndex.value = null;
+  }
+});
 
 const toggleAccordion = (index: number) => {
   activeIndex.value = activeIndex.value === index ? null : index;

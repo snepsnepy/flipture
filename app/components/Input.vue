@@ -1,9 +1,10 @@
 <template>
   <fieldset class="fieldset p-0" :class="fieldsetClass">
     <legend
-      class="fieldset-legend pb-2.5 md:pb-4 !pt-0 font-poppins text-sm md:text-base leading-4 text-base-content"
+      class="fieldset-legend gap-1 pb-2.5 md:pb-4 pt-0! font-poppins text-sm md:text-base leading-4 text-base-content"
     >
-      {{ label }}
+      <p>{{ label }}</p>
+      <span v-if="required" class="text-error">*</span>
     </legend>
     <label
       class="input validator border-2 bg-base-100 h-12 md:h-14 !outline-none !shadow-none w-full rounded-2xl border-base-content"
@@ -35,6 +36,7 @@
 interface Props {
   label: string;
   name: string;
+  required?: boolean;
   type?: string;
   placeholder?: string;
   errorMessage?: string;
@@ -44,6 +46,7 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
+  required: false,
   type: "text",
   placeholder: "",
   fieldsetClass: "",

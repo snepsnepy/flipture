@@ -457,6 +457,7 @@
                   label="Current Password"
                   name="currentPassword"
                   type="password"
+                  required
                   placeholder="Current Password"
                   v-model:model-value="currentPassword"
                   :error-message="currentPasswordErrors"
@@ -492,6 +493,7 @@
                   label="New Password"
                   name="newPassword"
                   type="password"
+                  required
                   placeholder="New Password"
                   v-model:model-value="newPassword"
                   :error-message="newPasswordErrors"
@@ -527,6 +529,7 @@
                   label="Confirm Password"
                   name="confirmPassword"
                   type="password"
+                  required
                   placeholder="Confirm Password"
                   v-model:model-value="confirmPassword"
                   :error-message="confirmPasswordErrors"

@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     "@nuxtjs/supabase",
     "@vee-validate/nuxt",
+    "motion-v/nuxt"
   ],
 
   nitro: {

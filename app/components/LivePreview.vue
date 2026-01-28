@@ -8,7 +8,7 @@
       <div class="flex flex-col gap-y-8">
         <header class="flex flex-col gap-y-6 items-center text-center">
           <h2
-            class="font-poppins font-bold text-3xl md:text-5xl text-base-content"
+            class="font-poppins font-bold text-3xl md:text-6xl text-base-content"
           >
             See exactly what your readers <br />will experience
           </h2>

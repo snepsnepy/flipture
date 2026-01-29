@@ -1,15 +1,15 @@
 <template>
-  <section class="container mx-auto py-0 px-4 md:px-6">
-    <section class="flex flex-col lg:flex-row gap-6 md:gap-10 py-10 md:py-16 lg:py-20 w-full items-center overflow-hidden lg:pr-10 lg:rounded-r-3xl">
+  <section class="container mx-auto py-0">
+    <section class="flex flex-col xl:flex-row py-20 gap-10 items-center overflow-hidden xl:pr-10 lg:rounded-r-3xl">
       <div class="flex flex-col w-full gap-4">
         <!-- Content container with higher z-index to appear above the image -->
-        <header class="flex flex-col gap-4 md:gap-6 lg:gap-8 relative z-10 text-center lg:text-left">
+        <header class="flex flex-col gap-4 md:gap-6 lg:gap-8 relative z-10 text-center xl:text-left">
             <h1
               id="hero-heading"
               class="font-poppins text-base-content text-5xl md:text-7xl lg:text-[115px] font-bold leading-[110%]"
             >
               <span class="text-base-content/60">A better way <br />
-              to</span> present, share <br />
+              to</span> present, <br /> share <br />
               and impress.
             </h1>
 

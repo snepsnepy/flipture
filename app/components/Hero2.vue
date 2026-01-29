@@ -1,6 +1,6 @@
 <template>
-  <section class="container mx-auto py-10">
-    <section class="flex flex-row gap-10 w-full items-center">
+  <section class="container mx-auto py-0">
+    <section class="flex flex-row gap-10 py-20 w-full items-center overflow-hidden pr-10 rounded-r-3xl">
       <div class="flex flex-col w-full gap-4">
         <!-- Content container with higher z-index to appear above the image -->
         <header class="flex flex-col gap-8 relative z-10">
@@ -17,11 +17,15 @@
         </header>
     </div>
 
-      <div class="flex flex-col">
-       
+      <div class="flex flex-col relative z-0">
+        <!-- Extra large yellow circle background -->
+        <div class="absolute border-2 border-secondary/50 inset-0 -inset-x-72 -inset-y-72 -top-96 -left-96 bg-secondary/30 rounded-full"></div>
+        <!-- Large yellow circle background -->
+        <div class="absolute border-2 border-secondary/50 inset-5 -inset-x-24 -inset-y-24 -left-40 -top-40 bg-secondary/50 rounded-full"></div>
+        
         <button 
           ref="buttonRef"
-          class="flex flex-row items-center bg-secondary hover:bg-base-100 text-base-content transition-all duration-300 hover:cursor-pointer h-fit rounded-full py-36 px-10 whitespace-nowrap font-poppins font-bold text-4xl border-2 border-base-content overflow-hidden"
+          class="flex flex-row items-center bg-secondary hover:bg-base-100 text-base-content transition-all duration-300 hover:cursor-pointer h-fit rounded-full py-36 px-10 whitespace-nowrap font-poppins font-bold text-4xl border-2 border-base-content overflow-hidden relative z-10"
         >
           Get Started
           <div class="relative w-14 h-14 flex items-center justify-center">
@@ -34,7 +38,7 @@
               :transition="{ duration: 0.4 }"
             />
           </div>
-        </button>
+        </button> 
       </div>
     </section>
   </section>

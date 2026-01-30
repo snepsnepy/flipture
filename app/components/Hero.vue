@@ -13,7 +13,7 @@
               and impress.
             </h1>
 
-            <p class="font-poppins text-base-content/60 text-base sm:text-lg md:text-xl lg:text-2xl leading-relaxed lg:leading-10">Premium design, effortless publishing — upload a PDF and share a beautiful flipbook in minutes.</p>
+            <p class="font-poppins text-base-content/60 text-base px-2 md:px-0 sm:text-lg md:text-xl lg:text-2xl leading-relaxed lg:leading-10">Premium design, effortless publishing — upload a PDF and share a beautiful flipbook in minutes.</p>
         </header>
     </div>
 

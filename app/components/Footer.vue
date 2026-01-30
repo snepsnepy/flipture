@@ -8,7 +8,7 @@
       :rotation="0"
       class="relative overflow-hidden"
     >
-      <div class="container mx-auto relative z-10 px-4 md:px-6 lg:px-8">
+      <div class="container mx-auto relative z-10">
         <footer class="flex flex-col gap-10 md:gap-20 lg:gap-30 items-start py-10 md:py-16 lg:py-20">
           <!-- CTA Message -->
           <section>

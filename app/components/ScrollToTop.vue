@@ -61,10 +61,29 @@ const isVisible = ref<boolean>(false);
 const SCROLL_THRESHOLD = 400;
 
 const scrollToTop = (): void => {
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
+  const duration = 800; // Duration in milliseconds
+  const start = window.pageYOffset;
+  const startTime = performance.now();
+
+  const animateScroll = (currentTime: number) => {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Easing function for smooth deceleration
+    const easeInOutCubic = (t: number): number => {
+      return t < 0.5
+        ? 4 * t * t * t
+        : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    };
+    
+    window.scrollTo(0, start * (1 - easeInOutCubic(progress)));
+    
+    if (progress < 1) {
+      requestAnimationFrame(animateScroll);
+    }
+  };
+
+  requestAnimationFrame(animateScroll);
 };
 
 const handleScroll = (): void => {

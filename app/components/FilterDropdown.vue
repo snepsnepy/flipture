@@ -8,7 +8,7 @@
       <ListboxButton
         :class="[
           buttonClass ||
-            'btn w-full text-base-content bg-base-100 border-2 px-3 md:px-3 py-[22px] md:py-[26px] border-base-content rounded-2xl hover:bg-secondary font-poppins text-base md:text-lg flex items-center xl:w-fit whitespace-nowrap',
+            'btn w-full font-medium text-base-content bg-base-100 border-2 px-3 md:px-3 py-[22px] md:py-[26px] border-base-content rounded-2xl hover:bg-secondary font-poppins text-base md:text-lg flex items-center xl:w-fit whitespace-nowrap',
         ]"
       >
         <span v-if="buttonLabel">

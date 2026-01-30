@@ -36,7 +36,7 @@
           </svg>
         </div>
         <span
-          class="whitespace-nowrap font-poppins font-bold text-base md:block"
+          class="whitespace-nowrap font-poppins font-medium text-base md:block"
           :class="{
             'hidden font-normal': activeStep !== index,
           }"

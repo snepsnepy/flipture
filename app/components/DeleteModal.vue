@@ -18,7 +18,7 @@
           />
         </svg>
         <p
-          class="text-base-content font-bold font-poppins text-2xl leading-6 text-center"
+          class="text-base-content font-medium font-poppins text-2xl leading-6 text-center"
         >
           <span class="text-primary">{{ title }}</span>
           will be deleted permanently.

@@ -30,7 +30,7 @@
       <div class="flex gap-2 relative z-10 justify-center items-center">
         <span
           v-if="text"
-          class="relative whitespace-nowrap text-base md:text-lg leading-4 font-poppins font-bold"
+          class="relative whitespace-nowrap text-base md:text-lg leading-4 font-poppins font-medium"
         >
           {{ text }}
         </span>

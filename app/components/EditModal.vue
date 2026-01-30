@@ -2,7 +2,7 @@
   <dialog ref="modal" class="modal">
     <div class="modal-box rounded-3xl p-6 flex flex-col gap-y-8">
       <header class="flex flex-col justify-center items-center space-y-4">
-        <div class="text-base-content font-bold font-poppins text-2xl leading-6 text-center space-y-2">
+        <div class="text-base-content font-medium font-poppins text-2xl leading-6 text-center space-y-2">
           <p>
             Edit details for
           </p>
@@ -51,7 +51,7 @@
             >
               Company Name
             </legend>
-            <span class="label text-primary font-poppins font-bold">Optional</span>
+            <span class="label text-primary font-poppins font-medium">Optional</span>
           </div>
           <label
             class="input validator border-2 bg-base-100 rounded-2xl h-14 outline-none! !shadow-none w-full border-base-content"
@@ -81,7 +81,7 @@
             >
               Description
             </legend>
-            <span class="label text-primary font-poppins font-bold">Optional</span>
+            <span class="label text-primary font-poppins font-medium">Optional</span>
           </div>
           <textarea
             class="textarea px-4 h-24 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl border-2 border-base-content focus:outline-none focus:border-base-content"

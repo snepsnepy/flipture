@@ -12,7 +12,7 @@
 
     <div class="flex flex-col gap-2 items-center">
       <h4
-        class="font-poppins font-bold text-lg leading-4 md:text-2xl md:leading-6"
+        class="font-poppins font-medium text-lg leading-4 md:text-2xl md:leading-6"
       >
         No Flipbooks
       </h4>

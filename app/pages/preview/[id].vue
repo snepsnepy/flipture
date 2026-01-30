@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto py-0 flex flex-col gap-6">
+  <div class="container mx-auto flex flex-col gap-6">
     <!-- Navigation Header -->
     <header class="flex flex-col gap-6 items-start">
       <div class="flex flex-row items-center gap-2">
@@ -25,7 +25,7 @@
       </div>
 
       <div class="flex flex-col justify-center items-center gap-2 w-full">
-        <h1 class="font-delight font-bold text-2xl leading-6 md:text-4xl">
+        <h1 class="font-delight font-medium text-2xl leading-6 md:text-4xl">
           {{ flipbook?.title }}
         </h1>
         <div class="flex items-end gap-1 text-sm leading-3 text-neutral">

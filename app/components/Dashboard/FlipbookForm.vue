@@ -136,7 +136,7 @@
       type="button"
       @click="createFlipbook"
       :disabled="isButtonDisabled"
-      class="w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-bold border-2 border-base-content text-base md:text-lg transition-all duration-300 bg-secondary text-base-content hover:cursor-pointer hover:bg-primary-content hover:border-2 hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:bg-secondary-content disabled:text-base-content/50"
+      class="w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-medium border-2 border-base-content text-base md:text-lg transition-all duration-300 bg-secondary text-base-content hover:cursor-pointer hover:bg-primary-content hover:border-2 hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:bg-secondary-content disabled:text-base-content/50"
     >
       Create Flipbook
       <span v-if="isLoading" class="loading loading-spinner loading-md"></span>

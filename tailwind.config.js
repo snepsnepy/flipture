@@ -13,6 +13,7 @@ export default {
       inter: "Inter",
       anton: "Anton",
       delight: "Delight",
+      poppins: "Poppins",
     },
     screens: {
       sm: "768px",
@@ -21,8 +22,8 @@ export default {
       md: "1024px",
       // => @media (min-width: 960px) { ... }
 
-      lg: "1360px",
-      // => @media (min-width: 1360px) { ... }
+      lg: "1440px",
+      // => @media (min-width: 1440px) { ... }
     },
     container: {
       padding: {

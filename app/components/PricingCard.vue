@@ -23,7 +23,7 @@
         >
           <span
             :class="[
-              'w-fit font-poppins font-bold text-sm leading-3 p-3 border rounded-full hover:cursor-default',
+              'w-fit font-poppins font-medium text-sm leading-3 p-3 border rounded-full hover:cursor-default',
               badgeClass,
             ]"
             >{{ title }}</span
@@ -31,7 +31,7 @@
           <span
             v-if="badge"
             :class="[
-              'w-fit flex flex-row items-center gap-1 font-poppins font-bold text-sm leading-3 py-1.5 px-3 rounded-full hover:cursor-default',
+              'w-fit flex flex-row items-center gap-1 font-poppins font-medium text-sm leading-3 py-1.5 px-3 rounded-full hover:cursor-default',
               badge.variant === 'popular'
                 ? 'text-base-content bg-secondary'
                 : 'text-primary-content bg-primary',
@@ -71,7 +71,7 @@
         <section class="flex flex-col gap-4 md:gap-5 z-10 relative shrink-0">
           <p
             :class="[
-              'font-poppins font-medium text-base min-h-[48px]',
+              'font-poppins md:font-medium text-base min-h-[48px]',
               descriptionClass,
             ]"
           >
@@ -82,7 +82,7 @@
           >
             <h4
               :class="[
-                'font-poppins font-bold text-2xl md:text-5xl leading-[104%]',
+                'font-poppins font-semibold text-5xl leading-[104%]',
                 priceClass,
               ]"
             >
@@ -98,7 +98,7 @@
             :disabled="buttonState.disabled"
             @click="handleClick"
             :class="[
-              'w-full py-3 px-6 md:px-10 rounded-full font-poppins font-bold text-sm md:text-lg transition-all duration-300 min-h-[48px] md:min-h-[56px]',
+              'w-full py-3 px-6 md:px-10 rounded-full font-poppins font-medium text-sm md:text-lg transition-all duration-300 min-h-[48px] md:min-h-[56px]',
               buttonClass,
               buttonState.disabled
                 ? 'disabled:cursor-not-allowed disabled:pointer-events-none'
@@ -117,7 +117,7 @@
         <!-- Bullet Points -->
         <section class="flex flex-col gap-y-2 z-10 relative flex-1">
           <div
-            class="flex flex-row gap-2 items-start"
+            class="flex flex-row gap-2 items-center"
             v-for="feature in features"
             :key="feature"
           >
@@ -137,7 +137,7 @@
             </svg>
             <span
               :class="[
-                'font-poppins text-sm md:text-base flex-1',
+                'font-poppins text-sm md:text-base leading-4 flex-1',
                 featureClass,
               ]"
               >{{ feature }}</span

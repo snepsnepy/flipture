@@ -10,7 +10,7 @@
     <section class="flex flex-col gap-20 w-full relative z-10 h-full">
       <header class="flex flex-col justify-between h-full gap-4">
         <h1
-          class="text-primary-content text-xl leading-5 md:text-[40px] md:leading-10 font-bold font-poppins"
+          class="text-primary-content text-xl leading-5 md:text-[40px] md:leading-10 font-medium font-poppins"
         >
           Turn Your Files Into <br />
           Interactive Flipbooks

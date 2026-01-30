@@ -20,14 +20,14 @@
           <section class="flex flex-col md:flex-row justify-between w-full items-start md:items-end gap-6 md:gap-4">
             <div>
               <p class="font-poppins text-primary-content/80 text-sm md:text-base leading-6">Contact Flipture at:</p>
-              <a href="mailto:contact@flipture.io" class="font-poppins text-primary-content text-lg md:text-xl leading-[30px] font-bold underline">contact@flipture.io</a>
+              <a href="mailto:contact@flipture.io" class="font-poppins text-primary-content text-lg md:text-xl leading-[30px] font-medium underline">contact@flipture.io</a>
             </div>
 
             <section class="flex flex-col md:flex-row gap-2 md:gap-4 w-full md:w-auto">
-              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-bold hover:underline">Pricing</a>
-              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-bold hover:underline">FAQs</a>
-              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-bold hover:underline">Terms of Service</a>
-              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-bold hover:underline">Privacy Policy</a>
+              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline">Pricing</a>
+              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline">FAQs</a>
+              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline">Terms of Service</a>
+              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline">Privacy Policy</a>
             </section>
           </section>
 
@@ -38,7 +38,7 @@
              </div>
 
             <!-- Copyright and Social Media Links -->
-            <section class="flex flex-col md:flex-row justify-between w-full gap-4 md:gap-0">
+            <section class="flex flex-col md:flex-row justify-between items-center w-full gap-4 md:gap-0">
               <span
                 class="font-poppins text-primary-content/80 text-sm md:text-base leading-6 md:leading-10"
                 >© 2025 Flipture. All rights reserved.</span

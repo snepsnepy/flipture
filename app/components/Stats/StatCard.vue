@@ -5,11 +5,11 @@
     <div class="flex items-start justify-between">
       <div class="flex-1">
         <p
-          class="text-base leading-4 font-medium text-base-content/50 uppercase tracking-normal"
+          class="text-base leading-4 font-poppins font-medium text-base-content/50 uppercase tracking-normal"
         >
           {{ title }}
         </p>
-        <p class="mt-2 text-3xl font-bold text-gray-900">
+        <p class="mt-2 text-3xl font-poppins font-semibold text-base-content">
           {{ formattedValue }}
         </p>
         <div v-if="showChange && percentageChange !== null" class="mt-2">

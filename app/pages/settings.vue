@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto py-0">
+  <div class="container mx-auto">
     <!-- Loading Spinner -->
     <div
       v-if="isLoading"
@@ -38,7 +38,7 @@
           class="flex flex-col md:flex-row w-full justify-between gap-4 md:items-end border-b border-base-300 pb-4"
         >
           <h1
-            class="font-delight font-bold text-4xl leading-6 w-full text-base-content"
+            class="font-delight font-semibold text-4xl leading-6 w-full text-base-content"
           >
             SETTINGS
           </h1>
@@ -69,7 +69,7 @@
                 d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2m0 14H4v-6h16zm0-10H4V6h16z"
               />
             </svg>
-            <h2 class="font-poppins font-bold text-xl text-base-content">
+            <h2 class="font-poppins font-medium text-xl text-base-content">
               Subscription & Plan
             </h2>
           </section>
@@ -78,7 +78,7 @@
           <div class="flex flex-wrap items-center gap-2">
             <div
               :class="[
-                'px-4 py-2 rounded-full font-poppins font-bold text-xs md:text-sm flex items-center gap-2',
+                'px-4 py-2 rounded-full font-poppins font-medium text-xs md:text-sm flex items-center gap-2',
                 currentPlan === 'free'
                   ? 'bg-base-content text-base-100'
                   : currentPlan === 'premium'
@@ -308,7 +308,7 @@
                   <circle cx="12" cy="7" r="4" />
                 </g>
               </svg>
-              <h2 class="font-poppins font-bold text-xl text-base-content">
+              <h2 class="font-poppins font-medium text-xl text-base-content">
                 Profile Information
               </h2>
             </header>
@@ -444,7 +444,7 @@
                 <path d="M7 11V7a5 5 0 0 1 10 0v4" />
               </g>
             </svg>
-            <h2 class="font-poppins font-bold text-xl text-base-content">
+            <h2 class="font-poppins font-medium text-xl text-base-content">
               Security
             </h2>
           </header>

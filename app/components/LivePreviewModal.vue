@@ -7,7 +7,7 @@
       <!-- Modal Header -->
       <div class="flex justify-between items-center">
         <div class="flex items-end gap-2">
-          <h3 class="font-delight font-bold text-xl leading-5 md:text-3xl">
+          <h3 class="font-delight font-medium text-xl leading-5 md:text-3xl">
             {{ flipbook?.title }}
           </h3>
           <div class="flex items-end gap-1 text-sm leading-3 text-neutral">

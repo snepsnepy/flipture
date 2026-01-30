@@ -2,7 +2,7 @@
   <!-- No Access Message for Free Plan -->
   <section
     v-if="!currentLimits.hasAnalytics && !userStore.isLoadingProfile"
-    class="container mx-auto py-0 flex flex-col gap-6 md:gap-8"
+    class="container mx-auto flex flex-col gap-6 md:gap-8"
   >
     <div class="flex flex-row items-center gap-2">
       <svg
@@ -44,7 +44,7 @@
 
       <div class="text-center space-y-4 max-w-lg">
         <h3
-          class="text-3xl font-bold text-base-content font-delight tracking-wide"
+          class="text-3xl font-medium text-base-content font-delight tracking-wide"
         >
           Analytics Not Available
         </h3>
@@ -93,7 +93,7 @@
       <div
         class="mt-4 p-6 bg-base-200 rounded-2xl border-2 flex flex-col border-base-content max-w-2xl gap-4"
       >
-        <h4 class="font-delight font-bold text-xl text-center">
+        <h4 class="font-delight font-medium text-xl text-center">
           What you'll get with Analytics:
         </h4>
         <ul class="space-y-2 text-left font-poppins">
@@ -130,7 +130,7 @@
   </div>
 
   <!-- Main Content -->
-  <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
+  <section v-else class="container mx-auto flex flex-col gap-6 md:gap-8">
     <!-- Header -->
     <header class="flex flex-col gap-8">
       <div class="flex flex-row items-center gap-2">
@@ -158,7 +158,7 @@
       <div class="flex flex-col xl:flex-row justify-between gap-y-4">
         <div class="w-full items-center xl:items-start flex flex-col">
           <h4
-            class="font-delight font-bold text-4xl leading-8 md:leading-8 text-center md:text-left md:pt-2"
+            class="font-delight font-semibold text-4xl leading-8 md:leading-8 text-center md:text-left md:pt-2"
           >
             ANALYTICS DASHBOARD
           </h4>
@@ -320,7 +320,7 @@
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <!-- Views Over Time -->
         <div class="rounded-2xl shadow-md p-6 border-2 border-base-content">
-          <h5 class="font-delight font-bold text-xl mb-4">Views Over Time</h5>
+          <h5 class="font-delight font-medium text-xl mb-4">Views Over Time</h5>
           <div class="h-[300px]">
             <StatsLineChart
               v-if="dailyChartData.labels.length > 0"
@@ -353,7 +353,7 @@
 
         <!-- Top Countries -->
         <div class="rounded-2xl shadow-md p-6 border-2 border-base-content">
-          <h5 class="font-delight font-bold text-xl mb-4">
+          <h5 class="font-delight font-medium text-xl mb-4">
             Top Countries by Views
           </h5>
           <div class="h-[300px]">
@@ -389,7 +389,7 @@
         class="rounded-2xl shadow-md border-2 border-base-content overflow-hidden"
       >
         <div class="p-6 border-b border-gray-100">
-          <h5 class="font-delight font-bold text-xl">Geographic Breakdown</h5>
+          <h5 class="font-delight font-medium text-xl">Geographic Breakdown</h5>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full">

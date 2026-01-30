@@ -11,7 +11,7 @@
         <!-- Dark overlay mask -->
         <div class="absolute inset-0 bg-base-content/70 rounded-3xl"></div>
         <p
-          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-12 font-medium p-6 pb-8 relative z-10"
+          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-16 font-poppins font-medium p-6 pb-8 relative z-10"
         >
           Flip the ordinary <br />
           into extraordinary.
@@ -22,14 +22,14 @@
       <div class="w-full flex flex-col gap-8 md:gap-10 lg:max-w-[500px]">
         <header class="flex flex-col gap-4">
           <h1
-            class="text-[40px] leading-10 font-black font-poppins text-base-content -tracking-[0.2%]"
+            class="text-[40px] leading-10 font-semibold font-poppins text-base-content -tracking-[0.2%]"
           >
             Welcome back
           </h1>
           <p class="text-base-content text-base leading-4 font-poppins">
             New to Flipture?
             <span
-              class="text-primary font-semibold hover:cursor-pointer"
+              class="text-primary font-medium hover:cursor-pointer"
               @click="goToRegister"
               >Sign Up</span
             >
@@ -107,7 +107,7 @@
             </div>
 
             <span
-              class="text-sm leading-4 text-primary font-semibold font-poppins hover:cursor-pointer"
+              class="text-sm leading-4 text-primary font-medium font-poppins hover:cursor-pointer"
               >Forget password</span
             >
           </div>
@@ -147,7 +147,7 @@
           <button
             type="button"
             :disabled="isButtonDisabled"
-            class="'w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-bold border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
+            class="'w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-medium border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
             @click="signUp"
           >
             Sign In
@@ -164,7 +164,7 @@
 
           <button
             @click="signInWithGoogle"
-            class="btn bg-transparent border-2 border-base-content shadow-none rounded-2xl text-base-content font-poppins py-6 hover:bg-base-300"
+            class="btn bg-transparent border-2 border-base-content shadow-none rounded-2xl text-base-content font-medium font-poppins py-6 hover:bg-base-300"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +194,7 @@
         </section>
 
         <footer
-          class="flex gap-2 text-sm leading-4 justify-center font-poppins"
+          class="flex gap-4 text-sm leading-4 justify-center font-poppins"
         >
           <a href="#" class="hover:text-primary whitespace-nowrap"
             >Customer Support</a

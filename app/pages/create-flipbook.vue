@@ -1,5 +1,5 @@
 <template>
-  <section class="container mx-auto py-0 space-y-6">
+  <section class="container mx-auto space-y-6">
     <div class="flex flex-row items-center gap-2">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@
         <!-- Dark overlay mask -->
         <div class="absolute inset-0 bg-base-content/70 rounded-3xl"></div>
         <p
-          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-12 font-medium p-6 pb-8 relative z-10"
+          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-16 font-poppins font-medium p-6 pb-8 relative z-10"
         >
           Flip the ordinary <br />
           into extraordinary.

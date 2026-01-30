@@ -1,21 +1,25 @@
 <template>
   <section>
-    <div class="container mx-auto flex flex-col gap-y-8">
+    <div class="container mx-auto flex flex-col gap-y-6 md:gap-y-8">
       <!-- Header -->
-      <header class="flex flex-col gap-y-6 items-center text-center">
-        <h2
-          class="font-poppins font-medium text-3xl md:text-5xl text-base-content"
-        >
-          Frequently Asked Questions
-        </h2>
-        <p
-          class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px]"
-        >
-          Still unsure? Here are quick answers to common questions about
-          uploading, sharing, subscriptions, and more — so you know exactly what
-          to expect.
-        </p>
-      </header>
+      <div class="flex flex-col md:flex-row w-full gap-4 md:gap-0">
+        <p class="whitespace-nowrap font-poppins font-medium text-base-content/60 text-sm md:text-base">(Common questions)</p>
+
+        <header class="flex flex-col gap-y-4 md:gap-y-6 items-start md:items-end justify-start md:justify-end w-full">
+          <h2
+            class="font-poppins font-medium text-3xl md:text-5xl lg:text-6xl md:leading-tight lg:leading-16 text-base-content max-w-full md:max-w-[750px] text-left md:text-right"
+          >
+            Frequently Asked Questions
+          </h2>
+          <p
+            class="text-base-content text-sm md:text-base font-poppins max-w-full md:max-w-[650px] text-left md:text-right"
+          >
+            Still unsure? Here are quick answers to common questions about
+            uploading, sharing, subscriptions, and more — so you know exactly what
+            to expect.
+          </p>
+        </header>
+      </div>
 
       <!-- Content -->
       <section ref="faqsContainer" class="flex flex-col gap-4">

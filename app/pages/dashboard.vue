@@ -8,7 +8,7 @@
   </div>
 
   <!-- Main Content -->
-  <section v-else class="container mx-auto py-0 flex flex-col gap-6 md:gap-8">
+  <section v-else class="container mx-auto flex flex-col gap-6 md:gap-8">
     <!-- Show LimitReached when user has reached max flipbooks -->
     <DashboardLimitReached
       v-if="
@@ -48,7 +48,7 @@
           class="flex flex-col md:flex-row justify-between items-start gap-y-4 md:items-center"
         >
           <h4
-            class="font-delight font-bold text-4xl leading-6 md:leading-8 w-full text-center md:text-left md:pt-2"
+            class="font-delight font-semibold text-4xl leading-6 md:leading-8 w-full text-center md:text-left md:pt-2"
           >
             YOUR FLIPBOOKS
           </h4>

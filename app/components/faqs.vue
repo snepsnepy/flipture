@@ -4,12 +4,12 @@
       <!-- Header -->
       <header class="flex flex-col gap-y-6 items-center text-center">
         <h2
-          class="font-poppins font-bold text-3xl md:text-5xl text-base-content"
+          class="font-poppins font-medium text-3xl md:text-5xl text-base-content"
         >
           Frequently Asked Questions
         </h2>
         <p
-          class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px] font-medium"
+          class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px]"
         >
           Still unsure? Here are quick answers to common questions about
           uploading, sharing, subscriptions, and more — so you know exactly what
@@ -43,7 +43,7 @@
             class="collapse-title p-4 flex flex-row justify-between items-center"
           >
             <p
-              class="font-semibold font-poppins text-xl leading-5 md:text-4xl md:leading-[104%]"
+              class="font-medium font-poppins text-xl leading-5 md:text-4xl md:leading-[104%]"
             >
               {{ faq.question }}
             </p>
@@ -77,7 +77,7 @@
             </div>
           </div>
           <div
-            class="collapse-content font-poppins text-base leading-4 md:text-lg font-medium md:leading-5"
+            class="collapse-content font-poppins text-base leading-4 md:text-lg md:leading-5"
           >
             {{ faq.answer }}
           </div>

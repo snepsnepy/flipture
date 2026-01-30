@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="container mx-auto flex flex-col py-0 gap-6 md:gap-8">
+    <div class="container mx-auto flex flex-col gap-6 md:gap-8">
       <!-- Header -->
       <header>
         <div class="flex flex-row items-center gap-2">
@@ -29,7 +29,7 @@
       <!-- Title and Description -->
       <section class="flex flex-col gap-y-6 items-center text-center">
         <h2
-          class="font-poppins font-bold text-3xl md:text-5xl text-base-content"
+          class="font-poppins font-medium text-3xl md:text-5xl text-base-content"
         >
           Choose the perfect plan <br />for your needs
         </h2>

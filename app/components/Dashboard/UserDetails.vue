@@ -69,13 +69,13 @@
       <HorizontalDivider />
 
       <section class="flex gap-2 items-center justify-between">
-        <h4 class="text-base md:text-lg leading-4 font-poppins font-semibold">
+        <h4 class="text-base md:text-lg leading-4 font-poppins font-medium">
           Quick Overview
         </h4>
         <!-- Subscription Badge -->
         <div
           v-if="!flipbookStore.isSigningOut && userFullName"
-          class="badge font-semibold text-xs md:text-sm font-poppins"
+          class="badge font-medium text-xs md:text-sm font-poppins"
           :class="planBadgeClass"
         >
           {{ planBadgeText }}
@@ -90,7 +90,7 @@
           >
             <div class="flex flex-row justify-between items-center">
               <h4
-                class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
+                class="text-base-content tracking-wide text-sm whitespace-nowrap font-poppins leading-[14px] font-medium"
               >
                 Storage Used
               </h4>
@@ -114,7 +114,7 @@
               </div>
             </div>
             <p class="text-sm text-base-content leading-3 font-poppins">
-              <span class="font-bold text-primary text-3xl leading-[30px]">{{
+              <span class="font-medium text-primary text-4xl leading-[30px]">{{
                 formattedStorageSize.number
               }}</span>
               {{ formattedStorageSize.unit }}
@@ -125,7 +125,7 @@
           >
             <div class="flex flex-row justify-between items-center">
               <h4
-                class="text-base-content text-sm whitespace-nowrap leading-[14px] font-semibold"
+                class="text-base-content text-sm whitespace-nowrap leading-[14px] font-medium"
               >
                 Flipbooks
               </h4>
@@ -150,14 +150,14 @@
             <div class="flex flex-col gap-1">
               <p class="text-sm text-base-content leading-3 font-poppins">
                 <span 
-                  class="font-bold text-3xl leading-[30px]"
+                  class="font-medium text-4xl leading-[30px]"
                   :class="flipbooksLength > flipbookLimit ? 'text-error' : 'text-primary'"
                 >
                   {{ flipbooksLength }}
                 </span>
                 <span class="text-neutral text-lg leading-4">/{{ flipbookLimit }}</span>
               </p>
-              <p class="text-xs leading-3 text-neutral font-medium">
+              <p class="text-xs leading-3 text-neutral">
                 {{ remainingCount > 0 ? `${remainingCount} remaining` : 'Limit reached' }}
               </p>
             </div>

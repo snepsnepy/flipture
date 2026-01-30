@@ -10,7 +10,7 @@
       <div class="blob"></div>
     </div>
     <span
-      class="text-base-content text-2xl leading-8 font-semibold font-poppins"
+      class="text-base-content text-2xl leading-8 font-medium font-poppins"
       >Loading...</span
     >
   </div>

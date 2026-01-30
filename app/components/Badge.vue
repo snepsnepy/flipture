@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span class="badge font-poppins font-bold text-xs p-2 rounded-md whitespace-nowrap" :class="variantClass">
+    <span class="badge font-poppins font-medium text-xs p-2 rounded-md whitespace-nowrap" :class="variantClass">
       <slot name="icon" />
       {{ text }}
     </span>

@@ -1,7 +1,7 @@
 <template>
   <fieldset class="fieldset p-0" :class="fieldsetClass">
     <legend
-      class="fieldset-legend gap-1 pb-2.5 md:pb-4 pt-0! font-poppins text-sm md:text-base leading-4 text-base-content"
+      class="fieldset-legend gap-1 pb-2.5 md:pb-4 pt-0! font-medium font-poppins text-sm md:text-base leading-4 text-base-content"
     >
       <p>{{ label }}</p>
       <span v-if="required" class="text-error">*</span>

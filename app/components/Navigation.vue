@@ -1,16 +1,16 @@
 <template>
   <nav
-    class="container mx-auto py-0 pt-6"
+    class="container mx-auto py-0 pt-3 md:pt-6"
     role="navigation"
     aria-label="Main navigation"
   >
     <div
-      class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-5"
-    >
+        class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-3 md:pb-6"
+      >
       <div class="w-full justify-between items-center flex flex-row">
         <!-- Logo -->
         <NuxtLink
-          class="font-poppins font-bold text-3xl md:text-5xl text-base-content tracking-tighter"
+          class="font-poppins font-medium text-3xl md:text-5xl text-base-content tracking-tighter"
           aria-label="Flipture - Home"
           to="/"
         >
@@ -46,7 +46,7 @@
 
             <ul
               id="mobile-menu"
-              class="menu menu-lg dropdown-content bg-white border border-base-300 shadow-md rounded-box z-1 mt-2 w-52 p-2 drop-shadow-md font-poppins font-bold text-sm"
+              class="menu menu-lg dropdown-content bg-white border border-base-300 shadow-md rounded-box z-1 mt-2 w-52 p-2 drop-shadow-md font-poppins font-medium text-sm"
               role="menu"
               aria-label="Mobile navigation menu"
             >
@@ -94,7 +94,7 @@
                 <button
                   @click="handleAuthAction"
                   type="button"
-                  class="w-full py-2 px-4 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base leading-4 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300"
+                  class="w-full py-2 px-4 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-base leading-4 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300"
                   role="menuitem"
                   :disabled="isLoading"
                 >
@@ -113,14 +113,14 @@
           <button
             @click="navigateToLogin"
             type="button"
-            class="w-fit py-2 md:py-3 px-3 md:px-6 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-semibold text-sm md:text-base leading-4 transition-all duration-300"
+            class="w-fit py-2 md:py-3 px-3 md:px-6 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-base leading-4 transition-all duration-300"
           >
             Sign In
           </button>
           <button
             @click="navigateToRegister"
             type="button"
-            class="w-fit py-2 md:py-3 px-3 md:px-6 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-semibold text-sm md:text-base leading-4 transition-all duration-300"
+            class="w-fit py-2 md:py-3 px-3 md:px-6 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-base leading-4 transition-all duration-300"
           >
             Sign Up
           </button>

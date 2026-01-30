@@ -8,17 +8,17 @@
       <div class="flex flex-col gap-y-8">
         <header class="flex flex-col gap-y-6 items-center text-center">
           <h2
-            class="font-poppins font-bold text-3xl md:text-6xl text-base-content"
+            class="font-poppins font-medium text-3xl md:text-6xl md:leading-16 text-base-content"
           >
             See exactly what your readers <br />will experience
           </h2>
           <p
-            class="text-base-content text-sm md:text-base text-center font-poppins max-w-[650px] font-medium"
+            class="text-base-content text-sm md:text-base text-center font-poppins max-w-[650px]"
           >
             This is a live example of a 3D flipbook created with just one PDF
             upload. Flip through the pages, interact with the layout, and
             imagine your own content presented this beautifully —
-            <b class="text-primary">
+            <b class="text-primary font-medium">
               instantly shareable, fully responsive, and ad-free.</b
             >
           </p>
@@ -33,8 +33,6 @@
           ></iframe>
         </div>
       </div>
-
-      <Features />
     </div>
   </section>
 </template>

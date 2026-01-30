@@ -11,7 +11,7 @@
         <!-- Dark overlay mask -->
         <div class="absolute inset-0 bg-base-content/70 rounded-2xl"></div>
         <p
-          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-12 font-medium p-6 pb-8 relative z-10"
+          class="text-primary-content text-2xl leading-6 md:text-6xl md:leading-16 font-poppins font-medium p-6 pb-8 relative z-10"
         >
           Your documents. <br />
           Reimagined.
@@ -23,7 +23,7 @@
         <header class="flex flex-col gap-4">
           <div class="flex gap-2 items-center">
             <h1
-              class="text-[40px] leading-10 font-black font-poppins text-base-content -tracking-[0.2%]"
+              class="text-[40px] leading-10 font-medium font-poppins text-base-content -tracking-[0.2%]"
             >
               Sign Up
             </h1>
@@ -212,16 +212,16 @@
             class="checkbox rounded-[6px] checked:bg-primary checked:text-primary-content"
           />
           <span
-            class="text-sm leading-4 text-base-content font-semibold font-poppins whitespace-normal"
-            >I agree to all the <a href="#" class="text-primary">Terms</a> and
-            <a href="#" class="text-primary">Privacy Policies</a>
+            class="text-sm leading-4 text-base-content font-poppins whitespace-normal"
+            >I agree to all the <a href="#" class="text-primary font-medium">Terms</a> and
+            <a href="#" class="text-primary font-medium">Privacy Policies</a>
           </span>
         </label>
 
         <button
           :disabled="isButtonDisabled"
           type="button"
-          class="w-full py-4 md:px-10 bg-primary rounded-3xl border border-primary-content text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-bold text-base transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none"
+          class="w-full py-4 md:px-10 bg-primary rounded-3xl border border-primary-content text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-base transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none"
           @click="signUp"
         >
           Create Account
@@ -237,7 +237,7 @@
           Already have an account?
           <span
             @click="goToLogin"
-            class="whitespace-nowrap font-bold text-primary hover:cursor-pointer"
+            class="whitespace-nowrap font-medium text-primary hover:cursor-pointer"
             >Login</span
           >
         </footer>

@@ -1,19 +1,19 @@
 <template>
   <section class="bg-base-content">
-    <div class="container mx-auto py-32 flex flex-col gap-y-8">
+    <div class="container mx-auto flex flex-col gap-y-8">
       <!-- Header -->
       <header class="flex flex-col gap-y-6 items-center text-center">
         <h2
-          class="font-poppins font-bold text-3xl md:text-5xl text-primary-content"
+          class="font-poppins font-medium text-3xl md:text-5xl text-primary-content"
         >
           Choose the perfect plan <br />for your needs
         </h2>
         <p
-          class="text-primary-content text-sm md:text-base text-center font-poppins max-w-[600px] font-medium"
+          class="text-primary-content text-sm md:text-base text-center font-poppins max-w-[600px]"
         >
           Transform your PDFs into stunning 3D flipbooks with our flexible
           pricing plans. Start free and scale as you grow —
-          <b class="text-primary"> no hidden fees, cancel anytime.</b>
+          <b class="text-secondary font-medium"> no hidden fees, cancel anytime.</b>
         </p>
       </header>
 

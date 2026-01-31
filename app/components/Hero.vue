@@ -65,6 +65,6 @@ import ArrowDiagonal from "./ArrowDiagonal.vue"
 
 const ArrowIcon = motion.create(ArrowDiagonal)
 
-const buttonRef = useTemplateRef('buttonRef')
+const buttonRef = useTemplateRef<HTMLButtonElement>('buttonRef')
 const isHovered = useElementHover(buttonRef)
 </script>

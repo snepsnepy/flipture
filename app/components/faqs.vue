@@ -3,7 +3,7 @@
     <div class="container mx-auto flex flex-col gap-y-6 md:gap-y-8">
       <!-- Header -->
       <div class="flex flex-col md:flex-row w-full gap-4 md:gap-0">
-        <p class="whitespace-nowrap font-poppins font-medium text-base-content/60 text-sm md:text-base">(Common questions)</p>
+        <p class="whitespace-nowrap font-poppins font-medium text-neutral text-sm md:text-base">(Common questions)</p>
 
         <header class="flex flex-col gap-y-4 md:gap-y-6 items-start md:items-end justify-start md:justify-end w-full">
           <h2

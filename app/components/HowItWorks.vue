@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-y-6 md:gap-y-40 py-10">
       <!-- Header Section -->
       <section class="flex flex-col w-full gap-4 md:gap-8 ">
-        <p class="whitespace-nowrap font-poppins font-medium text-base-content/60 text-sm md:text-base">(See it in action)</p>
+        <p class="whitespace-nowrap font-poppins font-medium text-neutral text-sm md:text-base">(See it in action)</p>
 
         <header class="flex flex-col gap-y-4 md:gap-y-6 items-start justify-start w-full">
           <h2
@@ -38,19 +38,21 @@
         <div 
           v-for="(pillar, index) in pillars" 
           :key="index"
-          class="flex flex-col min-h-[200px] md:min-h-[400px] justify-between border-b-2 last:border-b-0 border-base-300 md:border-b-0 md:border-r-2 md:last:border-r-0 pb-6 md:pr-6 lg:pr-8"
+          class="flex flex-col gap-y-6 min-h-[200px] md:min-h-[400px] justify-between border-b-2 last:border-b-0 border-base-300 md:border-b-0 md:border-r-2 md:last:border-r-0 pb-6 md:pr-6 lg:pr-8"
         >
           <!-- Icon -->
-          <Icon :name="pillar.icon" :size="isMobile ? 48 : 92" class="w-full h-full text-base-content" />
+           <div class="p-2 md:p-3 bg-secondary/10 w-fit rounded-2xl border border-base-content/10">
+            <Icon :name="pillar.icon" :size="isMobile ? 48 : 64" class="w-full h-full text-secondary" />
+          </div>
           
-          <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-2 md:gap-4">
             <!-- Title -->
             <h3 class="font-poppins font-semibold text-xl md:text-3xl leading-6 text-base-content">
               {{ pillar.title }}
             </h3>
             
             <!-- Description -->
-            <p class="text-base-content/70 text-sm md:text-base leading-6 font-poppins">
+            <p class="text-neutral text-sm md:text-base leading-6 font-poppins">
               {{ pillar.description }}
             </p>
           </div>
@@ -64,7 +66,7 @@
 import { motion } from "motion-v"
 import { useElementVisibility } from "@vueuse/core"
 
-const isMobile = useIsMobile();
+const { isMobile } = useIsMobile();
 // Split the title into words for animation
 const titleWords = ref([
   "How", "Flipture", "works"

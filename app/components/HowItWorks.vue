@@ -41,8 +41,8 @@
           class="flex flex-col gap-y-6 min-h-[200px] md:min-h-[400px] justify-between border-b-2 last:border-b-0 border-base-300 md:border-b-0 md:border-r-2 md:last:border-r-0 pb-6 md:pr-6 lg:pr-8"
         >
           <!-- Icon -->
-           <div class="p-3 bg-secondary/10 w-fit rounded-2xl border border-base-content/10">
-            <Icon :name="pillar.icon" :size="isMobile ? 48 : 92" class="w-full h-full text-secondary" />
+           <div class="p-2 md:p-3 bg-secondary/10 w-fit rounded-2xl border border-base-content/10">
+            <Icon :name="pillar.icon" :size="isMobile ? 48 : 64" class="w-full h-full text-secondary" />
           </div>
           
           <div class="flex flex-col gap-2 md:gap-4">
@@ -66,7 +66,7 @@
 import { motion } from "motion-v"
 import { useElementVisibility } from "@vueuse/core"
 
-const isMobile = useIsMobile();
+const { isMobile } = useIsMobile();
 // Split the title into words for animation
 const titleWords = ref([
   "How", "Flipture", "works"

@@ -19,12 +19,25 @@
 
       <div class="flex flex-col relative z-0 shrink-0 ml-auto mr-8 xl:ml-0 xl:mr-0">
         <!-- Extra large yellow circle background - hidden on mobile, visible on lg -->
-        <div class="absolute border-2 border-secondary/50 inset-0 -inset-x-32 -inset-y-32 -top-48 -left-48 lg:-inset-x-72 lg:-inset-y-72 lg:-top-86 lg:-left-86 bg-secondary/50 rounded-full"></div>
+        <motion.div 
+          :initial="{ scale: 0, opacity: 0 }" 
+          :animate="{ scale: 1, opacity: 1 }" 
+          :transition="{ duration: 0.6, delay: 0.2, ease: 'easeOut' }"
+          class="absolute border-2 border-secondary/50 inset-0 -inset-x-32 -inset-y-32 -top-48 -left-48 lg:-inset-x-72 lg:-inset-y-72 lg:-top-92 lg:-left-92 bg-secondary/50 rounded-full"
+        />
         <!-- Large yellow circle background -->
-        <div class="absolute border-2 border-secondary/50 inset-0 -inset-x-16 -inset-y-16 -left-20 -top-20 lg:inset-5 lg:-inset-x-24 lg:-inset-y-24 lg:-left-40 lg:-top-40 bg-secondary/75 rounded-full"></div>
+        <motion.div 
+          :initial="{ scale: 0, opacity: 0 }" 
+          :animate="{ scale: 1, opacity: 1 }" 
+          :transition="{ duration: 0.6, delay: 0.4, ease: 'easeOut' }"
+          class="absolute border-2 border-secondary/50 inset-0 -inset-x-16 -inset-y-16 -left-20 -top-20 lg:inset-5 lg:-inset-x-24 lg:-inset-y-24 lg:-left-40 lg:-top-40 bg-secondary/75 rounded-full"
+        />
         
-        <button 
+        <motion.button 
           ref="buttonRef"
+          :initial="{ scale: 0, opacity: 0 }" 
+          :animate="{ scale: 1, opacity: 1 }" 
+          :transition="{ duration: 0.6, delay: 0.2, ease: 'backOut' }"
           class="flex flex-row items-center bg-secondary hover:bg-base-100 text-base-content transition-all duration-300 hover:cursor-pointer h-fit rounded-full py-16 px-6 sm:py-24 sm:px-8 lg:py-36 lg:px-10 whitespace-nowrap font-poppins font-normal text-xl sm:text-2xl lg:text-4xl border-2 border-base-content overflow-hidden relative z-10"
         >
           Get Started
@@ -38,7 +51,7 @@
               :transition="{ duration: 0.4 }"
             />
           </div>
-        </button> 
+        </motion.button>
       </div>
     </section>
   </section>

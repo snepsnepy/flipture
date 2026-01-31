@@ -5,7 +5,7 @@
     aria-label="Main navigation"
   >
     <div
-        class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-3 md:pb-6"
+        class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-3 md:pb-6 "
       >
       <div class="w-full justify-between items-center flex flex-row">
         <!-- Logo -->
@@ -109,18 +109,18 @@
           </div>
         </section>
 
-        <section v-else class="flex flex-row gap-2">
+        <section v-else class="flex flex-row gap-2 relative z-20">
           <button
             @click="navigateToLogin"
             type="button"
-            class="w-fit py-2 md:py-3 px-3 md:px-6 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-base leading-4 transition-all duration-300"
+            class="w-fit py-2 md:py-4 px-3 md:px-8 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-all duration-300"
           >
             Sign In
           </button>
           <button
             @click="navigateToRegister"
             type="button"
-            class="w-fit py-2 md:py-3 px-3 md:px-6 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-base leading-4 transition-all duration-300"
+            class="w-fit py-2 md:py-4 px-3 md:px-8 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-all duration-300"
           >
             Sign Up
           </button>

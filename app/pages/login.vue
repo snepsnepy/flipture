@@ -147,7 +147,7 @@
           <button
             type="button"
             :disabled="isButtonDisabled"
-            class="'w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-medium border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
+            class="w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-medium border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content disabled:pointer-events-none disabled:opacity-50"
             @click="signUp"
           >
             Sign In

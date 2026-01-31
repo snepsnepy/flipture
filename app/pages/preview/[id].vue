@@ -25,7 +25,7 @@
       </div>
 
       <div class="flex flex-col justify-center items-center gap-2 w-full">
-        <h1 class="font-delight font-medium text-2xl leading-6 md:text-4xl">
+        <h1 class="font-delight font-bold text-2xl leading-6 md:text-4xl">
           {{ flipbook?.title }}
         </h1>
         <div class="flex items-end gap-1 text-sm leading-3 text-neutral">

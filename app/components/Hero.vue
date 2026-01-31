@@ -37,8 +37,8 @@
           ref="buttonRef"
           :initial="{ scale: 0, opacity: 0 }" 
           :animate="{ scale: 1, opacity: 1 }" 
-          :transition="{ duration: 0.6, delay: 0.2, ease: 'backOut' }"
-          class="flex flex-row items-center bg-secondary hover:bg-base-100 text-base-content transition-all duration-300 hover:cursor-pointer h-fit rounded-full py-16 px-6 sm:py-24 sm:px-8 lg:py-36 lg:px-10 whitespace-nowrap font-poppins font-normal text-xl sm:text-2xl lg:text-4xl border-2 border-base-content overflow-hidden relative z-10"
+          :transition="{ duration: 0.5, delay: 0.6, ease: 'easeOut' }"
+          class="flex flex-row items-center bg-secondary hover:bg-base-100 text-base-content transition-colors duration-300 hover:cursor-pointer h-fit rounded-full py-16 px-6 sm:py-24 sm:px-8 lg:py-36 lg:px-10 whitespace-nowrap font-poppins font-normal text-xl sm:text-2xl lg:text-4xl border-2 border-base-content overflow-hidden relative z-10 will-change-transform"
         >
           Get Started
           <div class="relative w-8 h-16 sm:w-10 sm:h-14 lg:w-14 lg:h-14 flex items-center justify-center">

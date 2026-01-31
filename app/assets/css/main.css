@@ -1,5 +1,50 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@import 'lenis/dist/lenis.css';
+
+/* Lenis smooth scroll setup */
+html {
+  scroll-padding-top: 2rem;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+/* Lenis smooth scroll styles */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Override for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html,
+  body,
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  .lenis {
+    scroll-behavior: auto !important;
+  }
+}
 
 @font-face {
   font-family: "Delight";

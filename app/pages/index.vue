@@ -1,6 +1,7 @@
 <template>
   <section class="flex flex-col gap-y-20 md:gap-y-36">
     <Hero />
+    <HowItWorks />
     <LivePreview />
     <Pricing />
     <faqs />

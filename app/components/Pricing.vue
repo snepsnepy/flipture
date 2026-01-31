@@ -2,7 +2,7 @@
   <section class="bg-base-content">
     <div class="container mx-auto flex flex-col gap-y-6 md:gap-y-10 py-40">
       <div class="flex flex-col md:flex-row-reverse w-full gap-4 md:gap-6 lg:gap-0">
-        <p class="whitespace-nowrap font-poppins font-medium text-primary-content/80 text-sm md:text-base order-first md:order-0">(Pricing plans)</p>
+        <p class="whitespace-nowrap font-poppins font-medium text-primary-content/70 text-sm md:text-base order-first md:order-0">(Pricing plans)</p>
         <!-- Header -->
         <header class="flex flex-col w-full gap-y-4 md:gap-y-6 items-start text-start">
           <h2

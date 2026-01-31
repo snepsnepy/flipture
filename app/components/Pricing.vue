@@ -6,9 +6,38 @@
         <!-- Header -->
         <header class="flex flex-col w-full gap-y-4 md:gap-y-6 items-start text-start">
           <h2
-            class="font-poppins font-medium text-3xl md:text-4xl lg:text-5xl text-primary-content leading-tight"
+            ref="titleRef"
+            class="font-poppins font-medium text-3xl md:text-4xl lg:text-5xl text-primary-content leading-tight overflow-hidden"
           >
-            Choose the perfect plan <br class="hidden md:block" />for your needs
+            <motion.span
+              v-for="(word, index) in titleWords"
+              :key="index"
+              :initial="{ opacity: 0, y: 20 }"
+              :animate="isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }"
+              :transition="{ 
+                duration: 0.5, 
+                delay: index * 0.1,
+                ease: 'easeOut'
+              }"
+              class="inline-block mr-2"
+            >
+              {{ word }}
+            </motion.span>
+            <br class="hidden md:block" />
+            <motion.span
+              v-for="(word, index) in titleWordsLine2"
+              :key="'line2-' + index"
+              :initial="{ opacity: 0, y: 20 }"
+              :animate="isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }"
+              :transition="{ 
+                duration: 0.5, 
+                delay: (titleWords.length + index) * 0.1,
+                ease: 'easeOut'
+              }"
+              class="inline-block mr-2"
+            >
+              {{ word }}
+            </motion.span>
           </h2>
           <p
             class="text-primary-content text-sm md:text-base font-poppins max-w-full md:max-w-[600px] leading-relaxed"
@@ -72,6 +101,33 @@
 </template>
 
 <script setup lang="ts">
+import { motion } from "motion-v"
+import { useElementVisibility } from "@vueuse/core"
+
+// Split the title into words for animation
+const titleWords = ref([
+  "Choose", "the", "perfect", "plan"
+])
+const titleWordsLine2 = ref([
+  "for", "your", "needs"
+])
+const titleRef = useTemplateRef('titleRef')
+
+// Track if the title is visible in viewport
+const elementIsVisible = useElementVisibility(titleRef)
+
+// Track if animation has already been triggered (play only once)
+const hasAnimated = ref(false)
+
+// Compute animation state - only trigger once
+const isInView = computed(() => {
+  if (elementIsVisible.value && !hasAnimated.value) {
+    hasAnimated.value = true
+    return true
+  }
+  return hasAnimated.value
+})
+
 const user = useSupabaseUser();
 const userStore = useUserStore();
 const { redirectToCheckout } = useStripe();

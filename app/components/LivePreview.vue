@@ -10,9 +10,23 @@
 
         <header class="flex flex-col gap-y-4 md:gap-y-6 items-start md:items-end justify-start md:justify-end w-full">
           <h2
-            class="font-poppins font-medium text-3xl md:text-5xl lg:text-6xl md:leading-tight lg:leading-16 text-base-content max-w-full md:max-w-[750px] text-left md:text-right"
+            ref="titleRef"
+            class="font-poppins font-medium text-3xl md:text-5xl lg:text-6xl md:leading-tight lg:leading-16 text-base-content max-w-full md:max-w-[750px] text-left md:text-right overflow-hidden"
           >
-            See exactly what your readers will experience
+            <motion.span
+              v-for="(word, index) in titleWords"
+              :key="index"
+              :initial="{ opacity: 0, y: 20 }"
+              :animate="isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }"
+              :transition="{ 
+                duration: 0.5, 
+                delay: index * 0.1,
+                ease: 'easeOut'
+              }"
+              class="inline-block mr-2"
+            >
+              {{ word }}
+            </motion.span>
           </h2>
           <p
             class="text-base-content text-sm md:text-base font-poppins max-w-full md:max-w-[650px] text-left md:text-right"
@@ -40,4 +54,29 @@
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { motion } from "motion-v"
+import { useElementVisibility } from "@vueuse/core"
+
+// Split the title into words for animation
+const titleWords = ref([
+  "See", "exactly", "what", "your", "readers", "will", "experience"
+])
+
+const titleRef = useTemplateRef('titleRef')
+
+// Track if the title is visible in viewport
+const elementIsVisible = useElementVisibility(titleRef)
+
+// Track if animation has already been triggered (play only once)
+const hasAnimated = ref(false)
+
+// Compute animation state - only trigger once
+const isInView = computed(() => {
+  if (elementIsVisible.value && !hasAnimated.value) {
+    hasAnimated.value = true
+    return true
+  }
+  return hasAnimated.value
+})
+</script>

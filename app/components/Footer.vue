@@ -13,7 +13,57 @@
           <!-- CTA Message -->
           <section>
             <p class="font-poppins text-primary-content/80 text-sm md:text-base leading-6">Get in touch</p>
-            <h4 class="font-poppins text-primary-content text-2xl md:text-3xl lg:text-4xl leading-tight md:leading-10 -tracking-[0.5px] md:-tracking-[1px]">Interested in creating stunning flipbooks, <br class="hidden md:block"/><span class="text-primary-content/85">upgrading your content presentation, <br class="hidden md:block"/>or simply learning more?</span></h4>
+            <h4 
+              ref="titleRef"
+              class="font-poppins text-primary-content text-2xl md:text-3xl lg:text-4xl leading-tight md:leading-10 -tracking-[0.5px] md:-tracking-[1px] overflow-hidden"
+            >
+              <motion.span
+                v-for="(word, index) in titleWordsLine1"
+                :key="index"
+                :initial="{ opacity: 0, y: 20 }"
+                :animate="isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }"
+                :transition="{ 
+                  duration: 0.5, 
+                  delay: index * 0.1,
+                  ease: 'easeOut'
+                }"
+                class="inline-block mr-2"
+              >
+                {{ word }}
+              </motion.span>
+              <br class="hidden md:block"/>
+              <span class="text-primary-content/85">
+                <motion.span
+                  v-for="(word, index) in titleWordsLine2"
+                  :key="'line2-' + index"
+                  :initial="{ opacity: 0, y: 20 }"
+                  :animate="isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }"
+                  :transition="{ 
+                    duration: 0.5, 
+                    delay: (titleWordsLine1.length + index) * 0.1,
+                    ease: 'easeOut'
+                  }"
+                  class="inline-block mr-2"
+                >
+                  {{ word }}
+                </motion.span>
+                <br class="hidden md:block"/>
+                <motion.span
+                  v-for="(word, index) in titleWordsLine3"
+                  :key="'line3-' + index"
+                  :initial="{ opacity: 0, y: 20 }"
+                  :animate="isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }"
+                  :transition="{ 
+                    duration: 0.5, 
+                    delay: (titleWordsLine1.length + titleWordsLine2.length + index) * 0.1,
+                    ease: 'easeOut'
+                  }"
+                  class="inline-block mr-2"
+                >
+                  {{ word }}
+                </motion.span>
+              </span>
+            </h4>
           </section>
 
           <!-- Contact Us At -->
@@ -62,4 +112,35 @@
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { motion } from "motion-v"
+import { useElementVisibility } from "@vueuse/core"
+
+// Split the title into words for animation (3 lines)
+const titleWordsLine1 = ref([
+  "Interested", "in", "creating", "stunning", "flipbooks,"
+])
+const titleWordsLine2 = ref([
+  "upgrading", "your", "content", "presentation,"
+])
+const titleWordsLine3 = ref([
+  "or", "simply", "learning", "more?"
+])
+
+const titleRef = useTemplateRef('titleRef')
+
+// Track if the title is visible in viewport
+const elementIsVisible = useElementVisibility(titleRef)
+
+// Track if animation has already been triggered (play only once)
+const hasAnimated = ref(false)
+
+// Compute animation state - only trigger once
+const isInView = computed(() => {
+  if (elementIsVisible.value && !hasAnimated.value) {
+    hasAnimated.value = true
+    return true
+  }
+  return hasAnimated.value
+})
+</script>

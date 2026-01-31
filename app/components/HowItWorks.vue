@@ -38,14 +38,14 @@
         <div 
           v-for="(pillar, index) in pillars" 
           :key="index"
-          class="flex flex-col min-h-[200px] md:min-h-[400px] justify-between border-b-2 last:border-b-0 border-base-300 md:border-b-0 md:border-r-2 md:last:border-r-0 pb-6 md:pr-6 lg:pr-8"
+          class="flex flex-col gap-y-6 min-h-[200px] md:min-h-[400px] justify-between border-b-2 last:border-b-0 border-base-300 md:border-b-0 md:border-r-2 md:last:border-r-0 pb-6 md:pr-6 lg:pr-8"
         >
           <!-- Icon -->
            <div class="p-3 bg-secondary/10 w-fit rounded-2xl border border-base-content/10">
             <Icon :name="pillar.icon" :size="isMobile ? 48 : 92" class="w-full h-full text-secondary" />
           </div>
           
-          <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-2 md:gap-4">
             <!-- Title -->
             <h3 class="font-poppins font-semibold text-xl md:text-3xl leading-6 text-base-content">
               {{ pillar.title }}

@@ -56,45 +56,44 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from "vue";
+import type Lenis from 'lenis';
 
 const isVisible = ref<boolean>(false);
 const SCROLL_THRESHOLD = 400;
+const { $lenis } = useNuxtApp();
+const lenis = $lenis as Lenis;
 
 const scrollToTop = (): void => {
-  const duration = 800; // Duration in milliseconds
-  const start = window.pageYOffset;
-  const startTime = performance.now();
-
-  const animateScroll = (currentTime: number) => {
-    const elapsed = currentTime - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-    
-    // Easing function for smooth deceleration
-    const easeInOutCubic = (t: number): number => {
-      return t < 0.5
-        ? 4 * t * t * t
-        : 1 - Math.pow(-2 * t + 2, 3) / 2;
-    };
-    
-    window.scrollTo(0, start * (1 - easeInOutCubic(progress)));
-    
-    if (progress < 1) {
-      requestAnimationFrame(animateScroll);
-    }
-  };
-
-  requestAnimationFrame(animateScroll);
+  if (lenis) {
+    lenis.scrollTo(0, {
+      duration: 0.8,
+      easing: (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2),
+    });
+  } else {
+    // Fallback to window scroll
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 };
 
-const handleScroll = (): void => {
-  isVisible.value = window.pageYOffset >= SCROLL_THRESHOLD;
+const handleScroll = (e: any): void => {
+  const scrollY = e?.scroll !== undefined ? e.scroll : window.pageYOffset;
+  isVisible.value = scrollY >= SCROLL_THRESHOLD;
 };
 
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll, { passive: true });
+  if (lenis) {
+    lenis.on('scroll', handleScroll);
+    isVisible.value = lenis.scroll >= SCROLL_THRESHOLD;
+  } else {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+  }
 });
 
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
+  if (lenis) {
+    lenis.off('scroll', handleScroll);
+  } else {
+    window.removeEventListener("scroll", handleScroll);
+  }
 });
 </script>

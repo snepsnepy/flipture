@@ -15,7 +15,7 @@
             <p class="font-poppins text-primary-content/80 text-sm md:text-base leading-6">Get in touch</p>
             <h4 
               ref="titleRef"
-              class="font-poppins text-primary-content text-2xl md:text-3xl lg:text-4xl leading-tight md:leading-10 -tracking-[0.5px] md:-tracking-[1px] overflow-hidden"
+              class="font-poppins text-primary-content text-2xl md:text-3xl lg:text-4xl leading-tight md:leading-12 -tracking-[0.5px] md:-tracking-[1px] overflow-hidden"
             >
               <motion.span
                 v-for="(word, index) in titleWordsLine1"

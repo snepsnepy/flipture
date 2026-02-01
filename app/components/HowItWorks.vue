@@ -47,7 +47,7 @@
           
           <div class="flex flex-col gap-2 md:gap-4">
             <!-- Title -->
-            <h3 class="font-poppins font-semibold text-xl md:text-3xl leading-6 text-base-content">
+            <h3 class="font-poppins uppercase font-semibold text-xl md:text-3xl leading-6 text-base-content">
               {{ pillar.title }}
             </h3>
             

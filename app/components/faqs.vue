@@ -37,17 +37,33 @@
 
       <!-- Content -->
       <section ref="faqsContainer" class="flex flex-col gap-4">
-        <div
+        <motion.div
           v-for="(faq, index) in faqs"
           :key="index"
           :data-hovered="hoveredIndex === index"
           @mouseenter="hoveredIndex = index"
           @mouseleave="hoveredIndex = null"
-          class="collapse border-2 rounded-3xl px-4 py-5 md:py-8 transition-all duration-300 cursor-pointer"
+          :animate="{ 
+            scale: activeIndex === index ? 1.02 : 1,
+            backgroundColor: hoveredIndex === index || activeIndex === index 
+              ? 'var(--color-base-content)' 
+              : 'var(--color-primary-content)',
+            borderColor: hoveredIndex === index || activeIndex === index 
+              ? 'var(--color-base-content)' 
+              : 'var(--color-base-content)',
+          }"
+          :transition="{ 
+            type: 'spring',
+            stiffness: 300,
+            damping: 30,
+            backgroundColor: { duration: 0.3 },
+            borderColor: { duration: 0.3 },
+          }"
+          class="collapse border-2 rounded-3xl px-4 py-5 md:py-8 cursor-pointer"
           :class="[
             hoveredIndex === index || activeIndex === index
-              ? 'bg-base-content text-primary-content border-primary-content'
-              : 'bg-primary-content text-base-content border',
+              ? 'text-primary-content'
+              : 'text-base-content',
             activeIndex === index ? 'collapse-open' : 'collapse-close',
           ]"
           @click="toggleAccordion(index)"
@@ -65,7 +81,11 @@
             >
               {{ faq.question }}
             </p>
-            <div
+            <motion.div
+              :animate="{ 
+                scale: activeIndex === index ? 1.2 : 1,
+              }"
+              :transition="{ type: 'spring', stiffness: 300, damping: 25 }"
               class="w-8 h-8 min-w-8 rounded-full transition-all duration-300 flex items-center justify-center"
               :class="
                 hoveredIndex === index || activeIndex === index
@@ -73,10 +93,11 @@
                   : 'bg-base-content'
               "
             >
-              <svg
+              <motion.svg
+                :animate="{ rotate: activeIndex === index ? 180 : 0 }"
+                :transition="{ type: 'spring', stiffness: 300, damping: 25 }"
                 :class="[
-                  'w-4 h-4 transition-transform duration-300',
-                  activeIndex === index ? 'rotate-180' : 'rotate-0',
+                  'w-4 h-4',
                   hoveredIndex === index || activeIndex === index
                     ? 'text-base-content'
                     : 'text-primary-content',
@@ -91,16 +112,39 @@
                   stroke-width="2"
                   d="M19 9l-7 7-7-7"
                 />
-              </svg>
-            </div>
+              </motion.svg>
+            </motion.div>
           </div>
-          <div
-            class="collapse-content font-poppins text-base leading-4 md:text-lg md:leading-5"
+          <motion.div
+            v-if="activeIndex === index"
+            :initial="{ opacity: 0, height: 0, y: -10 }"
+            :animate="{ opacity: 1, height: 'auto', y: 0 }"
+            :exit="{ opacity: 0, height: 0, y: -10 }"
+            :transition="{ 
+              duration: 0.4,
+              ease: [0.4, 0, 0.2, 1],
+              opacity: { duration: 0.3 },
+              y: { type: 'spring', stiffness: 300, damping: 30 }
+            }"
+            class="collapse-content font-poppins text-primary-content text-base leading-4 md:text-lg md:leading-5 overflow-hidden"
           >
             {{ faq.answer }}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
+
+      <!-- View All FAQs Button -->
+      <div class="flex justify-center mt-4 md:mt-6">
+        <motion.button
+          type="button"
+          @click="goToFaqsPage"
+          :whileHover="{ scale: 1.05 }"
+          :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
+          class="w-full md:w-auto shadow-lg py-3 px-6 md:px-10 rounded-full font-poppins font-medium text-sm md:text-lg min-h-[48px] md:min-h-[56px] text-base-content border-2 border-base-content hover:bg-base-300 hover:cursor-pointer"
+        >
+          View All FAQs
+        </motion.button>
+      </div>
     </div>
   </section>
 </template>
@@ -146,26 +190,30 @@ const toggleAccordion = (index: number) => {
   activeIndex.value = activeIndex.value === index ? null : index;
 };
 
+const goToFaqsPage = () => {
+  navigateTo({ name: "faqs" });
+};
+
 const faqs = [
   {
-    question: "Can I cancel anytime?",
+    question: "What is Flipture?",
     answer:
-      "Yes, you are free to cancel your subscription at any time directly from your account dashboard. Once canceled, your plan will remain active until the end of your current billing cycle, and you won’t be charged again. There are no cancellation fees or hidden terms — we believe in full transparency and flexibility.",
+      "Flipture is a web app that turns your PDF into an interactive 3D flipbook you can manage from your dashboard and share with a simple link.",
   },
   {
-    question: "Are my flipbooks private?",
+    question: "What file types do you support?",
     answer:
-      "Yes, your flipbooks are private by default. Each one is hosted securely and can only be accessed through a unique, unlisted link. This means only people you share the link with will be able to view the content. We never display your flipbooks publicly or index them in search engines unless you explicitly choose to share them in that way.",
+      "Flipture currently supports PDF files only. If you upload a different file type, it will be rejected during validation.",
   },
   {
     question: "Is there a file size limit?",
     answer:
-      "We currently support PDF uploads up to 50MB in size, which is more than sufficient for most magazines, brochures, and catalogs. If your file exceeds this limit, we recommend compressing your PDF using free tools before uploading. Larger file support is planned in future updates.",
+      "Yes — the maximum PDF size depends on your plan: Free (5MB), Standard (30MB), and Premium (50MB). If your file is larger, compress the PDF and try again.",
   },
   {
-    question: "Can I embed flipbooks on my site?",
+    question: "How many flipbooks can I create?",
     answer:
-      "Yes. Every flipbook you create comes with a ready-to-use embed code. You can place it on any website, landing page, or blog, and the flipbook will display seamlessly with full interactivity. It's a great way to showcase content professionally without redirecting your visitors elsewhere.",
-  },
+      "Plan limits apply: Free (up to 3 flipbooks), Standard (up to 100), Premium (up to 100). If you hit your limit, you can still manage existing flipbooks, but you’ll need to upgrade to create more.",
+  }
 ];
 </script>

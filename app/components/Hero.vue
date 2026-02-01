@@ -35,6 +35,7 @@
         
         <motion.button 
           ref="buttonRef"
+          @click="navigateToRegister"
           :initial="{ scale: 0, opacity: 0 }" 
           :animate="{ scale: 1, opacity: 1 }" 
           :transition="{ duration: 0.5, delay: 0.6, ease: 'easeOut' }"
@@ -67,4 +68,8 @@ const ArrowIcon = motion.create(ArrowDiagonal)
 
 const buttonRef = useTemplateRef<HTMLButtonElement>('buttonRef')
 const isHovered = useElementHover(buttonRef)
+
+const navigateToRegister = () => {
+  return navigateTo({ name: 'register' })
+}
 </script>

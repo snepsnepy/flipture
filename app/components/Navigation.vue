@@ -83,10 +83,11 @@
                 >
               </li>
               <li role="none">
-                <a
+                <NuxtLink
                   class="hover:cursor-pointer hover:bg-base-300 text-base-content active:!text-primary active:!bg-base-300"
-                  role="menuitem"
-                  >FAQs</a
+                  to="/faqs"
+                  @click="close"
+                  >FAQs</NuxtLink
                 >
               </li>
               <HorizontalDivider class="pt-2 pb-1"/>
@@ -110,20 +111,24 @@
         </section>
 
         <section v-else class="flex flex-row gap-2 relative z-20">
-          <button
+          <motion.button
             @click="navigateToLogin"
             type="button"
+            :whileHover="{ scale: 1.05 }"
+            :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
             class="w-fit py-2 md:py-4 px-3 md:px-8 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-all duration-300"
           >
             Sign In
-          </button>
-          <button
+          </motion.button>
+          <motion.button
             @click="navigateToRegister"
+            :whileHover="{ scale: 1.05 }"
+            :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
             type="button"
             class="w-fit py-2 md:py-4 px-3 md:px-8 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-all duration-300"
           >
             Sign Up
-          </button>
+          </motion.button>
         </section>
       </div>
     </div>
@@ -131,9 +136,9 @@
 </template>
 
 <script lang="ts" setup>
+import { motion } from "motion-v"
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
 
-const route = useRoute();
 const client = useSupabaseClient();
 const user = useSupabaseUser();
 const flipbookStore = useFlipbookStore();

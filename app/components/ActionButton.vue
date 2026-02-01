@@ -61,3 +61,16 @@ const hasIcon = computed(() => !!slots.icon);
 
 const { isMobile } = useIsMobile();
 </script>
+
+<style scoped>
+/* Force animations to work even with prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .group {
+    transition-duration: 200ms !important;
+  }
+  
+  .group span {
+    transition-duration: 300ms !important;
+    animation-duration: 300ms !important;
+  }
+}</style>

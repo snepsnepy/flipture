@@ -93,16 +93,18 @@
               >{{ period }}</span
             >
           </div>
-          <button
+          <motion.button
             type="button"
             :disabled="buttonState.disabled"
             @click="handleClick"
+            :whileHover="!buttonState.disabled ? { scale: 1.05 } : {}"
+            :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
             :class="[
-              'w-full py-3 px-6 md:px-10 rounded-full font-poppins font-medium text-sm md:text-lg transition-all duration-300 min-h-[48px] md:min-h-[56px]',
+              'w-full py-3 px-6 md:px-10 rounded-full font-poppins font-medium text-sm md:text-lg min-h-[48px] md:min-h-[56px]',
               buttonClass,
               buttonState.disabled
                 ? 'disabled:cursor-not-allowed disabled:pointer-events-none'
-                : 'hover:cursor-pointer hover:scale-105',
+                : 'hover:cursor-pointer',
             ]"
           >
             <span
@@ -110,7 +112,7 @@
               class="loading loading-spinner"
             ></span>
             <span v-else>{{ buttonState.text }}</span>
-          </button>
+          </motion.button>
         </section>
         <HorizontalDivider class="relative z-10 shrink-0" />
 
@@ -150,6 +152,7 @@
 </template>
 
 <script setup lang="ts">
+import { motion } from "motion-v";
 import VueBitsSilk from "@/components/VueBits/Silk/Silk.vue";
 
 interface Badge {
@@ -241,9 +244,9 @@ const buttonClass = computed(() => {
     return "bg-secondary text-base-content hover:bg-primary-content disabled:opacity-80 disabled:scale-100";
   }
   if (props.buttonVariant === "primary") {
-    return "bg-primary text-primary-content disabled:opacity-50 disabled:scale-100";
+    return "bg-primary text-primary-content disabled:opacity-50 disabled:scale-100 hover:bg-primary/80";
   }
-  return "bg-base-content text-base-100 disabled:opacity-50";
+  return "bg-base-content text-base-100 disabled:opacity-50 hover:bg-neutral";
 });
 
 const silkProps = computed(() => ({

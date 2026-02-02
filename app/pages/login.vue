@@ -107,8 +107,9 @@
             </div>
 
             <span
+              @click="openForgotPasswordModal"
               class="text-sm leading-4 text-primary font-medium font-poppins hover:cursor-pointer hover:underline w-fit"
-              >Forget password</span
+              >Forgot your password?</span
             >
           </div>
 
@@ -178,15 +179,18 @@
         <footer
           class="flex gap-4 text-sm leading-4 justify-center font-poppins"
         >
-          <a href="#" class="hover:text-primary whitespace-nowrap"
+          <a href="mailto:contact@flipture.io" class="hover:text-primary whitespace-nowrap"
             >Customer Support</a
           >
-          <a href="#" class="hover:text-primary whitespace-nowrap"
-            >Terms of Service</a
-          >
+          <NuxtLink @click="navigateToTerms" class="hover:text-primary whitespace-nowrap hover:cursor-pointer">
+            Terms of Service
+          </NuxtLink>
         </footer>
       </div>
     </section>
+
+    <!-- Forgot Password Modal -->
+    <ForgotPasswordModal ref="forgotPasswordModal" />
   </section>
 </template>
 
@@ -195,6 +199,7 @@ import { motion } from "motion-v"
 import { useIsMobile } from "~/composables/useIsMobile";
 import { useForm, useField } from "vee-validate";
 import { createLoginSchema } from "~~/schema/form.schema";
+import ForgotPasswordModal from "~/components/ForgotPasswordModal.vue";
 
 definePageMeta({
   layout: "auth",
@@ -205,6 +210,7 @@ const user = useSupabaseUser();
 
 const errorMessage = ref("");
 const { isMobile } = useIsMobile();
+const forgotPasswordModal = ref<InstanceType<typeof ForgotPasswordModal>>();
 const validationSchema = createLoginSchema();
 
 const { errors } = useForm({
@@ -261,4 +267,12 @@ const signInWithGoogle = async () => {
 };
 
 const goToRegister = () => navigateTo({ name: "register" });
+
+const openForgotPasswordModal = () => {
+  forgotPasswordModal.value?.openModal();
+};
+
+const navigateToTerms = () => {
+  return navigateTo({ name: "terms" });
+};
 </script>

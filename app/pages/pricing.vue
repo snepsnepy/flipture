@@ -18,7 +18,7 @@
             />
           </svg>
           <button
-            @click="navigateToDashboard"
+            @click="navigateToIndex"
             class="text-base-content text-sm md:text-base leading-4 font-poppins font-medium hover:cursor-pointer hover:text-primary"
           >
             Back
@@ -295,7 +295,7 @@ const handleManageSubscription = async () => {
   }
 };
 
-const navigateToDashboard = () => {
-  return navigateTo({ name: "dashboard" });
+const navigateToIndex = () => {
+  return navigateTo({ name: "index" });
 };
 </script>

@@ -165,7 +165,7 @@
           </div>
         </section>
 
-        <label class="label">
+        <label class="label flex items-start">
           <input
             type="checkbox"
             v-model="terms"
@@ -173,8 +173,18 @@
           />
           <span
             class="text-sm leading-4 text-base-content font-poppins whitespace-normal hover:cursor-default"
-            >I agree to all the <a href="#123" class="text-primary font-medium underline">Terms of Service</a> and
-            <a href="#456" class="text-primary font-medium underline">Privacy Policy</a>
+            >By creating an account, I agree to the
+            <NuxtLink
+              @click="navigateToTerms"
+              class="text-primary font-medium underline hover:cursor-pointer"
+              >Terms of Service</NuxtLink
+            >
+            and acknowledge the
+            <NuxtLink
+              @click="navigateToPrivacyPolicy"
+              class="text-primary font-medium underline hover:cursor-pointer"
+              >Privacy Policy</NuxtLink
+            >.
           </span>
         </label>
 
@@ -218,14 +228,13 @@ definePageMeta({
 });
 
 const client = useSupabaseClient();
-const user = useSupabaseUser();
 
 const isLoading = ref(false);
 const terms = ref(false);
 const { isMobile } = useIsMobile();
 const validationSchema = createRegisterSchema();
 
-const { handleSubmit, errors } = useForm({
+const { errors } = useForm({
   validationSchema,
 });
 
@@ -274,7 +283,15 @@ const signUp = async () => {
   }
 };
 
-const goToLogin = () => navigateTo("/login");
-</script>
+const goToLogin = () => {
+  return navigateTo({ name: "login" });
+} 
 
-<style scoped></style>
+const navigateToTerms = () => {
+  return navigateTo({ name: "terms" });
+};
+
+const navigateToPrivacyPolicy = () => {
+  return navigateTo({ name: "privacy-policy" });
+};
+</script>

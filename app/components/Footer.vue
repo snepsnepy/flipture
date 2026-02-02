@@ -74,10 +74,10 @@
             </div>
 
             <section class="flex flex-col md:flex-row gap-2 md:gap-4 w-full md:w-auto">
-              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline">Pricing</a>
-              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline">FAQs</a>
-              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline">Terms of Service</a>
-              <a href="#" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline">Privacy Policy</a>
+              <NuxtLink @click="navigateToPage('pricing')" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline hover:cursor-pointer">Pricing</NuxtLink>
+              <NuxtLink @click="navigateToPage('faqs')" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline hover:cursor-pointer">FAQs</NuxtLink>
+              <NuxtLink @click="navigateToPage('terms')" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline hover:cursor-pointer">Terms of Service</NuxtLink>
+              <NuxtLink @click="navigateToPage('privacy-policy')" class="font-poppins text-primary-content text-base md:text-xl leading-[30px] font-medium hover:underline hover:cursor-pointer">Privacy Policy</NuxtLink>
             </section>
           </section>
 
@@ -143,4 +143,8 @@ const isInView = computed(() => {
   }
   return hasAnimated.value
 })
+
+const navigateToPage = (route: string) => {
+  return navigateTo({ name: route });
+};
 </script>

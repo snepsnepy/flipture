@@ -45,7 +45,7 @@
       >
         <!-- Page Header -->
         <div class="flex justify-between items-center">
-          <h3 class="font-delight font-semibold text-xl leading-5 md:text-2xl">
+          <h3 class="font-medium tracking-tight text-xl leading-5 md:text-2xl">
             Create New Flipbook
           </h3>
         </div>

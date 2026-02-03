@@ -2,7 +2,7 @@
   <div class="flex flex-col gap-6">
     <!-- Custom File Drop Zone -->
     <div
-      class="relative border-2 border-base-content rounded-2xl p-8 text-center bg-base-200 hover:bg-base-300 transition-all duration-300"
+      class="relative border-2 border-base-content rounded-3xl p-8 text-center bg-base-200 hover:bg-base-300 transition-all duration-300"
       :class="{
         'border-primary bg-primary/5': isDragOver,
         'bg-base-100 pointer-events-none': selectedFile || uploadError,
@@ -73,7 +73,7 @@
     <!-- Success State -->
     <div v-if="selectedFile">
       <div
-        class="flex flex-row gap-2 items-center bg-base-100 p-4 rounded-2xl border-2 border-base-content"
+        class="flex flex-row gap-2 items-center bg-base-100 p-4 rounded-3xl border-2 border-base-content"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@
         <section class="flex justify-between w-full items-center">
           <div class="flex flex-col gap-1">
             <span
-              class="font-semibold text-base leading-4 font-poppins break-all"
+              class="font-medium text-base leading-4 font-poppins break-all"
               >{{ selectedFile.name }}</span
             >
 
@@ -102,7 +102,7 @@
               <span class="text-base-content/50 font-medium font-poppins">{{
                 formatFileSize(selectedFile.size)
               }}</span>
-              <span class="font-semibold text-success font-poppins">
+              <span class="font-medium text-success font-poppins">
                 Success
               </span>
             </div>
@@ -151,7 +151,7 @@
     <!-- Error State -->
     <div
       v-if="uploadError"
-      class="flex flex-row gap-2 items-center bg-base-100 p-4 rounded-2xl border-2 border-base-content"
+      class="flex flex-row gap-2 items-center bg-base-100 p-4 rounded-3xl border-2 border-base-content"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

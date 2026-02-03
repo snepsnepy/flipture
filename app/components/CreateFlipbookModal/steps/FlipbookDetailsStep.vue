@@ -13,7 +13,7 @@
       <!-- Title -->
       <fieldset class="fieldset p-0">
         <legend
-          class="fieldset-legend pb-2 md:pb-4 !pt-0 font-poppins text-sm md:text-base md:leading-4 text-base-content"
+          class="fieldset-legend font-medium pb-2 md:pb-4 pt-0! font-poppins text-sm md:text-base md:leading-4 text-base-content"
         >
           <p>Flipbook Title <span class="text-error">*</span></p>
         </legend>
@@ -39,10 +39,10 @@
       <!-- Company Name -->
       <fieldset class="fieldset p-0">
         <legend
-          class="fieldset-legend pb-2 md:pb-4 !pt-0 font-poppins text-sm md:text-base md:leading-4 text-base-content flex justify-between items-center w-full"
+          class="fieldset-legend pb-2 md:pb-4 pt-0! font-medium font-poppins text-sm md:text-base md:leading-4 text-base-content flex justify-between items-center w-full"
         >
           <p>Company Name</p>
-          <span class="text-primary text-xs">Optional</span>
+          <span class="text-primary text-xs font-semibold">Optional</span>
         </legend>
         <label
           class="input validator border-2 bg-base-100 rounded-2xl h-14 !outline-none !shadow-none w-full border-base-content"
@@ -66,10 +66,10 @@
       <!-- Description -->
       <fieldset class="fieldset p-0">
         <legend
-          class="fieldset-legend pb-2 md:pb-4 !pt-0 font-poppins text-sm md:text-base md:leading-4 text-base-content flex justify-between items-center w-full"
+          class="fieldset-legend font-medium pb-2 md:pb-4 pt-0! font-poppins text-sm md:text-base md:leading-4 text-base-content flex justify-between items-center w-full"
         >
           <p>Description</p>
-          <span class="text-primary text-xs">Optional</span>
+          <span class="text-primary text-xs font-semibold">Optional</span>
         </legend>
         <textarea
           class="textarea px-4 h-24 w-full font-poppins rounded-2xl text-xl leading-4 placeholder:text-xl !border-2 border-base-content focus:outline-none focus:border-base-content"

@@ -2,19 +2,9 @@
   <section
     class="flex flex-row gap-2 items-start md:items-center border-2 border-primary bg-base-200 p-2 rounded-2xl"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 32 32"
-    >
-      <path
-        fill="#0046ff"
-        d="M16 13a1 1 0 0 1 1 1v9a1 1 0 1 1-2 0v-9a1 1 0 0 1 1-1m0-2a1.5 1.5 0 1 0 0-3a1.5 1.5 0 0 0 0 3M2 16C2 8.268 8.268 2 16 2s14 6.268 14 14s-6.268 14-14 14S2 23.732 2 16M16 4C9.373 4 4 9.373 4 16s5.373 12 12 12s12-5.373 12-12S22.627 4 16 4"
-      />
-    </svg>
+    <Icon name="fluent:info-24-regular" :size="24" style="color: var(--color-primary)" />
     <div class="flex flex-row items-center justify-between flex-1 gap-4">
-      <p class="text-xs md:text-sm">
+      <p class="text-xs md:text-sm font-poppins">
         You are currently on a <strong class="font-semibold">Free Plan</strong>
         and have limited access to features. Upgrade to unlock all features and
         benefits.
@@ -33,5 +23,3 @@ const navigateToPricing = () => {
   return navigateTo({ name: "pricing" });
 };
 </script>
-
-<style></style>

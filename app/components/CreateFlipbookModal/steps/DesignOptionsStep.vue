@@ -10,47 +10,20 @@
     </div>
 
     <!-- Info Section -->
-    <div class="bg-primary/10 rounded-3xl flex items-center gap-2 md:gap-4">
-      <div class="bg-primary px-4 py-6 rounded-l-3xl">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 48 48"
-        >
-          <g fill="none">
-            <path
-              stroke="#ffffff"
-              stroke-linejoin="round"
-              stroke-width="4"
-              d="M24 44a19.94 19.94 0 0 0 14.142-5.858A19.94 19.94 0 0 0 44 24a19.94 19.94 0 0 0-5.858-14.142A19.94 19.94 0 0 0 24 4A19.94 19.94 0 0 0 9.858 9.858A19.94 19.94 0 0 0 4 24a19.94 19.94 0 0 0 5.858 14.142A19.94 19.94 0 0 0 24 44Z"
-            />
-            <path
-              fill="#ffffff"
-              fill-rule="evenodd"
-              d="M24 11a2.5 2.5 0 1 1 0 5a2.5 2.5 0 0 1 0-5"
-              clip-rule="evenodd"
-            />
-            <path
-              stroke="#ffffff"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="4"
-              d="M24.5 34V20h-2M21 34h7"
-            />
-          </g>
-        </svg>
+    <section
+      class="flex flex-row gap-2 items-start md:items-center border-2 border-primary bg-base-200 p-2 rounded-2xl"
+    >
+      <Icon name="fluent:info-24-regular" :size="24" style="color: var(--color-primary)" />
+      <div class="flex flex-row items-center justify-between flex-1 gap-4">
+        <p class="text-xs md:text-sm font-poppins">
+          <span class="font-medium">Flipture Branded Cover</span>
+          uses our branding, while the other options use the
+          <span class="font-medium">first</span> or
+          <span class="font-medium">last</span> pages from your
+          uploaded PDF file as covers.
+        </p>
       </div>
-      <p
-        class="text-xs md:text-sm leading-3 md:leading-4 text-primary font-poppins px-1 md:px-2"
-      >
-        <span class="font-delight font-semibold">Flipture Branded Cover</span>
-        uses our branding, while the other options use the
-        <span class="font-semibold font-delight">first</span> or
-        <span class="font-semibold font-delight">last</span> pages from your
-        uploaded PDF file as covers.
-      </p>
-    </div>
+    </section>
 
     <!-- Cover Options Section -->
     <section class="space-y-4">
@@ -71,42 +44,36 @@
           :key="option.value"
           class="form-control"
         >
-          <Tooltip
-            :text="option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile ? 'Upgrade to Standard or Premium to unlock this cover option' : ''"
-            :hidden="!(option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile)"
-            class="w-full"
+          <label
+            class="label justify-start gap-3"
+            :class="[
+              option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile
+                ? 'opacity-60 cursor-default' 
+                : 'cursor-pointer'
+            ]"
+            @click="selectCoverOption(option.value)"
           >
-            <label 
-              class="label justify-start gap-3"
-              :class="[
-                option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile
-                  ? 'cursor-not-allowed opacity-60' 
-                  : 'cursor-pointer'
-              ]"
-              @click="selectCoverOption(option.value)"
+            <input
+              type="radio"
+              name="cover-option"
+              class="radio border-base-content checked:text-blue-600 checked:border-base-content"
+              :value="option.value"
+              v-model="localFormData.coverOption"
+              :disabled="option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile"
+              @change="updateFormData"
+            />
+            <span
+              class="label-text font-poppins text-base-content text-sm md:text-base md:leading-4 flex items-center gap-2"
             >
-              <input
-                type="radio"
-                name="cover-option"
-                class="radio border-base-content checked:text-blue-600 checked:border-base-content"
-                :value="option.value"
-                v-model="localFormData.coverOption"
-                :disabled="option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile"
-                @change="updateFormData"
-              />
+              {{ option.label }}
               <span
-                class="label-text font-poppins text-base-content text-sm md:text-base md:leading-4 flex items-center gap-2"
+                v-if="option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile"
+                class="text-[10px] bg-warning/20 text-warning px-1.5 py-0.5 rounded-full font-semibold"
               >
-                {{ option.label }}
-                <span
-                  v-if="option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile"
-                  class="text-[10px] bg-warning/20 text-warning px-1.5 py-0.5 rounded-full font-semibold"
-                >
-                  PRO
-                </span>
+                PRO
               </span>
-            </label>
-          </Tooltip>
+            </span>
+          </label>
         </div>
       </fieldset>
     </section>
@@ -123,75 +90,17 @@
           {{ availableGradientsCount }} / {{ backgroundGradients.length }} available
         </span>
       </div>
-      <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4">
-        <Tooltip
-          v-for="gradient in backgroundGradients"
-          :key="gradient.id"
-          :text="gradient.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile ? 'Upgrade to Standard or Premium to unlock this background' : ''"
-          :hidden="!(gradient.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile)"
-          class="flex flex-col items-center gap-2"
-        >
-          <div
-            class="flex flex-col items-center gap-2 group relative"
-            :class="[
-              gradient.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile
-                ? 'cursor-not-allowed opacity-60'
-                : 'cursor-pointer',
-            ]"
-            @click="selectGradient(gradient.id)"
-          >
-            <div
-              class="w-16 h-16 rounded-full border-2 transition-all duration-200 relative"
-              :class="[
-                localFormData.backgroundGradient === gradient.id
-                  ? 'border-primary ring-2 ring-primary ring-offset-2 scale-105'
-                  : gradient.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile
-                  ? 'border-base-content/20'
-                  : 'border-base-content/30! group-hover:border-base-content!',
-                gradient.gradient,
-              ]"
-            >
-              <!-- Lock Icon for Premium Backgrounds on FREE plan -->
-              <div
-                v-if="gradient.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile"
-                class="absolute inset-0 flex items-center justify-center bg-base-content/40 rounded-full backdrop-blur-sm"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-                </svg>
-              </div>
-            </div>
-            <span
-              class="text-xs md:text-sm font-poppins text-center text-base-content flex items-center gap-1"
-              :class="[
-                localFormData.backgroundGradient === gradient.id
-                  ? 'font-semibold text-primary'
-                  : '',
-                gradient.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile ? 'text-neutral' : '',
-              ]"
-            >
-              {{ gradient.name }}
-              <span
-                v-if="gradient.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile"
-                class="text-[10px] bg-warning/20 text-warning px-1.5 py-0.5 rounded-full font-semibold"
-              >
-                PRO
-              </span>
-            </span>
-          </div>
-        </Tooltip>
-      </div>
+
+      <!-- Scrollable Color Picker -->
+      <ColorScrollPicker
+        v-model="localFormData.backgroundGradient!"
+        :gradients="backgroundGradients"
+        :is-free-plan="userStore.isFreePlan && !userStore.isLoadingProfile"
+        @gradient-selected="handleGradientSelection"
+      />
+
+      <!-- Original Grid Layout (kept as backup/alternative) -->
+      
     </section>
   </div>
 </template>
@@ -360,4 +269,9 @@ const backgroundGradients: GradientOption[] = [
 const availableGradientsCount = computed(() => {
   return backgroundGradients.filter((g) => !g.isPremium).length;
 });
+
+// Handle gradient selection from the ColorScrollPicker
+const handleGradientSelection = (gradientId: string) => {
+  selectGradient(gradientId);
+};
 </script>

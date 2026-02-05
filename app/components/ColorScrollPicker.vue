@@ -1,8 +1,9 @@
 <template>
-  <div class="color-scroll-picker" :style="containerStyle">
+  <div class="color-scroll-picker w-full">
     <motion.ul 
       ref="containerRef" 
-      :style="{ ...listStyle, maskImage }"
+      :style="{ maskImage }"
+      class="flex list-none h-[180px] sm:h-[200px] md:h-[220px] overflow-x-auto overflow-y-hidden p-3 sm:p-4 md:p-5 w-full md:max-w-[450px] xl:max-w-[600px] mx-auto gap-3 sm:gap-4 md:gap-5 cursor-grab scroll-smooth"
       @mousedown="handleMouseDown"
       @mouseleave="handleMouseLeave"
       @mouseup="handleMouseUp"
@@ -11,10 +12,9 @@
       <motion.li 
         v-for="gradient in gradients"
         :key="gradient.id"
-        :style="listItemStyle"
         :class="[
           gradient.gradient,
-          'rounded-2xl border-2 transition-all duration-200 relative',
+          'shrink-0 w-[150px] sm:w-[180px] md:w-[200px] rounded-2xl border-2 transition-all duration-200 relative',
           modelValue === gradient.id 
             ? 'border-primary ring-2 ring-primary ring-offset-2' 
             : gradient.isPremium && isFreePlan
@@ -37,22 +37,14 @@
         <!-- Lock Icon for Premium Gradients -->
         <div
           v-if="gradient.isPremium && isFreePlan"
-          class="absolute inset-0 flex items-center justify-center bg-base-content/40 rounded-2xl backdrop-blur-sm"
+          class="absolute inset-0 flex flex-col gap-2 items-center justify-center bg-base-content/40 rounded-2xl backdrop-blur-sm"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+          <Icon name="octicon:lock-16" style="color: white" :size="48" />
+          <span 
+            class="text-[10px] bg-primary-content/50 text-base-content px-1.5 py-0.5 rounded-full font-semibold"
           >
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
+            PRO
+          </span>
         </div>
         <span class="sr-only">{{ gradient.name }}</span>
       </motion.li>
@@ -62,7 +54,6 @@
 
 <script setup lang="ts">
 import { motion, useScroll, useMotionValue, useMotionValueEvent, useDomRef, animate, MotionValue } from 'motion-v'
-import type { CSSProperties } from 'vue'
 
 // ============== Types ==============
 interface GradientOption {
@@ -240,29 +231,7 @@ const handleMouseMove = (e: MouseEvent) => {
   container.scrollLeft = scrollLeft.value - delta
 }
 
-// ============== Styles ==============
-const containerStyle: CSSProperties = {
-  width: '100%',
-  position: 'relative',
-}
-
-const listStyle: CSSProperties = {
-  display: 'flex',
-  listStyle: 'none',
-  height: '220px',
-  overflowX: 'auto',
-  overflowY: 'hidden',
-  padding: '20px 12px',
-  flex: '0 0 600px',
-  margin: '0 auto',
-  gap: '20px',
-  cursor: 'grab',
-  scrollBehavior: 'smooth',
-}
-
-const listItemStyle: CSSProperties = {
-  flex: '0 0 200px',
-}
+// Styles are now handled by Tailwind classes in the template
 </script>
 
 <style scoped>

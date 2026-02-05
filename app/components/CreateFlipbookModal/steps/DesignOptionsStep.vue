@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col gap-6">
+  <section class="flex flex-col gap-6">
     <div class="text-center space-y-2">
       <h4 class="font-delight font-semibold text-2xl leading-6">
         Design Options
@@ -11,7 +11,7 @@
 
     <!-- Info Section -->
     <section
-      class="flex flex-row gap-2 items-start md:items-center border-2 border-primary bg-base-200 p-2 rounded-2xl"
+      class="flex flex-row gap-2 items-start md:items-center border border-primary bg-base-200 p-3 rounded-2xl"
     >
       <Icon name="fluent:info-24-regular" :size="24" style="color: var(--color-primary)" />
       <div class="flex flex-row items-center justify-between flex-1 gap-4">
@@ -27,7 +27,7 @@
 
     <!-- Cover Options Section -->
     <section class="space-y-4">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between gap-1 xl:items-center flex-col xl:flex-row">
         <p class="text-base md:text-xl leading-4 font-delight text-base-content">
           Choose the cover option for your flipbook
         </p>
@@ -68,7 +68,7 @@
               {{ option.label }}
               <span
                 v-if="option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile"
-                class="text-[10px] bg-warning/20 text-warning px-1.5 py-0.5 rounded-full font-semibold"
+                class="text-[10px] bg-base-content/50 text-primary-content px-1.5 py-0.5 rounded-full font-semibold"
               >
                 PRO
               </span>
@@ -79,7 +79,7 @@
     </section>
 
     <section class="space-y-4">
-      <div class="flex justify-between items-center">
+      <div class="flex justify-between gap-1 xl:items-center flex-col xl:flex-row">
         <p class="text-base md:text-xl leading-4 font-delight text-base-content">
           Choose the background gradient for your flipbook
         </p>
@@ -98,11 +98,25 @@
         :is-free-plan="userStore.isFreePlan && !userStore.isLoadingProfile"
         @gradient-selected="handleGradientSelection"
       />
-
-      <!-- Original Grid Layout (kept as backup/alternative) -->
-      
     </section>
-  </div>
+
+    <!-- PRO Features Footer Info -->
+    <footer
+      v-if="userStore.isFreePlan && !userStore.isLoadingProfile"
+      class="flex flex-row gap-2 items-start md:items-center border border-base-content/20 bg-base-100 p-3 rounded-2xl"
+    >
+      <Icon name="prime:sparkles" :size="32" class="text-warning shrink-0 mt-0.5 md:mt-0" />
+      <p class="text-xs md:text-sm font-poppins text-base-content/80">
+        Options marked with 
+        <span class="text-[10px] bg-base-content/50 text-primary-content px-1.5 py-0.5 rounded-full font-semibold mx-1">PRO</span>
+        are available with our <span class="font-medium">Standard and Premium</span> plans. 
+        <NuxtLink to="/pricing" class="text-primary hover:underline font-medium">
+          Upgrade now
+        </NuxtLink>
+        to unlock all features and create even more stunning flipbooks!
+      </p>
+    </footer>
+  </section>
 </template>
 
 <script setup lang="ts">

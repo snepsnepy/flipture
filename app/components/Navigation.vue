@@ -144,8 +144,25 @@ const user = useSupabaseUser();
 const flipbookStore = useFlipbookStore();
 
 const isLoading = ref(false);
+const isAuthenticating = useState('isAuthenticating', () => false);
 
-const isLoggedIn = computed(() => user.value);
+// Only show logged in state when user exists AND not in authentication process
+const isLoggedIn = computed(() => user.value && !isAuthenticating.value);
+
+// Reset authenticating state on component mount if user is already present (page refresh)
+onMounted(() => {
+  if (user.value) {
+    isAuthenticating.value = false;
+  }
+});
+
+// Watch for user changes and reset authenticating state if user appears without login flow
+watch(user, (newUser) => {
+  // If user appears and we're not in authenticating state, ensure it's reset
+  if (newUser && !isAuthenticating.value) {
+    isAuthenticating.value = false;
+  }
+});
 
 const handleAuthAction = async () => {
   if (isLoggedIn.value) {

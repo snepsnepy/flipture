@@ -357,9 +357,13 @@ const fetchFlipbooks = async () => {
 };
 
 onMounted(async () => {
-  // Reset sign-out state if user is present (in case of page refresh)
+  // Reset authentication states if user is present
+  const isAuthenticating = useState('isAuthenticating', () => false);
+  
   if (user.value) {
     flipbookStore.setSigningOut(false);
+    // Reset authenticating state now that dashboard is loaded
+    isAuthenticating.value = false;
   }
 
   // Watch for user changes and fetch data when user becomes available

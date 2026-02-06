@@ -34,11 +34,11 @@
           Choose the perfect plan <br />for your needs
         </h2>
         <p
-          class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px] font-medium"
+          class="text-base-content text-sm md:text-base text-center font-poppins max-w-[600px]"
         >
           Transform your PDFs into stunning 3D flipbooks with our flexible
           pricing plans. Start free and scale as you grow —
-          <b class="text-primary"> no hidden fees, cancel anytime.</b>
+          <b class="text-primary font-medium"> no hidden fees, cancel anytime.</b>
         </p>
       </section>
 

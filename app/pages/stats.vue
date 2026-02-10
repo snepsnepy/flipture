@@ -27,7 +27,7 @@
     </div>
 
     <div class="flex flex-col items-center justify-center gap-6">
-      <div class="rounded-full bg-primary/20 p-6 border-2 border-base-content">
+      <div class="rounded-full bg-base-100 p-6 border-2 border-base-content">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="64"
@@ -50,8 +50,8 @@
         </h3>
         <p class="text-base text-neutral font-poppins leading-relaxed px-4">
           Analytics and insights are available on
-          <strong class="text-primary">Standard</strong> and
-          <strong class="text-primary">Premium</strong> plans. Upgrade now to
+          <strong class="text-primary font-medium">Standard</strong> and
+          <strong class="text-primary font-medium">Premium</strong> plans. Upgrade now to
           unlock detailed analytics, visitor tracking, and geographic insights
           for all your flipbooks.
         </p>
@@ -93,7 +93,7 @@
       <div
         class="mt-4 p-6 bg-base-200 rounded-2xl border-2 flex flex-col border-base-content max-w-2xl gap-4"
       >
-        <h4 class="font-delight font-medium text-xl text-center">
+        <h4 class="font-poppins font-medium text-xl text-center">
           What you'll get with Analytics:
         </h4>
         <ul class="space-y-2 text-left font-poppins">

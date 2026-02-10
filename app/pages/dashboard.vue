@@ -9,7 +9,6 @@
 
   <!-- Main Content -->
   <section v-else class="container mx-auto flex flex-col gap-6 md:gap-8">
-    <!-- Show LimitReached when user has reached max flipbooks -->
     <DashboardLimitReached
       v-if="
         !userStore.isLoadingProfile &&
@@ -357,9 +356,13 @@ const fetchFlipbooks = async () => {
 };
 
 onMounted(async () => {
-  // Reset sign-out state if user is present (in case of page refresh)
+  // Reset authentication states if user is present
+  const isAuthenticating = useState('isAuthenticating', () => false);
+  
   if (user.value) {
     flipbookStore.setSigningOut(false);
+    // Reset authenticating state now that dashboard is loaded
+    isAuthenticating.value = false;
   }
 
   // Watch for user changes and fetch data when user becomes available

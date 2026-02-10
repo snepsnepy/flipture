@@ -48,6 +48,7 @@
           src="https://flipture-view.netlify.app/?id=c01cea85-f49c-456a-ada2-30111e867ff0&preview=true"
           width="100%"
           height="100%"
+          loading="lazy"
         ></iframe>
       </div>
     </div>

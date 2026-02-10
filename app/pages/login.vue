@@ -222,11 +222,15 @@ const { value: password, errorMessage: passwordErrors } =
   useField<string>("password");
 
 const isLoading = ref(false);
+const isAuthenticating = useState('isAuthenticating', () => false);
 
 onMounted(() => {
   // Reset sign-out state when login page loads
   const flipbookStore = useFlipbookStore();
   flipbookStore.setSigningOut(false);
+
+  // Reset authenticating state when landing on login page
+  isAuthenticating.value = false;
 
   // Only redirect if user is already authenticated when landing on login page
   // This prevents redirect loops during page refresh
@@ -246,17 +250,24 @@ const isFormValid = computed(() => {
 
 const signUp = async () => {
   isLoading.value = true;
+  isAuthenticating.value = true;
+  
   const { error } = await client.auth.signInWithPassword({
     email: email.value as string,
     password: password.value as string,
   });
 
   if (!error) {
-    return navigateTo({ name: "dashboard" });
+    // Keep loading state visible for smooth transition
+    await new Promise(resolve => setTimeout(resolve, 300));
+    await navigateTo({ name: "dashboard" });
+    // Reset after navigation completes
+    isAuthenticating.value = false;
   } else {
     console.log(error.message);
     errorMessage.value = error.message;
     isLoading.value = false;
+    isAuthenticating.value = false;
   }
 };
 

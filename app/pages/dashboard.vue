@@ -9,7 +9,6 @@
 
   <!-- Main Content -->
   <section v-else class="container mx-auto flex flex-col gap-6 md:gap-8">
-    <!-- Show LimitReached when user has reached max flipbooks -->
     <DashboardLimitReached
       v-if="
         !userStore.isLoadingProfile &&

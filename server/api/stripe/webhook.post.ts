@@ -69,6 +69,13 @@ export default defineEventHandler(async (event) => {
               ).toISOString()
             : null;
 
+          // Get user profile for email
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("email, full_name")
+            .eq("id", userId)
+            .single();
+
           // Update user subscription in database
           const { error } = await supabase
             .from("profiles")
@@ -87,6 +94,36 @@ export default defineEventHandler(async (event) => {
             console.log(
               `✅ Subscription created for user ${userId}: ${planType} plan`
             );
+
+            // Send subscription success email
+            if (profile?.email) {
+              const userName = profile.full_name || "there";
+              const planName = planType === "premium" ? "Premium" : "Standard";
+              const amount = planType === "premium" ? "€59.99/year" : "€5.99/month";
+
+              try {
+                const { sendEmail, emailTemplates } = await import(
+                  "../../utils/sendEmail"
+                );
+                const emailContent = emailTemplates.subscriptionSuccess(
+                  userName,
+                  planName,
+                  amount
+                );
+
+                await sendEmail({
+                  to: profile.email,
+                  subject: emailContent.subject,
+                  html: emailContent.html,
+                  text: emailContent.text,
+                });
+
+                console.log(`📧 Subscription success email sent to ${profile.email}`);
+              } catch (emailError) {
+                console.error("Error sending subscription success email:", emailError);
+                // Don't fail the webhook if email fails
+              }
+            }
           }
         }
         break;

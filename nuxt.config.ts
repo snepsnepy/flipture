@@ -12,7 +12,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@vee-validate/nuxt",
     "motion-v/nuxt",
-    "@nuxt/icon"
+    "@nuxt/icon",
   ],
 
   nitro: {

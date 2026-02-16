@@ -21,11 +21,15 @@
 
     <!-- Show InfoComponent for free users who haven't reached limit yet -->
     <DashboardInfoComponent
-      v-else-if="!userStore.isLoadingProfile && userStore.isFreePlan && flipbooksLength > 0"
+      v-else-if="
+        !userStore.isLoadingProfile &&
+        userStore.isFreePlan &&
+        flipbooksLength > 0
+      "
     />
 
     <!-- Development Email Tester (only visible in development) -->
-    <DevEmailTester v-if="isDev" />
+    <DevEmailTester v-if="false" />
 
     <header class="flex flex-col xl:flex-row gap-4 xl:h-[400px] w-full">
       <!-- Hero -->
@@ -181,7 +185,12 @@
 </template>
 
 <script setup lang="ts">
-import type { Flipbook, SortOptionConfig, SortOption } from "~/types";
+import {
+  type Flipbook,
+  type SortOptionConfig,
+  type SortOption,
+  Environment,
+} from "~/types";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
 
 definePageMeta({
@@ -214,11 +223,10 @@ const currentPage = ref(Number.parseInt(route.query.page as string) || 1);
 const itemsPerPage = ref(6); // Items per page
 const { isMobile } = useIsMobile();
 
-// Check if we're in development mode
-const isDev = computed(() => process.env.NODE_ENV === 'development');
-
 // Combined loading state - wait for both flipbooks and profile data
-const isPageLoading = computed(() => isLoading.value || userStore.isLoadingProfile);
+const isPageLoading = computed(
+  () => isLoading.value || userStore.isLoadingProfile
+);
 
 // Check if search query is empty
 const isSearchEmpty = computed(() => !searchQuery.value.trim());
@@ -363,8 +371,8 @@ const fetchFlipbooks = async () => {
 
 onMounted(async () => {
   // Reset authentication states if user is present
-  const isAuthenticating = useState('isAuthenticating', () => false);
-  
+  const isAuthenticating = useState("isAuthenticating", () => false);
+
   if (user.value) {
     flipbookStore.setSigningOut(false);
     // Reset authenticating state now that dashboard is loaded

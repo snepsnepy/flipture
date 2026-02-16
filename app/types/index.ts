@@ -99,3 +99,8 @@ export interface SortOptionConfig {
   value: SortOption;
   label: string;
 }
+
+export enum Environment {
+  DEVELOPMENT = "development",
+  PRODUCTION = "production",
+}

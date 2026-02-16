@@ -64,64 +64,217 @@ export const emailTemplates = {
     subject: "Your Flipture Subscription Has Been Cancelled",
     html: `
       <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #0046ff 0%, #7b2cbf 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9f9f9; padding: 30px 20px; border-radius: 0 0 10px 10px; }
-            .button { display: inline-block; background: #0046ff; color: white; padding: 12px 30px; text-decoration: none; border-radius: 8px; margin: 20px 0; }
-            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
-            .warning-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 4px; }
-            .info-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 20px 0; border-radius: 4px; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1 style="margin: 0; font-size: 28px;">Flipture</h1>
-            <p style="margin: 10px 0 0; opacity: 0.9;">Subscription Update</p>
-          </div>
-          
-          <div class="content">
-            <h2 style="color: #333; margin-top: 0;">Hi ${userName},</h2>
-            
-            <p>We wanted to let you know that your <strong>${planName}</strong> subscription has been cancelled and you've been moved to the <strong>Free plan</strong>.</p>
-            
-            <div class="warning-box">
-              <strong>⚠️ What this means for you:</strong>
-              <ul style="margin: 10px 0; padding-left: 20px;">
-                <li>You can keep all your existing flipbooks</li>
-                <li>You cannot create new flipbooks if you have 3 or more</li>
-                <li>New uploads are limited to 5MB (instead of ${
-                  planName === "Premium" ? "50MB" : "30MB"
-                })</li>
-                <li>You cannot edit flipbook details anymore</li>
-                <li>Watermarks will appear on new flipbooks</li>
-                <li>Analytics access has been removed</li>
-              </ul>
-            </div>
-            
-            <div class="info-box">
-              <strong>💡 Your Content is Safe</strong>
-              <p style="margin: 5px 0;">All your existing flipbooks remain accessible and can be viewed and shared as usual.</p>
-            </div>
-            
-            <p>If you'd like to regain access to premium features, you can reactivate your subscription at any time.</p>
-            
-            <div style="text-align: center;">
-              <a href="https://flipture.netlify.app/pricing" class="button">View Pricing Plans</a>
-            </div>
-            
-            <p style="margin-top: 30px; color: #666;">If you have any questions or believe this was a mistake, please don't hesitate to contact us.</p>
-          </div>
-          
-          <div class="footer">
-            <p>© ${new Date().getFullYear()} Flipture. All rights reserved.</p>
-            <p>Create and share beautiful flipbooks with ease.</p>
-          </div>
-        </body>
-      </html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #ffffff;
+    "
+  >
+    <table
+      role="presentation"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      width="100%"
+      style="margin: 0; padding: 0"
+    >
+      <tr>
+        <td align="center" style="padding: 20px">
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="600"
+            style="max-width: 600px; width: 100%"
+          >
+            <!-- Header -->
+            <tr>
+              <td
+                style="
+                  background: #0046ff;
+                  color: white;
+                  padding: 40px 20px;
+                  text-align: center;
+                  border-radius: 16px 16px 0 0;
+                "
+              >
+                <h1 style="margin: 0; font-size: 32px; font-weight: 700">
+                  Subscription Update
+                </h1>
+                <p style="margin: 15px 0 0; opacity: 1; font-size: 16px">
+                  Your subscription has been cancelled
+                </p>
+              </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+              <td
+                style="
+                  background: #f9f9f9;
+                  padding: 30px 20px;
+                  border-radius: 0 0 16px 16px;
+                "
+              >
+                <h2 style="color: #333; margin-top: 0; font-weight: 600">
+                  Hi ${userName},
+                </h2>
+
+                <p style="font-size: 16px; margin: 15px 0">
+                  We wanted to let you know that your <strong>${planName}</strong> subscription has been cancelled and you've been moved to the <strong>Free plan</strong>.
+                </p>
+
+                <!-- Warning Box -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: rgba(255, 128, 64, 0.05);
+                    margin: 20px 0;
+                    border-radius: 8px;
+                    border: 1px solid rgba(255, 128, 64, 1);
+                  "
+                >
+                  <tr>
+                    <td style="padding: 20px">
+                      <h3
+                        style="
+                          margin: 0 0 10px 0;
+                          color: rgba(255, 128, 64, 1);
+                          font-weight: 600;
+                        "
+                      >
+                        ⚠️ What this means for you:
+                      </h3>
+                      <ul style="margin: 10px 0; padding-left: 20px">
+                        <li style="margin: 5px 0">You can keep all your existing flipbooks</li>
+                        <li style="margin: 5px 0">You cannot create new flipbooks if you have 3 or more</li>
+                        <li style="margin: 5px 0">New uploads are limited to 5MB (instead of ${
+                          planName === "Premium" ? "50MB" : "30MB"
+                        })</li>
+                        <li style="margin: 5px 0">You cannot edit flipbook details anymore</li>
+                        <li style="margin: 5px 0">Watermarks will appear on new flipbooks</li>
+                        <li style="margin: 5px 0">Analytics access has been removed</li>
+                      </ul>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Info Box -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: rgba(28, 76, 191, 0.05);
+                    margin: 20px 0;
+                    border-radius: 8px;
+                    border: 1px solid #1c4cbf;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 20px">
+                      <h3
+                        style="
+                          margin: 0 0 5px 0;
+                          color: #1c4cbf;
+                          font-weight: 600;
+                        "
+                      >
+                        💡 Your Content is Safe
+                      </h3>
+                      <p style="margin: 5px 0; color: #1c4cbf">
+                        All your existing flipbooks remain accessible and can be viewed and shared as usual.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-size: 16px; margin: 20px 0">
+                  If you'd like to regain access to premium features, you can reactivate your subscription at any time.
+                </p>
+
+                <!-- Button -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                >
+                  <tr>
+                    <td align="center" style="padding-top: 10px">
+                      <a
+                        href="https://flipture.io/pricing"
+                        style="
+                          display: inline-block;
+                          background: #0046ff;
+                          color: #ffffff;
+                          padding: 14px 35px;
+                          text-decoration: none;
+                          border-radius: 8px;
+                          margin: 0;
+                          font-weight: 600;
+                        "
+                        >View Pricing Plans</a
+                      >
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  style="
+                    color: #666;
+                    font-size: 14px;
+                    margin-top: 30px;
+                    text-align: center;
+                  "
+                >
+                  If you have any questions or believe this was a mistake, please contact us at <a href="mailto:support@flipture.io">support@flipture.io</a>.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                style="
+                  text-align: center;
+                  padding: 30px 20px 0 20px;
+                  color: #666;
+                  font-size: 12px;
+                "
+              >
+                <p style="margin: 5px 0">
+                  © ${new Date().getFullYear()} Flipture. All rights reserved.
+                </p>
+                <p style="margin: 5px 0">
+                  Create and share beautiful flipbooks with ease.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
     `,
     text: `
 Hi ${userName},
@@ -267,7 +420,7 @@ If not resolved, your subscription will be cancelled.
                   color: white;
                   padding: 40px 20px;
                   text-align: center;
-                  border-radius: 10px 10px 0 0;
+                  border-radius: 16px 16px 0 0;
                 "
               >
                 <h1 style="margin: 0; font-size: 32px; font-weight: 700">
@@ -285,7 +438,7 @@ If not resolved, your subscription will be cancelled.
                 style="
                   background: #f9f9f9;
                   padding: 30px 20px;
-                  border-radius: 0 0 10px 10px;
+                  border-radius: 0 0 16px 16px;
                 "
               >
                 <h2 style="color: #333; margin-top: 0; font-weight: 600">
@@ -470,91 +623,428 @@ Questions? Just reply to this email!
     subject: "🎉 Welcome to Flipture Premium!",
     html: `
       <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; padding: 40px 20px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9f9f9; padding: 30px 20px; border-radius: 0 0 10px 10px; }
-            .button { display: inline-block; background: #10b981; color: white; padding: 14px 35px; text-decoration: none; border-radius: 8px; margin: 20px 0; font-weight: 600; }
-            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
-            .success-box { background: #d1fae5; border-left: 4px solid #10b981; padding: 20px; margin: 20px 0; border-radius: 4px; }
-            .feature { background: white; padding: 12px 15px; margin: 10px 0; border-radius: 6px; display: flex; align-items: start; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1 style="margin: 0; font-size: 32px;">🎉 You're Now Premium!</h1>
-            <p style="margin: 15px 0 0; opacity: 0.9; font-size: 16px;">Thank you for upgrading</p>
-          </div>
-          
-          <div class="content">
-            <h2 style="color: #333; margin-top: 0;">Hi ${userName}! 🎊</h2>
-            
-            <div class="success-box">
-              <h3 style="margin: 0 0 10px 0; color: #059669;">✅ Payment Successful</h3>
-              <p style="margin: 5px 0; font-size: 16px;"><strong>${planName} Plan</strong> - ${amount}</p>
-              <p style="margin: 5px 0; color: #666; font-size: 14px;">Your subscription is now active!</p>
-            </div>
-            
-            <p style="font-size: 16px;">Welcome to Flipture ${planName}! You now have access to all premium features:</p>
-            
-            <div class="feature">
-              <span style="font-size: 20px; margin-right: 12px;">🚀</span>
-              <div>
-                <strong>Unlimited Flipbooks</strong>
-                <p style="margin: 2px 0; color: #666; font-size: 14px;">Create as many flipbooks as you need</p>
-              </div>
-            </div>
-            
-            <div class="feature">
-              <span style="font-size: 20px; margin-right: 12px;">📊</span>
-              <div>
-                <strong>Advanced Analytics</strong>
-                <p style="margin: 2px 0; color: #666; font-size: 14px;">Track views, visitors, and engagement</p>
-              </div>
-            </div>
-            
-            <div class="feature">
-              <span style="font-size: 20px; margin-right: 12px;">✏️</span>
-              <div>
-                <strong>Edit Anytime</strong>
-                <p style="margin: 2px 0; color: #666; font-size: 14px;">Update flipbook details whenever you want</p>
-              </div>
-            </div>
-            
-            <div class="feature">
-              <span style="font-size: 20px; margin-right: 12px;">⬆️</span>
-              <div>
-                <strong>Higher Upload Limits</strong>
-                <p style="margin: 2px 0; color: #666; font-size: 14px;">${
-                  planName === "Premium" ? "Up to 50MB" : "Up to 30MB"
-                } per PDF</p>
-              </div>
-            </div>
-            
-            <div class="feature">
-              <span style="font-size: 20px; margin-right: 12px;">🎨</span>
-              <div>
-                <strong>No Watermarks</strong>
-                <p style="margin: 2px 0; color: #666; font-size: 14px;">Clean, professional flipbooks</p>
-              </div>
-            </div>
-            
-            <div style="text-align: center; margin-top: 30px;">
-              <a href="https://flipture.netlify.app/dashboard" class="button">Go to Dashboard</a>
-            </div>
-            
-            <p style="color: #666; font-size: 14px; margin-top: 30px; text-align: center;">You can manage your subscription anytime from your settings page.</p>
-          </div>
-          
-          <div class="footer">
-            <p>© ${new Date().getFullYear()} Flipture. All rights reserved.</p>
-            <p>Questions? Reply to this email anytime.</p>
-          </div>
-        </body>
-      </html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #ffffff;
+    "
+  >
+    <table
+      role="presentation"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      width="100%"
+      style="margin: 0; padding: 0"
+    >
+      <tr>
+        <td align="center" style="padding: 20px">
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="600"
+            style="max-width: 600px; width: 100%"
+          >
+            <!-- Header -->
+            <tr>
+              <td
+                style="
+                  background: #5cb338;
+                  color: white;
+                  padding: 40px 20px;
+                  text-align: center;
+                  border-radius: 16px 16px 0 0;
+                "
+              >
+                <h1 style="margin: 0; font-size: 32px; font-weight: 700">
+                  You're Now Premium!
+                </h1>
+                <p style="margin: 15px 0 0; opacity: 1; font-size: 16px">
+                  Thank you for upgrading
+                </p>
+              </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+              <td
+                style="
+                  background: #f9f9f9;
+                  padding: 30px 20px;
+                  border-radius: 0 0 16px 16px;
+                "
+              >
+                <h2 style="color: #333; margin-top: 0; font-weight: 600">
+                  Hi ${userName}!
+                </h2>
+
+                <!-- Success Box -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: white;
+                    margin: 20px 0;
+                    border-radius: 8px;
+                    border: 1px solid #5cb338;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 20px">
+                      <h3
+                        style="
+                          margin: 0 0 10px 0;
+                          color: #5cb338;
+                          font-weight: 600;
+                        "
+                      >
+                        ✅ Payment Successful
+                      </h3>
+                      <p style="margin: 5px 0; font-size: 16px">
+                        <strong>${planName} Plan</strong> - ${amount}
+                      </p>
+                      <p style="margin: 5px 0; color: #666; font-size: 14px">
+                        Your subscription is now active!
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-size: 16px; margin: 15px 0">
+                  Welcome to Flipture ${planName}! You now have access to all
+                  premium features:
+                </p>
+
+                <!-- Feature 1 -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: white;
+                    margin: 10px 0;
+                    border-radius: 6px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 12px 15px">
+                      <table
+                        role="presentation"
+                        cellspacing="0"
+                        cellpadding="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            style="
+                              font-size: 20px;
+                              padding-right: 12px;
+                              vertical-align: top;
+                            "
+                          >
+                            🚀
+                          </td>
+                          <td style="vertical-align: top">
+                            <strong>Unlimited Flipbooks</strong>
+                            <p
+                              style="
+                                margin: 2px 0;
+                                color: #666;
+                                font-size: 14px;
+                              "
+                            >
+                              Create as many flipbooks as you need
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Feature 2 -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: white;
+                    margin: 10px 0;
+                    border-radius: 6px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 12px 15px">
+                      <table
+                        role="presentation"
+                        cellspacing="0"
+                        cellpadding="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            style="
+                              font-size: 20px;
+                              padding-right: 12px;
+                              vertical-align: top;
+                            "
+                          >
+                            📊
+                          </td>
+                          <td style="vertical-align: top">
+                            <strong>Advanced Analytics</strong>
+                            <p
+                              style="
+                                margin: 2px 0;
+                                color: #666;
+                                font-size: 14px;
+                              "
+                            >
+                              Track views, visitors, and engagement
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Feature 3 -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: white;
+                    margin: 10px 0;
+                    border-radius: 6px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 12px 15px">
+                      <table
+                        role="presentation"
+                        cellspacing="0"
+                        cellpadding="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            style="
+                              font-size: 20px;
+                              padding-right: 12px;
+                              vertical-align: top;
+                            "
+                          >
+                            ✏️
+                          </td>
+                          <td style="vertical-align: top">
+                            <strong>Edit Anytime</strong>
+                            <p
+                              style="
+                                margin: 2px 0;
+                                color: #666;
+                                font-size: 14px;
+                              "
+                            >
+                              Update flipbook details whenever you want
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Feature 4 -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: white;
+                    margin: 10px 0;
+                    border-radius: 6px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 12px 15px">
+                      <table
+                        role="presentation"
+                        cellspacing="0"
+                        cellpadding="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            style="
+                              font-size: 20px;
+                              padding-right: 12px;
+                              vertical-align: top;
+                            "
+                          >
+                            ⬆️
+                          </td>
+                          <td style="vertical-align: top">
+                            <strong>Higher Upload Limits</strong>
+                            <p
+                              style="
+                                margin: 2px 0;
+                                color: #666;
+                                font-size: 14px;
+                              "
+                            >
+                              ${
+                                planName === "Premium"
+                                  ? "Up to 50MB"
+                                  : "Up to 30MB"
+                              } per PDF
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Feature 5 -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: white;
+                    margin: 10px 0;
+                    border-radius: 6px;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 12px 15px">
+                      <table
+                        role="presentation"
+                        cellspacing="0"
+                        cellpadding="0"
+                        border="0"
+                      >
+                        <tr>
+                          <td
+                            style="
+                              font-size: 20px;
+                              padding-right: 12px;
+                              vertical-align: top;
+                            "
+                          >
+                            🎨
+                          </td>
+                          <td style="vertical-align: top">
+                            <strong>No Watermarks</strong>
+                            <p
+                              style="
+                                margin: 2px 0;
+                                color: #666;
+                                font-size: 14px;
+                              "
+                            >
+                              Clean, professional flipbooks
+                            </p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+                </table>
+
+                <!-- Button -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                >
+                  <tr>
+                    <td align="center" style="padding-top: 30px">
+                      <a
+                        href="https://flipture.io/dashboard"
+                        style="
+                          display: inline-block;
+                          background: #5cb338;
+                          color: #ffffff;
+                          padding: 14px 35px;
+                          text-decoration: none;
+                          border-radius: 8px;
+                          margin: 0;
+                          font-weight: 600;
+                        "
+                        >Go to Dashboard</a
+                      >
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  style="
+                    color: #666;
+                    font-size: 14px;
+                    margin-top: 30px;
+                    text-align: center;
+                  "
+                >
+                  You can manage your subscription anytime from your settings
+                  page.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                style="
+                  text-align: center;
+                  padding: 30px 20px 0 20px;
+                  color: #666;
+                  font-size: 12px;
+                "
+              >
+                <p style="margin: 5px 0">
+                  © ${new Date().getFullYear()} Flipture. All rights reserved.
+                </p>
+                <p style="margin: 5px 0">
+                  Questions? Reply to this email anytime.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
     `,
     text: `
 🎉 You're Now Premium!

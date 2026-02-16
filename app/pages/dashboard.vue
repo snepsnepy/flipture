@@ -29,7 +29,7 @@
     />
 
     <!-- Development Email Tester (only visible in development) -->
-    <DevEmailTester v-if="false" />
+    <DevEmailTester v-if="true" />
 
     <header class="flex flex-col xl:flex-row gap-4 xl:h-[400px] w-full">
       <!-- Hero -->

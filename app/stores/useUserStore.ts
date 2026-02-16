@@ -58,8 +58,11 @@ export const useUserStore = defineStore('user', () => {
         // Profile should exist due to database trigger on user registration
         // If it doesn't exist, this is an error that needs investigation
         if (fetchError.code === 'PGRST116') {
-          console.error('Profile not found for user - database trigger may have failed');
+          console.error('Profile not found for user - user may have been deleted');
           error.value = 'Profile not found. Please contact support.';
+          
+          // User was likely deleted, sign them out
+          await supabase.auth.signOut();
           return null;
         }
 

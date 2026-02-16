@@ -33,12 +33,17 @@ export default defineEventHandler(async (event) => {
 
     // If already sent, skip
     if (profile.welcome_email_sent) {
-      return { success: true, message: "Welcome email already sent", skipped: true };
+      return {
+        success: true,
+        message: "Welcome email already sent",
+        skipped: true,
+      };
     }
 
     // Check if user's email is verified
-    const { data: authUser, error: authError } = await supabase.auth.admin.getUserById(userId);
-    
+    const { data: authUser, error: authError } =
+      await supabase.auth.admin.getUserById(userId);
+
     if (authError || !authUser) {
       console.error("Auth user not found:", authError);
       return { success: false, message: "Auth user not found" };
@@ -46,8 +51,14 @@ export default defineEventHandler(async (event) => {
 
     // Only send if email is confirmed
     if (!authUser.user.email_confirmed_at) {
-      console.log(`Email not verified yet for user ${userId}, skipping welcome email`);
-      return { success: true, message: "Email not verified yet", skipped: true };
+      console.log(
+        `Email not verified yet for user ${userId}, skipping welcome email`
+      );
+      return {
+        success: true,
+        message: "Email not verified yet",
+        skipped: true,
+      };
     }
 
     // Send welcome email
@@ -84,4 +95,3 @@ export default defineEventHandler(async (event) => {
     return { success: false, message: error.message };
   }
 });
-

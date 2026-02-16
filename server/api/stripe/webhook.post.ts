@@ -99,7 +99,8 @@ export default defineEventHandler(async (event) => {
             if (profile?.email) {
               const userName = profile.full_name || "there";
               const planName = planType === "premium" ? "Premium" : "Standard";
-              const amount = planType === "premium" ? "€59.99/year" : "€5.99/month";
+              const amount =
+                planType === "premium" ? "€59.99/year" : "€5.99/month";
 
               try {
                 const { sendEmail, emailTemplates } = await import(
@@ -118,9 +119,14 @@ export default defineEventHandler(async (event) => {
                   text: emailContent.text,
                 });
 
-                console.log(`📧 Subscription success email sent to ${profile.email}`);
+                console.log(
+                  `📧 Subscription success email sent to ${profile.email}`
+                );
               } catch (emailError) {
-                console.error("Error sending subscription success email:", emailError);
+                console.error(
+                  "Error sending subscription success email:",
+                  emailError
+                );
                 // Don't fail the webhook if email fails
               }
             }

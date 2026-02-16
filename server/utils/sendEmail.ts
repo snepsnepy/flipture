@@ -16,19 +16,22 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
   try {
     // Check if email sending is enabled
     const shouldSendEmails = process.env.SEND_EMAILS === "true";
-    
+
     // For development/testing, just log the email
     if (!shouldSendEmails) {
       console.log("📧 [DEV MODE] Email would be sent:");
       console.log(`To: ${options.to}`);
       console.log(`Subject: ${options.subject}`);
-      console.log(`Body:\n${options.text || options.html.substring(0, 200)}...`);
+      console.log(
+        `Body:\n${options.text || options.html.substring(0, 200)}...`
+      );
       return true;
     }
 
     // Send via Resend
     const resendApiKey = process.env.RESEND_API_KEY;
-    const fromEmail = process.env.RESEND_FROM_EMAIL || "Flipture <onboarding@resend.dev>";
+    const fromEmail =
+      process.env.RESEND_FROM_EMAIL || "Flipture <onboarding@resend.dev>";
 
     if (!resendApiKey) {
       console.error("❌ RESEND_API_KEY not configured");
@@ -223,56 +226,93 @@ If not resolved, your subscription will be cancelled.
     html: `
       <!DOCTYPE html>
       <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #0046ff 0%, #7b2cbf 100%); color: white; padding: 40px 20px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9f9f9; padding: 30px 20px; border-radius: 0 0 10px 10px; }
-            .button { display: inline-block; background: #0046ff; color: white; padding: 14px 35px; text-decoration: none; border-radius: 8px; margin: 20px 0; font-weight: 600; }
-            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
-            .feature-box { background: white; padding: 15px; margin: 15px 0; border-radius: 8px; border-left: 4px solid #0046ff; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1 style="margin: 0; font-size: 32px;">Welcome to Flipture! 🎉</h1>
-            <p style="margin: 15px 0 0; opacity: 0.9; font-size: 16px;">Transform your PDFs into stunning 3D flipbooks</p>
-          </div>
-          
-          <div class="content">
-            <h2 style="color: #333; margin-top: 0;">Hi ${userName}! 👋</h2>
-            
-            <p style="font-size: 16px;">Thank you for joining Flipture! We're excited to help you create beautiful, interactive flipbooks that engage your audience.</p>
-            
-            <div class="feature-box">
-              <h3 style="margin: 0 0 10px 0; color: #0046ff;">✨ What you can do with Flipture:</h3>
-              <ul style="margin: 10px 0; padding-left: 20px;">
-                <li><strong>Upload PDFs</strong> - Drag and drop your documents</li>
-                <li><strong>3D Page Flipping</strong> - Realistic page-turning animations</li>
-                <li><strong>Share Instantly</strong> - Get shareable links in seconds</li>
-                <li><strong>Mobile Friendly</strong> - Perfect on all devices</li>
-                <li><strong>Track Performance</strong> - See views and engagement</li>
-              </ul>
-            </div>
-            
-            <p style="font-size: 16px; margin-top: 25px;">Ready to create your first flipbook? It only takes a few minutes!</p>
-            
-            <div style="text-align: center;">
-              <a href="https://flipture.netlify.app/dashboard" class="button">Create Your First Flipbook</a>
-            </div>
-            
-            <div style="background: #e3f2fd; padding: 15px; margin: 25px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
-              <strong>💡 Pro Tip:</strong> Free accounts can create up to 3 flipbooks. Upgrade anytime for unlimited flipbooks and premium features!
-            </div>
-            
-            <p style="color: #666; font-size: 14px; margin-top: 25px;">Questions? Need help? Just reply to this email - we're here to help!</p>
-          </div>
-          
-          <div class="footer">
-            <p>© ${new Date().getFullYear()} Flipture. All rights reserved.</p>
-            <p>Create and share beautiful flipbooks with ease.</p>
-          </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body style="margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; background-color: #ffffff;">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="margin: 0; padding: 0;">
+            <tr>
+              <td align="center" style="padding: 20px;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width: 600px; width: 100%;">
+                  <!-- Header -->
+                  <tr>
+                    <td style="background: linear-gradient(135deg, #0046ff 0%, #7b2cbf 100%); color: white; padding: 40px 20px; text-align: center; border-radius: 10px 10px 0 0;">
+                      <h1 style="margin: 0; font-size: 32px; font-weight: 700;">Welcome to Flipture! 🎉</h1>
+                      <p style="margin: 15px 0 0; opacity: 0.9; font-size: 16px;">
+                        Transform your PDFs into stunning 3D flipbooks
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Content -->
+                  <tr>
+                    <td style="background: #f9f9f9; padding: 30px 20px; border-radius: 0 0 10px 10px;">
+                      <h2 style="color: #333; margin-top: 0; font-weight: 600;">Hi ${userName}! 👋</h2>
+
+                      <p style="font-size: 16px; margin: 15px 0;">
+                        Thank you for joining Flipture! We're excited to help you create
+                        beautiful, interactive flipbooks that engage your audience.
+                      </p>
+
+                      <!-- Feature Box -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: white; margin: 15px 0; border-radius: 8px; border-left: 4px solid #0046ff;">
+                        <tr>
+                          <td style="padding: 15px;">
+                            <h3 style="margin: 0 0 10px 0; color: #0046ff; font-weight: 600;">
+                              ✨ What you can do with Flipture:
+                            </h3>
+                            <ul style="margin: 10px 0; padding-left: 20px;">
+                              <li style="margin: 5px 0;"><strong>Upload PDFs</strong> - Drag and drop your documents</li>
+                              <li style="margin: 5px 0;"><strong>3D Page Flipping</strong> - Realistic page-turning animations</li>
+                              <li style="margin: 5px 0;"><strong>Share Instantly</strong> - Get shareable links in seconds</li>
+                              <li style="margin: 5px 0;"><strong>Mobile Friendly</strong> - Perfect on all devices</li>
+                              <li style="margin: 5px 0;"><strong>Track Performance</strong> - See views and engagement</li>
+                            </ul>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <p style="font-size: 16px; margin: 25px 0 20px 0;">
+                        Ready to create your first flipbook? It only takes a few minutes!
+                      </p>
+
+                      <!-- Button -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                        <tr>
+                          <td align="center">
+                            <a href="https://flipture.netlify.app/dashboard" style="display: inline-block; background: #0046ff; color: #ffffff; padding: 14px 35px; text-decoration: none; border-radius: 8px; margin: 20px 0; font-weight: 600;">Create Your First Flipbook</a>
+                          </td>
+                        </tr>
+                      </table>
+
+                      <!-- Pro Tip Box -->
+                      <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background: #e3f2fd; margin: 25px 0; border-radius: 8px; border-left: 4px solid #2196f3;">
+                        <tr>
+                          <td style="padding: 15px;">
+                            <strong>💡 Pro Tip:</strong> Free accounts can create up to 3 flipbooks.
+                            Upgrade anytime for unlimited flipbooks and premium features!
+                          </td>
+                        </tr>
+                      </table>
+
+                      <p style="color: #666; font-size: 14px; margin: 25px 0 0 0;">
+                        Questions? Need help? Just reply to this email - we're here to help!
+                      </p>
+                    </td>
+                  </tr>
+                  
+                  <!-- Footer -->
+                  <tr>
+                    <td style="text-align: center; padding: 30px 20px 0 20px; color: #666; font-size: 12px;">
+                      <p style="margin: 5px 0;">© ${new Date().getFullYear()} Flipture. All rights reserved.</p>
+                      <p style="margin: 5px 0;">Create and share beautiful flipbooks with ease.</p>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </table>
         </body>
       </html>
     `,
@@ -301,7 +341,11 @@ Questions? Just reply to this email!
     `.trim(),
   }),
 
-  subscriptionSuccess: (userName: string, planName: string, amount: string) => ({
+  subscriptionSuccess: (
+    userName: string,
+    planName: string,
+    amount: string
+  ) => ({
     subject: "🎉 Welcome to Flipture Premium!",
     html: `
       <!DOCTYPE html>
@@ -363,7 +407,9 @@ Questions? Just reply to this email!
               <span style="font-size: 20px; margin-right: 12px;">⬆️</span>
               <div>
                 <strong>Higher Upload Limits</strong>
-                <p style="margin: 2px 0; color: #666; font-size: 14px;">${planName === "Premium" ? "Up to 50MB" : "Up to 30MB"} per PDF</p>
+                <p style="margin: 2px 0; color: #666; font-size: 14px;">${
+                  planName === "Premium" ? "Up to 50MB" : "Up to 30MB"
+                } per PDF</p>
               </div>
             </div>
             
@@ -402,7 +448,9 @@ YOUR PREMIUM FEATURES:
 🚀 Unlimited Flipbooks - Create as many as you need
 📊 Advanced Analytics - Track views and engagement
 ✏️ Edit Anytime - Update flipbook details
-⬆️ Higher Upload Limits - ${planName === "Premium" ? "Up to 50MB" : "Up to 30MB"} per PDF
+⬆️ Higher Upload Limits - ${
+      planName === "Premium" ? "Up to 50MB" : "Up to 30MB"
+    } per PDF
 🎨 No Watermarks - Clean, professional flipbooks
 
 👉 Go to Dashboard: https://flipture.netlify.app/dashboard
@@ -413,7 +461,12 @@ Manage your subscription anytime from settings.
     `.trim(),
   }),
 
-  renewalReminder: (userName: string, planName: string, renewalDate: string, amount: string) => ({
+  renewalReminder: (
+    userName: string,
+    planName: string,
+    renewalDate: string,
+    amount: string
+  ) => ({
     subject: "Your Flipture Subscription Renews Soon",
     html: `
       <!DOCTYPE html>

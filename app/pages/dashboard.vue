@@ -24,6 +24,9 @@
       v-else-if="!userStore.isLoadingProfile && userStore.isFreePlan && flipbooksLength > 0"
     />
 
+    <!-- Development Email Tester (only visible in development) -->
+    <DevEmailTester v-if="isDev" />
+
     <header class="flex flex-col xl:flex-row gap-4 xl:h-[400px] w-full">
       <!-- Hero -->
       <DashboardHero v-if="!isMobile" />
@@ -210,6 +213,9 @@ const isLoading = ref(true);
 const currentPage = ref(Number.parseInt(route.query.page as string) || 1);
 const itemsPerPage = ref(6); // Items per page
 const { isMobile } = useIsMobile();
+
+// Check if we're in development mode
+const isDev = computed(() => process.env.NODE_ENV === 'development');
 
 // Combined loading state - wait for both flipbooks and profile data
 const isPageLoading = computed(() => isLoading.value || userStore.isLoadingProfile);

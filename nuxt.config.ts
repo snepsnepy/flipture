@@ -77,6 +77,7 @@ export default defineNuxtConfig({
     supabaseSecretKey: process.env.SUPABASE_SECRET_KEY,
     resendApiKey: process.env.RESEND_API_KEY,
     resendFromEmail: process.env.RESEND_FROM_EMAIL,
+    sendEmails: process.env.SEND_EMAILS,
     public: {
       stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
       stripeStandardPriceId: process.env.STRIPE_STANDARD_PRICE_ID,

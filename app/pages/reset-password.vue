@@ -8,7 +8,12 @@
         </p>
       </div>
 
-      <div v-if="!isValidSession" class="alert alert-error">
+      <!-- Loading state while verifying reset link -->
+      <div v-if="isCheckingSession" class="flex justify-center py-6">
+        <span class="loading loading-spinner loading-lg text-primary"></span>
+      </div>
+
+      <div v-else-if="!isValidSession" class="alert alert-error">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="stroke-current shrink-0 h-6 w-6"
@@ -132,7 +137,8 @@ const confirmPassword = ref('');
 const passwordError = ref('');
 const confirmPasswordError = ref('');
 const isLoading = ref(false);
-const isValidSession = ref(true);
+const isValidSession = ref(false);
+const isCheckingSession = ref(true);
 
 const validatePassword = () => {
   passwordError.value = '';
@@ -212,25 +218,29 @@ const handleResetPassword = async () => {
 onMounted(async () => {
   try {
     const route = useRoute();
+    const code = route.query.code as string;
     const tokenHash = route.query.token_hash as string;
     const type = route.query.type as string;
 
-    if (tokenHash && type === 'recovery') {
-      // PKCE flow: exchange the token_hash for a session
+    if (code) {
+      // PKCE flow: exchange the authorization code for a session
+      const { error } = await client.auth.exchangeCodeForSession(code);
+      if (error) throw error;
+      isValidSession.value = true;
+    } else if (tokenHash && type === 'recovery') {
+      // OTP/legacy flow: verify the token_hash directly
       const { error } = await client.auth.verifyOtp({
         token_hash: tokenHash,
         type: 'recovery',
       });
-
-      if (error) {
-        throw error;
-      }
-      // Session is now established — form is shown
+      if (error) throw error;
+      isValidSession.value = true;
     } else {
       // No token in URL — check for an existing session (e.g. user navigated back)
       const { data: { session } } = await client.auth.getSession();
-
-      if (!session) {
+      if (session) {
+        isValidSession.value = true;
+      } else {
         isValidSession.value = false;
         showToast(Toast.ERROR, {
           toastTitle: 'Invalid Reset Link',
@@ -245,6 +255,8 @@ onMounted(async () => {
       toastTitle: 'Invalid Reset Link',
       description: 'This password reset link is invalid or has expired.',
     });
+  } finally {
+    isCheckingSession.value = false;
   }
 });
 </script>

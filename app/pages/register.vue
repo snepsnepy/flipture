@@ -225,7 +225,7 @@
           :whileHover="{ scale: 1.05 }"
           :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
           type="button"
-          class="w-full py-4 md:px-10 bg-primary rounded-3xl border border-primary-content text-primary-content hover:cursor-pointer hover:bg-primary/80 font-poppins font-medium text-base transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none"
+          class="w-full py-4 md:px-10 bg-primary rounded-3xl border border-primary-content text-primary-content hover:cursor-pointer hover:bg-primary/80 font-poppins font-medium text-base transition-[background-color,border-color,color,opacity] duration-200 disabled:opacity-50 disabled:pointer-events-none"
           @click="signUp"
         >
           Create Account

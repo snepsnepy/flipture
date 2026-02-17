@@ -211,18 +211,40 @@ const handleResetPassword = async () => {
 // Check if user has a valid session from the reset link
 onMounted(async () => {
   try {
-    const { data: { session } } = await client.auth.getSession();
-    
-    if (!session) {
-      isValidSession.value = false;
-      showToast(Toast.ERROR, {
-        toastTitle: 'Invalid Reset Link',
-        description: 'This password reset link is invalid or has expired.',
+    const route = useRoute();
+    const tokenHash = route.query.token_hash as string;
+    const type = route.query.type as string;
+
+    if (tokenHash && type === 'recovery') {
+      // PKCE flow: exchange the token_hash for a session
+      const { error } = await client.auth.verifyOtp({
+        token_hash: tokenHash,
+        type: 'recovery',
       });
+
+      if (error) {
+        throw error;
+      }
+      // Session is now established — form is shown
+    } else {
+      // No token in URL — check for an existing session (e.g. user navigated back)
+      const { data: { session } } = await client.auth.getSession();
+
+      if (!session) {
+        isValidSession.value = false;
+        showToast(Toast.ERROR, {
+          toastTitle: 'Invalid Reset Link',
+          description: 'This password reset link is invalid or has expired.',
+        });
+      }
     }
   } catch (error) {
     console.error('Session check error:', error);
     isValidSession.value = false;
+    showToast(Toast.ERROR, {
+      toastTitle: 'Invalid Reset Link',
+      description: 'This password reset link is invalid or has expired.',
+    });
   }
 });
 </script>

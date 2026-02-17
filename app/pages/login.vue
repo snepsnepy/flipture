@@ -150,7 +150,7 @@
             :disabled="isButtonDisabled"
             :whileHover="{ scale: 1.05 }"
             :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
-            class="w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-medium border border-primary-content text-base transition-all duration-300 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary/80 disabled:pointer-events-none disabled:opacity-50"
+            class="w-full py-3 md:py-4 md:px-10 rounded-3xl font-poppins font-medium border border-primary-content text-base transition-[background-color,border-color,color,opacity] duration-200 bg-primary text-primary-content hover:cursor-pointer hover:bg-primary/80 disabled:pointer-events-none disabled:opacity-50"
             @click="signUp"
           >
             Sign In

@@ -5,8 +5,8 @@
     aria-label="Main navigation"
   >
     <div
-        class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-3 md:pb-6 "
-      >
+      class="navbar p-0 flex flex-row justify-between border-b border-base-300 pb-3 md:pb-6"
+    >
       <div class="w-full justify-between items-center flex flex-row">
         <!-- Logo -->
         <NuxtLink
@@ -90,12 +90,12 @@
                   >FAQs</NuxtLink
                 >
               </li>
-              <HorizontalDivider class="pt-2 pb-1"/>
+              <HorizontalDivider class="pt-2 pb-1" />
               <li class="pt-2" role="none">
                 <button
                   @click="handleAuthAction"
                   type="button"
-                  class="w-full py-2 px-4 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-base leading-4 disabled:opacity-50 disabled:pointer-events-none transition-all duration-300"
+                  class="w-full py-2 px-4 text-center border border-primary-content justify-center items-center bg-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-base leading-4 disabled:opacity-50 disabled:pointer-events-none transition-[background-color,border-color,color,opacity] duration-200"
                   role="menuitem"
                   :disabled="isLoading"
                 >
@@ -116,7 +116,7 @@
             type="button"
             :whileHover="{ scale: 1.05 }"
             :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
-            class="w-fit py-2 md:py-4 px-3 md:px-8 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-all duration-300"
+            class="w-fit py-2 md:py-4 px-3 md:px-8 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-[background-color,border-color,color] duration-200"
           >
             Sign In
           </motion.button>
@@ -125,7 +125,7 @@
             :whileHover="{ scale: 1.05 }"
             :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
             type="button"
-            class="w-fit py-2 md:py-4 px-3 md:px-8 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-all duration-300"
+            class="w-fit py-2 md:py-4 px-3 md:px-8 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-[background-color,border-color,color] duration-200"
           >
             Sign Up
           </motion.button>
@@ -136,7 +136,7 @@
 </template>
 
 <script lang="ts" setup>
-import { motion } from "motion-v"
+import { motion } from "motion-v";
 import { useFlipbookStore } from "~/stores/useFlipbookStore";
 
 const client = useSupabaseClient();
@@ -144,7 +144,7 @@ const user = useSupabaseUser();
 const flipbookStore = useFlipbookStore();
 
 const isLoading = ref(false);
-const isAuthenticating = useState('isAuthenticating', () => false);
+const isAuthenticating = useState("isAuthenticating", () => false);
 
 // Only show logged in state when user exists AND not in authentication process
 const isLoggedIn = computed(() => user.value && !isAuthenticating.value);

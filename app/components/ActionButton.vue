@@ -68,9 +68,10 @@ const { isMobile } = useIsMobile();
   .group {
     transition-duration: 200ms !important;
   }
-  
+
   .group span {
     transition-duration: 300ms !important;
     animation-duration: 300ms !important;
   }
-}</style>
+}
+</style>

@@ -303,53 +303,191 @@ Questions? Contact us anytime.
     subject: "Payment Failed - Action Required",
     html: `
       <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #ff3f33 0%, #ff6b6b 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9f9f9; padding: 30px 20px; border-radius: 0 0 10px 10px; }
-            .button { display: inline-block; background: #ff3f33; color: white; padding: 12px 30px; text-decoration: none; border-radius: 8px; margin: 20px 0; }
-            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
-            .alert-box { background: #ffebee; border-left: 4px solid #f44336; padding: 15px; margin: 20px 0; border-radius: 4px; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1 style="margin: 0; font-size: 28px;">⚠️ Payment Failed</h1>
-            <p style="margin: 10px 0 0; opacity: 0.9;">Action Required</p>
-          </div>
-          
-          <div class="content">
-            <h2 style="color: #333; margin-top: 0;">Hi ${userName},</h2>
-            
-            <div class="alert-box">
-              <strong>We couldn't process your payment</strong>
-              <p style="margin: 10px 0 0;">Your subscription payment has failed. This could be due to insufficient funds, an expired card, or other payment issues.</p>
-            </div>
-            
-            <p><strong>What you need to do:</strong></p>
-            <ul>
-              <li>Update your payment method</li>
-              <li>Ensure your card has sufficient funds</li>
-              <li>Check that your card hasn't expired</li>
-            </ul>
-            
-            <p>If we don't receive payment soon, your subscription will be cancelled and you'll be moved to the Free plan.</p>
-            
-            <div style="text-align: center;">
-              <a href="https://flipture.netlify.app/settings" class="button">Update Payment Method</a>
-            </div>
-            
-            <p style="margin-top: 30px; color: #666;">Need help? Contact our support team.</p>
-          </div>
-          
-          <div class="footer">
-            <p>© ${new Date().getFullYear()} Flipture. All rights reserved.</p>
-          </div>
-        </body>
-      </html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #ffffff;
+    "
+  >
+    <table
+      role="presentation"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      width="100%"
+      style="margin: 0; padding: 0"
+    >
+      <tr>
+        <td align="center" style="padding: 20px">
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="600"
+            style="max-width: 600px; width: 100%"
+          >
+            <!-- Header -->
+            <tr>
+              <td
+                style="
+                  background: #ff3f33;
+                  color: white;
+                  padding: 40px 20px;
+                  text-align: center;
+                  border-radius: 16px 16px 0 0;
+                "
+              >
+                <h1 style="margin: 0; font-size: 32px; font-weight: 700">
+                  Payment Failed
+                </h1>
+                <p style="margin: 15px 0 0; opacity: 1; font-size: 16px">
+                  Action Required
+                </p>
+              </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+              <td
+                style="
+                  background: #f9f9f9;
+                  padding: 30px 20px;
+                  border-radius: 0 0 16px 16px;
+                "
+              >
+                <h2 style="color: #333; margin-top: 0; font-weight: 600">
+                  Hi ${userName},
+                </h2>
+
+                <!-- Alert Box -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: rgba(255, 63, 51, 0.05);
+                    margin: 20px 0;
+                    border-radius: 8px;
+                    border: 1px solid #ff3f33;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 20px">
+                      <h3
+                        style="
+                          margin: 0 0 10px 0;
+                          color: #ff3f33;
+                          font-weight: 600;
+                        "
+                      >
+                        We couldn't process your payment
+                      </h3>
+                      <p style="margin: 5px 0; font-size: 16px">
+                        Your subscription payment has failed. This could be due
+                        to insufficient funds, an expired card, or other payment
+                        issues.
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-size: 16px; margin: 20px 0 10px 0">
+                  <strong>What you need to do:</strong>
+                </p>
+                <ul style="margin: 10px 0; padding-left: 30px">
+                  <li style="margin: 5px 0">Update your payment method</li>
+                  <li style="margin: 5px 0">
+                    Ensure your card has sufficient funds
+                  </li>
+                  <li style="margin: 5px 0">
+                    Check that your card hasn't expired
+                  </li>
+                </ul>
+
+                <p style="font-size: 16px; margin: 15px 0">
+                  If we don't receive payment soon, your subscription will be
+                  cancelled and you'll be moved to the Free plan.
+                </p>
+
+                <!-- Button -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                >
+                  <tr>
+                    <td align="center" style="padding-top: 20px">
+                      <a
+                        href="https://flipture.io/settings"
+                        style="
+                          display: inline-block;
+                          background: #ff3f33;
+                          color: #ffffff;
+                          padding: 14px 35px;
+                          text-decoration: none;
+                          border-radius: 8px;
+                          margin: 0;
+                          font-weight: 600;
+                        "
+                        >Update Payment Method</a
+                      >
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  style="
+                    color: #666;
+                    font-size: 14px;
+                    margin-top: 30px;
+                    text-align: center;
+                  "
+                >
+                  Need help? Contact our support team at
+                  <a href="mailto:support@flipture.io">support@flipture.io</a>
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                style="
+                  text-align: center;
+                  padding: 30px 20px 0 20px;
+                  color: #666;
+                  font-size: 12px;
+                "
+              >
+                <p style="margin: 5px 0">
+                  © ${new Date().getFullYear()} Flipture. All rights reserved.
+                </p>
+                <p style="margin: 5px 0">
+                  Create and share beautiful flipbooks with ease.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
     `,
     text: `
 Hi ${userName},
@@ -1081,52 +1219,195 @@ Manage your subscription anytime from settings.
     subject: "Your Flipture Subscription Renews Soon",
     html: `
       <!DOCTYPE html>
-      <html>
-        <head>
-          <meta charset="utf-8">
-          <style>
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
-            .header { background: linear-gradient(135deg, #0046ff 0%, #7b2cbf 100%); color: white; padding: 30px 20px; text-align: center; border-radius: 10px 10px 0 0; }
-            .content { background: #f9f9f9; padding: 30px 20px; border-radius: 0 0 10px 10px; }
-            .button { display: inline-block; background: #0046ff; color: white; padding: 12px 30px; text-decoration: none; border-radius: 8px; margin: 15px 0; }
-            .footer { text-align: center; margin-top: 30px; color: #666; font-size: 12px; }
-            .info-box { background: #e3f2fd; border-left: 4px solid #2196f3; padding: 15px; margin: 20px 0; border-radius: 4px; }
-          </style>
-        </head>
-        <body>
-          <div class="header">
-            <h1 style="margin: 0; font-size: 28px;">Subscription Renewal Notice</h1>
-            <p style="margin: 10px 0 0; opacity: 0.9;">Your ${planName} plan renews soon</p>
-          </div>
-          
-          <div class="content">
-            <h2 style="color: #333; margin-top: 0;">Hi ${userName},</h2>
-            
-            <p>This is a friendly reminder that your <strong>${planName}</strong> subscription will automatically renew on <strong>${renewalDate}</strong>.</p>
-            
-            <div class="info-box">
-              <p style="margin: 0; font-size: 16px;"><strong>Renewal Details:</strong></p>
-              <p style="margin: 5px 0;">Plan: <strong>${planName}</strong></p>
-              <p style="margin: 5px 0;">Amount: <strong>${amount}</strong></p>
-              <p style="margin: 5px 0;">Date: <strong>${renewalDate}</strong></p>
-            </div>
-            
-            <p><strong>No action needed!</strong> Your payment method will be charged automatically and you'll continue enjoying all premium features.</p>
-            
-            <p>If you need to update your payment method or make changes to your subscription, you can do so anytime from your settings.</p>
-            
-            <div style="text-align: center;">
-              <a href="https://flipture.netlify.app/settings" class="button">Manage Subscription</a>
-            </div>
-            
-            <p style="margin-top: 30px; color: #666; font-size: 14px;">If you wish to cancel, you can do so before the renewal date to avoid being charged.</p>
-          </div>
-          
-          <div class="footer">
-            <p>© ${new Date().getFullYear()} Flipture. All rights reserved.</p>
-          </div>
-        </body>
-      </html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+        'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #ffffff;
+    "
+  >
+    <table
+      role="presentation"
+      cellspacing="0"
+      cellpadding="0"
+      border="0"
+      width="100%"
+      style="margin: 0; padding: 0"
+    >
+      <tr>
+        <td align="center" style="padding: 20px">
+          <table
+            role="presentation"
+            cellspacing="0"
+            cellpadding="0"
+            border="0"
+            width="600"
+            style="max-width: 600px; width: 100%"
+          >
+            <!-- Header -->
+            <tr>
+              <td
+                style="
+                  background: #0046ff;
+                  color: white;
+                  padding: 40px 20px;
+                  text-align: center;
+                  border-radius: 16px 16px 0 0;
+                "
+              >
+                <h1 style="margin: 0; font-size: 32px; font-weight: 700">
+                  Subscription Renewal Notice
+                </h1>
+                <p style="margin: 15px 0 0; opacity: 1; font-size: 16px">
+                  Your ${planName} plan renews soon
+                </p>
+              </td>
+            </tr>
+
+            <!-- Content -->
+            <tr>
+              <td
+                style="
+                  background: #f9f9f9;
+                  padding: 30px 20px;
+                  border-radius: 0 0 16px 16px;
+                "
+              >
+                <h2 style="color: #333; margin-top: 0; font-weight: 600">
+                  Hi ${userName},
+                </h2>
+
+                <p style="font-size: 16px; margin: 15px 0">
+                  This is a friendly reminder that your
+                  <strong>${planName}</strong> subscription will automatically
+                  renew on <strong>${renewalDate}</strong>.
+                </p>
+
+                <!-- Info Box -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                  style="
+                    background: rgba(0, 70, 255, 0.05);
+                    margin: 20px 0;
+                    border-radius: 8px;
+                    border: 1px solid #0046ff;
+                  "
+                >
+                  <tr>
+                    <td style="padding: 20px">
+                      <p
+                        style="
+                          margin: 0 0 10px 0;
+                          font-size: 16px;
+                          font-weight: 600;
+                        "
+                      >
+                        <strong>Renewal Details:</strong>
+                      </p>
+                      <p style="margin: 5px 0">
+                        Plan: <strong>${planName}</strong>
+                      </p>
+                      <p style="margin: 5px 0">
+                        Amount: <strong>${amount}</strong>
+                      </p>
+                      <p style="margin: 5px 0">
+                        Date: <strong>${renewalDate}</strong>
+                      </p>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="font-size: 16px; margin: 15px 0">
+                  <strong>No action needed!</strong> Your payment method will be
+                  charged automatically and you'll continue enjoying all premium
+                  features.
+                </p>
+
+                <p style="font-size: 16px; margin: 15px 0">
+                  If you need to update your payment method or make changes to
+                  your subscription, you can do so anytime from your settings.
+                </p>
+
+                <!-- Button -->
+                <table
+                  role="presentation"
+                  cellspacing="0"
+                  cellpadding="0"
+                  border="0"
+                  width="100%"
+                >
+                  <tr>
+                    <td align="center" style="padding-top: 10px">
+                      <a
+                        href="https://flipture.io/settings"
+                        style="
+                          display: inline-block;
+                          background: #0046ff;
+                          color: #ffffff;
+                          padding: 14px 35px;
+                          text-decoration: none;
+                          border-radius: 8px;
+                          margin: 0;
+                          font-weight: 600;
+                        "
+                        >Manage Subscription</a
+                      >
+                    </td>
+                  </tr>
+                </table>
+
+                <p
+                  style="
+                    color: #666;
+                    font-size: 14px;
+                    margin-top: 30px;
+                    text-align: center;
+                  "
+                >
+                  If you wish to cancel, you can do so before the renewal date
+                  to avoid being charged.
+                </p>
+              </td>
+            </tr>
+
+            <!-- Footer -->
+            <tr>
+              <td
+                style="
+                  text-align: center;
+                  padding: 30px 20px 0 20px;
+                  color: #666;
+                  font-size: 12px;
+                "
+              >
+                <p style="margin: 5px 0">
+                  © ${new Date().getFullYear()} Flipture. All rights reserved.
+                </p>
+                <p style="margin: 5px 0">
+                  Create and share beautiful flipbooks with ease.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+
     `,
     text: `
 Hi ${userName},

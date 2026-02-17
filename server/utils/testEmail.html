@@ -45,10 +45,10 @@
                 "
               >
                 <h1 style="margin: 0; font-size: 32px; font-weight: 700">
-                  Subscription Update
+                  Subscription Renewal Notice
                 </h1>
                 <p style="margin: 15px 0 0; opacity: 1; font-size: 16px">
-                  Your subscription has been cancelled
+                  Your ${planName} plan renews soon
                 </p>
               </td>
             </tr>
@@ -67,47 +67,10 @@
                 </h2>
 
                 <p style="font-size: 16px; margin: 15px 0">
-                  We wanted to let you know that your <strong>${planName}</strong> subscription has been cancelled and you've been moved to the <strong>Free plan</strong>.
+                  This is a friendly reminder that your
+                  <strong>${planName}</strong> subscription will automatically
+                  renew on <strong>${renewalDate}</strong>.
                 </p>
-
-                <!-- Warning Box -->
-                <table
-                  role="presentation"
-                  cellspacing="0"
-                  cellpadding="0"
-                  border="0"
-                  width="100%"
-                  style="
-                    background: rgba(255, 128, 64, 0.05);
-                    margin: 20px 0;
-                    border-radius: 8px;
-                    border: 1px solid rgba(255, 128, 64, 1);
-                  "
-                >
-                  <tr>
-                    <td style="padding: 20px">
-                      <h3
-                        style="
-                          margin: 0 0 10px 0;
-                          color: rgba(255, 128, 64, 1);
-                          font-weight: 600;
-                        "
-                      >
-                        ⚠️ What this means for you:
-                      </h3>
-                      <ul style="margin: 10px 0; padding-left: 20px">
-                        <li style="margin: 5px 0">You can keep all your existing flipbooks</li>
-                        <li style="margin: 5px 0">You cannot create new flipbooks if you have 3 or more</li>
-                        <li style="margin: 5px 0">New uploads are limited to 5MB (instead of ${
-                          planName === "Premium" ? "50MB" : "30MB"
-                        })</li>
-                        <li style="margin: 5px 0">You cannot edit flipbook details anymore</li>
-                        <li style="margin: 5px 0">Watermarks will appear on new flipbooks</li>
-                        <li style="margin: 5px 0">Analytics access has been removed</li>
-                      </ul>
-                    </td>
-                  </tr>
-                </table>
 
                 <!-- Info Box -->
                 <table
@@ -117,32 +80,45 @@
                   border="0"
                   width="100%"
                   style="
-                    background: rgba(28, 76, 191, 0.05);
+                    background: rgba(0, 70, 255, 0.05);
                     margin: 20px 0;
                     border-radius: 8px;
-                    border: 1px solid #1c4cbf;
+                    border: 1px solid #0046ff;
                   "
                 >
                   <tr>
                     <td style="padding: 20px">
-                      <h3
+                      <p
                         style="
-                          margin: 0 0 5px 0;
-                          color: #1c4cbf;
+                          margin: 0 0 10px 0;
+                          font-size: 16px;
                           font-weight: 600;
                         "
                       >
-                        💡 Your Content is Safe
-                      </h3>
-                      <p style="margin: 5px 0; color: #1c4cbf">
-                        All your existing flipbooks remain accessible and can be viewed and shared as usual.
+                        <strong>Renewal Details:</strong>
+                      </p>
+                      <p style="margin: 5px 0">
+                        Plan: <strong>${planName}</strong>
+                      </p>
+                      <p style="margin: 5px 0">
+                        Amount: <strong>${amount}</strong>
+                      </p>
+                      <p style="margin: 5px 0">
+                        Date: <strong>${renewalDate}</strong>
                       </p>
                     </td>
                   </tr>
                 </table>
 
-                <p style="font-size: 16px; margin: 20px 0">
-                  If you'd like to regain access to premium features, you can reactivate your subscription at any time.
+                <p style="font-size: 16px; margin: 15px 0">
+                  <strong>No action needed!</strong> Your payment method will be
+                  charged automatically and you'll continue enjoying all premium
+                  features.
+                </p>
+
+                <p style="font-size: 16px; margin: 15px 0">
+                  If you need to update your payment method or make changes to
+                  your subscription, you can do so anytime from your settings.
                 </p>
 
                 <!-- Button -->
@@ -156,7 +132,7 @@
                   <tr>
                     <td align="center" style="padding-top: 10px">
                       <a
-                        href="https://flipture.io/pricing"
+                        href="https://flipture.netlify.app/settings"
                         style="
                           display: inline-block;
                           background: #0046ff;
@@ -167,7 +143,7 @@
                           margin: 0;
                           font-weight: 600;
                         "
-                        >View Pricing Plans</a
+                        >Manage Subscription</a
                       >
                     </td>
                   </tr>
@@ -181,7 +157,8 @@
                     text-align: center;
                   "
                 >
-                  If you have any questions or believe this was a mistake, please contact us at <a href="mailto:support@flipture.io">support@flipture.io</a>.
+                  If you wish to cancel, you can do so before the renewal date
+                  to avoid being charged.
                 </p>
               </td>
             </tr>

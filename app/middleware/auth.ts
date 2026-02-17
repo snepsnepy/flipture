@@ -14,23 +14,51 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     return;
   }
 
-  // If user is not loaded yet, check the session directly from Supabase
-  if (!user.value) {
-    try {
-      // Check if there's an active session in Supabase
-      const {
-        data: { session },
-        error,
-      } = await client.auth.getSession();
+  // Check if there's an active session
+  try {
+    const {
+      data: { session },
+      error: sessionError,
+    } = await client.auth.getSession();
 
-      // If no session exists or there's an error, redirect to login
-      if (!session || error) {
-        return navigateTo("/login");
-      }
-      // If session exists, allow navigation - useSupabaseUser will populate shortly
-    } catch (error) {
-      console.error("Auth middleware error:", error);
+    // If no session exists or there's an error, redirect to login
+    if (!session || sessionError) {
+      console.log("No valid session found, redirecting to login");
       return navigateTo("/login");
     }
+
+    // Verify the user still exists in Supabase Auth
+    const {
+      data: { user: authUser },
+      error: userError,
+    } = await client.auth.getUser();
+
+    if (userError || !authUser) {
+      // User doesn't exist anymore in Supabase Auth, sign them out
+      console.log("User no longer exists in auth, logging out");
+      await client.auth.signOut();
+      return navigateTo("/login");
+    }
+
+    // Check if the user's profile exists in the database
+    const { data: profile, error: profileError } = await client
+      .from("profiles")
+      .select("id")
+      .eq("id", authUser.id)
+      .single();
+
+    if (profileError || !profile) {
+      // Profile doesn't exist, user was likely deleted from the database
+      console.log("User profile no longer exists, logging out");
+      await client.auth.signOut();
+      return navigateTo("/login");
+    }
+
+    // All checks passed, allow navigation
+  } catch (error) {
+    console.error("Auth middleware error:", error);
+    // On any error, sign out and redirect to login
+    await client.auth.signOut();
+    return navigateTo("/login");
   }
 });

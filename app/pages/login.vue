@@ -252,19 +252,31 @@ const signUp = async () => {
   isLoading.value = true;
   isAuthenticating.value = true;
   
-  const { error } = await client.auth.signInWithPassword({
+  const { data, error } = await client.auth.signInWithPassword({
     email: email.value as string,
     password: password.value as string,
   });
 
-  if (!error) {
+  if (!error && data.user) {
+    // Send welcome email on first login after verification
+    try {
+      $fetch("/api/auth/check-and-send-welcome", {
+        method: "POST",
+        body: { userId: data.user.id },
+      }).catch((err) => {
+        console.error("Welcome email check error:", err);
+      });
+    } catch (emailError) {
+      console.error("Welcome email error:", emailError);
+    }
+    
     // Keep loading state visible for smooth transition
     await new Promise(resolve => setTimeout(resolve, 300));
     await navigateTo({ name: "dashboard" });
     // Reset after navigation completes
     isAuthenticating.value = false;
-  } else {
-    console.log(error.message);
+  } else if (error) {
+    console.error(error.message);
     errorMessage.value = error.message;
     isLoading.value = false;
     isAuthenticating.value = false;

@@ -8,13 +8,7 @@
         </p>
       </div>
 
-      <!-- Loading: waiting for PKCE code exchange -->
-      <div v-if="isCheckingSession" class="flex flex-col items-center gap-3 py-4">
-        <span class="loading loading-spinner loading-lg text-primary"></span>
-        <p class="text-sm text-base-content/60 font-poppins">Verifying reset link…</p>
-      </div>
-
-      <div v-else-if="!isValidSession" class="alert alert-error">
+      <div v-if="!isValidSession" class="alert alert-error">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="stroke-current shrink-0 h-6 w-6"
@@ -131,7 +125,6 @@ definePageMeta({
 
 const client = useSupabaseClient();
 const router = useRouter();
-const route = useRoute();
 const { showToast } = useToast();
 
 const newPassword = ref('');
@@ -139,8 +132,7 @@ const confirmPassword = ref('');
 const passwordError = ref('');
 const confirmPasswordError = ref('');
 const isLoading = ref(false);
-const isValidSession = ref(false);
-const isCheckingSession = ref(true);
+const isValidSession = ref(true);
 
 const validatePassword = () => {
   passwordError.value = '';
@@ -216,48 +208,21 @@ const handleResetPassword = async () => {
   }
 };
 
-const markInvalid = () => {
-  isValidSession.value = false;
-  isCheckingSession.value = false;
-  showToast(Toast.ERROR, {
-    toastTitle: 'Invalid Reset Link',
-    description: 'This password reset link is invalid or has expired.',
-  });
-};
-
-// Check if user has a valid session from the reset link.
-// With PKCE flow, Supabase sends a `code` or `token_hash` in the URL which the
-// client exchanges asynchronously for a session. We must wait for the
-// PASSWORD_RECOVERY auth event instead of calling getSession() immediately,
-// otherwise we race against the code exchange and always find no session.
+// Check if user has a valid session from the reset link
 onMounted(async () => {
-  // Listen for PASSWORD_RECOVERY — fires once the code/token from the email
-  // link has been successfully exchanged for a session.
-  const { data: { subscription } } = client.auth.onAuthStateChange((event, session) => {
-    if (event === 'PASSWORD_RECOVERY') {
-      isValidSession.value = true;
-      isCheckingSession.value = false;
-    } else if (event === 'INITIAL_SESSION') {
-      if (session) {
-        // Already has an active session (e.g. user refreshed after code exchange)
-        isValidSession.value = true;
-        isCheckingSession.value = false;
-      } else if (!route.query.code && !route.query.token_hash) {
-        // No session and no reset params in URL → definitely an invalid link
-        markInvalid();
-      }
-      // If reset params exist, keep waiting for the PASSWORD_RECOVERY event
+  try {
+    const { data: { session } } = await client.auth.getSession();
+    
+    if (!session) {
+      isValidSession.value = false;
+      showToast(Toast.ERROR, {
+        toastTitle: 'Invalid Reset Link',
+        description: 'This password reset link is invalid or has expired.',
+      });
     }
-  });
-
-  onUnmounted(() => subscription.unsubscribe());
-
-  // Safety timeout: if the auth state never resolves (e.g. expired/invalid code),
-  // stop the spinner and show an error after 10 seconds.
-  setTimeout(() => {
-    if (isCheckingSession.value) {
-      markInvalid();
-    }
-  }, 10000);
+  } catch (error) {
+    console.error('Session check error:', error);
+    isValidSession.value = false;
+  }
 });
 </script>

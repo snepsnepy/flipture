@@ -25,7 +25,7 @@
             <h1
               class="text-[40px] leading-10 font-medium font-poppins text-base-content -tracking-[0.2%]"
             >
-              Sign Up 
+              Sign Up
             </h1>
             <Icon name="noto-v1:handshake" :size="48" />
           </div>
@@ -72,7 +72,7 @@
               >
                 <template #icon>
                   <svg
-                    class="h-[1em] opacity-50"
+                    class="h-5 opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -102,7 +102,7 @@
               >
                 <template #icon>
                   <svg
-                    class="h-[1em] opacity-50"
+                    class="h-5 opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -137,7 +137,7 @@
               >
                 <template #icon>
                   <svg
-                    class="h-[1em] opacity-50"
+                    class="h-5 opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -174,16 +174,18 @@
           <span
             class="text-sm leading-4 text-base-content font-poppins whitespace-normal hover:cursor-default"
             >By creating an account, I agree to the
-            <NuxtLink
+            <UnderlineLink
               @click="navigateToTerms"
-              class="text-primary font-medium underline hover:cursor-pointer"
-              >Terms of Service</NuxtLink
+              text-class="text-primary font-medium font-poppins"
             >
+              Terms of Service
+            </UnderlineLink>
             and acknowledge the
-            <NuxtLink
+            <UnderlineLink
               @click="navigateToPrivacyPolicy"
-              class="text-primary font-medium underline hover:cursor-pointer"
-              >Privacy Policy</NuxtLink
+              text-class="text-primary font-medium font-poppins"
+            >
+              Privacy Policy </UnderlineLink
             >.
           </span>
         </label>
@@ -239,11 +241,12 @@
           class="flex gap-1 text-sm leading-4 justify-center font-poppins"
         >
           Already have an account?
-          <span
+          <UnderlineLink
             @click="goToLogin"
-            class="whitespace-nowrap font-medium text-primary hover:cursor-pointer hover:underline"
-            >Login</span
+            text-class="text-primary font-medium font-poppins"
           >
+            Login
+          </UnderlineLink>
         </footer>
       </div>
     </section>
@@ -253,7 +256,7 @@
 <script setup lang="ts">
 import { useIsMobile } from "~/composables/useIsMobile";
 import { createRegisterSchema } from "~~/schema/form.schema";
-import { motion } from "motion-v"
+import { motion } from "motion-v";
 
 definePageMeta({
   layout: "auth",
@@ -263,7 +266,7 @@ const client = useSupabaseClient();
 
 const errorMessage = ref("");
 const isLoading = ref(false);
-const isAuthenticating = useState('isAuthenticating', () => false);
+const isAuthenticating = useState("isAuthenticating", () => false);
 const terms = ref(false);
 const { isMobile } = useIsMobile();
 const validationSchema = createRegisterSchema();
@@ -304,7 +307,7 @@ onMounted(() => {
 const signUp = async () => {
   isLoading.value = true;
   isAuthenticating.value = true;
-  
+
   const { data, error } = await client.auth.signUp({
     email: email.value as string,
     password: password.value as string,
@@ -322,9 +325,9 @@ const signUp = async () => {
     // See: server/api/auth/send-welcome-on-verify.ts
     // This ensures users only get ONE email at registration (the verification email)
     // and receive the welcome email AFTER they confirm their email address
-    
+
     // Keep loading state visible for smooth transition
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     await navigateTo({ name: "login" });
     // Reset after navigation completes
     isAuthenticating.value = false;
@@ -338,7 +341,7 @@ const signUp = async () => {
 
 const goToLogin = () => {
   return navigateTo({ name: "login" });
-} 
+};
 
 const navigateToTerms = () => {
   return navigateTo({ name: "terms" });

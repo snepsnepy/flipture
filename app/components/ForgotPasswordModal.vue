@@ -11,10 +11,11 @@
       </form>
 
       <h3 class="font-delight font-bold text-2xl mb-4">Reset Password</h3>
-      
+
       <div class="space-y-4">
         <p class="text-sm text-base-content/80 font-poppins">
-          Enter your email address and we'll send you a link to reset your password.
+          Enter your email address and we'll send you a link to reset your
+          password.
         </p>
 
         <Input
@@ -28,7 +29,7 @@
         >
           <template #icon>
             <svg
-              class="h-[1em] opacity-50"
+              class="h-5 opacity-50"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
             >
@@ -75,23 +76,30 @@
         </div>
 
         <div class="modal-action">
-          <button
-            type="button"
-            class="btn btn-ghost"
+          <motion.button
             @click="closeModal"
             :disabled="isLoading"
+            type="button"
+            :whileHover="{ scale: 1.05 }"
+            :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
+            class="w-fit py-2 md:py-4 px-3 md:px-8 bg-base-100 border border-base-content rounded-full text-base-content hover:cursor-pointer hover:bg-base-300 hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-[background-color,border-color,color] duration-200"
           >
             Cancel
-          </button>
-          <button
-            type="button"
-            class="btn btn-primary"
+          </motion.button>
+          <motion.button
             @click="handleResetPassword"
             :disabled="isLoading || !email || !!emailError"
+            :whileHover="{ scale: 1.05 }"
+            :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
+            type="button"
+            class="w-fit py-2 md:py-4 px-3 md:px-8 bg-primary border border-primary rounded-full text-primary-content hover:cursor-pointer hover:bg-primary-content hover:border hover:border-base-content hover:text-base-content font-poppins font-medium text-sm md:text-lg leading-4 transition-[background-color,border-color,color] duration-200"
           >
-            <span v-if="isLoading" class="loading loading-spinner loading-sm"></span>
-            {{ isLoading ? 'Sending...' : 'Send Reset Link' }}
-          </button>
+            <span
+              v-if="isLoading"
+              class="loading loading-spinner loading-sm"
+            ></span>
+            {{ isLoading ? "Sending..." : "Send Reset Link" }}
+          </motion.button>
         </div>
       </div>
     </div>
@@ -102,27 +110,28 @@
 </template>
 
 <script setup lang="ts">
-import Input from './Input.vue';
+import { motion } from "motion-v";
+import Input from "./Input.vue";
 
 const modal = ref<HTMLDialogElement | null>(null);
-const email = ref('');
-const emailError = ref('');
-const successMessage = ref('');
-const errorMessage = ref('');
+const email = ref("");
+const emailError = ref("");
+const successMessage = ref("");
+const errorMessage = ref("");
 const isLoading = ref(false);
 
 const client = useSupabaseClient();
 const config = useRuntimeConfig();
 
 const validateEmail = () => {
-  emailError.value = '';
+  emailError.value = "";
   if (!email.value) {
-    emailError.value = 'Email is required';
+    emailError.value = "Email is required";
     return false;
   }
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!emailRegex.test(email.value)) {
-    emailError.value = 'Please enter a valid email';
+    emailError.value = "Please enter a valid email";
     return false;
   }
   return true;
@@ -132,13 +141,13 @@ const handleResetPassword = async () => {
   if (!validateEmail()) return;
 
   isLoading.value = true;
-  successMessage.value = '';
-  errorMessage.value = '';
+  successMessage.value = "";
+  errorMessage.value = "";
 
   try {
     // Get the current origin for the redirect URL
     const origin = globalThis.location.origin;
-    
+
     const { error } = await client.auth.resetPasswordForEmail(email.value, {
       redirectTo: `${origin}/reset-password`,
     });
@@ -147,17 +156,18 @@ const handleResetPassword = async () => {
       throw error;
     }
 
-    successMessage.value = 'Password reset link sent! Check your email.';
-    
+    successMessage.value = "Password reset link sent! Check your email.";
+
     // Clear form after 3 seconds and close modal
     setTimeout(() => {
-      email.value = '';
-      successMessage.value = '';
+      email.value = "";
+      successMessage.value = "";
       closeModal();
     }, 3000);
   } catch (error: any) {
-    console.error('Password reset error:', error);
-    errorMessage.value = error.message || 'Failed to send reset link. Please try again.';
+    console.error("Password reset error:", error);
+    errorMessage.value =
+      error.message || "Failed to send reset link. Please try again.";
   } finally {
     isLoading.value = false;
   }
@@ -166,10 +176,10 @@ const handleResetPassword = async () => {
 const openModal = () => {
   modal.value?.showModal();
   // Reset state when opening
-  email.value = '';
-  emailError.value = '';
-  successMessage.value = '';
-  errorMessage.value = '';
+  email.value = "";
+  emailError.value = "";
+  successMessage.value = "";
+  errorMessage.value = "";
 };
 
 const closeModal = () => {

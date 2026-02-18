@@ -28,11 +28,12 @@
           </h1>
           <p class="text-base-content text-base leading-4 font-poppins">
             New to Flipture?
-            <span
-              class="text-primary font-medium hover:cursor-pointer hover:underline"
+            <UnderlineLink
               @click="goToRegister"
-              >Sign Up</span
+              text-class="text-base leading-4 text-primary font-medium font-poppins"
             >
+              Sign Up
+            </UnderlineLink>
           </p>
         </header>
 
@@ -50,7 +51,7 @@
               >
                 <template #icon>
                   <svg
-                    class="h-[1em] opacity-50"
+                    class="h-5 opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -80,7 +81,7 @@
               >
                 <template #icon>
                   <svg
-                    class="h-[1em] opacity-50"
+                    class="h-5 opacity-50"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
                   >
@@ -106,11 +107,12 @@
               </Input>
             </div>
 
-            <span
+            <UnderlineLink
               @click="openForgotPasswordModal"
-              class="text-sm leading-4 text-primary font-medium font-poppins hover:cursor-pointer hover:underline w-fit"
-              >Forgot your password?</span
+              text-class="text-sm leading-4 text-primary font-medium font-poppins"
             >
+              Forgot your password?
+            </UnderlineLink>
           </div>
 
           <section
@@ -179,10 +181,15 @@
         <footer
           class="flex gap-4 text-sm leading-4 justify-center font-poppins"
         >
-          <a href="mailto:contact@flipture.io" class="hover:text-primary whitespace-nowrap"
+          <a
+            href="mailto:contact@flipture.io"
+            class="hover:text-primary whitespace-nowrap"
             >Customer Support</a
           >
-          <NuxtLink @click="navigateToTerms" class="hover:text-primary whitespace-nowrap hover:cursor-pointer">
+          <NuxtLink
+            @click="navigateToTerms"
+            class="hover:text-primary whitespace-nowrap hover:cursor-pointer"
+          >
             Terms of Service
           </NuxtLink>
         </footer>
@@ -195,7 +202,7 @@
 </template>
 
 <script setup lang="ts">
-import { motion } from "motion-v"
+import { motion } from "motion-v";
 import { useIsMobile } from "~/composables/useIsMobile";
 import { useForm, useField } from "vee-validate";
 import { createLoginSchema } from "~~/schema/form.schema";
@@ -222,7 +229,7 @@ const { value: password, errorMessage: passwordErrors } =
   useField<string>("password");
 
 const isLoading = ref(false);
-const isAuthenticating = useState('isAuthenticating', () => false);
+const isAuthenticating = useState("isAuthenticating", () => false);
 
 onMounted(() => {
   // Reset sign-out state when login page loads
@@ -251,7 +258,7 @@ const isFormValid = computed(() => {
 const signUp = async () => {
   isLoading.value = true;
   isAuthenticating.value = true;
-  
+
   const { data, error } = await client.auth.signInWithPassword({
     email: email.value as string,
     password: password.value as string,
@@ -269,9 +276,9 @@ const signUp = async () => {
     } catch (emailError) {
       console.error("Welcome email error:", emailError);
     }
-    
+
     // Keep loading state visible for smooth transition
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     await navigateTo({ name: "dashboard" });
     // Reset after navigation completes
     isAuthenticating.value = false;

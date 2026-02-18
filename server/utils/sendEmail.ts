@@ -17,12 +17,6 @@ export async function sendEmail(options: EmailOptions): Promise<boolean> {
     // Check if email sending is enabled
     const shouldSendEmails = process.env.SEND_EMAILS === "true";
 
-    console.log(`📧 Email sending configuration:`);
-    console.log(`  - SEND_EMAILS env var: "${process.env.SEND_EMAILS}"`);
-    console.log(`  - Should send: ${shouldSendEmails}`);
-    console.log(`  - RESEND_API_KEY exists: ${!!process.env.RESEND_API_KEY}`);
-    console.log(`  - RESEND_FROM_EMAIL: ${process.env.RESEND_FROM_EMAIL}`);
-
     // For development/testing, just log the email
     if (!shouldSendEmails) {
       console.log("📧 [DEV MODE] Email would be sent:");

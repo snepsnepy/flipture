@@ -225,7 +225,7 @@ const { isMobile } = useIsMobile();
 
 // Combined loading state - wait for both flipbooks and profile data
 const isPageLoading = computed(
-  () => isLoading.value || userStore.isLoadingProfile
+  () => isLoading.value || userStore.isLoadingProfile,
 );
 
 // Check if search query is empty
@@ -361,7 +361,7 @@ const fetchFlipbooks = async () => {
             stopWatching();
           }
         },
-        { immediate: true }
+        { immediate: true },
       );
     } else {
       isLoading.value = false;
@@ -400,7 +400,7 @@ onMounted(async () => {
         navigateTo("/login");
       }
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   // If user is already loaded, fetch data immediately
@@ -420,7 +420,7 @@ const handleFlipbookCreated = async () => {
 const handleFlipbookDeleted = (deletedFlipbookId: string) => {
   // Remove from local state
   flipbooks.value = flipbooks.value.filter(
-    (flipbook) => flipbook.id !== deletedFlipbookId
+    (flipbook) => flipbook.id !== deletedFlipbookId,
   );
 
   // Update the computed values
@@ -437,7 +437,7 @@ const handleFlipbookDeleted = (deletedFlipbookId: string) => {
 const handleFlipbookUpdated = (updatedFlipbook: Flipbook) => {
   // Update local state
   const index = flipbooks.value.findIndex(
-    (flipbook) => flipbook.id === updatedFlipbook.id
+    (flipbook) => flipbook.id === updatedFlipbook.id,
   );
   if (index !== -1) {
     flipbooks.value[index] = updatedFlipbook;

@@ -1,15 +1,6 @@
 <template>
   <dialog ref="modal" class="modal">
     <div class="modal-box bg-base-100 border-2 border-base-content rounded-3xl">
-      <form method="dialog">
-        <button
-          class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-          @click="closeModal"
-        >
-          ✕
-        </button>
-      </form>
-
       <h3 class="font-delight font-bold text-2xl mb-4">Reset Password</h3>
 
       <div class="space-y-4">

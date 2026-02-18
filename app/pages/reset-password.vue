@@ -143,6 +143,7 @@ import { Toast } from "~/types";
 
 definePageMeta({
   layout: "base",
+  middleware: ["auth"],
 });
 
 const client = useSupabaseClient();
@@ -154,7 +155,7 @@ const confirmPassword = ref("");
 const passwordError = ref("");
 const confirmPasswordError = ref("");
 const isLoading = ref(false);
-const isValidSession = ref<boolean | null>(null);
+const isValidSession = ref(true);
 
 const validatePassword = () => {
   passwordError.value = "";
@@ -232,37 +233,14 @@ const handleResetPassword = async () => {
   }
 };
 
-// Only grant access when Supabase fires the PASSWORD_RECOVERY event,
-// which exclusively happens when the user arrives via a reset-password email link.
-// A regular logged-in user navigating here directly will not trigger this event.
-let recoveryDetected = false;
-
-const {
-  data: { subscription },
-} = client.auth.onAuthStateChange((event) => {
-  if (event === "PASSWORD_RECOVERY") {
-    recoveryDetected = true;
-    isValidSession.value = true;
-  }
-});
-
+// Check if user has a valid session from the reset link
 onMounted(async () => {
-  // Give Supabase enough time to process the token in the URL and fire onAuthStateChange.
-  await new Promise((resolve) => setTimeout(resolve, 500));
-
-  if (recoveryDetected) return;
-
-  // No PASSWORD_RECOVERY event — determine why and respond accordingly.
   try {
     const {
       data: { session },
     } = await client.auth.getSession();
 
-    if (session) {
-      // Regular logged-in user who typed the URL manually — send them away.
-      await navigateTo("/dashboard");
-    } else {
-      // No session at all — link is invalid or already expired.
+    if (!session) {
       isValidSession.value = false;
       showToast(Toast.ERROR, {
         toastTitle: "Invalid Reset Link",
@@ -273,10 +251,6 @@ onMounted(async () => {
     console.error("Session check error:", error);
     isValidSession.value = false;
   }
-});
-
-onUnmounted(() => {
-  subscription.unsubscribe();
 });
 
 const navigateToLogin = () => {

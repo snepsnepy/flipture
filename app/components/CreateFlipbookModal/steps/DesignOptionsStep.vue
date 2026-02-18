@@ -51,16 +51,15 @@
                 ? 'opacity-60 cursor-default' 
                 : 'cursor-pointer'
             ]"
-            @click="selectCoverOption(option.value)"
           >
             <input
               type="radio"
               name="cover-option"
               class="radio border-base-content checked:text-blue-600 checked:border-base-content"
               :value="option.value"
-              v-model="localFormData.coverOption"
+              :checked="localFormData.coverOption === option.value"
               :disabled="option.isPremium && userStore.isFreePlan && !userStore.isLoadingProfile"
-              @change="updateFormData"
+              @change="selectCoverOption(option.value)"
             />
             <span
               class="label-text font-poppins text-base-content text-sm md:text-base md:leading-4 flex items-center gap-2"

@@ -1,15 +1,16 @@
 <script setup lang="ts">
-// Initialize auth state management
-const { initialize } = useAuthStateManager();
+// Initialize auth state management immediately (client-side only)
+// Must be in setup (not onMounted) to catch PASSWORD_RECOVERY events
+// before child components mount
+let cleanup: (() => void) | undefined;
 
-onMounted(() => {
-  // Set up auth listeners and periodic checks
-  const cleanup = initialize();
+if (process.client) {
+  const { initialize } = useAuthStateManager();
+  cleanup = initialize();
+}
 
-  // Clean up on unmount
-  onUnmounted(() => {
-    cleanup();
-  });
+onUnmounted(() => {
+  cleanup?.();
 });
 </script>
 

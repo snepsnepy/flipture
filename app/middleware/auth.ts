@@ -1,6 +1,7 @@
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const user = useSupabaseUser();
   const client = useSupabaseClient();
+  const isRecoverySession = useState("isRecoverySession", () => false);
 
   // Protected routes that require authentication
   const protectedRoutes = ["/dashboard", "/settings", "/create-flipbook"];
@@ -12,6 +13,11 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   if (!isProtectedRoute) {
     return;
+  }
+
+  // If user is in a password recovery session, they should not access protected routes
+  if (isRecoverySession.value) {
+    return navigateTo("/reset-password");
   }
 
   // Check if there's an active session

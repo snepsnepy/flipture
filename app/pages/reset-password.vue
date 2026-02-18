@@ -148,14 +148,23 @@ definePageMeta({
 
 const client = useSupabaseClient();
 const router = useRouter();
+const route = useRoute();
 const { showToast } = useToast();
+const isRecoverySession = useState("isRecoverySession", () => false);
+
+// Detect recovery flow via URL code parameter (PKCE flow)
+// The ?code= param is present when user navigates from recovery email
+if (route.query.code) {
+  isRecoverySession.value = true;
+}
 
 const newPassword = ref("");
 const confirmPassword = ref("");
 const passwordError = ref("");
 const confirmPasswordError = ref("");
 const isLoading = ref(false);
-const isValidSession = ref(true);
+// Start as valid only if we already know we have a recovery code in the URL
+const isValidSession = ref(isRecoverySession.value);
 
 const validatePassword = () => {
   passwordError.value = "";
@@ -214,7 +223,8 @@ const handleResetPassword = async () => {
       duration: 4000,
     });
 
-    // Sign out the user after password reset
+    // Clear recovery session state and sign out
+    isRecoverySession.value = false;
     await client.auth.signOut();
 
     // Redirect to login after a short delay
@@ -233,8 +243,18 @@ const handleResetPassword = async () => {
   }
 };
 
-// Check if user has a valid session from the reset link
+// Check if user arrived here via a valid password recovery link
 onMounted(async () => {
+  // If no recovery code was in the URL, this is not a valid reset flow
+  if (!isRecoverySession.value) {
+    isValidSession.value = false;
+    showToast(Toast.ERROR, {
+      toastTitle: "Invalid Reset Link",
+      description: "This password reset link is invalid or has expired.",
+    });
+    return;
+  }
+
   try {
     const {
       data: { session },
@@ -242,6 +262,7 @@ onMounted(async () => {
 
     if (!session) {
       isValidSession.value = false;
+      isRecoverySession.value = false;
       showToast(Toast.ERROR, {
         toastTitle: "Invalid Reset Link",
         description: "This password reset link is invalid or has expired.",
@@ -250,6 +271,7 @@ onMounted(async () => {
   } catch (error) {
     console.error("Session check error:", error);
     isValidSession.value = false;
+    isRecoverySession.value = false;
   }
 });
 

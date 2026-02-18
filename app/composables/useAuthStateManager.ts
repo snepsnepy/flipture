@@ -6,6 +6,7 @@ export function useAuthStateManager() {
   const supabase = useSupabaseClient();
   const router = useRouter();
   const user = useSupabaseUser();
+  const isRecoverySession = useState("isRecoverySession", () => false);
 
   /**
    * Protected routes that require authentication
@@ -54,8 +55,16 @@ export function useAuthStateManager() {
   const setupAuthListener = () => {
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        // Handle password recovery - user clicked reset link in email
+        if (event === "PASSWORD_RECOVERY") {
+          isRecoverySession.value = true;
+          await router.push("/reset-password");
+          return;
+        }
+
         // Handle sign out event
         if (event === "SIGNED_OUT") {
+          isRecoverySession.value = false;
           const currentPath = router.currentRoute.value.path;
           if (isProtectedRoute(currentPath)) {
             await router.push("/login");
@@ -134,5 +143,6 @@ export function useAuthStateManager() {
 
   return {
     initialize,
+    isRecoverySession,
   };
 }

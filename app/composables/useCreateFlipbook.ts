@@ -17,9 +17,10 @@ type ValidationResponse =
       success: false;
       error: string;
       message: string;
-      limit: number;
-      currentValue: number;
+      limit?: number;
+      currentValue?: number;
     };
+
 
 export const useCreateFlipbook = () => {
   const { showToast } = useToast();
@@ -55,15 +56,19 @@ export const useCreateFlipbook = () => {
 
     isLoading.value = true;
 
-    try {
-      const client = useSupabaseClient<Database>();
-      const user = useSupabaseUser();
+    // Declared outside try so the catch block can access them for cleanup
+    const client = useSupabaseClient<Database>();
+    const user = useSupabaseUser();
+    let uploadedFileName: string | null = null;
 
+    try {
       if (!user.value) {
         throw new Error("User not authenticated");
       }
 
-      // Server-side validation - verify limits before uploading
+      // Pre-upload server check: fast-fail before wasting bandwidth on the file
+      // upload. The create endpoint re-validates everything authoritatively, but
+      // this saves the round-trip when we already know it will be rejected.
       const validationResponse = await $fetch<ValidationResponse>(
         "/api/flipbooks/validate-create",
         {
@@ -71,16 +76,21 @@ export const useCreateFlipbook = () => {
           body: {
             userId: user.value.sub,
             fileSize: formData.file.size,
+            coverOption: formData.coverOption,
+            backgroundGradient: formData.backgroundGradient || "deep-white",
           },
         }
       );
 
       if (!validationResponse.success) {
+        let toastTitle = "Limit Reached";
+        if (validationResponse.error === "premium_feature_required") {
+          toastTitle = "Pro Feature";
+        } else if (validationResponse.error === "file_size_exceeded") {
+          toastTitle = "File Too Large";
+        }
         showToast(Toast.ERROR, {
-          toastTitle:
-            validationResponse.error === "file_size_exceeded"
-              ? "File Too Large"
-              : "Limit Reached",
+          toastTitle,
           description: validationResponse.message || validationResponse.error,
           duration: 6000,
           action: {
@@ -98,11 +108,11 @@ export const useCreateFlipbook = () => {
 
       // Upload file to Supabase Storage
       const fileExt = formData.file.name.split(".").pop();
-      const fileName = `${user.value.sub}/${Date.now()}.${fileExt}`;
+      uploadedFileName = `${user.value.sub}/${Date.now()}.${fileExt}`;
 
       const { error: uploadError } = await client.storage
         .from("uploads")
-        .upload(fileName, formData.file);
+        .upload(uploadedFileName, formData.file);
 
       if (uploadError) {
         throw new Error(`Upload failed: ${uploadError.message}`);
@@ -111,38 +121,47 @@ export const useCreateFlipbook = () => {
       // Get public URL for the uploaded file
       const {
         data: { publicUrl },
-      } = client.storage.from("uploads").getPublicUrl(fileName);
+      } = client.storage.from("uploads").getPublicUrl(uploadedFileName);
 
-      // Create flipbook record
-      const { error } = await client
-        .from("flipbooks")
-        .insert({
+      // Server-side INSERT — the server re-reads the user's plan from the
+      // database and enforces premium-feature restrictions, so client-side
+      // state manipulation cannot influence what is stored.
+      await $fetch("/api/flipbooks/create", {
+        method: "POST",
+        body: {
+          userId: user.value.sub,
           title: formData.title,
-          company_name: formData.company,
+          company: formData.company,
           description: formData.description,
-          user_id: user.value.sub,
-          pdf_file_url: publicUrl,
-          pdf_file_name: formData.file.name,
-          pdf_file_size: formData.file.size,
-          cover_options: formData.coverOption,
-          background_gradient: formData.backgroundGradient || "deep-white",
-        } as unknown as never)
-        .single();
+          pdfFileUrl: publicUrl,
+          pdfFileName: formData.file.name,
+          pdfFileSize: formData.file.size,
+          coverOption: formData.coverOption,
+          backgroundGradient: formData.backgroundGradient || "deep-white",
+        },
+      });
 
-      if (error) {
-        // If database insert fails, clean up uploaded file
-        await client.storage.from("uploads").remove([fileName]);
-        throw new Error(`Database error: ${error.message}`);
-      }
-
+      // Insert succeeded — nothing to clean up
+      uploadedFileName = null;
       return { success: true, error: null };
     } catch (error: any) {
       console.error("Error creating flipbook:", error);
+
+      // Clean up the orphaned storage file when the insert was rejected
+      if (uploadedFileName) {
+        await client.storage
+          .from("uploads")
+          .remove([uploadedFileName])
+          .catch(() => {});
+      }
+
+      const message: string =
+        error?.data?.statusMessage ?? error?.message ?? "Something went wrong";
       showToast(Toast.ERROR, {
         toastTitle: "Error creating flipbook",
-        description: error.message,
+        description: message,
       });
-      return { success: false, error: error.message };
+      return { success: false, error: message };
     } finally {
       isLoading.value = false;
     }

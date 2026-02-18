@@ -17,11 +17,42 @@ const PLAN_LIMITS = {
   },
 };
 
+// Premium-only feature values — free plan may only use values NOT in these sets
+const PREMIUM_COVER_OPTIONS = new Set(["first-page", "first-last-page"]);
+const PREMIUM_GRADIENTS = new Set([
+  "royal-blue",
+  "purple-dream",
+  "sunset-orange",
+  "fire-red",
+  "spring-green",
+  "arctic-blue",
+]);
+
+function checkPremiumFeatureAccess(
+  coverOption: string | undefined,
+  backgroundGradient: string | undefined
+): { allowed: boolean; message?: string } {
+  if (coverOption && PREMIUM_COVER_OPTIONS.has(coverOption)) {
+    return {
+      allowed: false,
+      message: "The selected cover option requires a Standard or Premium plan",
+    };
+  }
+  if (backgroundGradient && PREMIUM_GRADIENTS.has(backgroundGradient)) {
+    return {
+      allowed: false,
+      message:
+        "The selected background gradient requires a Standard or Premium plan",
+    };
+  }
+  return { allowed: true };
+}
+
 export default defineEventHandler(async (event) => {
   try {
     // Get request body
     const body = await readBody(event);
-    const { userId, fileSize } = body;
+    const { userId, fileSize, coverOption, backgroundGradient } = body;
 
     if (!userId || fileSize === undefined) {
       throw createError({
@@ -81,6 +112,21 @@ export default defineEventHandler(async (event) => {
       : "free";
 
     const limits = PLAN_LIMITS[userPlan] || PLAN_LIMITS.free;
+
+    // Reject premium features for free-plan users
+    if (userPlan === "free") {
+      const featureCheck = checkPremiumFeatureAccess(
+        coverOption,
+        backgroundGradient
+      );
+      if (!featureCheck.allowed) {
+        return {
+          success: false,
+          error: "premium_feature_required",
+          message: featureCheck.message,
+        };
+      }
+    }
 
     // Check file size
     if (fileSize > limits.maxFileSize) {

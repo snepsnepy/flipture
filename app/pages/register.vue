@@ -165,30 +165,47 @@
           </div>
         </section>
 
-        <label class="label flex items-start">
-          <input
-            type="checkbox"
-            v-model="terms"
-            class="checkbox rounded-[6px] checked:bg-primary checked:text-primary-content"
-          />
-          <span
-            class="text-sm leading-4 text-base-content font-poppins whitespace-normal hover:cursor-default"
-            >By creating an account, I agree to the
-            <UnderlineLink
-              @click="navigateToTerms"
-              text-class="text-primary font-medium font-poppins"
+        <div class="flex flex-col gap-3">
+          <label class="label flex items-start">
+            <input
+              type="checkbox"
+              v-model="terms"
+              class="checkbox rounded-[6px] checked:bg-primary checked:text-primary-content"
+            />
+            <span
+              class="text-sm leading-4 text-base-content font-poppins whitespace-normal hover:cursor-default"
+              >By creating an account, I agree to the
+              <UnderlineLink
+                @click="navigateToTerms"
+                text-class="text-primary font-medium font-poppins"
+              >
+                Terms of Service
+              </UnderlineLink>
+              and acknowledge the
+              <UnderlineLink
+                @click="navigateToPrivacyPolicy"
+                text-class="text-primary font-medium font-poppins"
+              >
+                Privacy Policy </UnderlineLink
+              >.
+            </span>
+          </label>
+
+          <label class="label flex items-start">
+            <input
+              type="checkbox"
+              v-model="marketingOptIn"
+              class="checkbox rounded-[6px] checked:bg-primary checked:text-primary-content"
+            />
+            <span
+              class="text-sm leading-4 text-base-content font-poppins whitespace-normal hover:cursor-default"
             >
-              Terms of Service
-            </UnderlineLink>
-            and acknowledge the
-            <UnderlineLink
-              @click="navigateToPrivacyPolicy"
-              text-class="text-primary font-medium font-poppins"
-            >
-              Privacy Policy </UnderlineLink
-            >.
-          </span>
-        </label>
+              I'd like to receive occasional product updates and special offers
+              from Flipture.
+              <span class="text-base-content/50">(Optional)</span>
+            </span>
+          </label>
+        </div>
 
         <section
           class="bg-error/20 border-2 border-error p-2 rounded-2xl flex flex-row gap-2 items-center"
@@ -268,6 +285,7 @@ const errorMessage = ref("");
 const isLoading = ref(false);
 const isAuthenticating = useState("isAuthenticating", () => false);
 const terms = ref(false);
+const marketingOptIn = ref(false);
 const { isMobile } = useIsMobile();
 const validationSchema = createRegisterSchema();
 
@@ -316,6 +334,9 @@ const signUp = async () => {
         full_name: `${firstName.value} ${lastName.value}`,
         firstName: firstName.value as string,
         lastName: lastName.value as string,
+        terms_accepted: true,
+        terms_version: '2026-02-02',
+        marketing_opt_in: marketingOptIn.value,
       },
     },
   });

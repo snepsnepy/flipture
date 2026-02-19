@@ -48,12 +48,14 @@
         >
           Analytics Not Available
         </h3>
-        <p class="text-base text-neutral font-poppins leading-relaxed px-4">
+        <p
+          class="text-base text-base-content/50 font-poppins leading-relaxed px-4"
+        >
           Analytics and insights are available on
           <strong class="text-primary font-medium">Standard</strong> and
-          <strong class="text-primary font-medium">Premium</strong> plans. Upgrade now to
-          unlock detailed analytics, visitor tracking, and geographic insights
-          for all your flipbooks.
+          <strong class="text-primary font-medium">Premium</strong> plans.
+          Upgrade now to unlock detailed analytics, visitor tracking, and
+          geographic insights for all your flipbooks.
         </p>
       </div>
 
@@ -365,7 +367,7 @@
                   label: 'Views',
                   data: countryChartData.views,
                   backgroundColor: generateCountryColors(
-                    countryChartData.labels.length
+                    countryChartData.labels.length,
                   ),
                   borderWidth: 1,
                 },
@@ -520,14 +522,14 @@ const flipbookOptions = computed(() => {
 
 const selectedFlipbookLabel = computed(() => {
   const option = flipbookOptions.value.find(
-    (opt) => opt.value === selectedFlipbookId.value
+    (opt) => opt.value === selectedFlipbookId.value,
   );
   return option?.label || "All Flipbooks";
 });
 
 const selectedDateRangeLabel = computed(() => {
   const option = dateRangeOptions.find(
-    (opt) => opt.value === selectedDateRange.value
+    (opt) => opt.value === selectedDateRange.value,
   );
   return option?.label || "Last 30 Days";
 });
@@ -638,7 +640,7 @@ const fetchData = async () => {
       const flipbookIds = flipbooks.value.map((f) => f.id);
       analyticsData.value = await fetchComprehensiveAnalytics(
         flipbookIds,
-        selectedDateRange.value
+        selectedDateRange.value,
       );
     } else {
       // Reset analytics if no flipbooks
@@ -686,7 +688,7 @@ onMounted(async () => {
         navigateTo("/login");
       }
     },
-    { immediate: false }
+    { immediate: false },
   );
 
   // Fetch initial data if user is already loaded

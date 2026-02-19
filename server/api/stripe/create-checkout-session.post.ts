@@ -30,6 +30,9 @@ export default defineEventHandler(async (event) => {
       });
     }
 
+    const planName =
+      priceId === config.public.stripePremiumPriceId ? "business" : "standard";
+
     // Get the request origin for redirect URLs
     const origin = getRequestURL(event).origin;
 
@@ -46,12 +49,14 @@ export default defineEventHandler(async (event) => {
       customer_email: userEmail,
       metadata: {
         userId,
+        plan: planName,
       },
       success_url: `${origin}/dashboard?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/dashboard?canceled=true`,
       subscription_data: {
         metadata: {
           userId,
+          plan: planName,
         },
       },
     });

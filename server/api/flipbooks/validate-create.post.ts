@@ -11,7 +11,7 @@ const PLAN_LIMITS = {
     maxFlipbooks: 20,
     maxFileSize: 30 * 1024 * 1024, // 30MB
   },
-  premium: {
+  business: {
     maxFlipbooks: null, // unlimited
     maxFileSize: 100 * 1024 * 1024, // 100MB
   },

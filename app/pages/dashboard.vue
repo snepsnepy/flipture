@@ -21,11 +21,7 @@
 
     <!-- Show InfoComponent for free users who haven't reached limit yet -->
     <DashboardInfoComponent
-      v-else-if="
-        !userStore.isLoadingProfile &&
-        userStore.isFreePlan &&
-        flipbooksLength > 0
-      "
+      v-else-if="!userStore.isLoadingProfile && userStore.isFreePlan"
     />
 
     <!-- Development Email Tester (only visible in development) -->
@@ -369,6 +365,7 @@ const fetchFlipbooks = async () => {
   }
 };
 
+// Poll profile until subscription is updated
 onMounted(async () => {
   // Reset authentication states if user is present
   const isAuthenticating = useState("isAuthenticating", () => false);

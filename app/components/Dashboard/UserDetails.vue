@@ -151,14 +151,14 @@
               <p class="text-sm text-base-content leading-3 font-poppins">
                 <span 
                   class="font-medium text-4xl leading-[30px]"
-                  :class="flipbooksLength > flipbookLimit ? 'text-error' : 'text-primary'"
+                  :class="flipbooksLength > flipbookLimit! ? 'text-error' : 'text-primary'"
                 >
                   {{ flipbooksLength }}
                 </span>
                 <span class="text-neutral text-lg leading-4">/{{ flipbookLimit }}</span>
               </p>
               <p class="text-xs leading-3 text-neutral">
-                {{ remainingCount > 0 ? `${remainingCount} remaining` : 'Limit reached' }}
+                {{ remainingCount && remainingCount > 0 ? `${remainingCount} remaining` : 'Limit reached' }}
               </p>
             </div>
           </div>
@@ -257,7 +257,7 @@ const planBadgeClass = computed(() => {
   const plan = props.currentPlan;
   const status = props.subscriptionStatus;
 
-  if (status === "active" && plan === "premium") {
+  if (status === "active" && plan === "business") {
     return "badge-primary";
   } else if (status === "active" && plan === "standard") {
     return "badge-secondary";
@@ -277,16 +277,17 @@ const planBadgeText = computed(() => {
 
   const plan = props.currentPlan;
   const status = props.subscriptionStatus;
+  const displayName = plan === "business" ? "Business" : plan.charAt(0).toUpperCase() + plan.slice(1);
 
   if (status === "active") {
-    return plan.charAt(0).toUpperCase() + plan.slice(1);
+    return displayName;
   } else if (status === "canceled") {
     return "Free";
   } else if (status === "past_due") {
     return "Past Due";
   }
 
-  return plan.charAt(0).toUpperCase() + plan.slice(1);
+  return displayName;
 });
 
 const userFullName = computed(() => {

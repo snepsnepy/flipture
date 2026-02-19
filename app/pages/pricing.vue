@@ -79,7 +79,7 @@
 
         <!-- Business Plan -->
         <PricingCard
-          plan-type="premium"
+          plan-type="business"
           title="BUSINESS"
           description="Unlimited flipbooks and tailored customization for your brand."
           price="€12.99"
@@ -135,12 +135,12 @@ const config = useRuntimeConfig();
 
 const loading = ref(false);
 const portalLoading = ref(false);
-const selectedPlan = ref<"standard" | "premium" | null>(null);
+const selectedPlan = ref<"standard" | "business" | null>(null);
 
 const {
   free: freePlan,
   standard: standardPlan,
-  premium: premiumPlan,
+  business: premiumPlan,
 } = PLAN_FEATURES;
 
 // Computed button states
@@ -161,7 +161,7 @@ const standardButtonState = computed(() => {
     userStore.profile?.subscription_plan === "standard" &&
     userStore.profile?.subscription_status === "active";
   const isPremiumActive =
-    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_plan === "business" &&
     userStore.profile?.subscription_status === "active";
   const isStandardCanceled =
     userStore.profile?.subscription_plan === "standard" &&
@@ -187,17 +187,17 @@ const standardButtonState = computed(() => {
 
 const premiumButtonState = computed(() => {
   const isPremiumActive =
-    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_plan === "business" &&
     userStore.profile?.subscription_status === "active";
   const isPremiumCanceled =
-    userStore.profile?.subscription_plan === "premium" &&
+    userStore.profile?.subscription_plan === "business" &&
     userStore.profile?.subscription_status === "canceled";
   const isStandardActive =
     userStore.profile?.subscription_plan === "standard" &&
     userStore.profile?.subscription_status === "active";
 
   let text = "Subscribe Now";
-  if (loading.value && selectedPlan.value === "premium") {
+  if (loading.value && selectedPlan.value === "business") {
     text = "";
   } else if (isPremiumActive) {
     text = "Current Plan";
@@ -210,7 +210,7 @@ const premiumButtonState = computed(() => {
   return {
     text,
     disabled: loading.value || isPremiumActive,
-    loading: loading.value && selectedPlan.value === "premium",
+    loading: loading.value && selectedPlan.value === "business",
   };
 });
 
@@ -243,19 +243,13 @@ const handleSubscribe = async (plan: string) => {
   }
 
   loading.value = true;
-  selectedPlan.value = plan as "standard" | "premium";
+  selectedPlan.value = plan as "standard" | "business";
 
   try {
     const priceId =
       plan === "standard"
         ? config.public.stripeStandardPriceId
         : config.public.stripePremiumPriceId;
-
-    console.log("Checkout details:", {
-      priceId,
-      userId,
-      userEmail,
-    });
 
     await redirectToCheckout(priceId, userId, userEmail);
   } catch (error: any) {

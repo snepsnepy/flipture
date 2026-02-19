@@ -14,7 +14,7 @@ export const PLAN_FEATURES = {
     "Full customization options",
     "Cancel anytime",
   ],
-  premium: [
+  business: [
     "Unlimited flipbooks",
     "100MB per flipbook limit",
     "No watermark",

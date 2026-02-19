@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
       stripeEvent = stripe.webhooks.constructEvent(
         body,
         signature,
-        config.stripeWebhookSecret
+        config.stripeWebhookSecret,
       );
     } catch (err: any) {
       console.error("Webhook signature verification failed:", err.message);
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
     // Initialize Supabase client with service role key to bypass RLS
     const supabase = createClient(
       process.env.SUPABASE_URL!,
-      config.supabaseSecretKey!
+      config.supabaseSecretKey!,
     );
 
     // Handle different event types
@@ -50,22 +50,23 @@ export default defineEventHandler(async (event) => {
 
         if (userId && subscriptionId) {
           // Retrieve subscription details
-          const subscription = await stripe.subscriptions.retrieve(
-            subscriptionId
-          );
+          const subscription =
+            await stripe.subscriptions.retrieve(subscriptionId);
 
           const priceId = subscription.items.data[0].price.id;
 
-          // Determine plan type
+          // Use metadata plan (set during checkout creation) as primary source,
+          // fall back to price comparison
           const planType =
-            priceId === config.public.stripePremiumPriceId
-              ? "premium"
-              : "standard";
+            session.metadata?.plan ||
+            (priceId === config.public.stripePremiumPriceId
+              ? "business"
+              : "standard");
 
           // Convert timestamp safely
           const periodEnd = (subscription as any).current_period_end
             ? new Date(
-                (subscription as any).current_period_end * 1000
+                (subscription as any).current_period_end * 1000,
               ).toISOString()
             : null;
 
@@ -92,24 +93,24 @@ export default defineEventHandler(async (event) => {
             console.error("Error updating user subscription:", error);
           } else {
             console.log(
-              `✅ Subscription created for user ${userId}: ${planType} plan`
+              `✅ Subscription created for user ${userId}: ${planType} plan`,
             );
 
             // Send subscription success email
             if (profile?.email) {
               const userName = profile.full_name || "there";
-              const planName = planType === "premium" ? "Premium" : "Standard";
+              const planName =
+                planType === "business" ? "Business" : "Standard";
               const amount =
-                planType === "premium" ? "€59.99/year" : "€5.99/month";
+                planType === "business" ? "€12.99/month" : "€7.99/month";
 
               try {
-                const { sendEmail, emailTemplates } = await import(
-                  "../../utils/sendEmail"
-                );
+                const { sendEmail, emailTemplates } =
+                  await import("../../utils/sendEmail");
                 const emailContent = emailTemplates.subscriptionSuccess(
                   userName,
                   planName,
-                  amount
+                  amount,
                 );
 
                 await sendEmail({
@@ -120,12 +121,12 @@ export default defineEventHandler(async (event) => {
                 });
 
                 console.log(
-                  `📧 Subscription success email sent to ${profile.email}`
+                  `📧 Subscription success email sent to ${profile.email}`,
                 );
               } catch (emailError) {
                 console.error(
                   "Error sending subscription success email:",
-                  emailError
+                  emailError,
                 );
                 // Don't fail the webhook if email fails
               }
@@ -141,15 +142,19 @@ export default defineEventHandler(async (event) => {
 
         if (userId) {
           const priceId = subscription.items.data[0].price.id;
+
+          // Use metadata plan (set during checkout creation) as primary source,
+          // fall back to price comparison
           const planType =
-            priceId === config.public.stripePremiumPriceId
-              ? "premium"
-              : "standard";
+            subscription.metadata?.plan ||
+            (priceId === config.public.stripePremiumPriceId
+              ? "business"
+              : "standard");
 
           // Convert timestamp safely
           const periodEnd = (subscription as any).current_period_end
             ? new Date(
-                (subscription as any).current_period_end * 1000
+                (subscription as any).current_period_end * 1000,
               ).toISOString()
             : null;
 
@@ -173,7 +178,7 @@ export default defineEventHandler(async (event) => {
             console.error("Error updating subscription:", error);
           } else {
             console.log(
-              `✅ Subscription updated for user ${userId}: ${subscription.status}`
+              `✅ Subscription updated for user ${userId}: ${planType} plan (status: ${subscription.status})`,
             );
           }
         }
@@ -212,17 +217,16 @@ export default defineEventHandler(async (event) => {
             if (profile?.email) {
               const userName = profile.full_name || "there";
               const planName =
-                profile.subscription_plan === "premium"
-                  ? "Premium"
+                profile.subscription_plan === "business"
+                  ? "Business"
                   : "Standard";
 
               try {
-                const { sendEmail, emailTemplates } = await import(
-                  "../../utils/sendEmail"
-                );
+                const { sendEmail, emailTemplates } =
+                  await import("../../utils/sendEmail");
                 const emailContent = emailTemplates.subscriptionCancelled(
                   userName,
-                  planName
+                  planName,
                 );
 
                 await sendEmail({
@@ -267,9 +271,8 @@ export default defineEventHandler(async (event) => {
           const userName = profile.full_name || "there";
 
           try {
-            const { sendEmail, emailTemplates } = await import(
-              "../../utils/sendEmail"
-            );
+            const { sendEmail, emailTemplates } =
+              await import("../../utils/sendEmail");
             const emailContent = emailTemplates.paymentFailed(userName);
 
             await sendEmail({

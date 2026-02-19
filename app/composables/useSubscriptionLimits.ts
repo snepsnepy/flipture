@@ -20,13 +20,13 @@ export const useSubscriptionLimits = () => {
       autoRemoveDays: null,
       displayName: "Standard",
     },
-    premium: {
+    business: {
       maxFlipbooks: null, // unlimited
       maxFileSize: 100 * 1024 * 1024, // 100MB
       hasWatermark: false,
       hasAnalytics: true,
       autoRemoveDays: null,
-      displayName: "Premium",
+      displayName: "Business",
     },
   };
 

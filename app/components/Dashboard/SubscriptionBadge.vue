@@ -75,7 +75,7 @@ const badgeClass = computed(() => {
   const plan = userStore.profile.subscription_plan;
   const status = userStore.profile.subscription_status;
 
-  if (status === "active" && plan === "premium") {
+  if (status === "active" && plan === "business") {
     return "badge-primary";
   } else if (status === "active" && plan === "standard") {
     return "badge-secondary";
@@ -96,7 +96,7 @@ const badgeText = computed(() => {
   const plan = userStore.profile.subscription_plan;
   const status = userStore.profile.subscription_status;
 
-  const displayName = plan === "premium" ? "Business" : plan.charAt(0).toUpperCase() + plan.slice(1);
+  const displayName = plan === "business" ? "Business" : plan.charAt(0).toUpperCase() + plan.slice(1);
 
   if (status === "active") {
     return displayName;

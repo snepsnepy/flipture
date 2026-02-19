@@ -81,7 +81,7 @@
                 'px-4 py-2 rounded-full font-poppins font-medium text-xs md:text-sm flex items-center gap-2',
                 currentPlan === 'free'
                   ? 'bg-base-content text-base-100'
-                  : currentPlan === 'premium'
+                  : currentPlan === 'business'
                   ? 'bg-primary text-primary-content'
                   : 'bg-secondary text-base-content',
               ]"
@@ -259,7 +259,7 @@
 
               <!-- Upgrade Button (for free/standard users) -->
               <ActionButton
-                v-if="currentPlan !== 'premium'"
+                v-if="currentPlan !== 'business'"
                 type="primary"
                 :text="
                   currentPlan === 'free'
@@ -699,7 +699,7 @@ const isFreePlan = computed(() => userStore.isFreePlan);
 
 const planName = computed(() => {
   const plan = currentPlan.value;
-  return plan.charAt(0).toUpperCase() + plan.slice(1);
+  return plan === "business" ? "Business" : plan.charAt(0).toUpperCase() + plan.slice(1);
 });
 
 const maxFlipbooks = computed(() => {
@@ -760,14 +760,14 @@ const currentPlanFeatures = computed(() => {
 });
 
 const billingAmount = computed(() => {
-  if (currentPlan.value === "standard") return "€5.99";
-  if (currentPlan.value === "premium") return "€59.99";
+  if (currentPlan.value === "standard") return "€7.99";
+  if (currentPlan.value === "business") return "€12.99";
   return "€0";
 });
 
 const billingCycle = computed(() => {
   if (currentPlan.value === "standard") return "Monthly";
-  if (currentPlan.value === "premium") return "Yearly";
+  if (currentPlan.value === "business") return "Monthly";
   return "Free";
 });
 
@@ -776,7 +776,7 @@ const nextBillingDate = computed(() => {
   // For now, returning placeholder
   if (currentPlan.value === "free") return null;
   const date = new Date();
-  date.setMonth(date.getMonth() + (currentPlan.value === "premium" ? 12 : 1));
+  date.setMonth(date.getMonth() + 1);
   return formatDate(date.toISOString());
 });
 

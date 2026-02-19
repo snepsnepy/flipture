@@ -207,6 +207,7 @@ import { useIsMobile } from "~/composables/useIsMobile";
 import { useForm, useField } from "vee-validate";
 import { createLoginSchema } from "~~/schema/form.schema";
 import ForgotPasswordModal from "~/components/ForgotPasswordModal.vue";
+import { useGtm } from "~/composables/useGtm";
 
 definePageMeta({
   layout: "auth",
@@ -214,6 +215,7 @@ definePageMeta({
 
 const client = useSupabaseClient();
 const user = useSupabaseUser();
+const { trackLogin, trackLoginFailed, trackPasswordResetRequested } = useGtm();
 
 const errorMessage = ref("");
 const { isMobile } = useIsMobile();
@@ -265,6 +267,8 @@ const signUp = async () => {
   });
 
   if (!error && data.user) {
+    trackLogin('email');
+
     // Send welcome email on first login after verification
     try {
       $fetch("/api/auth/check-and-send-welcome", {
@@ -283,6 +287,7 @@ const signUp = async () => {
     // Reset after navigation completes
     isAuthenticating.value = false;
   } else if (error) {
+    trackLoginFailed('email', error.message);
     console.error(error.message);
     errorMessage.value = error.message;
     isLoading.value = false;
@@ -291,6 +296,7 @@ const signUp = async () => {
 };
 
 const signInWithGoogle = async () => {
+  trackLogin('google');
   await client.auth.signInWithOAuth({
     provider: "google",
   });
@@ -299,6 +305,7 @@ const signInWithGoogle = async () => {
 const goToRegister = () => navigateTo({ name: "register" });
 
 const openForgotPasswordModal = () => {
+  trackPasswordResetRequested();
   forgotPasswordModal.value?.openModal();
 };
 

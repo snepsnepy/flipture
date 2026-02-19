@@ -8,12 +8,12 @@ const PLAN_LIMITS = {
     maxFileSize: 5 * 1024 * 1024, // 5MB
   },
   standard: {
-    maxFlipbooks: 100,
+    maxFlipbooks: 20,
     maxFileSize: 30 * 1024 * 1024, // 30MB
   },
-  premium: {
-    maxFlipbooks: 100,
-    maxFileSize: 50 * 1024 * 1024, // 50MB
+  business: {
+    maxFlipbooks: null, // unlimited
+    maxFileSize: 100 * 1024 * 1024, // 100MB
   },
 };
 
@@ -156,7 +156,7 @@ export default defineEventHandler(async (event) => {
 
     const currentCount = count || 0;
 
-    if (currentCount >= limits.maxFlipbooks) {
+    if (limits.maxFlipbooks !== null && currentCount >= limits.maxFlipbooks) {
       return {
         success: false,
         error: "flipbook_limit_reached",
@@ -174,7 +174,7 @@ export default defineEventHandler(async (event) => {
         maxFlipbooks: limits.maxFlipbooks,
         maxFileSize: limits.maxFileSize,
         currentFlipbooks: currentCount,
-        remainingFlipbooks: limits.maxFlipbooks - currentCount,
+        remainingFlipbooks: limits.maxFlipbooks === null ? null : limits.maxFlipbooks - currentCount,
       },
     };
   } catch (error: any) {

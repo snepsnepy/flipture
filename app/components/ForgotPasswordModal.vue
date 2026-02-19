@@ -32,20 +32,11 @@
           </template>
         </Input>
 
-        <div v-if="successMessage" class="alert alert-success">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="stroke-current shrink-0 h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+        <div
+          v-if="successMessage"
+          class="flex items-center gap-2 font-poppins text-base leading-4 bg-success p-3 rounded-2xl text-success-content"
+        >
+          <Icon name="cuida:check-circle-outline" size="24" />
           <span>{{ successMessage }}</span>
         </div>
 
@@ -150,11 +141,11 @@ const handleResetPassword = async () => {
     successMessage.value = "Password reset link sent! Check your email.";
 
     // Clear form after 3 seconds and close modal
-    setTimeout(() => {
-      email.value = "";
-      successMessage.value = "";
-      closeModal();
-    }, 3000);
+    // setTimeout(() => {
+    //   email.value = "";
+    //   successMessage.value = "";
+    //   closeModal();
+    // }, 3000);
   } catch (error: any) {
     console.error("Password reset error:", error);
     errorMessage.value =

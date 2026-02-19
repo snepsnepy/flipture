@@ -168,7 +168,7 @@ interface ButtonState {
 
 interface Props {
   // Plan identification
-  planType: "free" | "standard" | "premium";
+  planType: "free" | "standard" | "business";
   title: string;
   description: string;
   price: string;

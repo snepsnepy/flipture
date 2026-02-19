@@ -148,17 +148,41 @@
               </div>
             </div>
             <div class="flex flex-col gap-1">
-              <p class="text-sm text-base-content leading-3 font-poppins">
-                <span 
+              <p
+                class="text-sm text-base-content leading-3 font-poppins flex items-center gap-1"
+              >
+                <span
                   class="font-medium text-4xl leading-[30px]"
-                  :class="flipbooksLength > flipbookLimit ? 'text-error' : 'text-primary'"
+                  :class="
+                    flipbookLimit !== null && flipbooksLength > flipbookLimit
+                      ? 'text-error'
+                      : 'text-primary'
+                  "
                 >
                   {{ flipbooksLength }}
                 </span>
-                <span class="text-neutral text-lg leading-4">/{{ flipbookLimit }}</span>
+                <span class="text-neutral text-lg leading-4">
+                  <template v-if="flipbookLimit !== null"
+                    >/{{ flipbookLimit }}</template
+                  >
+                  <div v-else class="flex items-center gap-1">
+                    /
+                    <Icon
+                      name="mynaui:infinity-solid"
+                      class="text-neutral"
+                      :size="28"
+                    />
+                  </div>
+                </span>
               </p>
               <p class="text-xs leading-3 text-neutral">
-                {{ remainingCount > 0 ? `${remainingCount} remaining` : 'Limit reached' }}
+                {{
+                  flipbookLimit === null
+                    ? "Unlimited"
+                    : remainingCount && remainingCount > 0
+                      ? `${remainingCount} remaining`
+                      : "Limit reached"
+                }}
               </p>
             </div>
           </div>
@@ -232,7 +256,9 @@ const props = defineProps<{
 const flipbookLimit = computed(() => currentLimits.value.maxFlipbooks);
 
 // Calculate remaining flipbooks
-const remainingCount = computed(() => remainingFlipbooks(props.flipbooksLength));
+const remainingCount = computed(() =>
+  remainingFlipbooks(props.flipbooksLength),
+);
 
 const user = useSupabaseUser();
 const { isMobile } = useIsMobile();
@@ -257,7 +283,7 @@ const planBadgeClass = computed(() => {
   const plan = props.currentPlan;
   const status = props.subscriptionStatus;
 
-  if (status === "active" && plan === "premium") {
+  if (status === "active" && plan === "business") {
     return "badge-primary";
   } else if (status === "active" && plan === "standard") {
     return "badge-secondary";
@@ -277,16 +303,20 @@ const planBadgeText = computed(() => {
 
   const plan = props.currentPlan;
   const status = props.subscriptionStatus;
+  const displayName =
+    plan === "business"
+      ? "Business"
+      : plan.charAt(0).toUpperCase() + plan.slice(1);
 
   if (status === "active") {
-    return plan.charAt(0).toUpperCase() + plan.slice(1);
+    return displayName;
   } else if (status === "canceled") {
     return "Free";
   } else if (status === "past_due") {
     return "Past Due";
   }
 
-  return plan.charAt(0).toUpperCase() + plan.slice(1);
+  return displayName;
 });
 
 const userFullName = computed(() => {

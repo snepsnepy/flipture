@@ -4,7 +4,7 @@ import type { Database } from "~/types/supabase";
 const PLAN_LIMITS = {
   free: { maxFlipbooks: 3 },
   standard: { maxFlipbooks: 100 },
-  premium: { maxFlipbooks: 100 },
+  business: { maxFlipbooks: 100 },
 };
 
 // Authoritative server-side lists — must stay in sync with DesignOptionsStep.vue

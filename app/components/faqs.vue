@@ -86,11 +86,7 @@
             >
               {{ faq.question }}
             </p>
-            <motion.div
-              :animate="{
-                scale: activeIndex === index ? 1.2 : 1,
-              }"
-              :transition="{ type: 'spring', stiffness: 300, damping: 25 }"
+            <div
               class="w-8 h-8 min-w-8 rounded-full transition-all duration-300 flex items-center justify-center"
               :class="
                 hoveredIndex === index || activeIndex === index
@@ -118,7 +114,7 @@
                   d="M19 9l-7 7-7-7"
                 />
               </motion.svg>
-            </motion.div>
+            </div>
           </div>
           <motion.div
             v-if="activeIndex === index"

@@ -104,20 +104,25 @@
         <p class="mb-4 text-base-content/90 font-poppins">
           Already subscribed? Manage your subscription
         </p>
-        <button
-          @click="handleManageSubscription"
+        <motion.button
+          type="button"
           :disabled="portalLoading"
-          class="btn btn-outline text-base-content border-base-content hover:bg-primary-content hover:text-base-content"
+          @click="handleManageSubscription"
+          :whileHover="{ scale: 1.05 }"
+          :transition="{ type: 'spring', stiffness: 400, damping: 17 }"
+          class="w-full md:w-auto shadow-lg py-3 px-6 md:px-10 rounded-full font-poppins font-medium text-sm md:text-lg min-h-[48px] md:min-h-[56px] text-base-content border-2 border-base-content hover:bg-base-300 hover:cursor-pointer"
         >
           <span v-if="portalLoading" class="loading loading-spinner"></span>
           <span v-else>Manage Subscription</span>
-        </button>
+        </motion.button>
       </footer>
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { motion } from "motion-v";
+
 definePageMeta({
   layout: "base",
   middleware: "auth",

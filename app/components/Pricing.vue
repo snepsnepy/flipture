@@ -106,6 +106,16 @@
           @subscribe="handleSubscribe"
         />
       </section>
+
+      <p class="text-center text-primary-content text-sm font-poppins">
+        Need a custom solution?
+        <a
+          href="mailto:support@flipture.io"
+          class="text-secondary hover:text-secondary/80 transition-colors font-medium"
+        >
+          Reach out to us at contact@flipture.io
+        </a>
+      </p>
     </div>
   </section>
 </template>

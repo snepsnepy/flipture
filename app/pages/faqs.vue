@@ -31,17 +31,17 @@
         :key="index"
         :initial="{ opacity: 0, y: 20 }"
         :animate="isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }"
-        :transition="{ 
-          duration: 0.5, 
+        :transition="{
+          duration: 0.5,
           delay: index * 0.1,
-          ease: 'easeOut'
+          ease: 'easeOut',
         }"
         class="inline-block mr-2"
       >
         {{ word }}
       </motion.span>
     </h2>
-    
+
     <!-- Content -->
     <section ref="faqsContainer" class="flex flex-col gap-4">
       <motion.div
@@ -50,16 +50,18 @@
         :data-hovered="hoveredIndex === index"
         @mouseenter="hoveredIndex = index"
         @mouseleave="hoveredIndex = null"
-        :animate="{ 
+        :animate="{
           scale: activeIndex === index ? 1.02 : 1,
-          backgroundColor: hoveredIndex === index || activeIndex === index 
-            ? 'var(--color-base-content)' 
-            : 'var(--color-primary-content)',
-          borderColor: hoveredIndex === index || activeIndex === index 
-            ? 'var(--color-base-content)' 
-            : 'var(--color-base-content)',
+          backgroundColor:
+            hoveredIndex === index || activeIndex === index
+              ? 'var(--color-base-content)'
+              : 'var(--color-primary-content)',
+          borderColor:
+            hoveredIndex === index || activeIndex === index
+              ? 'var(--color-base-content)'
+              : 'var(--color-base-content)',
         }"
-        :transition="{ 
+        :transition="{
           type: 'spring',
           stiffness: 300,
           damping: 30,
@@ -88,11 +90,7 @@
           >
             {{ faq.question }}
           </p>
-          <motion.div
-            :animate="{ 
-              scale: activeIndex === index ? 1.2 : 1,
-            }"
-            :transition="{ type: 'spring', stiffness: 300, damping: 25 }"
+          <div
             class="w-8 h-8 min-w-8 rounded-full transition-all duration-300 flex items-center justify-center"
             :class="
               hoveredIndex === index || activeIndex === index
@@ -101,7 +99,7 @@
             "
           >
             <motion.svg
-              :animate="{ 
+              :animate="{
                 rotate: activeIndex === index ? 180 : 0,
                 scale: activeIndex === index ? 1.2 : 1,
               }"
@@ -123,7 +121,7 @@
                 d="M19 9l-7 7-7-7"
               />
             </motion.svg>
-          </motion.div>
+          </div>
         </div>
 
         <motion.div
@@ -131,11 +129,11 @@
           :initial="{ opacity: 0, height: 0, y: -10 }"
           :animate="{ opacity: 1, height: 'auto', y: 0 }"
           :exit="{ opacity: 0, height: 0, y: -10 }"
-          :transition="{ 
+          :transition="{
             duration: 0.4,
             ease: [0.4, 0, 0.2, 1],
             opacity: { duration: 0.3 },
-            y: { type: 'spring', stiffness: 300, damping: 30 }
+            y: { type: 'spring', stiffness: 300, damping: 30 },
           }"
           class="collapse-content p-2 lg:p-4 pt-4 lg:pt-0 font-poppins text-primary-content text-base leading-4 md:text-lg md:leading-5 overflow-hidden"
         >
@@ -149,31 +147,29 @@
 <script lang="ts" setup>
 definePageMeta({
   layout: "base",
-})
+});
 
 import { motion } from "motion-v";
 import { useTemplateRef } from "vue";
 import { useElementVisibility } from "@vueuse/core";
 
-const titleRef = useTemplateRef('titleRef')
-const elementIsVisible = useElementVisibility(titleRef)
-const hasAnimated = ref(false)
+const titleRef = useTemplateRef("titleRef");
+const elementIsVisible = useElementVisibility(titleRef);
+const hasAnimated = ref(false);
 
 const isInView = computed(() => {
   if (elementIsVisible.value && !hasAnimated.value) {
-    hasAnimated.value = true
-    return true
+    hasAnimated.value = true;
+    return true;
   }
-  return hasAnimated.value
-})
+  return hasAnimated.value;
+});
 
-const titleWords = ref([
-  "Frequently", "Asked", "Questions"
-])
+const titleWords = ref(["Frequently", "Asked", "Questions"]);
 
 const hoveredIndex = ref<number | null>(null);
 const activeIndex = ref<number | null>(null);
-const faqsContainer = useTemplateRef("faqsContainer")
+const faqsContainer = useTemplateRef("faqsContainer");
 
 onClickOutside(faqsContainer, () => {
   if (activeIndex.value !== null) {

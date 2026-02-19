@@ -38,7 +38,9 @@
         >
           Transform your PDFs into stunning 3D flipbooks with our flexible
           pricing plans. Start free and scale as you grow —
-          <b class="text-primary font-medium"> no hidden fees, cancel anytime.</b>
+          <b class="text-primary font-medium">
+            no hidden fees, cancel anytime.</b
+          >
         </p>
       </section>
 
@@ -63,8 +65,8 @@
         <PricingCard
           plan-type="standard"
           title="STANDARD"
-          description="Unlock unlimited flipbooks with full analytics."
-          price="€5.99"
+          description="More flipbooks, no watermark and full analytics."
+          price="€7.99"
           period="/Month"
           :features="standardPlan"
           background-type="animated"
@@ -75,13 +77,13 @@
           @subscribe="handleSubscribe"
         />
 
-        <!-- Premium Plan -->
+        <!-- Business Plan -->
         <PricingCard
           plan-type="premium"
-          title="PREMIUM"
-          description="Best value for regular publishing."
-          price="€59.99"
-          period="/Year"
+          title="BUSINESS"
+          description="Unlimited flipbooks and tailored customization for your brand."
+          price="€12.99"
+          period="/Month"
           :features="premiumPlan"
           background-type="primary"
           border-class="border-base-content"
@@ -130,32 +132,11 @@ const loading = ref(false);
 const portalLoading = ref(false);
 const selectedPlan = ref<"standard" | "premium" | null>(null);
 
-const freePlan = [
-  "Up to 3 flipbooks",
-  "5MB per flipbook limit",
-  "Watermark on flipbooks",
-  "No analytics",
-  "Auto-remove after 30 days of no visits",
-];
-
-const standardPlan = [
-  "Up to 100 flipbooks",
-  "30MB per flipbook limit",
-  "No watermark",
-  "Full analytics & insights",
-  "Full customization options",
-  "Cancel anytime",
-];
-
-const premiumPlan = [
-  "Up to 100 flipbooks",
-  "50MB per flipbook limit",
-  "No watermark",
-  "Full analytics & insights",
-  "Cancel anytime",
-  "Save 2 months with annual billing",
-  "One simple annual invoice",
-];
+const {
+  free: freePlan,
+  standard: standardPlan,
+  premium: premiumPlan,
+} = PLAN_FEATURES;
 
 // Computed button states
 const freeButtonState = computed(() => {

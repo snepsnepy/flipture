@@ -96,15 +96,17 @@ const badgeText = computed(() => {
   const plan = userStore.profile.subscription_plan;
   const status = userStore.profile.subscription_status;
 
+  const displayName = plan === "premium" ? "Business" : plan.charAt(0).toUpperCase() + plan.slice(1);
+
   if (status === "active") {
-    return plan.charAt(0).toUpperCase() + plan.slice(1);
+    return displayName;
   } else if (status === "canceled") {
-    return "Free"; // Show as Free when canceled
+    return "Free";
   } else if (status === "past_due") {
     return "Past Due";
   }
 
-  return plan.charAt(0).toUpperCase() + plan.slice(1);
+  return displayName;
 });
 
 const handleManageSubscription = async () => {

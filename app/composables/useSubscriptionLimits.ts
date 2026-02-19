@@ -13,7 +13,7 @@ export const useSubscriptionLimits = () => {
       displayName: "Free",
     },
     standard: {
-      maxFlipbooks: 100,
+      maxFlipbooks: 20,
       maxFileSize: 30 * 1024 * 1024, // 30MB
       hasWatermark: false,
       hasAnalytics: true,
@@ -21,8 +21,8 @@ export const useSubscriptionLimits = () => {
       displayName: "Standard",
     },
     premium: {
-      maxFlipbooks: 100,
-      maxFileSize: 50 * 1024 * 1024, // 50MB
+      maxFlipbooks: null, // unlimited
+      maxFileSize: 100 * 1024 * 1024, // 100MB
       hasWatermark: false,
       hasAnalytics: true,
       autoRemoveDays: null,
@@ -38,6 +38,7 @@ export const useSubscriptionLimits = () => {
 
   // Verifică dacă utilizatorul poate crea flipbook
   const canCreateFlipbook = (currentFlipbookCount: number) => {
+    if (currentLimits.value.maxFlipbooks === null) return true;
     return currentFlipbookCount < currentLimits.value.maxFlipbooks;
   };
 
@@ -54,17 +55,21 @@ export const useSubscriptionLimits = () => {
 
   // Calculează câte flipbook-uri mai pot fi create
   const remainingFlipbooks = (currentFlipbookCount: number) => {
+    if (currentLimits.value.maxFlipbooks === null) return null;
     return Math.max(0, currentLimits.value.maxFlipbooks - currentFlipbookCount);
   };
 
   // Verifică dacă utilizatorul se apropie de limită (>= 80%)
   const isApproachingLimit = (currentFlipbookCount: number) => {
+    if (currentLimits.value.maxFlipbooks === null) return false;
     const threshold = currentLimits.value.maxFlipbooks * 0.8;
     return currentFlipbookCount >= threshold;
   };
 
   // Mesaj pentru limită atinsă
   const getLimitReachedMessage = (currentFlipbookCount: number) => {
+    if (currentLimits.value.maxFlipbooks === null) return "";
+
     const remaining = remainingFlipbooks(currentFlipbookCount);
 
     if (remaining === 0) {

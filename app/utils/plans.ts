@@ -1,0 +1,28 @@
+export const PLAN_FEATURES = {
+  free: [
+    "Up to 3 flipbooks",
+    "5MB per flipbook limit",
+    "Watermark on flipbooks",
+    "No analytics",
+    "Auto-remove after 30 days of no visits",
+  ],
+  standard: [
+    "Up to 20 flipbooks",
+    "30MB per flipbook limit",
+    "No watermark",
+    "Basic analytics & insights",
+    "Full customization options",
+    "Cancel anytime",
+  ],
+  premium: [
+    "Unlimited flipbooks",
+    "100MB per flipbook limit",
+    "No watermark",
+    "Advanced analytics & insights",
+    "Password protection per flipbook",
+    "Custom branding (logo, colors & more)",
+    "Tailored setup based on your needs",
+    "Priority support",
+    "Cancel anytime",
+  ],
+};

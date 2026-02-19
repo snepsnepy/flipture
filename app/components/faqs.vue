@@ -3,9 +3,15 @@
     <div class="container mx-auto flex flex-col gap-y-6 md:gap-y-8">
       <!-- Header -->
       <div class="flex flex-col md:flex-row w-full gap-4 md:gap-0">
-        <p class="whitespace-nowrap font-poppins font-medium text-neutral text-sm md:text-base">(Common questions)</p>
+        <p
+          class="whitespace-nowrap font-poppins font-medium text-neutral text-sm md:text-base"
+        >
+          (Common questions)
+        </p>
 
-        <header class="flex flex-col gap-y-4 md:gap-y-6 items-start md:items-end justify-start md:justify-end w-full">
+        <header
+          class="flex flex-col gap-y-4 md:gap-y-6 items-start md:items-end justify-start md:justify-end w-full"
+        >
           <h2
             ref="titleRef"
             class="font-poppins font-medium text-3xl md:text-5xl lg:text-6xl md:leading-tight lg:leading-16 text-base-content max-w-full md:max-w-[750px] text-left md:text-right overflow-hidden"
@@ -15,10 +21,10 @@
               :key="index"
               :initial="{ opacity: 0, y: 20 }"
               :animate="isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }"
-              :transition="{ 
-                duration: 0.5, 
+              :transition="{
+                duration: 0.5,
                 delay: index * 0.1,
-                ease: 'easeOut'
+                ease: 'easeOut',
               }"
               class="inline-block mr-2"
             >
@@ -29,8 +35,8 @@
             class="text-base-content text-sm md:text-base font-poppins max-w-full md:max-w-[650px] text-left md:text-right"
           >
             Still unsure? Here are quick answers to common questions about
-            uploading, sharing, subscriptions, and more — so you know exactly what
-            to expect.
+            uploading, sharing, subscriptions, and more — so you know exactly
+            what to expect.
           </p>
         </header>
       </div>
@@ -43,16 +49,15 @@
           :data-hovered="hoveredIndex === index"
           @mouseenter="hoveredIndex = index"
           @mouseleave="hoveredIndex = null"
-          :animate="{ 
+          :animate="{
             scale: activeIndex === index ? 1.02 : 1,
-            backgroundColor: hoveredIndex === index || activeIndex === index 
-              ? 'var(--color-base-content)' 
-              : 'var(--color-primary-content)',
-            borderColor: hoveredIndex === index || activeIndex === index 
-              ? 'var(--color-base-content)' 
-              : 'var(--color-base-content)',
+            backgroundColor:
+              hoveredIndex === index || activeIndex === index
+                ? '#000000'
+                : '#ffffff',
+            borderColor: '#000000',
           }"
-          :transition="{ 
+          :transition="{
             type: 'spring',
             stiffness: 300,
             damping: 30,
@@ -82,7 +87,7 @@
               {{ faq.question }}
             </p>
             <motion.div
-              :animate="{ 
+              :animate="{
                 scale: activeIndex === index ? 1.2 : 1,
               }"
               :transition="{ type: 'spring', stiffness: 300, damping: 25 }"
@@ -120,11 +125,11 @@
             :initial="{ opacity: 0, height: 0, y: -10 }"
             :animate="{ opacity: 1, height: 'auto', y: 0 }"
             :exit="{ opacity: 0, height: 0, y: -10 }"
-            :transition="{ 
+            :transition="{
               duration: 0.4,
               ease: [0.4, 0, 0.2, 1],
               opacity: { duration: 0.3 },
-              y: { type: 'spring', stiffness: 300, damping: 30 }
+              y: { type: 'spring', stiffness: 300, damping: 30 },
             }"
             class="collapse-content font-poppins text-primary-content text-base leading-4 md:text-lg md:leading-5 overflow-hidden"
           >
@@ -151,34 +156,32 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { motion } from "motion-v"
+import { motion } from "motion-v";
 import { onClickOutside, useElementVisibility } from "@vueuse/core";
 
 // Split the title into words for animation
-const titleWords = ref([
-  "Frequently", "Asked", "Questions"
-])
+const titleWords = ref(["Frequently", "Asked", "Questions"]);
 
-const titleRef = useTemplateRef('titleRef')
+const titleRef = useTemplateRef("titleRef");
 
 // Track if the title is visible in viewport
-const elementIsVisible = useElementVisibility(titleRef)
+const elementIsVisible = useElementVisibility(titleRef);
 
 // Track if animation has already been triggered (play only once)
-const hasAnimated = ref(false)
+const hasAnimated = ref(false);
 
 // Compute animation state - only trigger once
 const isInView = computed(() => {
   if (elementIsVisible.value && !hasAnimated.value) {
-    hasAnimated.value = true
-    return true
+    hasAnimated.value = true;
+    return true;
   }
-  return hasAnimated.value
-})
+  return hasAnimated.value;
+});
 
 const hoveredIndex = ref<number | null>(null);
 const activeIndex = ref<number | null>(null);
-const faqsContainer = useTemplateRef("faqsContainer")
+const faqsContainer = useTemplateRef("faqsContainer");
 
 onClickOutside(faqsContainer, () => {
   if (activeIndex.value !== null) {
@@ -214,6 +217,6 @@ const faqs = [
     question: "How many flipbooks can I create?",
     answer:
       "Plan limits apply: Free (up to 3 flipbooks), Standard (up to 100), Premium (up to 100). If you hit your limit, you can still manage existing flipbooks, but you’ll need to upgrade to create more.",
-  }
+  },
 ];
 </script>
